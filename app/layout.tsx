@@ -1,25 +1,45 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter_Tight, IBM_Plex_Sans_Thai_Looped } from "next/font/google";
+import { Trirong, Newsreader, Anuphan, Inter } from "next/font/google";
 import "./globals.css";
 import { ClientShell } from "@/components/ClientShell";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  axes: ["opsz", "SOFT"],
-  display: "swap",
-});
+/*
+ * Type system — "Tricolor Editorial" (research-locked 2026-05-31).
+ * Thai serif headline = the editorial unlock (Bangkok broadsheet, not weather widget).
+ * All four are Google Fonts + SIL-OFL → zero license risk for the hackathon.
+ *   - Trirong   : Thai serif, high-contrast display headlines (the differentiator)
+ *   - Newsreader: Latin serif, optical-size, display + editorial body
+ *   - Anuphan   : Thai sans, UI + body
+ *   - Inter     : Latin sans, UI
+ */
 
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const plexThai = IBM_Plex_Sans_Thai_Looped({
-  variable: "--font-plex-thai",
+const trirong = Trirong({
+  variable: "--font-display-th",
   subsets: ["thai", "latin"],
   weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const newsreader = Newsreader({
+  variable: "--font-display-en",
+  subsets: ["latin"],
+  axes: ["opsz"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const anuphan = Anuphan({
+  variable: "--font-ui-th",
+  subsets: ["thai", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-ui-en",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -35,6 +55,7 @@ export const metadata: Metadata = {
     description: "Decision engine ที่อ่านฟ้าให้คุณ — ฝนมาแล้วบอกที่ดีกว่า",
     locale: "th_TH",
     alternateLocale: ["en_US"],
+    type: "website",
   },
 };
 
@@ -53,7 +74,7 @@ export default function RootLayout({
   return (
     <html
       lang="th"
-      className={`${fraunces.variable} ${interTight.variable} ${plexThai.variable} h-full antialiased`}
+      className={`${trirong.variable} ${newsreader.variable} ${anuphan.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col relative">
         <ClientShell>{children}</ClientShell>

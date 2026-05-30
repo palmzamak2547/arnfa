@@ -1,6 +1,9 @@
 import { ArnfaRibbon } from "@/components/ArnfaRibbon";
 import { HomeHero } from "@/components/HomeHero";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SkyWindow } from "@/components/SkyWindow";
+import { DataSources } from "@/components/DataSources";
+import { Logo } from "@/components/Logo";
 
 export default function Home() {
   return (
@@ -9,6 +12,9 @@ export default function Home() {
 
       {/* HERO — R3F sky with real BKK clock + weather, translatable overlay */}
       <HomeHero />
+
+      {/* SKY WINDOW — the daily-ritual hook: today's go/wait/stay verdict (real forecast) */}
+      <SkyWindow />
 
       {/* NOW STRIP — อ่านฟ้า ribbon (6-hour brushstroke) */}
       <section className="relative border-y border-hairline bg-surface/50 backdrop-blur-sm">
@@ -26,9 +32,8 @@ export default function Home() {
           <p className="font-display text-xs uppercase tracking-[0.25em] text-ink-faint mb-6">
             Today&apos;s pick
           </p>
-          <h2 className="font-display text-4xl sm:text-5xl font-light text-ink leading-tight mb-8">
-            <span className="font-thai">บ่ายนี้ฟ้าเปิด —</span> the rooftop at{" "}
-            <em className="text-sun">Yelo House</em> reads better than the cafe.
+          <h2 className="font-thai-serif text-4xl sm:text-5xl font-light text-ink leading-tight mb-8">
+            บ่ายนี้ฟ้าเปิด — <span className="font-display italic text-sun">the rooftop</span> reads better than the cafe.
           </h2>
           <p className="font-thai text-lg text-ink-muted leading-relaxed max-w-2xl">
             หลังคาเปิด มุมลม แต่ไม่ร้อนเพราะร่ม. UV ปานกลาง 14:00–16:00.
@@ -44,7 +49,7 @@ export default function Home() {
           <p className="font-display text-xs uppercase tracking-[0.25em] text-ink-faint mb-6">
             How Arnfa thinks
           </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-light text-ink leading-snug mb-8">
+          <h2 className="font-thai-serif text-3xl sm:text-4xl font-light text-ink leading-snug mb-8">
             แต่ละสถานที่มี <em>โปรไฟล์ความเข้ากับอากาศ</em> ของตัวเอง.
           </h2>
           <p className="font-thai text-lg text-ink-muted leading-relaxed mb-6">
@@ -60,11 +65,15 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PROVENANCE — data-source-as-trust (BDI judge differentiator) */}
+      <DataSources />
+
       <footer className="border-t border-hairline px-6 py-12 sm:px-12 lg:px-20">
-        <div className="mx-auto max-w-6xl flex flex-col sm:flex-row justify-between gap-4 text-sm text-ink-faint">
-          <p className="font-display">อ่านฟ้า — ฟ้ากรุงเทพ ตามเวลา</p>
-          <p className="font-thai">
-            ข้อมูล: Open-Meteo, MET Norway, OpenStreetMap, Air4Thai (กรมควบคุมมลพิษ)
+        <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-start justify-between gap-4 text-sm text-ink-faint">
+          <Logo className="text-lg" animate={false} />
+          <p className="font-thai max-w-md sm:text-right">
+            ข้อมูลเปิดจาก Open-Meteo, MET Norway, OpenStreetMap, OpenFreeMap, RainViewer,
+            และ Air4Thai (กรมควบคุมมลพิษ) · ทำเพื่อกรุงเทพ
           </p>
         </div>
       </footer>

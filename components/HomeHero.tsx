@@ -13,8 +13,8 @@ export function HomeHero() {
       <div className="absolute inset-x-0 bottom-0 px-6 sm:px-12 lg:px-20 pb-16 sm:pb-24">
         <div className="max-w-4xl">
           <p className="font-thai text-sm tracking-[0.2em] uppercase text-ink-muted mb-4">{t("hero.kicker")}</p>
-          <h1 className="font-display font-light text-5xl sm:text-7xl lg:text-8xl leading-[0.95] text-ink tracking-tight">
-            <span className="font-thai">{t("hero.title1")}</span>
+          <h1 className="font-thai-serif font-light text-5xl sm:text-7xl lg:text-8xl leading-[0.98] text-ink tracking-tight">
+            <span>{t("hero.title1")}</span>
             <br />
             <span className="italic text-ink-muted">{t("hero.title2")}</span>
           </h1>
