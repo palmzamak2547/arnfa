@@ -45,6 +45,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://arnfa.vercel.app"),
   title: "อ่านฟ้า · Arnfa",
   description: "วางแผนทริปกรุงเทพให้เข้ากับฟ้า — decision engine ที่อ่านฟ้าให้คุณ",
   applicationName: "Arnfa",
