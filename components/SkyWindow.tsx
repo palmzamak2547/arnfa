@@ -70,7 +70,7 @@ export function SkyWindow() {
           </span>
           {state === "ok" && provider && (
             <span className="font-thai ml-auto text-xs text-ink-faint">
-              ฟ้าจาก {provider} · {new Date().getHours()}:00
+              ฟ้าจาก {provider}
             </span>
           )}
         </div>

@@ -12,6 +12,8 @@ import type { HourlyForecast } from "@/lib/weather/types";
 import { injectRainAt } from "@/lib/plan/rainInject";
 import { SkyChip } from "@/components/SkyChip";
 import { SwapCard } from "@/components/SwapCard";
+import { PlanSkeleton } from "@/components/PlanSkeleton";
+import { openStatusLabelTh } from "@/lib/core/openingHours";
 
 const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanMap), {
   ssr: false,
@@ -163,9 +165,22 @@ export default function PlanPage() {
                         <SkyChip state={stop.skyState} arrivalLabel={stop.arrivalLabel} tempC={stop.tempC} rainProb={stop.rainProb} size="sm" />
                       </div>
                       <p className="font-thai text-sm text-ink-muted mt-1">
-                        {categoryTh(stop.poi.category)} · {stop.reason}
-                        {stop.poi.profile.confidence < 0.5 && <span className="text-ink-faint"> · โปรไฟล์ยังไม่ชัด</span>}
+                        {categoryTh(stop.poi.category)} — {stop.reason}
                       </p>
+                      <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+                        {stop.openStatus === "open" && (
+                          <span className="text-success">เปิดอยู่</span>
+                        )}
+                        {stop.openStatus === "closed" && (
+                          <span className="text-indoor-warm">ปิดตอนนี้</span>
+                        )}
+                        {stop.openStatus === "unknown" && (
+                          <span className="text-ink-faint">{openStatusLabelTh("unknown")}</span>
+                        )}
+                        {stop.poi.profile.confidence < 0.5 && (
+                          <span className="text-ink-faint">โปรไฟล์ยังไม่ชัด</span>
+                        )}
+                      </div>
                     </div>
                   </li>
                 ))}

@@ -5,6 +5,7 @@
 
 import { weatherFit, finalScore, type PoiProfile, type SlotForecast } from "@/lib/core/weatherFit";
 import { planTrip, type Candidate, type PlannerOutput } from "@/lib/core/planner";
+import { isOpenAtISO, type OpenStatus } from "@/lib/core/openingHours";
 import type { HourlyForecast } from "@/lib/weather/types";
 import { skyStateFrom, type SkyState } from "@/components/SkyChip";
 
@@ -71,6 +72,8 @@ export type EnrichedStop = {
   fit: number;
   reason: string;
   score: number;
+  /** Honest open/closed status at arrival (from OSM opening_hours). */
+  openStatus: OpenStatus;
 };
 
 export type BuiltPlan = { stops: EnrichedStop[]; totalScore: number; totalMin: number; providerUsed?: string };
@@ -97,13 +100,20 @@ export function buildPlan(district: SeedDistrict, forecast: HourlyForecast[], op
       if (other.id === poi.id) continue;
       travelMin[other.id] = walkMin(poi.lat, poi.lng, other.lat, other.lng);
     }
+    // Honest open/closed per forecast hour — a KNOWN-closed place is hard-gated
+    // out of the plan; unknown stays eligible (flagged in UI, not fabricated).
+    const openByAbs = fc.map((f) => isOpenAtISO(poi.openingHoursRaw, f.hourISO));
+    const isOpenAt = ((rel: number) => {
+      const abs = Math.min(Math.max(opts.startHourIndex + rel, 0), openByAbs.length - 1);
+      return openByAbs[abs] === "closed" ? 0 : 1;
+    }) as Candidate["isOpenAt"];
     return {
       id: poi.id,
       baseScore: scoreAtSlot[opts.startHourIndex] ?? 0,
       scoreAtSlot,
       travelMin,
       stayMin: stayForCategory(poi.category),
-      isOpenAt: () => 1,
+      isOpenAt,
     };
   });
 
@@ -136,6 +146,7 @@ export function buildPlan(district: SeedDistrict, forecast: HourlyForecast[], op
       fit: fitR.fit,
       reason: fitR.reason,
       score: s.scoreRealized,
+      openStatus: isOpenAtISO(poi.openingHoursRaw, f.hourISO),
     };
   });
 

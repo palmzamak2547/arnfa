@@ -9,7 +9,6 @@ import { ImageResponse } from "next/og";
  * motif carry the brand. Thai lives on the page itself.
  */
 
-export const runtime = "edge";
 export const alt = "Arnfa — a decision engine that reads the sky for you";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

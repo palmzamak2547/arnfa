@@ -133,7 +133,7 @@ export function DataSources() {
             {en ? "View raw data →" : "ดูข้อมูลดิบ →"}
           </a>
           <span className="font-thai text-sm text-ink-faint">
-            {en ? "Open data · reproducible · built for Bangkok" : "ข้อมูลเปิด · ตรวจสอบซ้ำได้ · ทำเพื่อกรุงเทพ"}
+            {en ? "Open data, reproducible, built for Bangkok" : "ข้อมูลเปิด ตรวจสอบซ้ำได้ ทำเพื่อกรุงเทพ"}
           </span>
         </div>
       </div>
