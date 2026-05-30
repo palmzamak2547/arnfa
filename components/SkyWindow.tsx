@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { dayVerdict, type DayVerdict, type VerdictKind } from "@/lib/core/verdict";
 import type { HourlyForecast } from "@/lib/weather/types";
+import { useMounted } from "@/lib/useMounted";
 
 /**
  * SkyWindow — THE daily-ritual hook (UX research feature #1).
@@ -48,10 +49,15 @@ export function SkyWindow() {
 
   const style = verdict ? KIND_STYLE[verdict.kind] : KIND_STYLE.go;
 
+  // Gate the entrance animation on mount so SSR HTML matches the client's first
+  // paint (no hydration mismatch). useReducedMotion() is also null on server.
+  const mounted = useMounted();
+  const doEntrance = mounted && !reduce;
+
   return (
     <section className="relative z-10 px-6 sm:px-12 lg:px-20 -mt-20 sm:-mt-28">
       <motion.div
-        initial={reduce ? false : { opacity: 0, y: 16 }}
+        initial={doEntrance ? { opacity: 0, y: 16 } : false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         className="mx-auto max-w-3xl rounded-[2rem] border border-hairline bg-surface/85 p-7 sm:p-9 shadow-[0_20px_60px_-30px_rgba(26,31,43,0.35)] backdrop-blur-md"
