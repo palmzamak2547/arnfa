@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { SkyHero } from "./SkyHero";
+import { MagneticButton } from "./motion/MagneticButton";
 
 /** HomeHero — R3F sky + translatable editorial overlay. */
 export function HomeHero() {

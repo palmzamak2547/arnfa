@@ -1,6 +1,8 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
+import { NumberTicker } from "./motion/NumberTicker";
+import { Reveal } from "./motion/Reveal";
 
 /**
  * DataSources — "ทุกการตัดสินใจ มีที่มา" provenance ledger.
@@ -103,6 +105,23 @@ export function DataSources() {
             </div>
           ))}
         </div>
+
+        {/* Honest credibility stat band — NumberTickers count up on scroll. */}
+        <Reveal className="mt-14 grid grid-cols-2 gap-y-8 sm:grid-cols-4 border-t border-hairline pt-10">
+          {[
+            { n: 428, suffix: "", th: "สถานที่จริง", en: "real places" },
+            { n: 6, suffix: "", th: "แหล่งข้อมูลเปิด", en: "open sources" },
+            { n: 24, suffix: "ชม.", enSuffix: "h", th: "พยากรณ์ล่วงหน้า", en: "forecast ahead" },
+            { n: 0, suffix: "", th: "ตัวเลขที่กุขึ้น", en: "fabricated numbers" },
+          ].map((s) => (
+            <div key={s.en}>
+              <div className="font-display text-4xl sm:text-5xl text-ink tabular-nums">
+                <NumberTicker value={s.n} suffix={en ? (s.enSuffix ?? s.suffix) : s.suffix} />
+              </div>
+              <p className="font-thai text-sm text-ink-faint mt-1">{en ? s.en : s.th}</p>
+            </div>
+          ))}
+        </Reveal>
 
         <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2">
           <a

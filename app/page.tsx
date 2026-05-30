@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SkyWindow } from "@/components/SkyWindow";
 import { DataSources } from "@/components/DataSources";
 import { Logo } from "@/components/Logo";
+import { Reveal } from "@/components/motion/Reveal";
 
 export default function Home() {
   return (
@@ -28,7 +29,7 @@ export default function Home() {
 
       {/* TODAY'S PICK */}
       <section className="px-6 py-24 sm:px-12 lg:px-20">
-        <div className="mx-auto max-w-5xl">
+        <Reveal className="mx-auto max-w-5xl">
           <p className="font-display text-xs uppercase tracking-[0.25em] text-ink-faint mb-6">
             Today&apos;s pick
           </p>
@@ -40,12 +41,12 @@ export default function Home() {
             ใกล้ MRT คลองเตย เดิน 6 นาที. ฝนตามพยากรณ์ 18% — Arnfa เผื่อทาง
             ในร่มไว้ที่ห่าง 280 ม.
           </p>
-        </div>
+        </Reveal>
       </section>
 
       {/* HOW ARNFA THINKS */}
       <section id="how" className="border-t border-hairline px-6 py-24 sm:px-12 lg:px-20">
-        <div className="mx-auto max-w-3xl">
+        <Reveal className="mx-auto max-w-3xl">
           <p className="font-display text-xs uppercase tracking-[0.25em] text-ink-faint mb-6">
             How Arnfa thinks
           </p>
@@ -62,7 +63,7 @@ export default function Home() {
             ฟ้าจาก Open-Meteo + เรดาร์ใกล้ตัวจาก RainViewer. ทุกคำแนะนำมี
             <em> เหตุผล</em> เสมอ — ไม่ใช่กล่องดำ.
           </p>
-        </div>
+        </Reveal>
       </section>
 
       {/* PROVENANCE — data-source-as-trust (BDI judge differentiator) */}
