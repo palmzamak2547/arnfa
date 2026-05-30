@@ -1,11 +1,18 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Sky, Cloud, Clouds } from "@react-three/drei";
-import { Suspense, useMemo } from "react";
+import { Sky, Cloud, Clouds, Stars } from "@react-three/drei";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import * as THREE from "three";
+import { RainLayer } from "./RainLayer";
 
-/** SkyHero — R3F drei <Sky> with sun-position bound to real Bangkok clock. Spec: 01-design-lock § Hero */
+/**
+ * SkyHero — R3F drei <Sky> with sun-position bound to the real Bangkok clock,
+ * plus rain particles whose density reflects the REAL current rain probability.
+ * Night → stars instead of sun. Spec: 01-design-lock § Hero + interaction research.
+ */
+
+const BKK = { lat: 13.7563, lng: 100.5018 };
 
 function sunPositionForBangkok(now: Date): [number, number, number] {
   const bkk = new Date(now.getTime() + (now.getTimezoneOffset() + 7 * 60) * 60_000);
@@ -27,22 +34,49 @@ function paintBodyGradient(sunY: number) {
   document.documentElement.style.setProperty("--sky-to", to);
 }
 
+function prefersReduced(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+}
+
 export function SkyHero() {
   const sunPos = useMemo(() => sunPositionForBangkok(new Date()), []);
   if (typeof window !== "undefined") paintBodyGradient(sunPos[1]);
   const sunVec = useMemo(() => new THREE.Vector3(...sunPos), [sunPos]);
+  const isNight = sunPos[1] < -20;
+  const reduced = useMemo(prefersReduced, []);
+
+  // Real current rain probability → hero rain density (the page shows the weather).
+  const [rainIntensity, setRainIntensity] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/api/forecast?lat=${BKK.lat}&lng=${BKK.lng}&hours=3`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (cancelled || !d?.hours?.length) return;
+        const f = d.hours[0];
+        setRainIntensity(Math.min(1, f.rainProb * Math.max(0.4, f.rainIntensity)));
+      })
+      .catch(() => { /* hero rain is decorative-adjacent; silent */ });
+    return () => { cancelled = true; };
+  }, []);
 
   return (
     <div className="absolute inset-0 arnfa-sky-surface" aria-label="ฟ้ากรุงเทพ ตามเวลา">
       <Canvas camera={{ position: [0, 5, 12], fov: 55, near: 0.1, far: 1000 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }} style={{ position: "absolute", inset: 0 }}>
         <Suspense fallback={null}>
-          <Sky sunPosition={sunVec} turbidity={6} rayleigh={2.5} mieCoefficient={0.005} mieDirectionalG={0.85} />
+          {isNight ? (
+            <Stars radius={120} depth={50} count={2200} factor={4} saturation={0} fade speed={reduced ? 0 : 0.4} />
+          ) : (
+            <Sky sunPosition={sunVec} turbidity={6} rayleigh={2.5} mieCoefficient={0.005} mieDirectionalG={0.85} />
+          )}
           <ambientLight intensity={0.35} />
           <Clouds material={THREE.MeshBasicMaterial} limit={48}>
-            <Cloud seed={1} segments={28} bounds={[10, 2, 2]} volume={6} color="#FFFFFF" fade={50} position={[-8, 3, -5]} opacity={0.55} />
-            <Cloud seed={9} segments={24} bounds={[8, 1.6, 2]} volume={5} color="#FFFFFF" fade={40} position={[6, 4.5, -8]} opacity={0.45} />
-            <Cloud seed={17} segments={20} bounds={[6, 1.4, 1.8]} volume={4} color="#FFFFFF" fade={30} position={[0, 2.2, -12]} opacity={0.4} />
+            <Cloud seed={1} segments={28} bounds={[10, 2, 2]} volume={6} color="#FFFFFF" fade={50} position={[-8, 3, -5]} opacity={0.55} speed={reduced ? 0 : 0.08} />
+            <Cloud seed={9} segments={24} bounds={[8, 1.6, 2]} volume={5} color="#FFFFFF" fade={40} position={[6, 4.5, -8]} opacity={0.45} speed={reduced ? 0 : 0.06} />
+            <Cloud seed={17} segments={20} bounds={[6, 1.4, 1.8]} volume={4} color="#FFFFFF" fade={30} position={[0, 2.2, -12]} opacity={0.4} speed={reduced ? 0 : 0.05} />
           </Clouds>
+          {rainIntensity > 0.08 && <RainLayer intensity={rainIntensity} reduced={reduced} />}
         </Suspense>
       </Canvas>
 
