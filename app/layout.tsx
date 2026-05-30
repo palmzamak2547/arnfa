@@ -24,7 +24,8 @@ const trirong = Trirong({
 const newsreader = Newsreader({
   variable: "--font-display-en",
   subsets: ["latin"],
-  axes: ["opsz"],
+  // NOTE: next/font forbids `axes` together with an explicit `weight` array.
+  // Newsreader's opsz still applies via its named weights; we just request weights.
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
