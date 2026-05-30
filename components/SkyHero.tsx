@@ -1,10 +1,11 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Sky, Cloud, Clouds, Stars } from "@react-three/drei";
+import { Sky, Stars } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import * as THREE from "three";
 import { RainLayer } from "./RainLayer";
+import { PuffClouds } from "./PuffClouds";
 
 /**
  * SkyHero — R3F drei <Sky> with sun-position bound to the real Bangkok clock,
@@ -70,12 +71,9 @@ export function SkyHero() {
           ) : (
             <Sky sunPosition={sunVec} turbidity={6} rayleigh={2.5} mieCoefficient={0.005} mieDirectionalG={0.85} />
           )}
-          <ambientLight intensity={0.35} />
-          <Clouds material={THREE.MeshBasicMaterial} limit={48}>
-            <Cloud seed={1} segments={28} bounds={[10, 2, 2]} volume={6} color="#FFFFFF" fade={50} position={[-8, 3, -5]} opacity={0.55} speed={reduced ? 0 : 0.08} />
-            <Cloud seed={9} segments={24} bounds={[8, 1.6, 2]} volume={5} color="#FFFFFF" fade={40} position={[6, 4.5, -8]} opacity={0.45} speed={reduced ? 0 : 0.06} />
-            <Cloud seed={17} segments={20} bounds={[6, 1.4, 1.8]} volume={4} color="#FFFFFF" fade={30} position={[0, 2.2, -12]} opacity={0.4} speed={reduced ? 0 : 0.05} />
-          </Clouds>
+          <ambientLight intensity={0.7} />
+          <directionalLight position={[sunPos[0] * 0.01, Math.max(2, sunPos[1] * 0.01), 5]} intensity={1.1} />
+          <PuffClouds reduced={reduced} clusters={isNight ? 2 : 4} />
           {rainIntensity > 0.08 && <RainLayer intensity={rainIntensity} reduced={reduced} />}
         </Suspense>
       </Canvas>
