@@ -66,6 +66,41 @@ body {
   font-feature-settings: "ss01" on;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* never let any child force sideways scroll on a phone */
+  overflow-x: hidden;
+}
+
+/*
+ * Cross-platform foundations — works on iPhone (notch/home-bar), Android,
+ * tablet, desktop, ultrawide. Safe-area insets activate via viewport-fit=cover
+ * (set in layout viewport). Fluid clamp() type means one scale reads well from
+ * a 320px phone to a 1920px monitor — no cramped-mobile / giant-desktop jumps.
+ */
+:root {
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+
+  /* Fluid type scale (min @360px → max @1280px viewport) */
+  --fs-display: clamp(2.75rem, 1.6rem + 5.8vw, 6rem);   /* hero headline */
+  --fs-h2:      clamp(1.9rem, 1.3rem + 2.8vw, 3.25rem); /* section headline */
+  --fs-lead:    clamp(1.05rem, 0.95rem + 0.6vw, 1.3rem);/* lead paragraph */
+}
+
+/* Honor the notch + home indicator on the floating header / full-bleed edges. */
+.pad-safe-x { padding-left: max(1.5rem, var(--safe-l)); padding-right: max(1.5rem, var(--safe-r)); }
+.pad-safe-t { padding-top: max(1.25rem, var(--safe-t)); }
+.pad-safe-b { padding-bottom: max(1.25rem, var(--safe-b)); }
+
+/* Fluid type utilities (used on hero + section headlines for device-agnostic scale). */
+.fs-display { font-size: var(--fs-display); }
+.fs-h2      { font-size: var(--fs-h2); }
+.fs-lead    { font-size: var(--fs-lead); }
+
+/* Guarantee comfortable tap targets on touch devices (WCAG 2.5.5 = 44px). */
+@media (pointer: coarse) {
+  a[role="button"], button, .tap-target { min-height: 44px; }
 }
 
 /* Thai serif headline utility — Trirong, the editorial broadsheet voice. */
