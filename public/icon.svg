@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Arnfa">
+  <rect width="512" height="512" rx="112" fill="#F4EFE6"/>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A8C6E8"/>
+      <stop offset="1" stop-color="#F4D9B8"/>
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="226" r="150" fill="url(#sky)"/>
+  <circle cx="318" cy="170" r="40" fill="#F2A65A"/>
+  <path d="M150 286 a44 44 0 0 1 8 -86 a58 58 0 0 1 110 9 a38 38 0 0 1 -7 77 H158 a36 36 0 0 1 -8 -1 Z" fill="#FFFFFF" stroke="#1A1F2B" stroke-width="10" stroke-linejoin="round"/>
+  <line x1="190" y1="312" x2="178" y2="350" stroke="#5B7FB8" stroke-width="11" stroke-linecap="round"/>
+  <line x1="240" y1="312" x2="228" y2="350" stroke="#5B7FB8" stroke-width="11" stroke-linecap="round"/>
+  <line x1="120" y1="392" x2="392" y2="392" stroke="#1A1F2B" stroke-width="8" stroke-linecap="round" opacity="0.5"/>
+</svg>

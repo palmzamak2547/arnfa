@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/*
+ * Arnfa (อ่านฟ้า) — design tokens
+ * "เปิดฟ้า / Open Sky" editorial palette + type system + motion philosophy
+ * See vault doc: projects/arnfa/01-design-lock.md
+ */
+
+:root {
+  --arnfa-paper: #F4EFE6;
+  --arnfa-surface: #FFFFFF;
+  --arnfa-ink: #1A1F2B;
+  --arnfa-ink-muted: #4B5263;
+  --arnfa-ink-faint: #8A8F9B;
+  --arnfa-accent-sun: #F2A65A;
+  --arnfa-accent-rain: #5B7FB8;
+  --arnfa-accent-indoor-warm: #D9534A;
+  --arnfa-success: #7BA68A;
+  --arnfa-hairline: rgba(26, 31, 43, 0.08);
+
+  --sky-from: #F4D9B8;
+  --sky-to:   #C9D6E4;
+
+  --ease-drift: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast:   320ms;
+  --dur-base:   700ms;
+  --dur-slow:   1200ms;
+  --dur-very-slow: 1400ms;
+}
+
+@theme inline {
+  --color-paper:              var(--arnfa-paper);
+  --color-surface:            var(--arnfa-surface);
+  --color-ink:                var(--arnfa-ink);
+  --color-ink-muted:          var(--arnfa-ink-muted);
+  --color-ink-faint:          var(--arnfa-ink-faint);
+  --color-sun:                var(--arnfa-accent-sun);
+  --color-rain:               var(--arnfa-accent-rain);
+  --color-indoor-warm:        var(--arnfa-accent-indoor-warm);
+  --color-success:            var(--arnfa-success);
+  --color-hairline:           var(--arnfa-hairline);
+
+  --color-background:         var(--arnfa-paper);
+  --color-foreground:         var(--arnfa-ink);
+
+  --font-display: var(--font-fraunces);
+  --font-sans:    var(--font-inter-tight);
+  --font-thai:    var(--font-plex-thai);
+
+  --ease-drift: var(--ease-drift);
+}
+
+body {
+  background: var(--arnfa-paper);
+  color: var(--arnfa-ink);
+  font-family: var(--font-inter-tight), var(--font-plex-thai), system-ui, sans-serif;
+  font-feature-settings: "ss01" on, "cv11" on;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.arnfa-sky-surface {
+  background: linear-gradient(to bottom, var(--sky-from), var(--sky-to));
+  transition: background var(--dur-slow) var(--ease-drift);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arnfa-spin,
+  .arnfa-zoom,
+  .arnfa-bounce,
+  .arnfa-parallax {
+    animation: none !important;
+    transform: none !important;
+  }
+}
