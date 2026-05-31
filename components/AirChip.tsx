@@ -18,22 +18,27 @@ const LEVEL_COLOR: Record<AirLevel, string> = {
   unknown: "var(--arnfa-ink-faint)",
 };
 
-export function AirChip({ lat, lng }: { lat: number; lng: number }) {
-  const [air, setAir] = useState<AirReading | null>(null);
+export function AirChip({ lat, lng, reading }: { lat: number; lng: number; reading?: AirReading | null }) {
+  // Controlled mode: when the parent already fetched the reading (to also drive
+  // the day advisory) it passes it in, so we don't double-hit /api/air.
+  const controlled = reading !== undefined;
+  const [fetched, setFetched] = useState<AirReading | null>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    if (controlled) return;
     let cancelled = false;
-    setAir(null);
+    setFetched(null);
     setFailed(false);
     fetch(`/api/air?lat=${lat}&lng=${lng}`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => { if (!cancelled) setAir(d); })
+      .then((d) => { if (!cancelled) setFetched(d); })
       .catch(() => { if (!cancelled) setFailed(true); });
     return () => { cancelled = true; };
-  }, [lat, lng]);
+  }, [lat, lng, controlled]);
 
-  if (failed) return null; // air is a bonus signal; stay quiet if it can't load
+  const air = controlled ? reading : fetched;
+  if (!controlled && failed) return null; // air is a bonus signal; stay quiet if it can't load
   if (!air) {
     return <span className="font-thai text-xs text-ink-faint animate-pulse">กำลังเช็คฝุ่น…</span>;
   }

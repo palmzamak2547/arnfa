@@ -16,6 +16,9 @@ import { injectRainAt } from "@/lib/plan/rainInject";
 import { decodePlanState, encodePlanState, DEFAULT_PLAN_STATE } from "@/lib/plan/shareState";
 import { loadTaste } from "@/lib/plan/taste";
 import { recordFeedback } from "@/lib/plan/feedback";
+import { dayAdvisory } from "@/lib/core/advisory";
+import type { AirReading } from "@/lib/air/air4thai";
+import { TodayAdvisory } from "@/components/TodayAdvisory";
 import { SkyChip } from "@/components/SkyChip";
 import { SwapCard } from "@/components/SwapCard";
 import { PlanSkeleton } from "@/components/PlanSkeleton";
@@ -77,6 +80,19 @@ function PlanInner() {
     return () => { cancelled = true; };
   }, [districtKey]);
 
+  // Real Air4Thai reading for this area — drives BOTH the chip and the day advisory
+  // (and, when PM2.5 is unhealthy, the planner's outdoor penalty). One fetch.
+  const [air, setAir] = useState<AirReading | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    setAir(null);
+    fetch(`/api/air?lat=${center.lat}&lng=${center.lng}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => { if (!cancelled) setAir(d); })
+      .catch(() => { if (!cancelled) setAir(null); });
+    return () => { cancelled = true; };
+  }, [center.lat, center.lng]);
+
   // Load saved taste once; if none and the user hasn't dismissed, offer the quiz.
   useEffect(() => {
     const saved = loadTaste();
@@ -116,15 +132,24 @@ function PlanInner() {
     return idx >= 0 ? idx : 0;
   }, [forecast]);
 
+  // "เตรียมตัววันนี้" — outfit + packing + safety, from the trip-window forecast +
+  // real PM2.5. Its outdoorPenalty is the safety lever fed to the planner below.
+  const advisory = useMemo(() => {
+    if (!forecast) return null;
+    const window = forecast.slice(startHourIndex, startHourIndex + Math.ceil(budgetMin / 60) + 1);
+    return dayAdvisory(window.length ? window : forecast, air ? { pm25: air.pm25, level: air.level } : null);
+  }, [forecast, startHourIndex, budgetMin, air]);
+  const outdoorPenalty = advisory?.outdoorPenalty ?? 0;
+
   const basePlan: BuiltPlan | null = useMemo(() => {
     if (!forecast || !districtData) return null;
-    return buildPlan(districtData, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined });
-  }, [districtData, forecast, startHourIndex, budgetMin, center, taste]);
+    return buildPlan(districtData, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty });
+  }, [districtData, forecast, startHourIndex, budgetMin, center, taste, outdoorPenalty]);
 
   const rainedPlan: BuiltPlan | null = useMemo(() => {
     if (!forecast || !districtData || rainSlot === null) return null;
-    return buildPlan(districtData, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, forecastOverride: injectRainAt(forecast, rainSlot, 2) });
-  }, [districtData, forecast, rainSlot, startHourIndex, budgetMin, center, taste]);
+    return buildPlan(districtData, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, forecastOverride: injectRainAt(forecast, rainSlot, 2) });
+  }, [districtData, forecast, rainSlot, startHourIndex, budgetMin, center, taste, outdoorPenalty]);
 
   const activePlan = rainedPlan ?? basePlan;
 
@@ -199,7 +224,7 @@ function PlanInner() {
             วางแผนทริป — <span className="italic text-ink-muted">{districtTh}</span>
           </h1>
           <div className="flex items-center gap-3 mb-7">
-            <AirChip lat={center.lat} lng={center.lng} />
+            <AirChip lat={center.lat} lng={center.lng} reading={air} />
             {!taste && !quizOpen && (
               <button type="button" onClick={() => setQuizOpen(true)} className="font-thai text-sm text-rain hover:underline min-h-[44px]">
                 ปรับให้ตรงใจ →
@@ -235,6 +260,15 @@ function PlanInner() {
           </div>
         </div>
       </section>
+
+      {/* Today's prep — outfit / packing / safety, from the real forecast + PM2.5 */}
+      {advisory && (
+        <section className="arnfa-grid mt-1">
+          <div className="col-content max-w-3xl">
+            <TodayAdvisory advisory={advisory} />
+          </div>
+        </section>
+      )}
 
       {/* Results */}
       <section className="arnfa-grid section-minor">
