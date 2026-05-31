@@ -27,10 +27,12 @@ export function SwapCard({ from, to, active, onAccept, onDismiss }: SwapCardProp
       className="rounded-3xl border border-hairline p-6 sm:p-7 shadow-sm"
     >
       <div className="flex items-center justify-between mb-4">
-        <span className="font-display text-xs uppercase tracking-[0.2em]" style={{ color: active ? "rgba(255,255,255,0.85)" : "var(--arnfa-ink-faint)" }}>
+        <span className="font-display text-xs uppercase tracking-[0.2em]" style={{ color: active ? "rgba(255,255,255,0.9)" : "var(--arnfa-ink-faint)" }}>
           {active ? "ฝนเข้าแล้ว — เปลี่ยนให้" : "เผื่อทางไว้"}
         </span>
-        <SkyChip state={active ? to.skyState : from.skyState} arrivalLabel={active ? to.arrivalLabel : from.arrivalLabel} size="sm" />
+        <span className={active ? "rounded-full bg-white/95 px-1 py-0.5" : ""}>
+          <SkyChip state={active ? to.skyState : from.skyState} arrivalLabel={active ? to.arrivalLabel : from.arrivalLabel} size="sm" />
+        </span>
       </div>
 
       <p className="font-thai text-lg sm:text-xl leading-relaxed" style={{ color: active ? "#FFFFFF" : "var(--arnfa-ink)" }}>
