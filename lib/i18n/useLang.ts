@@ -1,7 +1,14 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { createContext, useContext, useSyncExternalStore } from "react";
 import { useTranslation } from "react-i18next";
+
+/**
+ * The locale the SERVER rendered with (from the arnfa.locale cookie). useLang uses
+ * it as the SSR + first-paint baseline so reload renders the chosen language with
+ * NO Thai→English flash. Defaults to Thai.
+ */
+export const LocaleContext = createContext<"th" | "en">("th");
 
 /**
  * useLang — the smooth language read. SSR and the FIRST client paint always report
@@ -28,9 +35,15 @@ export function useHydrated(): boolean {
   return useSyncExternalStore(subscribe, () => _hydrated, () => false);
 }
 
-/** `{ en, lang }` — en is false until hydrated, then reflects the chosen language. */
+/**
+ * `{ en, lang }` — before hydration, reports the SERVER-rendered locale (from the
+ * cookie via LocaleContext) so SSR + first paint agree and reload is flash-free;
+ * after hydration, reflects the live chosen language.
+ */
 export function useLang(): { en: boolean; lang: string } {
   const { i18n } = useTranslation();
   const hydrated = useHydrated();
-  return { en: hydrated && i18n.language === "en", lang: hydrated ? i18n.language : "th" };
+  const initial = useContext(LocaleContext);
+  const lang = hydrated ? i18n.language : initial;
+  return { en: lang === "en", lang };
 }

@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import { useAuth } from "@/lib/auth/useAuth";
 
 /** Magic-link sign-in widget (email → link). Shows the account + sign-out once in. */
 export function AuthButton({ compact = false }: { compact?: boolean }) {
-  const { i18n } = useTranslation();
-  const en = i18n.language === "en";
+  const { en } = useLang();
   const { user, ready, signIn, signOut } = useAuth();
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import Map, { Marker, Popup, NavigationControl, GeolocateControl, ScaleControl, Source, Layer, type MapRef } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { EnrichedStop } from "@/lib/plan/buildPlan";
@@ -30,8 +30,7 @@ function prefersReduced(): boolean {
 }
 
 export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { lat: number; lng: number } }) {
-  const { i18n } = useTranslation();
-  const en = i18n.language === "en";
+  const { en } = useLang();
   const mapRef = useRef<MapRef>(null);
   const reduced = useMemo(prefersReduced, []);
   const initialView = useMemo(() => ({ longitude: center.lng, latitude: center.lat, zoom: 13.5 }), [center]);

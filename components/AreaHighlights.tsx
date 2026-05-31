@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import type { SeedPoi } from "@/lib/plan/buildPlan";
 import { fetchPoiImage, hasLinkedImage, mapsPoiUrl } from "@/lib/poi/photo";
 import { categoryLabel } from "@/lib/plan/categoryLabel";
@@ -15,8 +15,7 @@ import { categoryLabel } from "@/lib/plan/categoryLabel";
 type Card = { poi: SeedPoi; src: string };
 
 export function AreaHighlights({ pois }: { pois: SeedPoi[] }) {
-  const { i18n } = useTranslation();
-  const en = i18n.language === "en";
+  const { en } = useLang();
   const [cards, setCards] = useState<Card[]>([]);
 
   useEffect(() => {

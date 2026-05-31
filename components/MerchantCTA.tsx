@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import { submitMerchantLead } from "@/lib/deals/deals";
 
 /**
@@ -11,8 +11,7 @@ import { submitMerchantLead } from "@/lib/deals/deals";
  * relevant stop. Write-only intake (arnfa.merchant_lead).
  */
 export function MerchantCTA() {
-  const { i18n } = useTranslation();
-  const en = i18n.language === "en";
+  const { en } = useLang();
   const [open, setOpen] = useState(false);
   const [place, setPlace] = useState("");
   const [contact, setContact] = useState("");

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import type { SeedPoi } from "@/lib/plan/buildPlan";
 import { nearestShelter, type Shelter } from "@/lib/core/shelter";
 import type { Nowcast } from "@/lib/weather/nowcast";
@@ -21,8 +21,7 @@ const ALERT_MIN = 25;
 type Coords = { lat: number; lng: number };
 
 export function LiveCompanion({ pois }: { pois: SeedPoi[] }) {
-  const { i18n } = useTranslation();
-  const en = i18n.language === "en";
+  const { en } = useLang();
   const [active, setActive] = useState(false);
   const [coords, setCoords] = useState<Coords | null>(null);
   const [nowcast, setNowcast] = useState<Nowcast | null>(null);

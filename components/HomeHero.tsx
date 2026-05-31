@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
+import { resources } from "@/lib/i18n/locales";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
 // Lazy-load the R3F sky (three.js ≈ 1 MB) so it's OFF the home critical path. The
@@ -16,7 +17,10 @@ const SkyHero = dynamic(() => import("./SkyHero").then((m) => m.SkyHero), {
 
 /** HomeHero — R3F sky + translatable editorial overlay, with a gentle scroll parallax. */
 export function HomeHero() {
-  const { t } = useTranslation();
+  // Read hero copy via the cookie-aware language flag (not i18n t()), so SSR + first
+  // paint render the chosen language with no flash on reload.
+  const { en } = useLang();
+  const t = (k: string) => (resources[en ? "en" : "th"].translation as Record<string, string>)[k] ?? k;
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   // As the hero scrolls away, the sky drifts up slower + the copy fades — tasteful

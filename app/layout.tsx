@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { Trirong, Newsreader, Anuphan, Inter } from "next/font/google";
 import "./globals.css";
 import { ClientShell } from "@/components/ClientShell";
@@ -102,14 +103,18 @@ const jsonLd = {
     "Decision engine that reads the Thai sky and plans a day that fits the weather at your arrival time, across Bangkok and every province. Open data: Open-Meteo, OpenStreetMap, Air4Thai.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Read the saved locale server-side so SSR renders in the user's language (no
+  // Thai→English flash on reload for those who chose English). Thai by default.
+  const cookieStore = await cookies();
+  const initialLocale = cookieStore.get("arnfa.locale")?.value === "en" ? "en" : "th";
   return (
     <html
-      lang="th"
+      lang={initialLocale}
       className={`${trirong.variable} ${newsreader.variable} ${anuphan.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col relative">
@@ -117,7 +122,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <ClientShell>{children}</ClientShell>
+        <ClientShell initialLocale={initialLocale}>{children}</ClientShell>
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import { nearestDistricts } from "@/lib/poi/districts";
 import { skyScoreNow, skyVerdict, SKY_VERDICT_TH, SKY_VERDICT_EN, worthMoving, type SkyVerdict } from "@/lib/core/skyScore";
 
@@ -21,8 +21,7 @@ const DOT: Record<SkyVerdict, string> = {
 };
 
 export function SkyAround({ currentKey, lat, lng, onPick }: { currentKey: string; lat: number; lng: number; onPick: (key: string) => void }) {
-  const { i18n } = useTranslation();
-  const en = i18n.language === "en";
+  const { en } = useLang();
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [rows, setRows] = useState<Row[]>([]);
 

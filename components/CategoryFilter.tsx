@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import { clsx } from "clsx";
 import { CATEGORY_GROUPS } from "@/lib/plan/categories";
 
@@ -16,8 +16,7 @@ export function CategoryFilter({
   selected: Set<string>;
   onChange: (next: Set<string>) => void;
 }) {
-  const { i18n } = useTranslation();
-  const en = i18n.language === "en";
+  const { en } = useLang();
   const groups = CATEGORY_GROUPS.filter((g) => available.has(g.key));
   if (groups.length <= 1) return null; // nothing meaningful to choose between
 

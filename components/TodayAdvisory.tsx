@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import type { Advisory } from "@/lib/core/advisory";
 
 /**
@@ -17,8 +17,7 @@ const SAFETY_STYLE: Record<Advisory["safety"][number]["level"], string> = {
 };
 
 export function TodayAdvisory({ advisory }: { advisory: Advisory | null }) {
-  const { i18n } = useTranslation();
-  const en = i18n.language === "en";
+  const { en } = useLang();
   if (!advisory) return null;
   const { outfit, packing, safety } = advisory;
 

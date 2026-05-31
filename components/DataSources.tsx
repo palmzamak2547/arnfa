@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import { NumberTicker } from "./motion/NumberTicker";
 import { Reveal } from "./motion/Reveal";
 import { DISTRICTS } from "@/lib/poi/registry.generated";
@@ -62,8 +62,7 @@ const SOURCES: Source[] = [
 ];
 
 export function DataSources() {
-  const { i18n } = useTranslation();
-  const en = i18n.language === "en";
+  const { en } = useLang();
 
   return (
     <section className="border-t border-hairline bg-surface/40 px-6 py-24 sm:px-12 lg:px-20">
