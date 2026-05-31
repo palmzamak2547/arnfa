@@ -74,7 +74,7 @@ export default function Home() {
           <Logo className="text-lg" animate={false} />
           <p className="font-thai max-w-md sm:text-right">
             ข้อมูลเปิดจาก Open-Meteo, MET Norway, OpenStreetMap, OpenFreeMap, RainViewer,
-            และ Air4Thai (กรมควบคุมมลพิษ) — ทำเพื่อกรุงเทพ
+            และ Air4Thai (กรมควบคุมมลพิษ) — ทำเพื่อคนไทย
           </p>
         </div>
       </footer>

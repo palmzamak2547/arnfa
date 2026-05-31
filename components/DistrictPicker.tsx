@@ -76,7 +76,7 @@ export function DistrictPicker({ value, onChange }: { value: string; onChange: (
                   ref={inputRef}
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
-                  placeholder={`ค้นย่าน · ${total} พื้นที่ทั่วกรุงเทพ`}
+                  placeholder={`ค้นเมือง/ย่าน · ${total} พื้นที่ทั่วไทย`}
                   className="font-thai h-11 w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-faint"
                 />
               </div>

@@ -58,7 +58,7 @@ export default function OG() {
         {/* bottom row: tagline + provenance */}
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           <div style={{ display: "flex", fontSize: 30, color: "#1A1F2B" }}>
-            A decision engine for Bangkok — when rain comes, it names a better place.
+            A decision engine for Thailand — when rain comes, it names a better place.
           </div>
           <div style={{ display: "flex", fontSize: 22, color: "#8A8F9B" }}>
             Open-Meteo · OpenStreetMap · Air4Thai · never a fabricated forecast

@@ -45,16 +45,16 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://arnfa.vercel.app"),
   title: {
-    default: "อ่านฟ้า · Arnfa — วางแผนทริปกรุงเทพตามฟ้า",
+    default: "อ่านฟ้า · Arnfa — วางแผนทริปทั่วไทยตามฟ้า",
     template: "%s · อ่านฟ้า",
   },
   description:
-    "อ่านฟ้า (Arnfa) — decision engine ที่อ่านฟ้าให้คุณ. วางแผนทริปกรุงเทพให้เข้ากับอากาศ ณ เวลาที่จะไปถึง ฝนมาเมื่อไหร่บอกที่ดีกว่าให้เอง.",
+    "อ่านฟ้า (Arnfa) — decision engine ที่อ่านฟ้าให้คุณ. วางแผนทริปทั่วไทยให้เข้ากับอากาศ ณ เวลาที่จะไปถึง ฝนมาเมื่อไหร่บอกที่ดีกว่าให้เอง.",
   applicationName: "Arnfa",
   authors: [{ name: "Palm" }],
   keywords: [
-    "อ่านฟ้า", "Arnfa", "วางแผนทริป", "พยากรณ์อากาศ", "กรุงเทพ", "คาเฟ่",
-    "Bangkok weather", "trip planner", "decision engine",
+    "อ่านฟ้า", "Arnfa", "วางแผนทริป", "พยากรณ์อากาศ", "ทั่วไทย", "กรุงเทพ", "เชียงใหม่", "ภูเก็ต", "คาเฟ่",
+    "Thailand weather", "Bangkok weather", "trip planner", "decision engine",
   ],
   manifest: "/manifest.webmanifest",
   icons: {
@@ -99,7 +99,7 @@ const jsonLd = {
   inLanguage: ["th", "en"],
   offers: { "@type": "Offer", price: "0", priceCurrency: "THB" },
   description:
-    "Decision engine that reads the Bangkok sky and plans a day that fits the weather at your arrival time. Open data: Open-Meteo, OpenStreetMap, Air4Thai.",
+    "Decision engine that reads the Thai sky and plans a day that fits the weather at your arrival time, across Bangkok and every province. Open data: Open-Meteo, OpenStreetMap, Air4Thai.",
 };
 
 export default function RootLayout({

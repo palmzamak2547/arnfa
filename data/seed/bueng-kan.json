@@ -1,0 +1,298 @@
+{
+  "district": "bueng-kan",
+  "districtTh": "บึงกาฬ",
+  "districtEn": "Bueng Kan",
+  "kind": "province",
+  "osmRelationId": 18918807,
+  "bbox": [
+    18.1202609,
+    103.3059797,
+    18.448611,
+    103.9185077
+  ],
+  "fetchedAt": "2026-05-31T12:31:08.376Z",
+  "count": 13,
+  "pois": [
+    {
+      "id": "osm-n912408069",
+      "osmId": 912408069,
+      "osmType": "node",
+      "name": "วัดหงษ์ศิลาวาส",
+      "nameTh": "วัดหงษ์ศิลาวาส",
+      "lat": 18.4253158,
+      "lng": 103.4704375,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5158205021",
+      "osmId": 5158205021,
+      "osmType": "node",
+      "name": "นิวพอใจ",
+      "nameTh": "นิวพอใจ",
+      "lat": 18.3689642,
+      "lng": 103.6532699,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5418248821",
+      "osmId": 5418248821,
+      "osmType": "node",
+      "name": "Vegetarian restaurant",
+      "nameTh": null,
+      "lat": 18.3687022,
+      "lng": 103.6521704,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 09:00-17:00",
+      "tags": {
+        "cuisine": "asian"
+      }
+    },
+    {
+      "id": "osm-n6232850413",
+      "osmId": 6232850413,
+      "osmType": "node",
+      "name": "ศาลเจ้าปู่ - ย่า",
+      "nameTh": null,
+      "lat": 18.3714845,
+      "lng": 103.6495417,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n9377200019",
+      "osmId": 9377200019,
+      "osmType": "node",
+      "name": "หินสามวาฬ",
+      "nameTh": "หินสามวาฬ",
+      "lat": 18.2507423,
+      "lng": 103.8138637,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11513170172",
+      "osmId": 11513170172,
+      "osmType": "node",
+      "name": "วิวบนวัดภูทอก",
+      "nameTh": null,
+      "lat": 18.1398136,
+      "lng": 103.8854857,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11929883483",
+      "osmId": 11929883483,
+      "osmType": "node",
+      "name": "ສາວບ້ານ",
+      "nameTh": null,
+      "lat": 18.4081631,
+      "lng": 103.5345216,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12233160714",
+      "osmId": 12233160714,
+      "osmType": "node",
+      "name": "คาเฟ่ อเมซอน",
+      "nameTh": "คาเฟ่ อเมซอน",
+      "lat": 18.3741818,
+      "lng": 103.6319158,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n12372829001",
+      "osmId": 12372829001,
+      "osmType": "node",
+      "name": "Sapparose",
+      "nameTh": null,
+      "lat": 18.2764306,
+      "lng": 103.8310554,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "cake;coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n12540960001",
+      "osmId": 12540960001,
+      "osmType": "node",
+      "name": "Easter café",
+      "nameTh": null,
+      "lat": 18.384194,
+      "lng": 103.6026232,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "crepe"
+      }
+    },
+    {
+      "id": "osm-n13006336303",
+      "osmId": 13006336303,
+      "osmType": "node",
+      "name": "จุดชมวิวถ้ำฤาษี",
+      "nameTh": "จุดชมวิวถ้ำฤาษี",
+      "lat": 18.2535922,
+      "lng": 103.812574,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13340048301",
+      "osmId": 13340048301,
+      "osmType": "node",
+      "name": "Sang Roi Bu",
+      "nameTh": null,
+      "lat": 18.2690053,
+      "lng": 103.7966316,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1286164463",
+      "osmId": 1286164463,
+      "osmType": "way",
+      "name": "ຮານອາຫານ",
+      "nameTh": null,
+      "lat": 18.408856,
+      "lng": 103.5345098,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    }
+  ]
+}

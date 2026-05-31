@@ -64,7 +64,7 @@ export function SkyAround({ currentKey, lat, lng, onPick }: { currentKey: string
       </div>
 
       {status === "idle" && (
-        <p className="font-thai mt-2 text-sm text-ink-muted">{en ? "Bangkok's sky differs a few km apart — see where it's clearest right now." : "ฟ้ากรุงเทพห่างกันไม่กี่กม.ก็ต่างกัน — เช็คว่าตอนนี้ที่ไหนโปร่งสุด"}</p>
+        <p className="font-thai mt-2 text-sm text-ink-muted">{en ? "The sky differs a few km apart — see where it's clearest right now." : "ฟ้าห่างกันไม่กี่กม.ก็ต่างกัน — เช็คว่าตอนนี้ที่ไหนโปร่งสุด"}</p>
       )}
 
       {status === "error" && (

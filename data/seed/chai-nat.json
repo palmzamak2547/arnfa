@@ -1,0 +1,315 @@
+{
+  "district": "chai-nat",
+  "districtTh": "ชัยนาท",
+  "districtEn": "Chai Nat",
+  "kind": "province",
+  "osmRelationId": 18918548,
+  "bbox": [
+    15.0862029,
+    100.0359592,
+    15.2926528,
+    100.2981277
+  ],
+  "fetchedAt": "2026-05-31T12:25:16.592Z",
+  "count": 14,
+  "pois": [
+    {
+      "id": "osm-n772457793",
+      "osmId": 772457793,
+      "osmType": "node",
+      "name": "Wat Ngiu",
+      "nameTh": null,
+      "lat": 15.1630964,
+      "lng": 100.1363345,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4117908589",
+      "osmId": 4117908589,
+      "osmType": "node",
+      "name": "ลาบเป็ดชัยนาท",
+      "nameTh": null,
+      "lat": 15.216097,
+      "lng": 100.1656361,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4259932457",
+      "osmId": 4259932457,
+      "osmType": "node",
+      "name": "วัดสะพาน",
+      "nameTh": null,
+      "lat": 15.1626577,
+      "lng": 100.1259433,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4559353891",
+      "osmId": 4559353891,
+      "osmType": "node",
+      "name": "ก๋วยจับเวียดนาม+อาหารตามสั่ง",
+      "nameTh": "ก๋วยจับเวียดนาม+อาหารตามสั่ง",
+      "lat": 15.166105,
+      "lng": 100.1286633,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5034119621",
+      "osmId": 5034119621,
+      "osmType": "node",
+      "name": "Cafe Amazon",
+      "nameTh": null,
+      "lat": 15.1901602,
+      "lng": 100.1307984,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 07:00-19:00",
+      "tags": {
+        "cuisine": "cake;coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n5139583483",
+      "osmId": 5139583483,
+      "osmType": "node",
+      "name": "วัดส่องคบ",
+      "nameTh": null,
+      "lat": 15.154069,
+      "lng": 100.1569712,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5139596377",
+      "osmId": 5139596377,
+      "osmType": "node",
+      "name": "วัดพระบรมธาตุวรวิหาร",
+      "nameTh": null,
+      "lat": 15.1593944,
+      "lng": 100.1523076,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "We-Su 09:00-16:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n5995457825",
+      "osmId": 5995457825,
+      "osmType": "node",
+      "name": "คาเฟ่ อเมซอน",
+      "nameTh": "คาเฟ่ อเมซอน",
+      "lat": 15.1544518,
+      "lng": 100.14414,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n7117218285",
+      "osmId": 7117218285,
+      "osmType": "node",
+      "name": "วัดท่าชัย",
+      "nameTh": null,
+      "lat": 15.1675878,
+      "lng": 100.1217594,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12357611077",
+      "osmId": 12357611077,
+      "osmType": "node",
+      "name": "สวนนกชัยนาท",
+      "nameTh": null,
+      "lat": 15.2070258,
+      "lng": 100.1528551,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1011926312",
+      "osmId": 1011926312,
+      "osmType": "way",
+      "name": "สวนสาธารณะหนองระแหง",
+      "nameTh": null,
+      "lat": 15.1727024,
+      "lng": 100.1340005,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 08:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w1335897947",
+      "osmId": 1335897947,
+      "osmType": "way",
+      "name": "พิพิธภัณฑ์ไข่นก",
+      "nameTh": null,
+      "lat": 15.2068672,
+      "lng": 100.1509827,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": "Mo-Su 08:00-18:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w1335897958",
+      "osmId": 1335897958,
+      "osmType": "way",
+      "name": "วัดปฐมเทศนาอรัญวาสี",
+      "nameTh": null,
+      "lat": 15.2046453,
+      "lng": 100.1494419,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 08:00-16:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w1417504745",
+      "osmId": 1417504745,
+      "osmType": "way",
+      "name": "พิพิธภัณฑสถานแห่งชาติ ชัยนาทมุนี",
+      "nameTh": null,
+      "lat": 15.1601234,
+      "lng": 100.1521535,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    }
+  ]
+}

@@ -116,7 +116,7 @@ export function DataSources() {
         <Reveal className="mt-14 grid grid-cols-2 gap-y-8 sm:grid-cols-4 border-t border-hairline pt-10">
           {[
             { n: TOTAL_POIS, suffix: "", th: "สถานที่จริง", en: "real places" },
-            { n: AREA_COUNT, suffix: "", th: "ย่านทั่วกรุงเทพ", en: "areas across Bangkok" },
+            { n: AREA_COUNT, suffix: "", th: "พื้นที่ทั่วไทย", en: "areas across Thailand" },
             { n: 6, suffix: "", th: "แหล่งข้อมูลเปิด", en: "open sources" },
             { n: 0, suffix: "", th: "ตัวเลขที่กุขึ้น", en: "fabricated numbers" },
           ].map((s) => (
@@ -139,7 +139,7 @@ export function DataSources() {
             {en ? "View raw data →" : "ดูข้อมูลดิบ →"}
           </a>
           <span className="font-thai text-sm text-ink-faint">
-            {en ? "Open data, reproducible, built for Bangkok" : "ข้อมูลเปิด ตรวจสอบซ้ำได้ ทำเพื่อกรุงเทพ"}
+            {en ? "Open data, reproducible, built for Thailand" : "ข้อมูลเปิด ตรวจสอบซ้ำได้ ทำเพื่อคนไทย"}
           </span>
         </div>
       </div>

@@ -1,0 +1,917 @@
+{
+  "count": 76,
+  "provinces": [
+    {
+      "provinceTh": "กระบี่",
+      "provinceEn": "Krabi",
+      "key": "krabi",
+      "osmId": 18935570,
+      "bbox": [
+        7.6536269,
+        98.6604264,
+        8.2936048,
+        99.0179516
+      ]
+    },
+    {
+      "provinceTh": "กาญจนบุรี",
+      "provinceEn": "Kanchanaburi",
+      "key": "kanchanaburi",
+      "osmId": 18929456,
+      "bbox": [
+        13.757301,
+        99.020552,
+        14.345679,
+        99.5928509
+      ]
+    },
+    {
+      "provinceTh": "กาฬสินธุ์",
+      "provinceEn": "Kalasin",
+      "key": "kalasin",
+      "osmId": 18922046,
+      "bbox": [
+        16.3311463,
+        103.4120376,
+        16.6767577,
+        103.7091173
+      ]
+    },
+    {
+      "provinceTh": "กำแพงเพชร",
+      "provinceEn": "Kamphaeng Phet",
+      "key": "kamphaeng-phet",
+      "osmId": 18343549,
+      "bbox": [
+        16.146286,
+        99.2287933,
+        16.6934903,
+        99.7717008
+      ]
+    },
+    {
+      "provinceTh": "ขอนแก่น",
+      "provinceEn": "Khon Kaen",
+      "key": "khon-kaen",
+      "osmId": 18934428,
+      "bbox": [
+        16.2179131,
+        102.6303126,
+        16.636692,
+        103.0207649
+      ]
+    },
+    {
+      "provinceTh": "จันทบุรี",
+      "provinceEn": "Chanthaburi",
+      "key": "chanthaburi",
+      "osmId": 18994223,
+      "bbox": [
+        12.5110158,
+        102.0221776,
+        12.7486313,
+        102.2119963
+      ]
+    },
+    {
+      "provinceTh": "ฉะเชิงเทรา",
+      "provinceEn": "Chachoengsao",
+      "key": "chachoengsao",
+      "osmId": 18935187,
+      "bbox": [
+        13.630782,
+        100.855154,
+        13.8044265,
+        101.1440827
+      ]
+    },
+    {
+      "provinceTh": "ชลบุรี",
+      "provinceEn": "Chon Buri",
+      "key": "chon-buri",
+      "osmId": 18997107,
+      "bbox": [
+        13.2287909,
+        100.8974872,
+        13.473835,
+        101.0772517
+      ]
+    },
+    {
+      "provinceTh": "ชัยนาท",
+      "provinceEn": "Chai Nat",
+      "key": "chai-nat",
+      "osmId": 18918548,
+      "bbox": [
+        15.0862029,
+        100.0359592,
+        15.2926528,
+        100.2981277
+      ]
+    },
+    {
+      "provinceTh": "ชัยภูมิ",
+      "provinceEn": "Chaiyaphum",
+      "key": "chaiyaphum",
+      "osmId": 18936573,
+      "bbox": [
+        15.6202965,
+        101.7527413,
+        16.2515396,
+        102.2533587
+      ]
+    },
+    {
+      "provinceTh": "ชุมพร",
+      "provinceEn": "Chumphon",
+      "key": "chumphon",
+      "osmId": 18906765,
+      "bbox": [
+        10.3111869,
+        98.8839789,
+        10.5918549,
+        99.4227031
+      ]
+    },
+    {
+      "provinceTh": "เชียงราย",
+      "provinceEn": "Chiang Rai",
+      "key": "chiang-rai",
+      "osmId": 19051912,
+      "bbox": [
+        19.6191435,
+        99.4526746,
+        20.136381,
+        100.0252388
+      ]
+    },
+    {
+      "provinceTh": "เชียงใหม่",
+      "provinceEn": "Chiang Mai",
+      "key": "chiang-mai",
+      "osmId": 19033670,
+      "bbox": [
+        18.6991899,
+        98.8616668,
+        18.8758087,
+        99.0485707
+      ]
+    },
+    {
+      "provinceTh": "ตรัง",
+      "provinceEn": "Trang",
+      "key": "trang",
+      "osmId": 18989036,
+      "bbox": [
+        7.4656502,
+        99.4627881,
+        7.7184919,
+        99.8111169
+      ]
+    },
+    {
+      "provinceTh": "ตราด",
+      "provinceEn": "Trat",
+      "key": "trat",
+      "osmId": 19036372,
+      "bbox": [
+        11.970385,
+        102.3968471,
+        12.4696954,
+        102.787419
+      ]
+    },
+    {
+      "provinceTh": "ตาก",
+      "provinceEn": "Tak",
+      "key": "tak",
+      "osmId": 18976554,
+      "bbox": [
+        16.5600015,
+        98.8268815,
+        17.2139557,
+        99.4670352
+      ]
+    },
+    {
+      "provinceTh": "นครนายก",
+      "provinceEn": "Nakhon Nayok",
+      "key": "nakhon-nayok",
+      "osmId": 18972556,
+      "bbox": [
+        14.0071436,
+        101.0664362,
+        14.5127993,
+        101.4222089
+      ]
+    },
+    {
+      "provinceTh": "นครปฐม",
+      "provinceEn": "Nakhon Pathom",
+      "key": "nakhon-pathom",
+      "osmId": 18931445,
+      "bbox": [
+        13.6762457,
+        99.8984754,
+        13.9454346,
+        100.131853
+      ]
+    },
+    {
+      "provinceTh": "นครพนม",
+      "provinceEn": "Nakhon Phanom",
+      "key": "nakhon-phanom",
+      "osmId": 18972661,
+      "bbox": [
+        17.1276327,
+        104.4126431,
+        17.4914845,
+        104.806605
+      ]
+    },
+    {
+      "provinceTh": "นครราชสีมา",
+      "provinceEn": "Nakhon Ratchasima",
+      "key": "nakhon-ratchasima",
+      "osmId": 18976278,
+      "bbox": [
+        14.789613,
+        101.9324307,
+        15.1405753,
+        102.2305653
+      ]
+    },
+    {
+      "provinceTh": "นครศรีธรรมราช",
+      "provinceEn": "Nakhon Si Thammarat",
+      "key": "nakhon-si-thammarat",
+      "osmId": 18990065,
+      "bbox": [
+        8.2470139,
+        99.7982125,
+        8.603301,
+        100.0956017
+      ]
+    },
+    {
+      "provinceTh": "นครสวรรค์",
+      "provinceEn": "Nakhon Sawan",
+      "key": "nakhon-sawan",
+      "osmId": 18989005,
+      "bbox": [
+        15.5604445,
+        99.8914551,
+        15.848874,
+        100.3384922
+      ]
+    },
+    {
+      "provinceTh": "นนทบุรี",
+      "provinceEn": "Nonthaburi",
+      "key": "nonthaburi",
+      "osmId": null,
+      "bbox": [
+        13.83,
+        100.48,
+        13.89,
+        100.55
+      ]
+    },
+    {
+      "provinceTh": "นราธิวาส",
+      "provinceEn": "Narathiwat",
+      "key": "narathiwat",
+      "osmId": 18906903,
+      "bbox": [
+        6.2831757,
+        101.7093126,
+        6.5770324,
+        101.9188822
+      ]
+    },
+    {
+      "provinceTh": "น่าน",
+      "provinceEn": "Nan",
+      "key": "nan",
+      "osmId": null,
+      "bbox": [
+        18.75,
+        100.74,
+        18.81,
+        100.81
+      ]
+    },
+    {
+      "provinceTh": "บึงกาฬ",
+      "provinceEn": "Bueng Kan",
+      "key": "bueng-kan",
+      "osmId": 18918807,
+      "bbox": [
+        18.1202609,
+        103.3059797,
+        18.448611,
+        103.9185077
+      ]
+    },
+    {
+      "provinceTh": "บุรีรัมย์",
+      "provinceEn": "Buri Ram",
+      "key": "buri-ram",
+      "osmId": 17817575,
+      "bbox": [
+        14.7533666,
+        102.9130117,
+        15.1431544,
+        103.2106331
+      ]
+    },
+    {
+      "provinceTh": "ปทุมธานี",
+      "provinceEn": "Pathum Thani",
+      "key": "pathum-thani",
+      "osmId": 2913009,
+      "bbox": [
+        13.9362612,
+        100.448218,
+        14.073592,
+        100.6066119
+      ]
+    },
+    {
+      "provinceTh": "ประจวบคีรีขันธ์",
+      "provinceEn": "Prachuap Khiri Khan",
+      "key": "prachuap-khiri-khan",
+      "osmId": 18936307,
+      "bbox": [
+        11.6553588,
+        99.579413,
+        12.0623862,
+        99.9109133
+      ]
+    },
+    {
+      "provinceTh": "ปราจีนบุรี",
+      "provinceEn": "Prachin Buri",
+      "key": "prachin-buri",
+      "osmId": 18956090,
+      "bbox": [
+        13.9460039,
+        101.2775561,
+        14.2744843,
+        101.4953724
+      ]
+    },
+    {
+      "provinceTh": "ปัตตานี",
+      "provinceEn": "Pattani",
+      "key": "pattani",
+      "osmId": 18972765,
+      "bbox": [
+        6.802897,
+        101.1921814,
+        6.9045944,
+        101.324898
+      ]
+    },
+    {
+      "provinceTh": "พระนครศรีอยุธยา",
+      "provinceEn": "Phra Nakhon Si Ayutthaya",
+      "key": "phra-nakhon-si-ayutthaya",
+      "osmId": null,
+      "bbox": [
+        14.32,
+        100.53,
+        14.39,
+        100.61
+      ]
+    },
+    {
+      "provinceTh": "พะเยา",
+      "provinceEn": "Phayao",
+      "key": "phayao",
+      "osmId": 3427220,
+      "bbox": [
+        18.8952278,
+        99.6979961,
+        19.4064126,
+        100.0270593
+      ]
+    },
+    {
+      "provinceTh": "พังงา",
+      "provinceEn": "Phang-nga",
+      "key": "phang-nga",
+      "osmId": 18976260,
+      "bbox": [
+        8.2799326,
+        98.3678507,
+        8.6625942,
+        98.6187198
+      ]
+    },
+    {
+      "provinceTh": "พัทลุง",
+      "provinceEn": "Phatthalung",
+      "key": "phatthalung",
+      "osmId": 18988818,
+      "bbox": [
+        7.4388391,
+        99.9701051,
+        7.7381298,
+        100.2333147
+      ]
+    },
+    {
+      "provinceTh": "พิจิตร",
+      "provinceEn": "Phichit",
+      "key": "phichit",
+      "osmId": 18993782,
+      "bbox": [
+        16.2516765,
+        100.2259111,
+        16.5541821,
+        100.5299546
+      ]
+    },
+    {
+      "provinceTh": "พิษณุโลก",
+      "provinceEn": "Phitsanulok",
+      "key": "phitsanulok",
+      "osmId": 18994043,
+      "bbox": [
+        16.6315066,
+        100.1138009,
+        16.9776392,
+        100.5001799
+      ]
+    },
+    {
+      "provinceTh": "เพชรบุรี",
+      "provinceEn": "Phetchaburi",
+      "key": "phetchaburi",
+      "osmId": 18935190,
+      "bbox": [
+        12.954227,
+        99.8385412,
+        13.1881535,
+        100.0797305
+      ]
+    },
+    {
+      "provinceTh": "เพชรบูรณ์",
+      "provinceEn": "Phetchabun",
+      "key": "phetchabun",
+      "osmId": 18994503,
+      "bbox": [
+        16.090517,
+        100.7929992,
+        16.6451647,
+        101.5195486
+      ]
+    },
+    {
+      "provinceTh": "แพร่",
+      "provinceEn": "Phrae",
+      "key": "phrae",
+      "osmId": 18960157,
+      "bbox": [
+        17.8890037,
+        100.0366066,
+        18.2789017,
+        100.4177947
+      ]
+    },
+    {
+      "provinceTh": "ภูเก็ต",
+      "provinceEn": "Phuket",
+      "key": "phuket",
+      "osmId": 14029495,
+      "bbox": [
+        7.7331526,
+        98.272212,
+        7.9756026,
+        98.4829403
+      ]
+    },
+    {
+      "provinceTh": "มหาสารคาม",
+      "provinceEn": "Maha Sarakham",
+      "key": "maha-sarakham",
+      "osmId": 18971831,
+      "bbox": [
+        15.9646987,
+        103.1177289,
+        16.2446013,
+        103.5040292
+      ]
+    },
+    {
+      "provinceTh": "มุกดาหาร",
+      "provinceEn": "Mukdahan",
+      "key": "mukdahan",
+      "osmId": 18972221,
+      "bbox": [
+        16.2703458,
+        104.4348507,
+        16.7958109,
+        104.8599519
+      ]
+    },
+    {
+      "provinceTh": "แม่ฮ่องสอน",
+      "provinceEn": "Mae Hong Son",
+      "key": "mae-hong-son",
+      "osmId": 18971428,
+      "bbox": [
+        18.9335483,
+        97.782711,
+        19.640417,
+        98.2521874
+      ]
+    },
+    {
+      "provinceTh": "ยโสธร",
+      "provinceEn": "Yasothon",
+      "key": "yasothon",
+      "osmId": 18918534,
+      "bbox": [
+        15.675159,
+        103.9974655,
+        15.9882304,
+        104.3782366
+      ]
+    },
+    {
+      "provinceTh": "ยะลา",
+      "provinceEn": "Yala",
+      "key": "yala",
+      "osmId": 18922187,
+      "bbox": [
+        6.4461147,
+        101.0894875,
+        6.6831757,
+        101.3548745
+      ]
+    },
+    {
+      "provinceTh": "ร้อยเอ็ด",
+      "provinceEn": "Roi Et",
+      "key": "roi-et",
+      "osmId": 18936095,
+      "bbox": [
+        15.8638691,
+        103.4650526,
+        16.1634418,
+        103.7224873
+      ]
+    },
+    {
+      "provinceTh": "ระนอง",
+      "provinceEn": "Ranong",
+      "key": "ranong",
+      "osmId": 18997125,
+      "bbox": [
+        9.6157091,
+        98.3791422,
+        10.1833725,
+        98.7573241
+      ]
+    },
+    {
+      "provinceTh": "ระยอง",
+      "provinceEn": "Rayong",
+      "key": "rayong",
+      "osmId": 18955763,
+      "bbox": [
+        12.5129013,
+        101.0857349,
+        12.86983,
+        101.5302834
+      ]
+    },
+    {
+      "provinceTh": "ราชบุรี",
+      "provinceEn": "Ratchaburi",
+      "key": "ratchaburi",
+      "osmId": 18934531,
+      "bbox": [
+        13.4454143,
+        99.5777483,
+        13.6437597,
+        99.9190755
+      ]
+    },
+    {
+      "provinceTh": "ลพบุรี",
+      "provinceEn": "Lop Buri",
+      "key": "lop-buri",
+      "osmId": 18965764,
+      "bbox": [
+        14.6507414,
+        100.5090201,
+        14.9617957,
+        100.8981406
+      ]
+    },
+    {
+      "provinceTh": "ลำปาง",
+      "provinceEn": "Lampang",
+      "key": "lampang",
+      "osmId": 18936563,
+      "bbox": [
+        18.1770736,
+        99.302312,
+        18.610933,
+        99.7730529
+      ]
+    },
+    {
+      "provinceTh": "ลำพูน",
+      "provinceEn": "Lamphun",
+      "key": "lamphun",
+      "osmId": 18956118,
+      "bbox": [
+        18.4293585,
+        98.9319908,
+        18.6733307,
+        99.2253662
+      ]
+    },
+    {
+      "provinceTh": "เลย",
+      "provinceEn": "Loei",
+      "key": "loei",
+      "osmId": 18959896,
+      "bbox": [
+        17.3574147,
+        101.5014399,
+        17.7296189,
+        101.9184063
+      ]
+    },
+    {
+      "provinceTh": "ศรีสะเกษ",
+      "provinceEn": "Si Sa Ket",
+      "key": "si-sa-ket",
+      "osmId": 18955500,
+      "bbox": [
+        14.9458282,
+        104.2169584,
+        15.2529456,
+        104.4842135
+      ]
+    },
+    {
+      "provinceTh": "สกลนคร",
+      "provinceEn": "Sakon Nakhon",
+      "key": "sakon-nakhon",
+      "osmId": 18922213,
+      "bbox": [
+        17.0016099,
+        103.9106187,
+        17.3891388,
+        104.3289689
+      ]
+    },
+    {
+      "provinceTh": "สงขลา",
+      "provinceEn": "Songkhla",
+      "key": "songkhla",
+      "osmId": 18960148,
+      "bbox": [
+        7.0151144,
+        100.46221,
+        7.2394819,
+        100.6755135
+      ]
+    },
+    {
+      "provinceTh": "สตูล",
+      "provinceEn": "Satun",
+      "key": "satun",
+      "osmId": 18935220,
+      "bbox": [
+        6.422647,
+        99.1537985,
+        6.8053329,
+        100.18438
+      ]
+    },
+    {
+      "provinceTh": "สมุทรปราการ",
+      "provinceEn": "Samut Prakan",
+      "key": "samut-prakan",
+      "osmId": null,
+      "bbox": [
+        13.57,
+        100.56,
+        13.63,
+        100.63
+      ]
+    },
+    {
+      "provinceTh": "สมุทรสงคราม",
+      "provinceEn": "Samut Songkhram",
+      "key": "samut-songkhram",
+      "osmId": 18935379,
+      "bbox": [
+        13.2847687,
+        99.9181198,
+        13.5087752,
+        100.0787728
+      ]
+    },
+    {
+      "provinceTh": "สมุทรสาคร",
+      "provinceEn": "Samut Sakhon",
+      "key": "samut-sakhon",
+      "osmId": 18935071,
+      "bbox": [
+        13.4252106,
+        100.0531736,
+        13.6409675,
+        100.4200792
+      ]
+    },
+    {
+      "provinceTh": "สระแก้ว",
+      "provinceEn": "Sa Kaeo",
+      "key": "sa-kaeo",
+      "osmId": 18971453,
+      "bbox": [
+        13.6803918,
+        101.9039227,
+        14.1957918,
+        102.3257638
+      ]
+    },
+    {
+      "provinceTh": "สระบุรี",
+      "provinceEn": "Saraburi",
+      "key": "saraburi",
+      "osmId": null,
+      "bbox": [
+        14.49,
+        100.87,
+        14.56,
+        100.95
+      ]
+    },
+    {
+      "provinceTh": "สิงห์บุรี",
+      "provinceEn": "Sing Buri",
+      "key": "sing-buri",
+      "osmId": 18936393,
+      "bbox": [
+        14.8090743,
+        100.335919,
+        15.0039381,
+        100.456002
+      ]
+    },
+    {
+      "provinceTh": "สุโขทัย",
+      "provinceEn": "Sukhothai",
+      "key": "sukhothai",
+      "osmId": 18971898,
+      "bbox": [
+        16.878566,
+        99.614357,
+        17.1509399,
+        99.9661124
+      ]
+    },
+    {
+      "provinceTh": "สุพรรณบุรี",
+      "provinceEn": "Suphan Buri",
+      "key": "suphan-buri",
+      "osmId": 18929183,
+      "bbox": [
+        14.3339213,
+        99.9177043,
+        14.6106321,
+        100.2533757
+      ]
+    },
+    {
+      "provinceTh": "สุราษฎร์ธานี",
+      "provinceEn": "Surat Thani",
+      "key": "surat-thani",
+      "osmId": 18990179,
+      "bbox": [
+        8.9558587,
+        99.2187867,
+        9.2445771,
+        99.3959488
+      ]
+    },
+    {
+      "provinceTh": "สุรินทร์",
+      "provinceEn": "Surin",
+      "key": "surin",
+      "osmId": 18975352,
+      "bbox": [
+        14.6862295,
+        103.2790415,
+        15.1423599,
+        103.6934874
+      ]
+    },
+    {
+      "provinceTh": "หนองคาย",
+      "provinceEn": "Nong Khai",
+      "key": "nong-khai",
+      "osmId": 18971672,
+      "bbox": [
+        17.6840237,
+        102.6499569,
+        18.004923,
+        103.0100659
+      ]
+    },
+    {
+      "provinceTh": "หนองบัวลำภู",
+      "provinceEn": "Nong Bua Lam Phu",
+      "key": "nong-bua-lam-phu",
+      "osmId": 18971299,
+      "bbox": [
+        16.917329,
+        102.2361843,
+        17.3846395,
+        102.59465
+      ]
+    },
+    {
+      "provinceTh": "อ่างทอง",
+      "provinceEn": "Ang Thong",
+      "key": "ang-thong",
+      "osmId": 18906960,
+      "bbox": [
+        14.5179599,
+        100.3863728,
+        14.6322686,
+        100.4958728
+      ]
+    },
+    {
+      "provinceTh": "อำนาจเจริญ",
+      "provinceEn": "Amnat Charoen",
+      "key": "amnat-charoen",
+      "osmId": 18906414,
+      "bbox": [
+        15.7336928,
+        104.4312691,
+        16.0161978,
+        104.8245565
+      ]
+    },
+    {
+      "provinceTh": "อุดรธานี",
+      "provinceEn": "Udon Thani",
+      "key": "udon-thani",
+      "osmId": 18929325,
+      "bbox": [
+        17.2018929,
+        102.5939836,
+        17.5780287,
+        102.9622188
+      ]
+    },
+    {
+      "provinceTh": "อุตรดิตถ์",
+      "provinceEn": "Uttaradit",
+      "key": "uttaradit",
+      "osmId": 18918456,
+      "bbox": [
+        17.5102936,
+        99.9952738,
+        17.8601184,
+        100.4126683
+      ]
+    },
+    {
+      "provinceTh": "อุทัยธานี",
+      "provinceEn": "Uthai Thani",
+      "key": "uthai-thani",
+      "osmId": 18921851,
+      "bbox": [
+        15.2701737,
+        99.9298185,
+        15.5098895,
+        100.1067384
+      ]
+    },
+    {
+      "provinceTh": "อุบลราชธานี",
+      "provinceEn": "Ubon Ratchathani",
+      "key": "ubon-ratchathani",
+      "osmId": 18931767,
+      "bbox": [
+        15.1807112,
+        104.6726373,
+        15.4144616,
+        105.0343788
+      ]
+    }
+  ]
+}

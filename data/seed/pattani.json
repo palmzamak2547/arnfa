@@ -1,0 +1,597 @@
+{
+  "district": "pattani",
+  "districtTh": "ปัตตานี",
+  "districtEn": "Pattani",
+  "kind": "province",
+  "osmRelationId": 18972765,
+  "bbox": [
+    6.802897,
+    101.1921814,
+    6.9045944,
+    101.324898
+  ],
+  "fetchedAt": "2026-05-31T12:32:48.162Z",
+  "count": 27,
+  "pois": [
+    {
+      "id": "osm-n4918100020",
+      "osmId": 4918100020,
+      "osmType": "node",
+      "name": "Anatomy Coffee and Bistro",
+      "nameTh": null,
+      "lat": 6.8817125,
+      "lng": 101.2346624,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.35,
+        "indoorness": 0.85,
+        "shade": 0.2,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Sa 08:00-18:00",
+      "tags": {
+        "outdoor_seating": "yes",
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n5021512627",
+      "osmId": 5021512627,
+      "osmType": "node",
+      "name": "มัสยิดกลางจังหวัดปัตตานี",
+      "nameTh": "มัสยิดกลางจังหวัดปัตตานี",
+      "lat": 6.8620141,
+      "lng": 101.2555033,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n8231022818",
+      "osmId": 8231022818,
+      "osmType": "node",
+      "name": "ฮวงซุ้ยเจ้าแม่ลิ้มกอเหนี่ยว",
+      "nameTh": null,
+      "lat": 6.8732147,
+      "lng": 101.3020996,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n9502088478",
+      "osmId": 9502088478,
+      "osmType": "node",
+      "name": "มัทฉะ",
+      "nameTh": "มัทฉะ",
+      "lat": 6.85732,
+      "lng": 101.251474,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Th,Sa-Su 10:00+; Fr 14:00+",
+      "tags": {}
+    },
+    {
+      "id": "osm-n11290106651",
+      "osmId": 11290106651,
+      "osmType": "node",
+      "name": "อารีนี โภชนา",
+      "nameTh": "อารีนี โภชนา",
+      "lat": 6.8709884,
+      "lng": 101.2379154,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "06:30-15:00",
+      "tags": {
+        "cuisine": "regional;thai"
+      }
+    },
+    {
+      "id": "osm-n12371046338",
+      "osmId": 12371046338,
+      "osmType": "node",
+      "name": "Bird Watching Center, Pattani",
+      "nameTh": null,
+      "lat": 6.8826627,
+      "lng": 101.2305791,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12624710845",
+      "osmId": 12624710845,
+      "osmType": "node",
+      "name": "Sapakafe 36 Pattani",
+      "nameTh": null,
+      "lat": 6.8691398,
+      "lng": 101.2543756,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:00-21:00",
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n13012071913",
+      "osmId": 13012071913,
+      "osmType": "node",
+      "name": "Black Blood Roastery Pattani",
+      "nameTh": null,
+      "lat": 6.8613306,
+      "lng": 101.2469269,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.35,
+        "indoorness": 0.85,
+        "shade": 0.2,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 07:30-22:00",
+      "tags": {
+        "outdoor_seating": "yes",
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-w501924461",
+      "osmId": 501924461,
+      "osmType": "way",
+      "name": "สวนสมเด็จพระศรีนครินทร์",
+      "nameTh": "สวนสมเด็จพระศรีนครินทร์",
+      "lat": 6.8919873,
+      "lng": 101.2446983,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1206036678",
+      "osmId": 1206036678,
+      "osmType": "way",
+      "name": "Pattani Jaya Mosque",
+      "nameTh": null,
+      "lat": 6.8654171,
+      "lng": 101.2759005,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1336859852",
+      "osmId": 1336859852,
+      "osmType": "way",
+      "name": "สวนจ้าวทะเล",
+      "nameTh": "สวนจ้าวทะเล",
+      "lat": 6.8958265,
+      "lng": 101.2466243,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337106151",
+      "osmId": 1337106151,
+      "osmType": "way",
+      "name": "Pattani Central Mosque",
+      "nameTh": null,
+      "lat": 6.8621067,
+      "lng": 101.2550725,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337109569",
+      "osmId": 1337109569,
+      "osmType": "way",
+      "name": "Municipal Market Pattani",
+      "nameTh": null,
+      "lat": 6.8603997,
+      "lng": 101.2565106,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337110888",
+      "osmId": 1337110888,
+      "osmType": "way",
+      "name": "Public Night Market",
+      "nameTh": null,
+      "lat": 6.8635556,
+      "lng": 101.2532542,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337111626",
+      "osmId": 1337111626,
+      "osmType": "way",
+      "name": "วัดตานีนรสโมสร",
+      "nameTh": "วัดตานีนรสโมสร",
+      "lat": 6.8669519,
+      "lng": 101.2537563,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337111627",
+      "osmId": 1337111627,
+      "osmType": "way",
+      "name": "Chao Mae Lim Ko Niao Shrine",
+      "nameTh": "ศาลเจ้าแม่ลิ้มกอเหนี่ยว",
+      "lat": 6.8715447,
+      "lng": 101.2581958,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337111628",
+      "osmId": 1337111628,
+      "osmType": "way",
+      "name": "Wat Nikorn Chanaram",
+      "nameTh": null,
+      "lat": 6.8711011,
+      "lng": 101.2601782,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337146202",
+      "osmId": 1337146202,
+      "osmType": "way",
+      "name": "ศาลหลักเมืองปัตตานี",
+      "nameTh": "ศาลหลักเมืองปัตตานี",
+      "lat": 6.868777,
+      "lng": 101.2525222,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337162919",
+      "osmId": 1337162919,
+      "osmType": "way",
+      "name": "มัสยิดปากีสถาน",
+      "nameTh": "มัสยิดปากีสถาน",
+      "lat": 6.8684521,
+      "lng": 101.2536331,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337235717",
+      "osmId": 1337235717,
+      "osmType": "way",
+      "name": "วัดหลักเมือง",
+      "nameTh": "วัดหลักเมือง",
+      "lat": 6.876681,
+      "lng": 101.2441156,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337273601",
+      "osmId": 1337273601,
+      "osmType": "way",
+      "name": "มัสยิดยูโยด่านภาษี",
+      "nameTh": null,
+      "lat": 6.88649,
+      "lng": 101.2554014,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1337436193",
+      "osmId": 1337436193,
+      "osmType": "way",
+      "name": "ตลาดนัดพญาตานี",
+      "nameTh": "ตลาดนัดพญาตานี",
+      "lat": 6.8685233,
+      "lng": 101.2745424,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1338015051",
+      "osmId": 1338015051,
+      "osmType": "way",
+      "name": "Banlay Seafood & Café",
+      "nameTh": null,
+      "lat": 6.8915226,
+      "lng": 101.2820613,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1338015052",
+      "osmId": 1338015052,
+      "osmType": "way",
+      "name": "Madam khrua seafood restaurant",
+      "nameTh": null,
+      "lat": 6.8914311,
+      "lng": 101.2831518,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1338015053",
+      "osmId": 1338015053,
+      "osmType": "way",
+      "name": "มัสยิดเเหลมนก",
+      "nameTh": null,
+      "lat": 6.8904804,
+      "lng": 101.28343,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1338015054",
+      "osmId": 1338015054,
+      "osmType": "way",
+      "name": "Wat Laem Nok",
+      "nameTh": null,
+      "lat": 6.8893136,
+      "lng": 101.2812971,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1414592465",
+      "osmId": 1414592465,
+      "osmType": "way",
+      "name": "Eyvall Cafe",
+      "nameTh": "เอวัลล์คาเฟ่",
+      "lat": 6.8561292,
+      "lng": 101.2515777,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 08:00-22:00",
+      "tags": {
+        "outdoor_seating": "no",
+        "cuisine": "coffee_shop;อาหาร"
+      }
+    }
+  ]
+}

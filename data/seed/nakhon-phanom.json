@@ -1,0 +1,881 @@
+{
+  "district": "nakhon-phanom",
+  "districtTh": "นครพนม",
+  "districtEn": "Nakhon Phanom",
+  "kind": "province",
+  "osmRelationId": 18972661,
+  "bbox": [
+    17.1276327,
+    104.4126431,
+    17.4914845,
+    104.806605
+  ],
+  "fetchedAt": "2026-05-31T12:29:16.806Z",
+  "count": 40,
+  "pois": [
+    {
+      "id": "osm-n671140937",
+      "osmId": 671140937,
+      "osmType": "node",
+      "name": "Café Amazon",
+      "nameTh": "คาเฟ่ อเมซอน",
+      "lat": 17.3958325,
+      "lng": 104.7813801,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n1839434734",
+      "osmId": 1839434734,
+      "osmType": "node",
+      "name": "Mer Lang Bakery",
+      "nameTh": null,
+      "lat": 17.4039365,
+      "lng": 104.7862091,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n1839434738",
+      "osmId": 1839434738,
+      "osmType": "node",
+      "name": "OHIO",
+      "nameTh": null,
+      "lat": 17.4040254,
+      "lng": 104.7865152,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.3,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4155914689",
+      "osmId": 4155914689,
+      "osmType": "node",
+      "name": "Indochina Market 2545",
+      "nameTh": null,
+      "lat": 17.4014771,
+      "lng": 104.7888695,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4199892272",
+      "osmId": 4199892272,
+      "osmType": "node",
+      "name": "tesco lotus",
+      "nameTh": null,
+      "lat": 17.3954504,
+      "lng": 104.7798503,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4611450591",
+      "osmId": 4611450591,
+      "osmType": "node",
+      "name": "ตลาดอินโดจีนนครพนม",
+      "nameTh": "ตลาดอินโดจีนนครพนม",
+      "lat": 17.4016622,
+      "lng": 104.789163,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5409100121",
+      "osmId": 5409100121,
+      "osmType": "node",
+      "name": "Vegetarian restaurant ahaan jai",
+      "nameTh": null,
+      "lat": 17.4020163,
+      "lng": 104.7871697,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "asian"
+      }
+    },
+    {
+      "id": "osm-n6166009665",
+      "osmId": 6166009665,
+      "osmType": "node",
+      "name": "หอเฉลิมพระเกียรติพระราชวงศ์จักรี",
+      "nameTh": null,
+      "lat": 17.3713127,
+      "lng": 104.7369266,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6166472722",
+      "osmId": 6166472722,
+      "osmType": "node",
+      "name": "วัดอรัญญิกาวาส",
+      "nameTh": null,
+      "lat": 17.3972351,
+      "lng": 104.7809616,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6166474317",
+      "osmId": 6166474317,
+      "osmType": "node",
+      "name": "วัดศรีเทพประดิษฐาราม นครพนม",
+      "nameTh": null,
+      "lat": 17.3960221,
+      "lng": 104.7880827,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6172599497",
+      "osmId": 6172599497,
+      "osmType": "node",
+      "name": "วัดโพธิ์ศรี",
+      "nameTh": null,
+      "lat": 17.3976226,
+      "lng": 104.7905475,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6172668497",
+      "osmId": 6172668497,
+      "osmType": "node",
+      "name": "วัดมหาธาตุ",
+      "nameTh": null,
+      "lat": 17.3910982,
+      "lng": 104.7922271,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6172732717",
+      "osmId": 6172732717,
+      "osmType": "node",
+      "name": "วัดพระอินทร์แปลง",
+      "nameTh": null,
+      "lat": 17.3888116,
+      "lng": 104.7927258,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6176287581",
+      "osmId": 6176287581,
+      "osmType": "node",
+      "name": "วัดโอกาส",
+      "nameTh": null,
+      "lat": 17.4020674,
+      "lng": 104.7884396,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n7265936430",
+      "osmId": 7265936430,
+      "osmType": "node",
+      "name": "sosang",
+      "nameTh": null,
+      "lat": 17.352102,
+      "lng": 104.7879223,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Sa 08:00-19:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n7265936431",
+      "osmId": 7265936431,
+      "osmType": "node",
+      "name": "ร้านรัตน์รุ่งเรือง",
+      "nameTh": null,
+      "lat": 17.3520995,
+      "lng": 104.7878847,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 06:00-19:00",
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n11212240099",
+      "osmId": 11212240099,
+      "osmType": "node",
+      "name": "รองอาสนวิหารนักบุญอันนา หนองแสง",
+      "nameTh": null,
+      "lat": 17.420804,
+      "lng": 104.7757423,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11212240100",
+      "osmId": 11212240100,
+      "osmType": "node",
+      "name": "วัดนักบุญยอแซฟ บ้านคำเกิ้ม",
+      "nameTh": null,
+      "lat": 17.426886,
+      "lng": 104.749741,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11516038969",
+      "osmId": 11516038969,
+      "osmType": "node",
+      "name": "อนุสรณ์สถานประธานโฮจิมินห์",
+      "nameTh": null,
+      "lat": 17.3765222,
+      "lng": 104.7578264,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11557670244",
+      "osmId": 11557670244,
+      "osmType": "node",
+      "name": "Lunar Bistro",
+      "nameTh": null,
+      "lat": 17.3535455,
+      "lng": 104.7733216,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11558059572",
+      "osmId": 11558059572,
+      "osmType": "node",
+      "name": "Dao Ruang",
+      "nameTh": null,
+      "lat": 17.4113677,
+      "lng": 104.7814972,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11558072976",
+      "osmId": 11558072976,
+      "osmType": "node",
+      "name": "Chao Doi",
+      "nameTh": null,
+      "lat": 17.3981733,
+      "lng": 104.7890382,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n12042748869",
+      "osmId": 12042748869,
+      "osmType": "node",
+      "name": "Little Home",
+      "nameTh": null,
+      "lat": 17.4043902,
+      "lng": 104.785722,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-18:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12570735664",
+      "osmId": 12570735664,
+      "osmType": "node",
+      "name": "ร้านหม่าล่าอีสาน",
+      "nameTh": null,
+      "lat": 17.3913673,
+      "lng": 104.7902781,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "12:00-22:00",
+      "tags": {
+        "cuisine": "thai;chinese"
+      }
+    },
+    {
+      "id": "osm-n12645496800",
+      "osmId": 12645496800,
+      "osmType": "node",
+      "name": "ก๋วยเตี๋ยวเนื้อต้นโพธิ์",
+      "nameTh": null,
+      "lat": 17.3955895,
+      "lng": 104.785723,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "07:00-15:30; We off",
+      "tags": {
+        "cuisine": "noodle"
+      }
+    },
+    {
+      "id": "osm-n12803456101",
+      "osmId": 12803456101,
+      "osmType": "node",
+      "name": "Nakhon Cafe @ Nakhon Phanom",
+      "nameTh": null,
+      "lat": 17.3580377,
+      "lng": 104.7891108,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 07:00-16:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12813189501",
+      "osmId": 12813189501,
+      "osmType": "node",
+      "name": "Punthai Coffee",
+      "nameTh": null,
+      "lat": 17.399927,
+      "lng": 104.7845051,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 06:00-18:00",
+      "tags": {
+        "cuisine": "cake;coffee_shop;sandwich"
+      }
+    },
+    {
+      "id": "osm-n12827631601",
+      "osmId": 12827631601,
+      "osmType": "node",
+      "name": "Jamjuree Caffee",
+      "nameTh": null,
+      "lat": 17.3795068,
+      "lng": 104.7944534,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 11:00-20:00",
+      "tags": {
+        "cuisine": "cake;coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n13251304635",
+      "osmId": 13251304635,
+      "osmType": "node",
+      "name": "จุดถ่ายรูปพระอาทิตย์ตกริมโขง",
+      "nameTh": null,
+      "lat": 17.3888916,
+      "lng": 104.7938814,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13264229922",
+      "osmId": 13264229922,
+      "osmType": "node",
+      "name": "บ้านลุงโฮจิมินห์",
+      "nameTh": null,
+      "lat": 17.3745631,
+      "lng": 104.7613453,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": "Mo-Su 08:00-18:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n13264229923",
+      "osmId": 13264229923,
+      "osmType": "node",
+      "name": "ศาลเจ้าพ่อด่ายเวือง",
+      "nameTh": null,
+      "lat": 17.3748377,
+      "lng": 104.7599385,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13368290103",
+      "osmId": 13368290103,
+      "osmType": "node",
+      "name": "คาเฟ่ อเมซอน",
+      "nameTh": "คาเฟ่ อเมซอน",
+      "lat": 17.375438,
+      "lng": 104.7943373,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n13762360302",
+      "osmId": 13762360302,
+      "osmType": "node",
+      "name": "Warm and Cozy Cafe and Space",
+      "nameTh": null,
+      "lat": 17.3950123,
+      "lng": 104.7819425,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 08:30-18:00",
+      "tags": {
+        "cuisine": "cake;coffee_shop;tea"
+      }
+    },
+    {
+      "id": "osm-n13773187801",
+      "osmId": 13773187801,
+      "osmType": "node",
+      "name": "Arabus",
+      "nameTh": null,
+      "lat": 17.4136258,
+      "lng": 104.7784356,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 07:00-18:00",
+      "tags": {
+        "cuisine": "cake;coffee_shop"
+      }
+    },
+    {
+      "id": "osm-w666150807",
+      "osmId": 666150807,
+      "osmType": "way",
+      "name": "สวนสาธารณะ สวนหลวง ร. 9",
+      "nameTh": "สวนสาธารณะ สวนหลวง ร. 9",
+      "lat": 17.4242666,
+      "lng": 104.7705174,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w867191443",
+      "osmId": 867191443,
+      "osmType": "way",
+      "name": "หอนาฬิกาเวียตนามอนุสรณ์",
+      "nameTh": null,
+      "lat": 17.4038998,
+      "lng": 104.7877955,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1444104565",
+      "osmId": 1444104565,
+      "osmType": "way",
+      "name": "พระธาตุนคร",
+      "nameTh": null,
+      "lat": 17.3913168,
+      "lng": 104.7925024,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1445677545",
+      "osmId": 1445677545,
+      "osmType": "way",
+      "name": "ไทยสามัคคี",
+      "nameTh": null,
+      "lat": 17.4036722,
+      "lng": 104.7878886,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-w1445687503",
+      "osmId": 1445687503,
+      "osmType": "way",
+      "name": "พิพิธภัณฑ์จวนผู้ว่าราชการจังหวัดนครพนม (หลังเก่า)",
+      "nameTh": null,
+      "lat": 17.4159554,
+      "lng": 104.7796959,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": "Mi-So 09:00-16:30",
+      "tags": {}
+    },
+    {
+      "id": "osm-w1451050081",
+      "osmId": 1451050081,
+      "osmType": "way",
+      "name": "Wat Pa Thamwiwek",
+      "nameTh": null,
+      "lat": 17.4771036,
+      "lng": 104.7228003,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    }
+  ]
+}

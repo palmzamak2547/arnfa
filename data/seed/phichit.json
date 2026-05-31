@@ -1,0 +1,691 @@
+{
+  "district": "phichit",
+  "districtTh": "พิจิตร",
+  "districtEn": "Phichit",
+  "kind": "province",
+  "osmRelationId": 18993782,
+  "bbox": [
+    16.2516765,
+    100.2259111,
+    16.5541821,
+    100.5299546
+  ],
+  "fetchedAt": "2026-05-31T12:34:14.538Z",
+  "count": 32,
+  "pois": [
+    {
+      "id": "osm-n1540351918",
+      "osmId": 1540351918,
+      "osmType": "node",
+      "name": "Swiss Steak House",
+      "nameTh": null,
+      "lat": 16.4335301,
+      "lng": 100.3439224,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4729031894",
+      "osmId": 4729031894,
+      "osmType": "node",
+      "name": "ปอย นมสด",
+      "nameTh": "ปอย นมสด",
+      "lat": 16.4483728,
+      "lng": 100.3347735,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n9507263120",
+      "osmId": 9507263120,
+      "osmType": "node",
+      "name": "คาเฟ่ อเมซอน",
+      "nameTh": "คาเฟ่ อเมซอน",
+      "lat": 16.43405,
+      "lng": 100.3573023,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 07:00-19:00",
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n13684325601",
+      "osmId": 13684325601,
+      "osmType": "node",
+      "name": "พิพิธภัณฑ์เมืองพิจิตร",
+      "nameTh": null,
+      "lat": 16.4437891,
+      "lng": 100.3478982,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13686480672",
+      "osmId": 13686480672,
+      "osmType": "node",
+      "name": "วัดบึงสีไฟภัทราราม",
+      "nameTh": null,
+      "lat": 16.4140599,
+      "lng": 100.3455018,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13686486816",
+      "osmId": 13686486816,
+      "osmType": "node",
+      "name": "อุทยานบัว บึงสีไฟ",
+      "nameTh": null,
+      "lat": 16.4037485,
+      "lng": 100.3336315,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13686486817",
+      "osmId": 13686486817,
+      "osmType": "node",
+      "name": "ศาลเจ้าแม่ทับทิมท่าฬ่อ",
+      "nameTh": null,
+      "lat": 16.5113103,
+      "lng": 100.3274452,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13688314481",
+      "osmId": 13688314481,
+      "osmType": "node",
+      "name": "วัดเขารูปช้าง",
+      "nameTh": null,
+      "lat": 16.3201779,
+      "lng": 100.3939935,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13688336318",
+      "osmId": 13688336318,
+      "osmType": "node",
+      "name": "ศาลหลักเมืองพิจิตร",
+      "nameTh": null,
+      "lat": 16.4120764,
+      "lng": 100.2923735,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13688336324",
+      "osmId": 13688336324,
+      "osmType": "node",
+      "name": "อุทยานเมืองเก่า พิจิตร",
+      "nameTh": null,
+      "lat": 16.4119631,
+      "lng": 100.2939813,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 05:00-20:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n13688336359",
+      "osmId": 13688336359,
+      "osmType": "node",
+      "name": "วัดหัวดง",
+      "nameTh": null,
+      "lat": 16.34634,
+      "lng": 100.3969135,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w396708749",
+      "osmId": 396708749,
+      "osmType": "way",
+      "name": "วัดท่าหล่อ",
+      "nameTh": null,
+      "lat": 16.5212124,
+      "lng": 100.3252041,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w398187476",
+      "osmId": 398187476,
+      "osmType": "way",
+      "name": "วัดราชช้างขวัญ",
+      "nameTh": null,
+      "lat": 16.4672741,
+      "lng": 100.3334806,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w412002622",
+      "osmId": 412002622,
+      "osmType": "way",
+      "name": "วัดบึงตะโกน",
+      "nameTh": null,
+      "lat": 16.404944,
+      "lng": 100.3723511,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w432719565",
+      "osmId": 432719565,
+      "osmType": "way",
+      "name": "วัดเนินสมอ",
+      "nameTh": null,
+      "lat": 16.459573,
+      "lng": 100.3917572,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503697605",
+      "osmId": 503697605,
+      "osmType": "way",
+      "name": "วัดลำชะล่า",
+      "nameTh": null,
+      "lat": 16.3311815,
+      "lng": 100.4357069,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503699693",
+      "osmId": 503699693,
+      "osmType": "way",
+      "name": "วัดหนองนาดำ",
+      "nameTh": null,
+      "lat": 16.3533495,
+      "lng": 100.4497401,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503739896",
+      "osmId": 503739896,
+      "osmType": "way",
+      "name": "วัดวังหูทิพย์",
+      "nameTh": null,
+      "lat": 16.2827104,
+      "lng": 100.3851495,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503739897",
+      "osmId": 503739897,
+      "osmType": "way",
+      "name": "วัดดงกลาง",
+      "nameTh": null,
+      "lat": 16.3524898,
+      "lng": 100.339978,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503890115",
+      "osmId": 503890115,
+      "osmType": "way",
+      "name": "วัดดงชะพลู",
+      "nameTh": null,
+      "lat": 16.4598198,
+      "lng": 100.2947168,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503890117",
+      "osmId": 503890117,
+      "osmType": "way",
+      "name": "วัดคลองคะเชนทร์",
+      "nameTh": null,
+      "lat": 16.4490144,
+      "lng": 100.3157888,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503890296",
+      "osmId": 503890296,
+      "osmType": "way",
+      "name": "วัดมูลเหล็ก",
+      "nameTh": null,
+      "lat": 16.43956,
+      "lng": 100.2992847,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503891215",
+      "osmId": 503891215,
+      "osmType": "way",
+      "name": "วัดคลองโนน",
+      "nameTh": null,
+      "lat": 16.4755453,
+      "lng": 100.2485764,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503894505",
+      "osmId": 503894505,
+      "osmType": "way",
+      "name": "วัดดงสว่าง",
+      "nameTh": null,
+      "lat": 16.3884159,
+      "lng": 100.512451,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503896907",
+      "osmId": 503896907,
+      "osmType": "way",
+      "name": "วัดป่ามะคาบ",
+      "nameTh": null,
+      "lat": 16.5153009,
+      "lng": 100.3835261,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503908504",
+      "osmId": 503908504,
+      "osmType": "way",
+      "name": "วัดบ้านยางคอยเกลือ",
+      "nameTh": null,
+      "lat": 16.4683585,
+      "lng": 100.3710405,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w503958134",
+      "osmId": 503958134,
+      "osmType": "way",
+      "name": "วัดหงษ์",
+      "nameTh": null,
+      "lat": 16.5240111,
+      "lng": 100.2697644,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w504121427",
+      "osmId": 504121427,
+      "osmType": "way",
+      "name": "วัดขนุน",
+      "nameTh": null,
+      "lat": 16.3836477,
+      "lng": 100.3323163,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w504121429",
+      "osmId": 504121429,
+      "osmType": "way",
+      "name": "วัดท่าข่อย",
+      "nameTh": null,
+      "lat": 16.3747172,
+      "lng": 100.2950219,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w504123925",
+      "osmId": 504123925,
+      "osmType": "way",
+      "name": "วัดโรงช้าง",
+      "nameTh": null,
+      "lat": 16.4267438,
+      "lng": 100.2890954,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1493373890",
+      "osmId": 1493373890,
+      "osmType": "way",
+      "name": "สวนสาธารณะพิจิตร",
+      "nameTh": null,
+      "lat": 16.4447616,
+      "lng": 100.3479517,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1493613942",
+      "osmId": 1493613942,
+      "osmType": "way",
+      "name": "สวนสมเด็จพระศรีนครินทร์ พิจิตร",
+      "nameTh": null,
+      "lat": 16.4262174,
+      "lng": 100.3431882,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    }
+  ]
+}

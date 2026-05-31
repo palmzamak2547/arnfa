@@ -76,7 +76,7 @@ export function SkyWindow() {
         </div>
 
         {state === "loading" && (
-          <div className="font-thai text-ink-faint py-6 animate-pulse">กำลังอ่านฟ้ากรุงเทพ…</div>
+          <div className="font-thai text-ink-faint py-6 animate-pulse">กำลังอ่านฟ้า…</div>
         )}
 
         {state === "error" && (
