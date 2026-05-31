@@ -1,19 +1,33 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { clsx } from "clsx";
 import thonglor from "@/data/seed/thonglor.json";
 import ari from "@/data/seed/ari.json";
 import silom from "@/data/seed/silom.json";
-import { buildPlan, districtCentroid, type SeedDistrict, type BuiltPlan } from "@/lib/plan/buildPlan";
+import siam from "@/data/seed/siam.json";
+import ekkamai from "@/data/seed/ekkamai.json";
+import phranakhon from "@/data/seed/phranakhon.json";
+import {
+  buildPlan,
+  districtCentroid,
+  type SeedDistrict,
+  type BuiltPlan,
+  type TasteVector,
+} from "@/lib/plan/buildPlan";
 import type { HourlyForecast } from "@/lib/weather/types";
 import { injectRainAt } from "@/lib/plan/rainInject";
+import { decodePlanState, encodePlanState } from "@/lib/plan/shareState";
+import { loadTaste } from "@/lib/plan/taste";
 import { SkyChip } from "@/components/SkyChip";
 import { SwapCard } from "@/components/SwapCard";
 import { PlanSkeleton } from "@/components/PlanSkeleton";
-import { openStatusLabelTh } from "@/lib/core/openingHours";
+import { AirChip } from "@/components/AirChip";
+import { ShareButton } from "@/components/ShareButton";
+import { TasteQuiz } from "@/components/TasteQuiz";
+import { Logo } from "@/components/Logo";
 
 const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanMap), {
   ssr: false,
@@ -24,26 +38,48 @@ const DISTRICTS: Record<string, SeedDistrict> = {
   thonglor: thonglor as SeedDistrict,
   ari: ari as SeedDistrict,
   silom: silom as SeedDistrict,
+  siam: siam as SeedDistrict,
+  ekkamai: ekkamai as SeedDistrict,
+  phranakhon: phranakhon as SeedDistrict,
 };
+const DISTRICT_KEYS = Object.keys(DISTRICTS);
 
 const BUDGETS = [
+  { label: "แวบเดียว", min: 150 },
   { label: "ครึ่งวัน", min: 240 },
   { label: "เต็มวัน", min: 420 },
-  { label: "แวบเดียว", min: 150 },
 ];
 
-export default function PlanPage() {
-  const [districtKey, setDistrictKey] = useState("thonglor");
-  const [budgetMin, setBudgetMin] = useState(240);
+function PlanInner() {
+  // Initial state from URL (so a shared link reproduces the exact plan).
+  const initial = useMemo(() => {
+    const q = typeof window !== "undefined" ? window.location.search.slice(1) : "";
+    return decodePlanState(q, DISTRICT_KEYS);
+  }, []);
+
+  const [districtKey, setDistrictKey] = useState(initial.district);
+  const [budgetMin, setBudgetMin] = useState(initial.budgetMin);
   const [forecast, setForecast] = useState<HourlyForecast[] | null>(null);
   const [provider, setProvider] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [rainSlot, setRainSlot] = useState<number | null>(null);
+  const [taste, setTaste] = useState<TasteVector | null>(null);
+  const [quizOpen, setQuizOpen] = useState(false);
 
   const district = DISTRICTS[districtKey];
   const center = useMemo(() => districtCentroid(district), [district]);
 
+  // Load saved taste once; if none and the user hasn't dismissed, offer the quiz.
+  useEffect(() => {
+    const saved = loadTaste();
+    if (saved) setTaste(saved);
+    else if (typeof localStorage !== "undefined" && !localStorage.getItem("arnfa.taste.skipped")) {
+      setQuizOpen(true);
+    }
+  }, []);
+
+  // Fetch forecast for the district centroid.
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
@@ -57,6 +93,13 @@ export default function PlanPage() {
     return () => { cancelled = true; };
   }, [districtKey, center.lat, center.lng]);
 
+  // Keep the URL in sync (shareable, back-button friendly) — replaceState, no reload.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const qs = encodePlanState({ district: districtKey, budgetMin, rain: rainSlot !== null });
+    window.history.replaceState(null, "", `${window.location.pathname}?${qs}`);
+  }, [districtKey, budgetMin, rainSlot]);
+
   const startHourIndex = useMemo(() => {
     if (!forecast) return 0;
     const nowHour = new Date().getHours();
@@ -67,13 +110,13 @@ export default function PlanPage() {
 
   const basePlan: BuiltPlan | null = useMemo(() => {
     if (!forecast) return null;
-    return buildPlan(district, forecast, { startHourIndex, budgetMin, start: center });
-  }, [district, forecast, startHourIndex, budgetMin, center]);
+    return buildPlan(district, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined });
+  }, [district, forecast, startHourIndex, budgetMin, center, taste]);
 
   const rainedPlan: BuiltPlan | null = useMemo(() => {
     if (!forecast || rainSlot === null) return null;
-    return buildPlan(district, forecast, { startHourIndex, budgetMin, start: center, forecastOverride: injectRainAt(forecast, rainSlot, 2) });
-  }, [district, forecast, rainSlot, startHourIndex, budgetMin, center]);
+    return buildPlan(district, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, forecastOverride: injectRainAt(forecast, rainSlot, 2) });
+  }, [district, forecast, rainSlot, startHourIndex, budgetMin, center, taste]);
 
   const activePlan = rainedPlan ?? basePlan;
 
@@ -95,25 +138,63 @@ export default function PlanPage() {
     return idx >= 0 ? idx : null;
   }, [basePlan, forecast]);
 
+  const shareUrl = useMemo(
+    () => `/plan?${encodePlanState({ district: districtKey, budgetMin, rain: rainSlot !== null })}`,
+    [districtKey, budgetMin, rainSlot],
+  );
+
+  function finishQuiz(v: TasteVector) {
+    setTaste(v);
+    setQuizOpen(false);
+  }
+  function skipQuiz() {
+    setQuizOpen(false);
+    try { localStorage.setItem("arnfa.taste.skipped", "1"); } catch { /* ignore */ }
+  }
+
   return (
-    <main className="relative z-10 min-h-screen px-5 py-8 sm:px-10 lg:px-16">
-      <div className="mx-auto max-w-7xl">
-        <div className="flex items-center justify-between mb-8">
-          <Link href="/" className="font-display text-xl text-ink hover:text-ink-muted transition-colors">อ่านฟ้า</Link>
+    <main className="relative z-10 min-h-screen">
+      {/* Header */}
+      <header className="arnfa-grid section-minor pad-safe-t">
+        <div className="col-content flex items-center justify-between">
+          <Link href="/" className="text-ink hover:text-ink-muted transition-colors">
+            <Logo className="text-xl" animate={false} />
+          </Link>
           <span className="font-thai text-sm text-ink-faint">{provider && `ฟ้าจาก ${provider}`}</span>
         </div>
+      </header>
 
-        <section className="mb-8">
-          <h1 className="font-display text-3xl sm:text-4xl font-light text-ink mb-6">
+      {/* Controls */}
+      <section className="arnfa-grid">
+        <div className="col-content">
+          <h1 className="font-thai-serif fs-h2 font-light text-ink mb-2 text-balance">
             วางแผนทริป — <span className="italic text-ink-muted">{district.districtTh}</span>
           </h1>
-          <div className="flex flex-wrap gap-6">
+          <div className="flex items-center gap-3 mb-7">
+            <AirChip lat={center.lat} lng={center.lng} />
+            {!taste && !quizOpen && (
+              <button type="button" onClick={() => setQuizOpen(true)} className="font-thai text-sm text-rain hover:underline min-h-[44px]">
+                ปรับให้ตรงใจ →
+              </button>
+            )}
+            {taste && (
+              <span className="font-thai text-xs text-ink-faint">ปรับตามรสนิยมคุณแล้ว</span>
+            )}
+          </div>
+
+          {quizOpen && (
+            <div className="mb-8 max-w-2xl">
+              <TasteQuiz onDone={finishQuiz} onSkip={skipQuiz} />
+            </div>
+          )}
+
+          <div className="flex flex-wrap gap-x-8 gap-y-5">
             <div>
               <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">ย่าน</p>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {Object.entries(DISTRICTS).map(([key, d]) => (
                   <button key={key} type="button" onClick={() => setDistrictKey(key)}
-                    className={clsx("font-thai rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)]", key === districtKey ? "bg-ink text-paper" : "border border-hairline text-ink hover:bg-surface")}>
+                    className={clsx("font-thai rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)] min-h-[44px]", key === districtKey ? "bg-ink text-paper" : "border border-hairline text-ink hover:bg-surface")}>
                     {d.districtTh}
                   </button>
                 ))}
@@ -124,78 +205,105 @@ export default function PlanPage() {
               <div className="flex gap-2">
                 {BUDGETS.map((b) => (
                   <button key={b.min} type="button" onClick={() => setBudgetMin(b.min)}
-                    className={clsx("font-thai rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)]", b.min === budgetMin ? "bg-ink text-paper" : "border border-hairline text-ink hover:bg-surface")}>
+                    className={clsx("font-thai rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)] min-h-[44px]", b.min === budgetMin ? "bg-ink text-paper" : "border border-hairline text-ink hover:bg-surface")}>
                     {b.label}
                   </button>
                 ))}
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {error && <div className="font-thai rounded-2xl border border-hairline bg-surface p-6 text-ink-muted">ดูฟ้าตอนนี้ไม่ได้ — {error}. ลองใหม่อีกครั้งนะ</div>}
-        {loading && <div className="font-thai text-ink-faint py-12 text-center animate-pulse">กำลังอ่านฟ้า {district.districtTh}…</div>}
+      {/* Results */}
+      <section className="arnfa-grid section-minor">
+        <div className="col-content">
+          {error && (
+            <div className="font-thai rounded-2xl border border-hairline bg-surface p-6 text-ink-muted">
+              ดูฟ้าตอนนี้ไม่ได้ — {error}. ลองใหม่อีกครั้งนะ (เราไม่เดาฟ้าให้)
+            </div>
+          )}
 
-        {activePlan && !loading && (
-          <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
-            <section>
-              {rainTargetSlot !== null && rainSlot === null && (
-                <button type="button" onClick={() => setRainSlot(rainTargetSlot)}
-                  className="font-thai mb-5 w-full rounded-2xl border border-dashed border-rain/40 bg-rain/5 px-5 py-4 text-left text-sm text-ink-muted transition-colors hover:bg-rain/10">
-                  <span className="font-medium text-rain">ลองดู:</span> ถ้าฝนตกตอนบ่าย Arnfa จะทำยังไง? →
-                </button>
-              )}
+          {loading && (
+            <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+              <div>
+                <p className="font-thai text-sm text-ink-faint mb-4">กำลังอ่านฟ้า {district.districtTh}</p>
+                <PlanSkeleton />
+              </div>
+              <div className="hidden lg:block h-[520px] rounded-3xl border border-hairline bg-surface/50 animate-pulse" />
+            </div>
+          )}
 
-              {swap && rainSlot !== null && (
-                <div className="mb-5">
-                  <SwapCard active
-                    from={{ name: swap.dropped.poi.name, skyState: "storm", arrivalLabel: swap.dropped.arrivalLabel, reason: `ฝนเข้า ${swap.dropped.arrivalLabel}` }}
-                    to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: 5, why: swap.added.reason }}
-                    onAccept={() => setRainSlot(null)} onDismiss={() => setRainSlot(null)} />
-                </div>
-              )}
+          {activePlan && !loading && (
+            <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
+              <div>
+                {rainTargetSlot !== null && rainSlot === null && (
+                  <button type="button" onClick={() => setRainSlot(rainTargetSlot)}
+                    className="font-thai mb-5 w-full rounded-2xl border border-dashed border-rain/40 bg-rain/5 px-5 py-4 text-left text-sm text-ink-muted transition-colors hover:bg-rain/10 min-h-[44px]">
+                    <span className="font-medium text-rain">ลองดู:</span> ถ้าฝนตกตอนบ่าย Arnfa จะทำยังไง? →
+                  </button>
+                )}
 
-              <ol className="space-y-3">
-                {activePlan.stops.map((stop, i) => (
-                  <li key={stop.poi.id} className="flex items-start gap-4 rounded-2xl border border-hairline bg-surface/70 p-4">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink text-paper text-sm font-semibold">{i + 1}</div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                        <h3 className="font-thai font-medium text-ink truncate">{stop.poi.name}</h3>
-                        <SkyChip state={stop.skyState} arrivalLabel={stop.arrivalLabel} tempC={stop.tempC} rainProb={stop.rainProb} size="sm" />
+                {swap && rainSlot !== null && (
+                  <div className="mb-5">
+                    <SwapCard active
+                      from={{ name: swap.dropped.poi.name, skyState: "storm", arrivalLabel: swap.dropped.arrivalLabel, reason: `ฝนเข้า ${swap.dropped.arrivalLabel}` }}
+                      to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: 5, why: swap.added.reason }}
+                      onAccept={() => setRainSlot(null)} onDismiss={() => setRainSlot(null)} />
+                  </div>
+                )}
+
+                <ol className="space-y-3">
+                  {activePlan.stops.map((stop, i) => (
+                    <li key={stop.poi.id} className="flex items-start gap-4 rounded-2xl border border-hairline bg-surface/70 p-4">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink text-paper text-sm font-semibold">{i + 1}</div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                          <h3 className="font-thai font-medium text-ink truncate">{stop.poi.name}</h3>
+                          <SkyChip state={stop.skyState} arrivalLabel={stop.arrivalLabel} tempC={stop.tempC} rainProb={stop.rainProb} size="sm" />
+                        </div>
+                        <p className="font-thai text-sm text-ink-muted mt-1">
+                          {categoryTh(stop.poi.category)} — {stop.reason}
+                        </p>
+                        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+                          {stop.openStatus === "open" && <span className="text-success">เปิดอยู่</span>}
+                          {stop.openStatus === "closed" && <span className="text-indoor-warm">ปิดตอนนี้</span>}
+                          {stop.openStatus === "unknown" && <span className="text-ink-faint">เวลาเปิดไม่แน่ชัด</span>}
+                          {stop.poi.profile.confidence < 0.5 && <span className="text-ink-faint">โปรไฟล์ยังไม่ชัด</span>}
+                        </div>
                       </div>
-                      <p className="font-thai text-sm text-ink-muted mt-1">
-                        {categoryTh(stop.poi.category)} — {stop.reason}
-                      </p>
-                      <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-                        {stop.openStatus === "open" && (
-                          <span className="text-success">เปิดอยู่</span>
-                        )}
-                        {stop.openStatus === "closed" && (
-                          <span className="text-indoor-warm">ปิดตอนนี้</span>
-                        )}
-                        {stop.openStatus === "unknown" && (
-                          <span className="text-ink-faint">{openStatusLabelTh("unknown")}</span>
-                        )}
-                        {stop.poi.profile.confidence < 0.5 && (
-                          <span className="text-ink-faint">โปรไฟล์ยังไม่ชัด</span>
-                        )}
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+                    </li>
+                  ))}
+                </ol>
 
-              {activePlan.stops.length === 0 && <p className="font-thai text-ink-faint py-8 text-center">ไม่มีที่แนะนำในเวลานี้ — ลองเพิ่มเวลาหรือเปลี่ยนย่านดู</p>}
-            </section>
+                {activePlan.stops.length === 0 && (
+                  <p className="font-thai text-ink-faint py-8 text-center">ไม่มีที่แนะนำในเวลานี้ — ลองเพิ่มเวลาหรือเปลี่ยนย่านดู</p>
+                )}
 
-            <section className="h-[420px] lg:h-auto lg:min-h-[520px] lg:sticky lg:top-8">
-              <PlanMap stops={activePlan.stops} center={center} />
-            </section>
-          </div>
-        )}
-      </div>
+                {activePlan.stops.length > 0 && (
+                  <div className="mt-6 flex items-center gap-3">
+                    <ShareButton url={shareUrl} />
+                    <span className="font-thai text-xs text-ink-faint">ส่งให้เพื่อนเปิดแพลนเดียวกัน</span>
+                  </div>
+                )}
+              </div>
+
+              <div className="h-[420px] lg:h-auto lg:min-h-[520px] lg:sticky lg:top-6">
+                <PlanMap stops={activePlan.stops} center={center} />
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     </main>
+  );
+}
+
+export default function PlanPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}>
+      <PlanInner />
+    </Suspense>
   );
 }
 
