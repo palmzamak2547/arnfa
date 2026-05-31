@@ -34,19 +34,23 @@ export function summarizeNowcast(slots: NowcastSlot[], nowMs: number): Omit<Nowc
 const ENDPOINT = "https://api.open-meteo.com/v1/forecast";
 
 export async function fetchNowcast(lat: number, lng: number, signal?: AbortSignal): Promise<Nowcast> {
+  // timeformat=unixtime → slot times are absolute epoch seconds (UTC), so the
+  // "rain in N min" delta is correct no matter what timezone the SERVER runs in.
+  // (A naive local string + a UTC server = a 7-hour skew — that bug is why this
+  // request asks for unixtime and we re-emit ISO strings WITH a trailing Z.)
   const params = new URLSearchParams({
     latitude: lat.toFixed(4),
     longitude: lng.toFixed(4),
     minutely_15: "precipitation",
     forecast_minutely_15: "8", // next 2 hours
-    timezone: "Asia/Bangkok",
+    timeformat: "unixtime",
   });
   const res = await fetch(`${ENDPOINT}?${params.toString()}`, { signal, headers: { "User-Agent": "Arnfa/0.1" } });
   if (!res.ok) throw new Error(`Open-Meteo nowcast ${res.status}`);
-  const data = (await res.json()) as { minutely_15?: { time: string[]; precipitation: number[] } };
+  const data = (await res.json()) as { minutely_15?: { time: number[]; precipitation: number[] } };
   const time = data.minutely_15?.time ?? [];
   const precip = data.minutely_15?.precipitation ?? [];
-  const slots: NowcastSlot[] = time.map((t, i) => ({ minISO: t, mm: precip[i] ?? 0 }));
+  const slots: NowcastSlot[] = time.map((epoch, i) => ({ minISO: new Date(epoch * 1000).toISOString(), mm: precip[i] ?? 0 }));
   const summary = summarizeNowcast(slots, Date.now());
   return { ...summary, provider: "open-meteo", fetchedAt: new Date().toISOString() };
 }

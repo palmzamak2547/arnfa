@@ -34,4 +34,14 @@ describe("summarizeNowcast", () => {
     const s = summarizeNowcast([slot(0, 0.1), slot(15, 0.15)], NOW);
     expect(s.rainInMin).toBeNull();
   });
+
+  // Regression: production emits ABSOLUTE UTC (…Z) slot times so a UTC server
+  // computes the right delta. Absolute strings are timezone-independent, so this
+  // passes in any runner TZ (the bug was naive local strings vs a UTC server).
+  it("handles absolute UTC (Z) timestamps with a UTC now", () => {
+    const nowUtc = Date.UTC(2026, 5, 1, 9, 0, 0); // 09:00:00 UTC
+    const utcSlot = (min: number, mm: number) => ({ minISO: new Date(nowUtc + min * 60000).toISOString(), mm });
+    const s = summarizeNowcast([utcSlot(0, 0), utcSlot(15, 0), utcSlot(30, 0.9)], nowUtc);
+    expect(s.rainInMin).toBe(30);
+  });
 });
