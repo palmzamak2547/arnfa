@@ -49,14 +49,16 @@ const SOURCES: Source[] = [
     groupEn: "Air quality",
     items: [
       { name: "Air4Thai", role: "PM2.5 · กรมควบคุมมลพิษ", roleEn: "PM2.5 · Thai PCD", href: "http://air4thai.pcd.go.th" },
+      { name: "NASA FIRMS", role: "จุดความร้อน/ไฟป่า · VIIRS", roleEn: "Active fire · VIIRS", href: "https://firms.modaps.eosdis.nasa.gov" },
     ],
   },
   {
-    group: "แผนที่ + เรดาร์",
-    groupEn: "Map + radar",
+    group: "แผนที่ + ดาวเทียม",
+    groupEn: "Map + satellite",
     items: [
       { name: "OpenFreeMap", role: "แผนที่ฐาน", roleEn: "Basemap", href: "https://openfreemap.org" },
       { name: "RainViewer", role: "เรดาร์ฝน", roleEn: "Rain radar", href: "https://www.rainviewer.com" },
+      { name: "NASA GIBS", role: "ภาพถ่ายดาวเทียม · หมอกควัน", roleEn: "Satellite imagery · aerosol", href: "https://nasa-gibs.github.io/gibs-api-docs/" },
     ],
   },
 ];
@@ -116,7 +118,7 @@ export function DataSources() {
           {[
             { n: TOTAL_POIS, suffix: "", th: "สถานที่จริง", en: "real places" },
             { n: AREA_COUNT, suffix: "", th: "พื้นที่ทั่วไทย", en: "areas across Thailand" },
-            { n: 6, suffix: "", th: "แหล่งข้อมูลเปิด", en: "open sources" },
+            { n: 8, suffix: "", th: "แหล่งข้อมูลเปิด", en: "open sources" },
             { n: 0, suffix: "", th: "ตัวเลขที่กุขึ้น", en: "fabricated numbers" },
           ].map((s) => (
             <div key={s.en}>

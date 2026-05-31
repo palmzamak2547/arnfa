@@ -21,9 +21,10 @@ const SERVICES = [
   { key: "air", th: "ฝุ่น PM2.5 (Air4Thai)", en: "Air quality (Air4Thai)", url: "/api/air?lat=13.7563&lng=100.5018" },
   { key: "nowcast", th: "ฝนใน 2 ชม.", en: "Rain nowcast", url: "/api/nowcast?lat=13.7563&lng=100.5018" },
   { key: "radar", th: "เรดาร์ฝน", en: "Rain radar", url: "/api/radar" },
+  { key: "fires", th: "ไฟป่า/หมอกควัน (NASA FIRMS)", en: "Fires/haze (NASA FIRMS)", url: "/api/fires?lat=18.79&lng=98.98" },
 ];
 
-const SOURCES = ["Open-Meteo", "MET Norway", "OpenStreetMap", "OpenFreeMap", "Air4Thai (PCD)", "RainViewer"];
+const SOURCES = ["Open-Meteo", "MET Norway", "OpenStreetMap", "OpenFreeMap", "Air4Thai (PCD)", "RainViewer", "NASA GIBS", "NASA FIRMS (VIIRS)"];
 
 const DOT: Record<Status, string> = {
   checking: "var(--arnfa-ink-faint)", ok: "var(--arnfa-success)",
