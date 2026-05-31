@@ -19,7 +19,7 @@ import {
 } from "@/lib/plan/buildPlan";
 import type { HourlyForecast } from "@/lib/weather/types";
 import { injectRainAt } from "@/lib/plan/rainInject";
-import { decodePlanState, encodePlanState } from "@/lib/plan/shareState";
+import { decodePlanState, encodePlanState, DEFAULT_PLAN_STATE } from "@/lib/plan/shareState";
 import { loadTaste } from "@/lib/plan/taste";
 import { recordFeedback } from "@/lib/plan/feedback";
 import { SkyChip } from "@/components/SkyChip";
@@ -53,14 +53,19 @@ const BUDGETS = [
 ];
 
 function PlanInner() {
-  // Initial state from URL (so a shared link reproduces the exact plan).
-  const initial = useMemo(() => {
-    const q = typeof window !== "undefined" ? window.location.search.slice(1) : "";
-    return decodePlanState(q, DISTRICT_KEYS);
-  }, []);
+  // Start from defaults so SSR and the first client render MATCH (no hydration
+  // mismatch). The URL is read in an effect after mount and applied below.
+  const [districtKey, setDistrictKey] = useState(DEFAULT_PLAN_STATE.district);
+  const [budgetMin, setBudgetMin] = useState(DEFAULT_PLAN_STATE.budgetMin);
+  const [urlApplied, setUrlApplied] = useState(false);
 
-  const [districtKey, setDistrictKey] = useState(initial.district);
-  const [budgetMin, setBudgetMin] = useState(initial.budgetMin);
+  useEffect(() => {
+    const q = window.location.search.slice(1);
+    const s = decodePlanState(q, DISTRICT_KEYS);
+    setDistrictKey(s.district);
+    setBudgetMin(s.budgetMin);
+    setUrlApplied(true);
+  }, []);
   const [forecast, setForecast] = useState<HourlyForecast[] | null>(null);
   const [provider, setProvider] = useState("");
   const [loading, setLoading] = useState(false);
@@ -96,11 +101,12 @@ function PlanInner() {
   }, [districtKey, center.lat, center.lng]);
 
   // Keep the URL in sync (shareable, back-button friendly) — replaceState, no reload.
+  // Wait until the initial URL has been applied so we don't clobber ?y=... with defaults.
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || !urlApplied) return;
     const qs = encodePlanState({ district: districtKey, budgetMin, rain: rainSlot !== null });
     window.history.replaceState(null, "", `${window.location.pathname}?${qs}`);
-  }, [districtKey, budgetMin, rainSlot]);
+  }, [districtKey, budgetMin, rainSlot, urlApplied]);
 
   const startHourIndex = useMemo(() => {
     if (!forecast) return 0;
@@ -124,13 +130,33 @@ function PlanInner() {
 
   const swap = useMemo(() => {
     if (!basePlan || !rainedPlan) return null;
+    // Primary: the planner genuinely reordered — a stop dropped, a new one added.
     const baseIds = new Set(basePlan.stops.map((s) => s.poi.id));
     const rainedIds = new Set(rainedPlan.stops.map((s) => s.poi.id));
     const dropped = basePlan.stops.find((s) => !rainedIds.has(s.poi.id));
     const added = rainedPlan.stops.find((s) => !baseIds.has(s.poi.id));
-    if (!dropped || !added) return null;
-    return { dropped, added };
-  }, [basePlan, rainedPlan]);
+    if (dropped && added) return { dropped, added };
+
+    // Fallback so the signature moment ALWAYS fires when rain is triggered:
+    // take the most-exposed stop in the plan and name the best nearby indoor
+    // alternative not already on the itinerary (covered + rain-friendly).
+    if (basePlan.stops.length === 0) return null;
+    let exposed = basePlan.stops[0];
+    for (const s of basePlan.stops) if (s.poi.profile.outdoorness > exposed.poi.profile.outdoorness) exposed = s;
+    const onPlan = new Set(basePlan.stops.map((s) => s.poi.id));
+    let indoor: typeof exposed["poi"] | null = null;
+    let bestScore = -1;
+    for (const p of district.pois) {
+      if (onPlan.has(p.id)) continue;
+      const score = p.profile.indoorness * 0.6 + p.profile.rainEnjoyment * 0.4 + p.profile.covered * 0.2;
+      if (score > bestScore) { bestScore = score; indoor = p; }
+    }
+    if (!indoor || exposed.poi.profile.outdoorness < 0.3) return null;
+    return {
+      dropped: exposed,
+      added: { ...exposed, poi: indoor, skyState: "clear" as const, reason: "ในร่มแบบดีตอนฝน หลบสบาย" },
+    };
+  }, [basePlan, rainedPlan, district]);
 
   const rainTargetSlot = useMemo(() => {
     if (!basePlan || basePlan.stops.length === 0) return null;

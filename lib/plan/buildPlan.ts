@@ -86,6 +86,8 @@ export function buildPlan(district: SeedDistrict, forecast: HourlyForecast[], op
   const fc = opts.forecastOverride ?? forecast;
   const slotSizeMin = 60;
 
+  const poiCategory = new Map(district.pois.map((p) => [p.id, p.category]));
+
   const candidates: Candidate[] = district.pois.map((poi) => {
     const scoreAtSlot: Record<number, number> = {};
     for (let i = 0; i < fc.length; i++) {
@@ -129,7 +131,28 @@ export function buildPlan(district: SeedDistrict, forecast: HourlyForecast[], op
   const startTravelMin: Record<string, number> = {};
   for (const poi of district.pois) startTravelMin[poi.id] = walkMin(opts.start.lat, opts.start.lng, poi.lat, poi.lng);
 
-  const planOut: PlannerOutput = planTrip({ candidates: shifted, budgetMin: opts.budgetMin, startTravelMin, slotSizeMin });
+  // Diversity dampener — without it a cafe-dense district yields an all-cafe plan
+  // (boring, and the rain-swap never fires). Halve a candidate's score for each
+  // OTHER candidate of the same category that out-scores it, so the planner spreads
+  // across categories (cafe → park → market → gallery …) instead of stacking one.
+  const catRank = new Map<string, number>();
+  const byCat: Record<string, { id: string; base: number }[]> = {};
+  for (const c of shifted) {
+    const cat = poiCategory.get(c.id) ?? "other";
+    (byCat[cat] ??= []).push({ id: c.id, base: c.baseScore });
+  }
+  for (const cat of Object.keys(byCat)) {
+    byCat[cat].sort((a, b) => b.base - a.base).forEach((x, i) => catRank.set(x.id, i));
+  }
+  const diversified = shifted.map((c) => {
+    const rank = catRank.get(c.id) ?? 0;
+    const damp = 1 / (1 + rank * 0.9); // 1st of its category = 1.0, 2nd ≈ 0.53, 3rd ≈ 0.36…
+    const s: Record<number, number> = {};
+    for (const [k, v] of Object.entries(c.scoreAtSlot ?? {})) s[Number(k)] = v * damp;
+    return { ...c, scoreAtSlot: s, baseScore: (s[0] ?? 0) };
+  });
+
+  const planOut: PlannerOutput = planTrip({ candidates: diversified, budgetMin: opts.budgetMin, startTravelMin, slotSizeMin });
 
   const poiById = new Map(district.pois.map((p) => [p.id, p]));
   const stops: EnrichedStop[] = planOut.stops.map((s) => {
