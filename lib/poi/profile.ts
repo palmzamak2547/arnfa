@@ -36,7 +36,7 @@ const CATEGORY_DEFAULTS: Record<PoiCategory, PoiProfile> = {
   library:    { outdoorness: 0.02, indoorness: 0.98, shade: 0,    covered: 1,    rainEnjoyment: 0.7,  heatTolerance: 0.9,  confidence: 0.75 },
   viewpoint:  { outdoorness: 0.95, indoorness: 0.05, shade: 0.05, covered: 0.05, rainEnjoyment: 0.05, heatTolerance: 0.25, confidence: 0.55 },
   playground: { outdoorness: 0.95, indoorness: 0.05, shade: 0.3,  covered: 0.05, rainEnjoyment: 0.05, heatTolerance: 0.3,  confidence: 0.5 },
-  other:      { outdoorness: 0.5,  indoorness: 0.5,  shade: 0.3,  covered: 0.5,  rainEnjoyment: 0.4,  heatTolerance: 0.5,  confidence: 0.3 },
+  other:      { outdoorness: 0.25, indoorness: 0.7,  shade: 0.2,  covered: 0.7,  rainEnjoyment: 0.45, heatTolerance: 0.6,  confidence: 0.3 },
 };
 
 function categorizeFromTags(t: Record<string, string>): PoiCategory {
@@ -52,8 +52,10 @@ function categorizeFromTags(t: Record<string, string>): PoiCategory {
   if (t.tourism === "museum") return "museum";
   if (t.tourism === "gallery") return "gallery";
   if (t.tourism === "viewpoint") return "viewpoint";
-  if (t.tourism === "attraction") return "other";
+  if (t.tourism === "attraction") return "viewpoint";
   if (t.shop === "mall" || t.shop === "department_store") return "mall";
+  if (t.shop === "bakery" || t.amenity === "ice_cream") return "cafe";
+  if (t.shop === "books") return "library";
   return "other";
 }
 

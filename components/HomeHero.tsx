@@ -1,25 +1,41 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { SkyHero } from "./SkyHero";
-import { MagneticButton } from "./motion/MagneticButton";
 
-/** HomeHero — R3F sky + translatable editorial overlay. */
+/** HomeHero — R3F sky + translatable editorial overlay, with a gentle scroll parallax. */
 export function HomeHero() {
   const { t } = useTranslation();
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  // As the hero scrolls away, the sky drifts up slower + the copy fades — tasteful
+  // depth, not a 2021 parallax slam. Disabled under reduced-motion.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const skyY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "-12%"]);
+  const copyY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "8%"]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, reduce ? 1 : 0.35]);
+
   return (
     <section
+      ref={ref}
       className="relative flex flex-col overflow-hidden"
       style={{ minHeight: "max(88svh, 600px)" }}
     >
-      <SkyHero />
+      <motion.div style={{ y: skyY }} className="absolute inset-0">
+        <SkyHero />
+      </motion.div>
       {/*
         Hero copy in normal flow (flex-end), NOT absolute-bottom — so it can never
         overlap the floating header: the column starts BELOW header height and the
         headline grows downward. pt reserves the header band; mt-auto pins copy low.
       */}
-      <div className="relative z-10 flex flex-1 flex-col px-6 sm:px-12 lg:px-20 pt-28 sm:pt-32 pb-16 sm:pb-24 pad-safe-b">
+      <motion.div
+        style={{ y: copyY, opacity: copyOpacity }}
+        className="relative z-10 flex flex-1 flex-col px-6 sm:px-12 lg:px-20 pt-28 sm:pt-32 pb-16 sm:pb-24 pad-safe-b"
+      >
         <div className="mt-auto max-w-[26ch] sm:max-w-[30ch]">
           <h1 className="font-thai-serif font-light fs-display leading-[1.04] text-ink tracking-tight">
             <span>{t("hero.title1")} </span>
@@ -35,7 +51,7 @@ export function HomeHero() {
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

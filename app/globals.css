@@ -142,6 +142,12 @@ body {
   font-family: var(--font-display-th), "Noto Serif Thai", Georgia, serif;
 }
 
+/* Map marker drop-in (staggered per stop). Reduced-motion: not applied (instant). */
+@keyframes arnfa-drop {
+  from { transform: translateY(-14px) scale(0.6); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
 /* Logo sun rises on load (info-light flourish; reduced-motion keeps it static-up). */
 @keyframes arnfa-sunrise {
   from { transform: translateY(0.18em) scaleY(0.6); opacity: 0; }
