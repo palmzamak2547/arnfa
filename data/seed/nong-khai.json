@@ -11,7 +11,7 @@
     103.0100659
   ],
   "fetchedAt": "2026-05-31T12:47:36.125Z",
-  "count": 124,
+  "count": 128,
   "pois": [
     {
       "id": "osm-n621838922",
@@ -2694,6 +2694,91 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n4261863989",
+      "osmId": 4261863989,
+      "osmType": "node",
+      "name": "Fivestars Multiplex",
+      "nameTh": null,
+      "lat": 17.8713488,
+      "lng": 102.7426305,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "PH,Mo-Su 10:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n7027509785",
+      "osmId": 7027509785,
+      "osmType": "node",
+      "name": "พิพิธภัณฑ์สัตว์น้ำจังหวัดหนองคาย",
+      "nameTh": null,
+      "lat": 17.8091672,
+      "lng": 102.7462026,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 09:00-17:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w1119344069",
+      "osmId": 1119344069,
+      "osmType": "way",
+      "name": "เมเจอร์ซีนีเพล็กซ์",
+      "nameTh": null,
+      "lat": 17.8740021,
+      "lng": 102.7457862,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w1119352841",
+      "osmId": 1119352841,
+      "osmType": "way",
+      "name": "5star Multiplex",
+      "nameTh": null,
+      "lat": 17.8713766,
+      "lng": 102.7426896,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:28:57.230Z"
 }

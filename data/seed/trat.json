@@ -11,7 +11,7 @@
     102.787419
   ],
   "fetchedAt": "2026-05-31T12:27:26.284Z",
-  "count": 69,
+  "count": 72,
   "pois": [
     {
       "id": "osm-n1651157668",
@@ -1483,6 +1483,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n3393821095",
+      "osmId": 3393821095,
+      "osmType": "node",
+      "name": "น้ำตกสะพานหิน",
+      "nameTh": "น้ำตกสะพานหิน",
+      "lat": 12.1023188,
+      "lng": 102.7114707,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3393821135",
+      "osmId": 3393821135,
+      "osmType": "node",
+      "name": "Tha Sen Waterfall",
+      "nameTh": null,
+      "lat": 12.1182804,
+      "lng": 102.7022373,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12632972261",
+      "osmId": 12632972261,
+      "osmType": "node",
+      "name": "Loincloth",
+      "nameTh": null,
+      "lat": 12.2438001,
+      "lng": 102.514047,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:49:24.072Z"
 }

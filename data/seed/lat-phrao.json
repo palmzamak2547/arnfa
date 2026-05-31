@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:36:52.562Z",
-  "count": 96,
+  "count": 97,
   "pois": [
     {
       "id": "osm-n939955124",
@@ -2121,6 +2121,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n12581979068",
+      "osmId": 12581979068,
+      "osmType": "node",
+      "name": "Thai Massage",
+      "nameTh": null,
+      "lat": 13.8190448,
+      "lng": 100.5925137,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:22:33.771Z"
 }

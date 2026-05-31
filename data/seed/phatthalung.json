@@ -11,7 +11,7 @@
     100.2333147
   ],
   "fetchedAt": "2026-05-31T12:34:11.567Z",
-  "count": 61,
+  "count": 64,
   "pois": [
     {
       "id": "osm-n1583925218",
@@ -1331,6 +1331,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n1583925185",
+      "osmId": 1583925185,
+      "osmType": "node",
+      "name": "ถ้ำพระนอน",
+      "nameTh": null,
+      "lat": 7.6811631,
+      "lng": 100.0620397,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n1641043404",
+      "osmId": 1641043404,
+      "osmType": "node",
+      "name": "เขาอกทะลุ",
+      "nameTh": "เขาอกทะลุ",
+      "lat": 7.6284691,
+      "lng": 100.0901268,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1330909144",
+      "osmId": 1330909144,
+      "osmType": "way",
+      "name": "สวนเดอลอง",
+      "nameTh": null,
+      "lat": 7.49939,
+      "lng": 100.0654547,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:29:45.118Z"
 }

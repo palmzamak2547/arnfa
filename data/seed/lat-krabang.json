@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:36:35.900Z",
-  "count": 205,
+  "count": 207,
   "pois": [
     {
       "id": "osm-n735122008",
@@ -4414,6 +4414,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n11621185187",
+      "osmId": 11621185187,
+      "osmType": "node",
+      "name": "ดาราวดี",
+      "nameTh": null,
+      "lat": 13.7325948,
+      "lng": 100.7159914,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w421586983",
+      "osmId": 421586983,
+      "osmType": "way",
+      "name": "Siam Serpentarium",
+      "nameTh": null,
+      "lat": 13.7105962,
+      "lng": 100.8237199,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:22:30.423Z"
 }

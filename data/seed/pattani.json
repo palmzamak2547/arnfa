@@ -11,7 +11,7 @@
     101.324898
   ],
   "fetchedAt": "2026-05-31T12:32:48.162Z",
-  "count": 27,
+  "count": 29,
   "pois": [
     {
       "id": "osm-n4918100020",
@@ -592,6 +592,49 @@
         "outdoor_seating": "no",
         "cuisine": "coffee_shop;อาหาร"
       }
+    },
+    {
+      "id": "osm-n11963849471",
+      "osmId": 11963849471,
+      "osmType": "node",
+      "name": "ปลายสุดแหลมตาชี",
+      "nameTh": null,
+      "lat": 6.9357254,
+      "lng": 101.2400829,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1338022887",
+      "osmId": 1338022887,
+      "osmType": "way",
+      "name": "Wat Mujjalinthawapiwihan, Royal Monastery",
+      "nameTh": null,
+      "lat": 6.8482088,
+      "lng": 101.1797169,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:29:09.613Z"
 }

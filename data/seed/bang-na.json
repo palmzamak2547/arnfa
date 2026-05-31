@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:22.447Z",
-  "count": 87,
+  "count": 88,
   "pois": [
     {
       "id": "osm-n1803586485",
@@ -1921,6 +1921,28 @@
         "outdoor_seating": "yes",
         "cuisine": "coffee_shop;japanese;tea"
       }
+    },
+    {
+      "id": "osm-n9958928550",
+      "osmId": 9958928550,
+      "osmType": "node",
+      "name": "Pororo Aqua Park",
+      "nameTh": null,
+      "lat": 13.668759,
+      "lng": 100.6347407,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:07:20.797Z"
 }

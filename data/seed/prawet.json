@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:39.733Z",
-  "count": 136,
+  "count": 137,
   "pois": [
     {
       "id": "osm-n370294708",
@@ -2963,6 +2963,28 @@
       "tags": {
         "cuisine": "ข้าวมันไก่"
       }
+    },
+    {
+      "id": "osm-n12578547818",
+      "osmId": 12578547818,
+      "osmType": "node",
+      "name": "ทองวันใหม่นวดเพื่อสุขภาพ",
+      "nameTh": null,
+      "lat": 13.7168417,
+      "lng": 100.6544813,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:36:07.423Z"
 }

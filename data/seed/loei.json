@@ -11,7 +11,7 @@
     101.9184063
   ],
   "fetchedAt": "2026-05-31T12:42:08.530Z",
-  "count": 39,
+  "count": 42,
   "pois": [
     {
       "id": "osm-n1312886930",
@@ -856,6 +856,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n9274483917",
+      "osmId": 9274483917,
+      "osmType": "node",
+      "name": "ร้านลักกี้นวดเพื่อสุขภาพ",
+      "nameTh": null,
+      "lat": 17.4873878,
+      "lng": 101.7287357,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:00-21:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n13121370902",
+      "osmId": 13121370902,
+      "osmType": "node",
+      "name": "ถ้ำผาปู่",
+      "nameTh": null,
+      "lat": 17.5783594,
+      "lng": 101.7105249,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13335217201",
+      "osmId": 13335217201,
+      "osmType": "node",
+      "name": "MVP",
+      "nameTh": null,
+      "lat": 17.469467,
+      "lng": 101.7268904,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:23:56.369Z"
 }

@@ -11,7 +11,7 @@
     101.9188822
   ],
   "fetchedAt": "2026-05-31T12:30:53.904Z",
-  "count": 37,
+  "count": 39,
   "pois": [
     {
       "id": "osm-n1846760769",
@@ -800,6 +800,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n8269122046",
+      "osmId": 8269122046,
+      "osmType": "node",
+      "name": "เขาตันหยง",
+      "nameTh": null,
+      "lat": 6.4142919,
+      "lng": 101.8677875,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n8269122047",
+      "osmId": 8269122047,
+      "osmType": "node",
+      "name": "เขาสำนัก",
+      "nameTh": null,
+      "lat": 6.3593606,
+      "lng": 101.8664655,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:28:26.406Z"
 }

@@ -11,7 +11,7 @@
     99.4227031
   ],
   "fetchedAt": "2026-05-31T12:26:53.395Z",
-  "count": 74,
+  "count": 80,
   "pois": [
     {
       "id": "osm-n978147592",
@@ -1606,6 +1606,133 @@
       },
       "openingHoursRaw": "16.00-23.00",
       "tags": {}
+    },
+    {
+      "id": "osm-n5416958109",
+      "osmId": 5416958109,
+      "osmType": "node",
+      "name": "อ่าวพนังตัก",
+      "nameTh": null,
+      "lat": 10.5300258,
+      "lng": 99.2368483,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12672544601",
+      "osmId": 12672544601,
+      "osmType": "node",
+      "name": "แสนสบาย นวดเพื่อสุขภาพ",
+      "nameTh": null,
+      "lat": 10.4976297,
+      "lng": 99.181149,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:00-21:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12941797201",
+      "osmId": 12941797201,
+      "osmType": "node",
+      "name": "นวด Massage",
+      "nameTh": null,
+      "lat": 10.500555,
+      "lng": 99.1748225,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:00-20:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n13095725587",
+      "osmId": 13095725587,
+      "osmType": "node",
+      "name": "Cave with Budda Statue",
+      "nameTh": null,
+      "lat": 10.3487688,
+      "lng": 99.2409576,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13095749422",
+      "osmId": 13095749422,
+      "osmType": "node",
+      "name": "Entrance cave",
+      "nameTh": null,
+      "lat": 10.3477829,
+      "lng": 99.2405993,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w553490959",
+      "osmId": 553490959,
+      "osmType": "way",
+      "name": "Ao Thung Makham",
+      "nameTh": "อ่าวทุ่งมะขาม",
+      "lat": 10.3552314,
+      "lng": 99.2522166,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:15:12.270Z"
 }

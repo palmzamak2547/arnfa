@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:28.098Z",
-  "count": 97,
+  "count": 101,
   "pois": [
     {
       "id": "osm-n1422384779",
@@ -2110,6 +2110,91 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n11343052159",
+      "osmId": 11343052159,
+      "osmType": "node",
+      "name": "วาเลนไทน์ อาบ อบ นวด",
+      "nameTh": null,
+      "lat": 13.7694866,
+      "lng": 100.4862034,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1135380268",
+      "osmId": 1135380268,
+      "osmType": "way",
+      "name": "อาเหนก ป้าสง",
+      "nameTh": null,
+      "lat": 13.7890627,
+      "lng": 100.4700533,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1135380270",
+      "osmId": 1135380270,
+      "osmType": "way",
+      "name": "ช่างเชื่อม",
+      "nameTh": null,
+      "lat": 13.7889088,
+      "lng": 100.4702582,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1135410435",
+      "osmId": 1135410435,
+      "osmType": "way",
+      "name": "Spectrum Hall",
+      "nameTh": null,
+      "lat": 13.7895124,
+      "lng": 100.4710348,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:07:23.753Z"
 }

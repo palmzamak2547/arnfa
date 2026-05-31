@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useTranslation } from "react-i18next";
 import { clsx } from "clsx";
 import {
   buildPlan,
@@ -16,6 +17,9 @@ import { injectRainAt } from "@/lib/plan/rainInject";
 import { decodePlanState, encodePlanState, DEFAULT_PLAN_STATE } from "@/lib/plan/shareState";
 import { loadTaste } from "@/lib/plan/taste";
 import { recordFeedback } from "@/lib/plan/feedback";
+import { filterByGroups, availableGroups } from "@/lib/plan/categories";
+import { categoryLabel } from "@/lib/plan/categoryLabel";
+import { CategoryFilter } from "@/components/CategoryFilter";
 import { dayAdvisory } from "@/lib/core/advisory";
 import type { AirReading } from "@/lib/air/air4thai";
 import { fetchActiveDeals, dealMatchesWeather, type Deal } from "@/lib/deals/deals";
@@ -39,12 +43,19 @@ const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanM
 });
 
 const BUDGETS = [
-  { label: "แวบเดียว", min: 150 },
-  { label: "ครึ่งวัน", min: 240 },
-  { label: "เต็มวัน", min: 420 },
+  { th: "แวบเดียว", en: "Quick", min: 150 },
+  { th: "ครึ่งวัน", en: "Half day", min: 240 },
+  { th: "เต็มวัน", en: "Full day", min: 420 },
 ];
 
 function PlanInner() {
+  const { i18n } = useTranslation();
+  // Gate language on mount: SSR + the first client paint render the DEFAULT (Thai)
+  // so server and client agree (no hydration text-mismatch, React #418); the EN
+  // switch happens after mount. Same discipline as the motion `initial` gate.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const en = mounted && i18n.language === "en";
   // Start from defaults so SSR and the first client render MATCH (no hydration
   // mismatch). The URL is read in an effect after mount and applied below.
   const [districtKey, setDistrictKey] = useState(DEFAULT_PLAN_STATE.district);
@@ -106,6 +117,22 @@ function PlanInner() {
     return () => { cancelled = true; };
   }, []);
 
+  // "อยากเที่ยวแนวไหน" — hard category-group filter the user controls.
+  const [catGroups, setCatGroups] = useState<Set<string>>(new Set());
+  const groupsHere = useMemo(() => availableGroups(districtData?.pois ?? []), [districtData]);
+  // drop any selected group the new area doesn't have (keeps the filter honest)
+  useEffect(() => {
+    setCatGroups((prev) => {
+      const next = new Set([...prev].filter((g) => groupsHere.has(g)));
+      return next.size === prev.size ? prev : next;
+    });
+  }, [groupsHere]);
+  const planDistrict = useMemo(() => {
+    if (!districtData) return null;
+    const pois = filterByGroups(districtData.pois, catGroups);
+    return { ...districtData, pois };
+  }, [districtData, catGroups]);
+
   // Load saved taste once; if none and the user hasn't dismissed, offer the quiz.
   useEffect(() => {
     const saved = loadTaste();
@@ -155,14 +182,14 @@ function PlanInner() {
   const outdoorPenalty = advisory?.outdoorPenalty ?? 0;
 
   const basePlan: BuiltPlan | null = useMemo(() => {
-    if (!forecast || !districtData) return null;
-    return buildPlan(districtData, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty });
-  }, [districtData, forecast, startHourIndex, budgetMin, center, taste, outdoorPenalty]);
+    if (!forecast || !planDistrict) return null;
+    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty });
+  }, [planDistrict, forecast, startHourIndex, budgetMin, center, taste, outdoorPenalty]);
 
   const rainedPlan: BuiltPlan | null = useMemo(() => {
-    if (!forecast || !districtData || rainSlot === null) return null;
-    return buildPlan(districtData, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, forecastOverride: injectRainAt(forecast, rainSlot, 2) });
-  }, [districtData, forecast, rainSlot, startHourIndex, budgetMin, center, taste, outdoorPenalty]);
+    if (!forecast || !planDistrict || rainSlot === null) return null;
+    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, forecastOverride: injectRainAt(forecast, rainSlot, 2) });
+  }, [planDistrict, forecast, rainSlot, startHourIndex, budgetMin, center, taste, outdoorPenalty]);
 
   const activePlan = rainedPlan ?? basePlan;
 
@@ -184,7 +211,7 @@ function PlanInner() {
     const onPlan = new Set(basePlan.stops.map((s) => s.poi.id));
     let indoor: typeof exposed["poi"] | null = null;
     let bestScore = -1;
-    for (const p of districtData?.pois ?? []) {
+    for (const p of planDistrict?.pois ?? []) {
       if (onPlan.has(p.id)) continue;
       const score = p.profile.indoorness * 0.6 + p.profile.rainEnjoyment * 0.4 + p.profile.covered * 0.2;
       if (score > bestScore) { bestScore = score; indoor = p; }
@@ -194,7 +221,7 @@ function PlanInner() {
       dropped: exposed,
       added: { ...exposed, poi: indoor, skyState: "clear" as const, reason: "ในร่มแบบดีตอนฝน หลบสบาย" },
     };
-  }, [basePlan, rainedPlan, districtData]);
+  }, [basePlan, rainedPlan, planDistrict]);
 
   const rainTargetSlot = useMemo(() => {
     if (!basePlan || basePlan.stops.length === 0) return null;
@@ -226,7 +253,7 @@ function PlanInner() {
           <Link href="/" className="text-ink hover:text-ink-muted transition-colors">
             <Logo className="text-xl" animate={false} />
           </Link>
-          <span className="font-thai text-sm text-ink-faint">{provider && `ฟ้าจาก ${provider}`}</span>
+          <span className="font-thai text-sm text-ink-faint">{provider && (en ? `sky via ${provider}` : `ฟ้าจาก ${provider}`)}</span>
         </div>
       </header>
 
@@ -234,17 +261,17 @@ function PlanInner() {
       <section className="arnfa-grid">
         <div className="col-content">
           <h1 className="font-thai-serif fs-h2 font-light text-ink mb-2 text-balance">
-            วางแผนทริป — <span className="italic text-ink-muted">{districtTh}</span>
+            {en ? "Plan a trip" : "วางแผนทริป"} — <span className="italic text-ink-muted">{districtTh}</span>
           </h1>
           <div className="flex items-center gap-3 mb-7">
             <AirChip lat={center.lat} lng={center.lng} reading={air} />
             {!taste && !quizOpen && (
               <button type="button" onClick={() => setQuizOpen(true)} className="font-thai text-sm text-rain hover:underline min-h-[44px]">
-                ปรับให้ตรงใจ →
+                {en ? "Tune to your taste →" : "ปรับให้ตรงใจ →"}
               </button>
             )}
             {taste && (
-              <span className="font-thai text-xs text-ink-faint">ปรับตามรสนิยมคุณแล้ว</span>
+              <span className="font-thai text-xs text-ink-faint">{en ? "tuned to your taste" : "ปรับตามรสนิยมคุณแล้ว"}</span>
             )}
           </div>
 
@@ -256,20 +283,24 @@ function PlanInner() {
 
           <div className="flex flex-wrap gap-x-8 gap-y-5">
             <div>
-              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">ย่าน</p>
+              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{en ? "Area" : "ย่าน"}</p>
               <DistrictPicker value={districtKey} onChange={setDistrictKey} />
             </div>
             <div>
-              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">เวลา</p>
+              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{en ? "Time" : "เวลา"}</p>
               <div className="flex gap-2">
                 {BUDGETS.map((b) => (
                   <button key={b.min} type="button" onClick={() => setBudgetMin(b.min)}
                     className={clsx("font-thai rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)] min-h-[44px]", b.min === budgetMin ? "bg-ink text-paper" : "border border-hairline text-ink hover:bg-surface")}>
-                    {b.label}
+                    {en ? b.en : b.th}
                   </button>
                 ))}
               </div>
             </div>
+          </div>
+
+          <div className="mt-5">
+            <CategoryFilter available={groupsHere} selected={catGroups} onChange={setCatGroups} />
           </div>
         </div>
       </section>
@@ -292,14 +323,14 @@ function PlanInner() {
         <div className="col-content">
           {error && (
             <div className="font-thai rounded-2xl border border-hairline bg-surface p-6 text-ink-muted">
-              ดูฟ้าตอนนี้ไม่ได้ — {error}. ลองใหม่อีกครั้งนะ (เราไม่เดาฟ้าให้)
+              {en ? `Can't read the sky right now — ${error}. Try again (we never guess the weather).` : `ดูฟ้าตอนนี้ไม่ได้ — ${error}. ลองใหม่อีกครั้งนะ (เราไม่เดาฟ้าให้)`}
             </div>
           )}
 
           {(!activePlan || loading) && !error && (
             <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
               <div>
-                <p className="font-thai text-sm text-ink-faint mb-4">กำลังอ่านฟ้า {districtTh}</p>
+                <p className="font-thai text-sm text-ink-faint mb-4">{en ? `Reading the sky · ${districtTh}` : `กำลังอ่านฟ้า ${districtTh}`}</p>
                 <PlanSkeleton />
               </div>
               <div className="hidden lg:block h-[520px] rounded-3xl border border-hairline bg-surface/50 animate-pulse" />
@@ -312,7 +343,7 @@ function PlanInner() {
                 {rainTargetSlot !== null && rainSlot === null && (
                   <button type="button" onClick={() => setRainSlot(rainTargetSlot)}
                     className="font-thai mb-5 w-full rounded-2xl border border-dashed border-rain/40 bg-rain/5 px-5 py-4 text-left text-sm text-ink-muted transition-colors hover:bg-rain/10 min-h-[44px]">
-                    <span className="font-medium text-rain">ลองดู:</span> ถ้าฝนตกตอนบ่าย Arnfa จะทำยังไง? →
+                    <span className="font-medium text-rain">{en ? "Try:" : "ลองดู:"}</span> {en ? "what if it rains this afternoon?" : "ถ้าฝนตกตอนบ่าย Arnfa จะทำยังไง?"} →
                   </button>
                 )}
 
@@ -349,7 +380,7 @@ function PlanInner() {
                           <SkyChip state={stop.skyState} arrivalLabel={stop.arrivalLabel} tempC={stop.tempC} rainProb={stop.rainProb} size="sm" />
                         </div>
                         <p className="font-thai text-sm text-ink-muted mt-1">
-                          {categoryTh(stop.poi.category)} — {stop.reason}
+                          {categoryLabel(stop.poi.category, en)} — {stop.reason}
                         </p>
                         {showDeal && deal && (
                           <a {...(deal.url ? { href: deal.url, target: "_blank", rel: "noopener noreferrer" } : {})}
@@ -360,10 +391,10 @@ function PlanInner() {
                           </a>
                         )}
                         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-                          {stop.openStatus === "open" && <span className="text-success">เปิดอยู่</span>}
-                          {stop.openStatus === "closed" && <span className="text-indoor-warm">ปิดตอนนี้</span>}
-                          {stop.openStatus === "unknown" && <span className="text-ink-faint">เวลาเปิดไม่แน่ชัด</span>}
-                          {stop.poi.profile.confidence < 0.5 && <span className="text-ink-faint">โปรไฟล์ยังไม่ชัด</span>}
+                          {stop.openStatus === "open" && <span className="text-success">{en ? "open now" : "เปิดอยู่"}</span>}
+                          {stop.openStatus === "closed" && <span className="text-indoor-warm">{en ? "closed now" : "ปิดตอนนี้"}</span>}
+                          {stop.openStatus === "unknown" && <span className="text-ink-faint">{en ? "hours unclear" : "เวลาเปิดไม่แน่ชัด"}</span>}
+                          {stop.poi.profile.confidence < 0.5 && <span className="text-ink-faint">{en ? "profile unsure" : "โปรไฟล์ยังไม่ชัด"}</span>}
                         </div>
                       </div>
                     </li>
@@ -371,13 +402,13 @@ function PlanInner() {
                 </ol>
 
                 {activePlan.stops.length === 0 && (
-                  <p className="font-thai text-ink-faint py-8 text-center">ไม่มีที่แนะนำในเวลานี้ — ลองเพิ่มเวลาหรือเปลี่ยนย่านดู</p>
+                  <p className="font-thai text-ink-faint py-8 text-center">{en ? "Nothing fits right now — try more time, another area, or a different vibe." : "ไม่มีที่แนะนำในเวลานี้ — ลองเพิ่มเวลา เปลี่ยนย่าน หรือเปลี่ยนแนวดู"}</p>
                 )}
 
                 {activePlan.stops.length > 0 && (
                   <div className="mt-6 flex items-center gap-3">
                     <ShareButton url={shareUrl} />
-                    <span className="font-thai text-xs text-ink-faint">ส่งให้เพื่อนเปิดแพลนเดียวกัน</span>
+                    <span className="font-thai text-xs text-ink-faint">{en ? "send a friend the same plan" : "ส่งให้เพื่อนเปิดแพลนเดียวกัน"}</span>
                   </div>
                 )}
                 <div className="mt-6 border-t border-hairline pt-5">
@@ -402,13 +433,4 @@ export default function PlanPage() {
       <PlanInner />
     </Suspense>
   );
-}
-
-function categoryTh(cat: string): string {
-  const map: Record<string, string> = {
-    cafe: "คาเฟ่", restaurant: "ร้านอาหาร", bar: "บาร์", park: "สวน", garden: "สวน",
-    market: "ตลาด", mall: "ห้าง", museum: "พิพิธภัณฑ์", gallery: "แกลเลอรี",
-    library: "ห้องสมุด", viewpoint: "จุดชมวิว", playground: "สนามเด็กเล่น", other: "สถานที่",
-  };
-  return map[cat] ?? "สถานที่";
 }

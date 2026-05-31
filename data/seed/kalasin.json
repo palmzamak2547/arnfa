@@ -11,7 +11,7 @@
     103.7091173
   ],
   "fetchedAt": "2026-05-31T12:23:21.432Z",
-  "count": 36,
+  "count": 38,
   "pois": [
     {
       "id": "osm-n668904652",
@@ -774,6 +774,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n6961409175",
+      "osmId": 6961409175,
+      "osmType": "node",
+      "name": "Da Bua",
+      "nameTh": null,
+      "lat": 16.4464328,
+      "lng": 103.4796755,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13255896179",
+      "osmId": 13255896179,
+      "osmType": "node",
+      "name": "ศูนย์ศึกษาธรรมชาติและสัตว์ป่าลำปาว",
+      "nameTh": null,
+      "lat": 16.6067416,
+      "lng": 103.4674003,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:17:28.795Z"
 }

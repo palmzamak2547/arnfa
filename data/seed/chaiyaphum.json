@@ -11,7 +11,7 @@
     102.2533587
   ],
   "fetchedAt": "2026-05-31T12:25:39.347Z",
-  "count": 44,
+  "count": 49,
   "pois": [
     {
       "id": "osm-n967759370",
@@ -945,6 +945,112 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n1932511257",
+      "osmId": 1932511257,
+      "osmType": "node",
+      "name": "น้ำตกตาดโตน ชัยภูมิ",
+      "nameTh": null,
+      "lat": 15.9840997,
+      "lng": 102.0407857,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13105529031",
+      "osmId": 13105529031,
+      "osmType": "node",
+      "name": "น้ำตกตาดฟ้า",
+      "nameTh": null,
+      "lat": 15.9451127,
+      "lng": 102.0996162,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13105550709",
+      "osmId": 13105550709,
+      "osmType": "node",
+      "name": "น้ำตกผานิต",
+      "nameTh": null,
+      "lat": 15.9617901,
+      "lng": 101.9043685,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13105550744",
+      "osmId": 13105550744,
+      "osmType": "node",
+      "name": "น้ำตกผาเอียง",
+      "nameTh": null,
+      "lat": 15.9635224,
+      "lng": 101.9092067,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13347968379",
+      "osmId": 13347968379,
+      "osmType": "node",
+      "name": "ภูเกษตร",
+      "nameTh": null,
+      "lat": 16.1994925,
+      "lng": 102.0020652,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:11:51.459Z"
 }

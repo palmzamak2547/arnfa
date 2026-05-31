@@ -1,18 +1,21 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import Map, { Marker, NavigationControl, Source, Layer, type MapRef } from "react-map-gl/maplibre";
+import { useTranslation } from "react-i18next";
+import Map, { Marker, Popup, NavigationControl, GeolocateControl, ScaleControl, Source, Layer, type MapRef } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import type { EnrichedStop } from "@/lib/plan/buildPlan";
 import type { SkyState } from "./SkyChip";
+import { categoryLabel } from "@/lib/plan/categoryLabel";
 
 /**
- * PlanMap — MapLibre + OpenFreeMap liberty. The route is animated:
- *   - a dashed walking line draws ON between stops in order (interaction research #5)
- *   - markers drop in staggered, sky-tinted
+ * PlanMap — MapLibre + OpenFreeMap liberty. Stable + premium:
+ *   - dashed walking line draws ON between stops in order; markers drop staggered
  *   - the map flies to fit the plan when stops change
- * Reduced-motion: the full line + markers render instantly (no draw/fly).
- * Spec: 03-data-sources § OpenFreeMap + interaction research.
+ *   - click a stop → popup (name · category · sky · time · temp)
+ *   - GeolocateControl shows where you are; ScaleControl for distance sense
+ *   - if WebGL/tiles fail it degrades to an honest list, never a blank box
+ * Reduced-motion: full line + markers render instantly (no draw/fly).
  */
 
 const STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
@@ -27,50 +30,32 @@ function prefersReduced(): boolean {
 }
 
 export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { lat: number; lng: number } }) {
+  const { i18n } = useTranslation();
+  const en = i18n.language === "en";
   const mapRef = useRef<MapRef>(null);
   const reduced = useMemo(prefersReduced, []);
   const initialView = useMemo(() => ({ longitude: center.lng, latitude: center.lat, zoom: 13.5 }), [center]);
+  const [selected, setSelected] = useState<EnrichedStop | null>(null);
+  const [mapError, setMapError] = useState(false);
 
-  // The full ordered path through the stops.
-  const fullPath = useMemo(
-    () => stops.map((s) => [s.poi.lng, s.poi.lat] as [number, number]),
-    [stops],
-  );
+  const fullPath = useMemo(() => stops.map((s) => [s.poi.lng, s.poi.lat] as [number, number]), [stops]);
 
-  // How many points of the path are currently revealed (animates 0 → full).
   const [revealed, setRevealed] = useState(reduced ? fullPath.length : 0);
   const [shownMarkers, setShownMarkers] = useState(reduced ? stops.length : 0);
 
-  // Re-run the draw-on whenever the set of stops changes.
+  useEffect(() => { setSelected(null); }, [stops]);
+
   useEffect(() => {
-    if (reduced) {
-      setRevealed(fullPath.length);
-      setShownMarkers(stops.length);
-      return;
-    }
-    setRevealed(0);
-    setShownMarkers(0);
-    let raf = 0;
-    let i = 0;
-    const stepMarker = () => {
-      i++;
-      setShownMarkers(i);
-      if (i < stops.length) raf = window.setTimeout(stepMarker, 140) as unknown as number;
-    };
-    // markers drop first (staggered), then the line draws through them
+    if (reduced) { setRevealed(fullPath.length); setShownMarkers(stops.length); return; }
+    setRevealed(0); setShownMarkers(0);
+    let raf = 0, i = 0;
+    const stepMarker = () => { i++; setShownMarkers(i); if (i < stops.length) raf = window.setTimeout(stepMarker, 140) as unknown as number; };
     const markerTimer = window.setTimeout(stepMarker, 200);
-
     let p = 0;
-    const drawTimer = window.setTimeout(function grow() {
-      p++;
-      setRevealed(p);
-      if (p < fullPath.length) raf = window.setTimeout(grow, 220) as unknown as number;
-    }, 200 + stops.length * 140);
-
+    const drawTimer = window.setTimeout(function grow() { p++; setRevealed(p); if (p < fullPath.length) raf = window.setTimeout(grow, 220) as unknown as number; }, 200 + stops.length * 140);
     return () => { window.clearTimeout(markerTimer); window.clearTimeout(drawTimer); window.clearTimeout(raf); };
   }, [fullPath, stops.length, reduced]);
 
-  // Fly to fit all stops when they change.
   useEffect(() => {
     const map = mapRef.current?.getMap();
     if (!map || fullPath.length === 0) return;
@@ -79,50 +64,78 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
       minLng = Math.min(minLng, lng); maxLng = Math.max(maxLng, lng);
       minLat = Math.min(minLat, lat); maxLat = Math.max(maxLat, lat);
     }
-    map.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
-      padding: 56, maxZoom: 15.5, duration: reduced ? 0 : 1100,
-    });
+    map.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 56, maxZoom: 15.5, duration: reduced ? 0 : 1100 });
   }, [fullPath, reduced]);
 
-  const lineGeoJSON = useMemo(
-    () => ({
-      type: "Feature" as const,
-      properties: {},
-      geometry: { type: "LineString" as const, coordinates: fullPath.slice(0, Math.max(2, revealed)) },
-    }),
-    [fullPath, revealed],
-  );
+  const lineGeoJSON = useMemo(() => ({
+    type: "Feature" as const, properties: {},
+    geometry: { type: "LineString" as const, coordinates: fullPath.slice(0, Math.max(2, revealed)) },
+  }), [fullPath, revealed]);
+
+  // Honest fallback — the plan never depends on the map rendering.
+  if (mapError) {
+    return (
+      <div className="flex h-full w-full flex-col overflow-hidden rounded-3xl border border-hairline bg-surface/70 p-5">
+        <p className="font-thai text-sm text-ink-muted mb-3">{en ? "Map couldn't load — here's the route:" : "แผนที่โหลดไม่ได้ — นี่คือเส้นทาง:"}</p>
+        <ol className="space-y-2 overflow-y-auto">
+          {stops.map((s, i) => (
+            <li key={s.poi.id} className="flex items-center gap-3 font-thai text-sm text-ink">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold text-white" style={{ background: SKY_COLOR[s.skyState] }}>{i + 1}</span>
+              <span className="truncate">{s.poi.name}</span>
+              <span className="ml-auto shrink-0 text-xs text-ink-faint tabular-nums">{s.arrivalLabel}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full overflow-hidden rounded-3xl border border-hairline">
-      <Map ref={mapRef} initialViewState={initialView} mapStyle={STYLE_URL} attributionControl={{ compact: true }} style={{ width: "100%", height: "100%" }}>
+      <Map
+        ref={mapRef}
+        initialViewState={initialView}
+        mapStyle={STYLE_URL}
+        attributionControl={{ compact: true }}
+        style={{ width: "100%", height: "100%" }}
+        onError={(e) => { if (/webgl|context|style/i.test(String(e?.error?.message || ""))) setMapError(true); }}
+      >
         <NavigationControl position="top-right" showCompass={false} />
+        <GeolocateControl position="top-right" trackUserLocation positionOptions={{ enableHighAccuracy: false }} />
+        <ScaleControl position="bottom-left" maxWidth={96} unit="metric" />
 
         {fullPath.length >= 2 && revealed >= 2 && (
           <Source id="route" type="geojson" data={lineGeoJSON}>
-            <Layer
-              id="route-line"
-              type="line"
-              layout={{ "line-cap": "round", "line-join": "round" }}
-              paint={{ "line-color": "#1A1F2B", "line-width": 2.5, "line-dasharray": [1.5, 1.2], "line-opacity": 0.55 }}
-            />
+            <Layer id="route-line" type="line" layout={{ "line-cap": "round", "line-join": "round" }}
+              paint={{ "line-color": "#1A1F2B", "line-width": 2.5, "line-dasharray": [1.5, 1.2], "line-opacity": 0.55 }} />
           </Source>
         )}
 
         {stops.slice(0, shownMarkers).map((stop, i) => (
-          <Marker key={stop.poi.id} longitude={stop.poi.lng} latitude={stop.poi.lat} anchor="bottom">
-            <div
-              className="flex flex-col items-center"
-              title={stop.poi.name}
-              style={reduced ? undefined : { animation: "arnfa-drop 0.5s cubic-bezier(0.22,1,0.36,1) both" }}
-            >
-              <div className="flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold text-white shadow-md ring-2 ring-white" style={{ background: SKY_COLOR[stop.skyState] }}>
+          <Marker key={stop.poi.id} longitude={stop.poi.lng} latitude={stop.poi.lat} anchor="bottom"
+            onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(stop); }}>
+            <button type="button" className="flex cursor-pointer flex-col items-center" title={stop.poi.name} aria-label={stop.poi.name}
+              style={reduced ? undefined : { animation: "arnfa-drop 0.5s cubic-bezier(0.22,1,0.36,1) both" }}>
+              <div className="flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold text-white shadow-md ring-2 ring-white transition-transform hover:scale-110" style={{ background: SKY_COLOR[stop.skyState] }}>
                 {i + 1}
               </div>
               <div className="h-2 w-2 -mt-1 rotate-45" style={{ background: SKY_COLOR[stop.skyState] }} />
-            </div>
+            </button>
           </Marker>
         ))}
+
+        {selected && (
+          <Popup longitude={selected.poi.lng} latitude={selected.poi.lat} anchor="bottom" offset={28} closeButton closeOnClick={false}
+            onClose={() => setSelected(null)} maxWidth="240px">
+            <div className="font-thai">
+              <p className="font-medium text-ink text-sm leading-snug">{selected.poi.name}</p>
+              <p className="text-xs text-ink-muted mt-0.5">
+                {categoryLabel(selected.poi.category, en)} · {selected.arrivalLabel}
+                {typeof selected.tempC === "number" && ` · ${Math.round(selected.tempC)}°`}
+              </p>
+            </div>
+          </Popup>
+        )}
       </Map>
     </div>
   );

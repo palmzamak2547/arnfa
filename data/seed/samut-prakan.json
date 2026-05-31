@@ -11,7 +11,7 @@
     100.63
   ],
   "fetchedAt": "2026-05-31T12:43:52.847Z",
-  "count": 87,
+  "count": 88,
   "pois": [
     {
       "id": "osm-n1669113249",
@@ -1869,6 +1869,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-w1336674593",
+      "osmId": 1336674593,
+      "osmType": "way",
+      "name": "ฟาร์มจระเข้และสวนสัตว์สมุทรปราการ",
+      "nameTh": "ฟาร์มจระเข้และสวนสัตว์สมุทรปราการ",
+      "lat": 13.5712181,
+      "lng": 100.5962111,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:40:36.005Z"
 }

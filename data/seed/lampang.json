@@ -11,7 +11,7 @@
     99.7730529
   ],
   "fetchedAt": "2026-05-31T12:41:44.008Z",
-  "count": 236,
+  "count": 244,
   "pois": [
     {
       "id": "osm-n706850456",
@@ -5078,6 +5078,175 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n2717018637",
+      "osmId": 2717018637,
+      "osmType": "node",
+      "name": "Mod Yim Nightclub",
+      "nameTh": null,
+      "lat": 18.2888042,
+      "lng": 99.4861616,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3217365671",
+      "osmId": 3217365671,
+      "osmType": "node",
+      "name": "Khamrai Massage",
+      "nameTh": null,
+      "lat": 18.294577,
+      "lng": 99.5033811,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5072925408",
+      "osmId": 5072925408,
+      "osmType": "node",
+      "name": "Harvest Moon Garden",
+      "nameTh": null,
+      "lat": 18.5128039,
+      "lng": 99.474631,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5389492964",
+      "osmId": 5389492964,
+      "osmType": "node",
+      "name": "Lampang Arts Center",
+      "nameTh": null,
+      "lat": 18.290762,
+      "lng": 99.4964851,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5608315327",
+      "osmId": 5608315327,
+      "osmType": "node",
+      "name": "ศรีชุมเก้าอี้นวดหยอดเหรียญ",
+      "nameTh": null,
+      "lat": 18.2765777,
+      "lng": 99.4987265,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 08:00-21:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n6919447466",
+      "osmId": 6919447466,
+      "osmType": "node",
+      "name": "Sankul Thai Massage",
+      "nameTh": null,
+      "lat": 18.289069,
+      "lng": 99.4967915,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6919501269",
+      "osmId": 6919501269,
+      "osmType": "node",
+      "name": "Lampang Herb Conservation",
+      "nameTh": null,
+      "lat": 18.3130982,
+      "lng": 99.465078,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 08:00-17:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n11558454538",
+      "osmId": 11558454538,
+      "osmType": "node",
+      "name": "ดอยขุนตาล",
+      "nameTh": null,
+      "lat": 18.491008,
+      "lng": 99.3029251,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:22:15.821Z"
 }

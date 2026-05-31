@@ -11,7 +11,7 @@
     100.3384922
   ],
   "fetchedAt": "2026-05-31T12:30:48.635Z",
-  "count": 105,
+  "count": 110,
   "pois": [
     {
       "id": "osm-n666776163",
@@ -2260,6 +2260,112 @@
       },
       "openingHoursRaw": "Fr-Sa 18:00-21:30",
       "tags": {}
+    },
+    {
+      "id": "osm-n2147672094",
+      "osmId": 2147672094,
+      "osmType": "node",
+      "name": "บึงบอระเพ็ด อาคารแสดงพันธุ์สัตว์น้ำ อุโมงค์ปลาบึงบอระเพ็ด",
+      "nameTh": null,
+      "lat": 15.711741,
+      "lng": 100.1756671,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13287109158",
+      "osmId": 13287109158,
+      "osmType": "node",
+      "name": "ลานแสดงจระเข้",
+      "nameTh": null,
+      "lat": 15.7138019,
+      "lng": 100.1759698,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13546365420",
+      "osmId": 13546365420,
+      "osmType": "node",
+      "name": "เขากบ",
+      "nameTh": null,
+      "lat": 15.715265,
+      "lng": 100.1338403,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13579395637",
+      "osmId": 13579395637,
+      "osmType": "node",
+      "name": "ถ้ำธารทิพย์",
+      "nameTh": null,
+      "lat": 15.7141839,
+      "lng": 99.9469117,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w52438403",
+      "osmId": 52438403,
+      "osmType": "way",
+      "name": "หาดบึงขรเพ็ด",
+      "nameTh": "หาดบึงขรเพ็ด",
+      "lat": 15.7110006,
+      "lng": 100.1777158,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:28:20.480Z"
 }

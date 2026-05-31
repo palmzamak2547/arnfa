@@ -19,6 +19,10 @@ export const CATEGORY_DEFAULTS = {
   temple:{outdoorness:0.6,indoorness:0.4,shade:0.35,covered:0.45,rainEnjoyment:0.2,heatTolerance:0.4,confidence:0.55},
   viewpoint:{outdoorness:0.95,indoorness:0.05,shade:0.05,covered:0.05,rainEnjoyment:0.05,heatTolerance:0.25,confidence:0.55},
   playground:{outdoorness:0.95,indoorness:0.05,shade:0.3,covered:0.05,rainEnjoyment:0.05,heatTolerance:0.3,confidence:0.5},
+  nature:{outdoorness:0.95,indoorness:0.05,shade:0.25,covered:0.05,rainEnjoyment:0.05,heatTolerance:0.3,confidence:0.55},
+  spa:{outdoorness:0.05,indoorness:0.95,shade:0,covered:1,rainEnjoyment:0.7,heatTolerance:0.9,confidence:0.6},
+  entertainment:{outdoorness:0.05,indoorness:0.95,shade:0,covered:1,rainEnjoyment:0.7,heatTolerance:0.9,confidence:0.6},
+  themepark:{outdoorness:0.75,indoorness:0.25,shade:0.3,covered:0.2,rainEnjoyment:0.2,heatTolerance:0.4,confidence:0.55},
   other:{outdoorness:0.25,indoorness:0.7,shade:0.2,covered:0.7,rainEnjoyment:0.45,heatTolerance:0.6,confidence:0.3},
 };
 
@@ -35,6 +39,11 @@ export function categorize(t) {
   if (t.leisure === "playground") return "playground";
   if (t.tourism === "gallery") return "gallery";
   if (t.tourism === "viewpoint") return "viewpoint";
+  // diverse trip categories (added 2026-05-31 for nationwide variety)
+  if (["beach", "peak", "hot_spring", "cave_entrance", "waterfall"].includes(t.natural) || t.waterway === "waterfall") return "nature";
+  if (t.leisure === "spa" || t.amenity === "spa" || t.shop === "massage") return "spa";
+  if (["cinema", "theatre", "nightclub", "arts_centre"].includes(t.amenity)) return "entertainment";
+  if (["theme_park", "zoo", "aquarium"].includes(t.tourism) || t.leisure === "water_park") return "themepark";
   if (t.shop === "mall" || t.shop === "department_store") return "mall";
   // bakeries/bookshops are indoor cafe-adjacent / library-adjacent, not "outdoor other"
   if (t.shop === "bakery") return "cafe";
@@ -109,6 +118,25 @@ export async function overpass(query, { preferMirror, label = "q", maxAttempts =
     }
   }
   return null;
+}
+
+// ONLY the diverse "variety" categories — for additive enrichment of existing areas.
+export function enrichClause(areaOrBox) {
+  const f = areaOrBox;
+  return [
+    `node["natural"~"beach|peak|hot_spring|cave_entrance|waterfall"]${f};`,
+    `way["natural"~"beach|peak|waterfall"]${f};`,
+    `node["waterway"="waterfall"]${f};`,
+    `node["leisure"~"spa|water_park"]${f};way["leisure"~"spa|water_park"]${f};`,
+    `node["amenity"~"spa|cinema|theatre|nightclub|arts_centre"]${f};way["amenity"~"cinema|theatre|arts_centre"]${f};`,
+    `node["shop"="massage"]${f};`,
+    `node["tourism"~"theme_park|zoo|aquarium"]${f};way["tourism"~"theme_park|zoo|aquarium"]${f};`,
+  ].join("");
+}
+
+// Expand a [s,w,n,e] bbox outward by `pad` degrees (≈111km/deg) for thin areas.
+export function widenBbox([s, w, n, e], pad = 0.05) {
+  return [s - pad, w - pad, n + pad, e + pad];
 }
 
 // The POI selector clause (nodes + ways + relations, with centers for areas).

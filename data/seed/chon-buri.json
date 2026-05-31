@@ -11,7 +11,7 @@
     101.0772517
   ],
   "fetchedAt": "2026-05-31T12:25:09.146Z",
-  "count": 243,
+  "count": 253,
   "pois": [
     {
       "id": "osm-n1668253594",
@@ -5267,6 +5267,217 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n2811156249",
+      "osmId": 2811156249,
+      "osmType": "node",
+      "name": "Major Cineplex",
+      "nameTh": null,
+      "lat": 13.3239011,
+      "lng": 100.9646196,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2811376913",
+      "osmId": 2811376913,
+      "osmType": "node",
+      "name": "SF Cinema City",
+      "nameTh": null,
+      "lat": 13.2872289,
+      "lng": 100.9266382,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6841957656",
+      "osmId": 6841957656,
+      "osmType": "node",
+      "name": "มณิมาสปา",
+      "nameTh": null,
+      "lat": 13.337454,
+      "lng": 100.9681508,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6848140681",
+      "osmId": 6848140681,
+      "osmType": "node",
+      "name": "พราว",
+      "nameTh": null,
+      "lat": 13.3402909,
+      "lng": 100.9650904,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6848158887",
+      "osmId": 6848158887,
+      "osmType": "node",
+      "name": "สุขสัมผัส นวดแผนไทย",
+      "nameTh": null,
+      "lat": 13.3421622,
+      "lng": 100.9629245,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6848637099",
+      "osmId": 6848637099,
+      "osmType": "node",
+      "name": "นวด",
+      "nameTh": null,
+      "lat": 13.3426346,
+      "lng": 100.9645808,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10005772978",
+      "osmId": 10005772978,
+      "osmType": "node",
+      "name": "เขาสามมุก",
+      "nameTh": null,
+      "lat": 13.3162429,
+      "lng": 100.9031327,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11978008790",
+      "osmId": 11978008790,
+      "osmType": "node",
+      "name": "BuNgaa Nuad Thai & Spa",
+      "nameTh": null,
+      "lat": 13.2790349,
+      "lng": 100.9354956,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 1,
+        "confidence": 0.65
+      },
+      "openingHoursRaw": "Mo-Fr 20:00-18:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12310915959",
+      "osmId": 12310915959,
+      "osmType": "node",
+      "name": "Sabai Sabai Massage",
+      "nameTh": null,
+      "lat": 13.3868969,
+      "lng": 101.0170813,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w32877657",
+      "osmId": 32877657,
+      "osmType": "way",
+      "name": "หาดบางแสน",
+      "nameTh": "หาดบางแสน",
+      "lat": 13.2895524,
+      "lng": 100.9096095,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:14:49.429Z"
 }

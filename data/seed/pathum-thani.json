@@ -11,7 +11,7 @@
     100.6066119
   ],
   "fetchedAt": "2026-05-31T12:32:23.097Z",
-  "count": 73,
+  "count": 74,
   "pois": [
     {
       "id": "osm-n891271924",
@@ -1579,6 +1579,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n5264241442",
+      "osmId": 5264241442,
+      "osmType": "node",
+      "name": "ตึก 17 ศาลาดนตรีสุริยเทพ",
+      "nameTh": null,
+      "lat": 13.9666352,
+      "lng": 100.5837854,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:29:01.590Z"
 }

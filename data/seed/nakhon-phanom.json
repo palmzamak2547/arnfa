@@ -11,7 +11,7 @@
     104.806605
   ],
   "fetchedAt": "2026-05-31T12:29:16.806Z",
-  "count": 40,
+  "count": 41,
   "pois": [
     {
       "id": "osm-n671140937",
@@ -876,6 +876,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n6166009666",
+      "osmId": 6166009666,
+      "osmType": "node",
+      "name": "พิพิธภัณฑ์สัตว์น้ำจืด หนองญาติ",
+      "nameTh": null,
+      "lat": 17.3741955,
+      "lng": 104.7367975,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 08:30-16:30",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:26:57.186Z"
 }

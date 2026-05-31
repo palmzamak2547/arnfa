@@ -11,7 +11,7 @@
     101.4222089
   ],
   "fetchedAt": "2026-05-31T12:28:58.668Z",
-  "count": 45,
+  "count": 50,
   "pois": [
     {
       "id": "osm-n477205671",
@@ -966,6 +966,112 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n4535123089",
+      "osmId": 4535123089,
+      "osmType": "node",
+      "name": "น้ำตกนางรอง",
+      "nameTh": null,
+      "lat": 14.3299951,
+      "lng": 101.3197314,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5463035249",
+      "osmId": 5463035249,
+      "osmType": "node",
+      "name": "น้ำตกกองแก้ว",
+      "nameTh": null,
+      "lat": 14.4388126,
+      "lng": 101.3739941,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6169106139",
+      "osmId": 6169106139,
+      "osmType": "node",
+      "name": "เขาฟาละมี",
+      "nameTh": null,
+      "lat": 14.466639,
+      "lng": 101.319667,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6169106141",
+      "osmId": 6169106141,
+      "osmType": "node",
+      "name": "เขาค่าง",
+      "nameTh": null,
+      "lat": 14.352861,
+      "lng": 101.311556,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w431875961",
+      "osmId": 431875961,
+      "osmType": "way",
+      "name": "Mini-Zoo",
+      "nameTh": null,
+      "lat": 14.3190349,
+      "lng": 101.2738926,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:26:28.643Z"
 }

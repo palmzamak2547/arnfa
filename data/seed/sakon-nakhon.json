@@ -11,7 +11,7 @@
     104.3289689
   ],
   "fetchedAt": "2026-05-31T12:42:27.876Z",
-  "count": 63,
+  "count": 67,
   "pois": [
     {
       "id": "osm-n671140907",
@@ -1358,6 +1358,91 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n12891820601",
+      "osmId": 12891820601,
+      "osmType": "node",
+      "name": "Massage",
+      "nameTh": null,
+      "lat": 17.1643546,
+      "lng": 104.1451244,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13316456149",
+      "osmId": 13316456149,
+      "osmType": "node",
+      "name": "น้ำตกคำหอม",
+      "nameTh": null,
+      "lat": 17.1235113,
+      "lng": 104.0184615,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13316500552",
+      "osmId": 13316500552,
+      "osmType": "node",
+      "name": "น้ำตกปรีชาสุขสันต์",
+      "nameTh": null,
+      "lat": 17.1938415,
+      "lng": 103.9681742,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1443908527",
+      "osmId": 1443908527,
+      "osmType": "way",
+      "name": "สถานแสดงพันธุ์ปลาน้ำจืดภาคอีสาน",
+      "nameTh": null,
+      "lat": 17.170549,
+      "lng": 104.1524184,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Fr 08:30-16:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:39:30.846Z"
 }

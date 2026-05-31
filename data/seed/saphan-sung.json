@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:37:09.043Z",
-  "count": 34,
+  "count": 35,
   "pois": [
     {
       "id": "osm-n1688415187",
@@ -747,6 +747,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n12618166701",
+      "osmId": 12618166701,
+      "osmType": "node",
+      "name": "TheOne",
+      "nameTh": null,
+      "lat": 13.7775115,
+      "lng": 100.6728136,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:40:45.086Z"
 }

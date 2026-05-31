@@ -2,9 +2,17 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useTranslation } from "react-i18next";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { SkyHero } from "./SkyHero";
+
+// Lazy-load the R3F sky (three.js ≈ 1 MB) so it's OFF the home critical path. The
+// CSS gradient (arnfa-sky-surface) shows instantly as the fallback, then the 3D
+// sky progressively enhances on top — fast LCP, identical final look.
+const SkyHero = dynamic(() => import("./SkyHero").then((m) => m.SkyHero), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0 arnfa-sky-surface" aria-hidden />,
+});
 
 /** HomeHero — R3F sky + translatable editorial overlay, with a gentle scroll parallax. */
 export function HomeHero() {

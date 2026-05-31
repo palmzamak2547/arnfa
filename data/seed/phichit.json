@@ -11,7 +11,7 @@
     100.5299546
   ],
   "fetchedAt": "2026-05-31T12:34:14.538Z",
-  "count": 32,
+  "count": 35,
   "pois": [
     {
       "id": "osm-n1540351918",
@@ -686,6 +686,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n13686480685",
+      "osmId": 13686480685,
+      "osmType": "node",
+      "name": "บ่อจระเข้ บึงสีไฟ",
+      "nameTh": null,
+      "lat": 16.4233448,
+      "lng": 100.3432427,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13688336317",
+      "osmId": 13688336317,
+      "osmType": "node",
+      "name": "ถ้ำชาละวัน",
+      "nameTh": null,
+      "lat": 16.4117819,
+      "lng": 100.2947805,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w236162747",
+      "osmId": 236162747,
+      "osmType": "way",
+      "name": "สถานแสดงพันธุ์ปลาเฉลิมพระเกียรติ บึงสีไฟ",
+      "nameTh": null,
+      "lat": 16.4237998,
+      "lng": 100.3412009,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:31:59.677Z"
 }

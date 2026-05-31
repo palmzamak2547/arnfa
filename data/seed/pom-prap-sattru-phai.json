@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:42.752Z",
-  "count": 114,
+  "count": 117,
   "pois": [
     {
       "id": "osm-n567014290",
@@ -2492,6 +2492,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n9729625018",
+      "osmId": 9729625018,
+      "osmType": "node",
+      "name": "Let’s Relax",
+      "nameTh": null,
+      "lat": 13.7416794,
+      "lng": 100.5113314,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12393039101",
+      "osmId": 12393039101,
+      "osmType": "node",
+      "name": "พุฒิ ไทย มัซซาฉ",
+      "nameTh": null,
+      "lat": 13.7563724,
+      "lng": 100.5101708,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12690340101",
+      "osmId": 12690340101,
+      "osmType": "node",
+      "name": "ล ม ล ม",
+      "nameTh": null,
+      "lat": 13.7415388,
+      "lng": 100.5137711,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 12:00-00:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:34:24.829Z"
 }

@@ -11,7 +11,7 @@
     105.0343788
   ],
   "fetchedAt": "2026-05-31T12:49:39.527Z",
-  "count": 159,
+  "count": 164,
   "pois": [
     {
       "id": "osm-n679787562",
@@ -3510,6 +3510,112 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n6584054785",
+      "osmId": 6584054785,
+      "osmType": "node",
+      "name": "Ubonvej Thai massage",
+      "nameTh": null,
+      "lat": 15.2322089,
+      "lng": 104.8644228,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6905730657",
+      "osmId": 6905730657,
+      "osmType": "node",
+      "name": "Heait Massage",
+      "nameTh": null,
+      "lat": 15.227746,
+      "lng": 104.861856,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-19:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n6912061128",
+      "osmId": 6912061128,
+      "osmType": "node",
+      "name": "Waewkam Thai Masdage",
+      "nameTh": null,
+      "lat": 15.2335361,
+      "lng": 104.8666397,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6917991421",
+      "osmId": 6917991421,
+      "osmType": "node",
+      "name": "Massage of blind people",
+      "nameTh": null,
+      "lat": 15.2826023,
+      "lng": 104.8295114,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n7792501237",
+      "osmId": 7792501237,
+      "osmType": "node",
+      "name": "SF Cinema City",
+      "nameTh": null,
+      "lat": 15.2557975,
+      "lng": 104.84898,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:50:16.049Z"
 }

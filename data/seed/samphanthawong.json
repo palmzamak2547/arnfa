@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:37:12.501Z",
-  "count": 227,
+  "count": 230,
   "pois": [
     {
       "id": "osm-n2972682325",
@@ -4946,6 +4946,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n4352628894",
+      "osmId": 4352628894,
+      "osmType": "node",
+      "name": "Hattaleela Thai Massages",
+      "nameTh": null,
+      "lat": 13.7405532,
+      "lng": 100.5108271,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-00:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n11690643676",
+      "osmId": 11690643676,
+      "osmType": "node",
+      "name": "ดีดี",
+      "nameTh": "ดีดี",
+      "lat": 13.7419105,
+      "lng": 100.5083904,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1234946845",
+      "osmId": 1234946845,
+      "osmType": "way",
+      "name": "Speedy Grandma",
+      "nameTh": "สปีดี้แกรนด์มา",
+      "lat": 13.7317246,
+      "lng": 100.5149656,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:39:34.679Z"
 }

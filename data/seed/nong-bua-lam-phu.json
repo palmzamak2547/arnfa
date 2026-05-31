@@ -11,7 +11,7 @@
     102.59465
   ],
   "fetchedAt": "2026-05-31T12:47:52.167Z",
-  "count": 43,
+  "count": 47,
   "pois": [
     {
       "id": "osm-n408361575",
@@ -941,6 +941,91 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n2343064816",
+      "osmId": 2343064816,
+      "osmType": "node",
+      "name": "Bao Dan Night Club",
+      "nameTh": null,
+      "lat": 17.1932354,
+      "lng": 102.4327219,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2343064875",
+      "osmId": 2343064875,
+      "osmType": "node",
+      "name": "Nik Massage",
+      "nameTh": null,
+      "lat": 17.1918896,
+      "lng": 102.437669,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4394495092",
+      "osmId": 4394495092,
+      "osmType": "node",
+      "name": "น้ำตกเฒ่าโต้",
+      "nameTh": "น้ำตกเฒ่าโต้",
+      "lat": 17.2302287,
+      "lng": 102.4602181,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n7710402885",
+      "osmId": 7710402885,
+      "osmType": "node",
+      "name": "เมเจอร์ ซีนีเพล็กซ์",
+      "nameTh": "เมเจอร์ ซีนีเพล็กซ์ (ເມເຈີ ຊີນີເພຼກ)",
+      "lat": 17.2146016,
+      "lng": 102.4320881,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:28:48.924Z"
 }

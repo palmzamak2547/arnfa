@@ -11,7 +11,7 @@
     99.8111169
   ],
   "fetchedAt": "2026-05-31T12:27:10.172Z",
-  "count": 113,
+  "count": 115,
   "pois": [
     {
       "id": "osm-n617268801",
@@ -2412,6 +2412,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n5415738094",
+      "osmId": 5415738094,
+      "osmType": "node",
+      "name": "ศูนย์แสดงศิลปวัฒนธรรมพระยารัษฎานุประดิษฐ์",
+      "nameTh": null,
+      "lat": 7.5646463,
+      "lng": 99.6280484,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w561680767",
+      "osmId": 561680767,
+      "osmType": "way",
+      "name": "ศูนย์แสดงศิลปวัฒนธรรมพระยารัษฎานุประดิษฐ์ เทศบาลนครตรัง",
+      "nameTh": null,
+      "lat": 7.5644764,
+      "lng": 99.628101,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:47:59.566Z"
 }

@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:16.415Z",
-  "count": 71,
+  "count": 75,
   "pois": [
     {
       "id": "osm-n1111714174",
@@ -1529,6 +1529,91 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n1729933444",
+      "osmId": 1729933444,
+      "osmType": "node",
+      "name": "เมเจอร์ซินีเพล็กซ์ สาขาเพชรเกษม",
+      "nameTh": null,
+      "lat": 13.7076302,
+      "lng": 100.3809739,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3476210534",
+      "osmId": 3476210534,
+      "osmType": "node",
+      "name": "เพชรเกษมพลาซ่า",
+      "nameTh": null,
+      "lat": 13.7099005,
+      "lng": 100.4005885,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4449866990",
+      "osmId": 4449866990,
+      "osmType": "node",
+      "name": "บ้านกบ",
+      "nameTh": "บ้านกบ",
+      "lat": 13.6981663,
+      "lng": 100.403242,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "24/7",
+      "tags": {}
+    },
+    {
+      "id": "osm-w368909127",
+      "osmId": 368909127,
+      "osmType": "way",
+      "name": "เมเจอร์ซีนีเพล็กซ์ สาขาเพชรเกษม",
+      "nameTh": null,
+      "lat": 13.7077732,
+      "lng": 100.3810184,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "จันทร์-ศุกร์ 11.00 - 23.00, เสาร์-อาทิตย์ 10.30 - 24.00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:06:02.654Z"
 }

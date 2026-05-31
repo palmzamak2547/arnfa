@@ -11,7 +11,7 @@
     100.2533757
   ],
   "fetchedAt": "2026-05-31T12:46:14.681Z",
-  "count": 111,
+  "count": 112,
   "pois": [
     {
       "id": "osm-n951384846",
@@ -2382,6 +2382,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n2089870915",
+      "osmId": 2089870915,
+      "osmType": "node",
+      "name": "Club House",
+      "nameTh": null,
+      "lat": 14.4797091,
+      "lng": 100.1295021,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:45:33.259Z"
 }

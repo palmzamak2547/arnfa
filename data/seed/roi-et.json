@@ -11,7 +11,7 @@
     103.7224873
   ],
   "fetchedAt": "2026-05-31T12:38:55.834Z",
-  "count": 67,
+  "count": 68,
   "pois": [
     {
       "id": "osm-n1784251628",
@@ -1457,6 +1457,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n4257344692",
+      "osmId": 4257344692,
+      "osmType": "node",
+      "name": "สถานแสดงพันธุ์สัตว์น้ำเทศบาลเมืองร้อยเอ็ด",
+      "nameTh": null,
+      "lat": 16.0558986,
+      "lng": 103.6500949,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Tu-Su 08:30-16:30",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:38:32.496Z"
 }

@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:39:15.343Z",
-  "count": 116,
+  "count": 118,
   "pois": [
     {
       "id": "osm-n2022082275",
@@ -2561,6 +2561,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n11296071385",
+      "osmId": 11296071385,
+      "osmType": "node",
+      "name": "กนกชล",
+      "nameTh": null,
+      "lat": 13.8544546,
+      "lng": 100.6480884,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13396646482",
+      "osmId": 13396646482,
+      "osmType": "node",
+      "name": "อิชยา นวดแผนไทย",
+      "nameTh": null,
+      "lat": 13.8713624,
+      "lng": 100.6025163,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:30-22:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:06:06.852Z"
 }

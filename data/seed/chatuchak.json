@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:40:33.255Z",
-  "count": 232,
+  "count": 236,
   "pois": [
     {
       "id": "osm-n724254396",
@@ -5062,6 +5062,91 @@
       "tags": {
         "cuisine": "japanese"
       }
+    },
+    {
+      "id": "osm-n891277688",
+      "osmId": 891277688,
+      "osmType": "node",
+      "name": "โรงงานต้นแบบอาหารสัตว์น้ำ",
+      "nameTh": null,
+      "lat": 13.8539169,
+      "lng": 100.5678432,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n1597533474",
+      "osmId": 1597533474,
+      "osmType": "node",
+      "name": "Major Cineplex",
+      "nameTh": null,
+      "lat": 13.8287524,
+      "lng": 100.5684261,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10772641961",
+      "osmId": 10772641961,
+      "osmType": "node",
+      "name": "สโมสรธรรมทาน",
+      "nameTh": null,
+      "lat": 13.8170826,
+      "lng": 100.5561979,
+      "category": "other",
+      "profile": {
+        "outdoorness": 0.25,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.45,
+        "heatTolerance": 0.6,
+        "confidence": 0.3
+      },
+      "openingHoursRaw": "We-Su 09:00-17:00; Mo-Tu closed",
+      "tags": {}
+    },
+    {
+      "id": "osm-w146461404",
+      "osmId": 146461404,
+      "osmType": "way",
+      "name": "Major Cineplex Ratchayothin",
+      "nameTh": "เมเจอร์ ซีนีเพล็กซ์ รัชโยธิน",
+      "lat": 13.828637,
+      "lng": 100.5685265,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 1,
+        "confidence": 0.65
+      },
+      "openingHoursRaw": "Mo-We 10:30-24:00; Th-Su 10:00-24:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:13:03.391Z"
 }

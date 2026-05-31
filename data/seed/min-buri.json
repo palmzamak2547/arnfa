@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:35:50.974Z",
-  "count": 31,
+  "count": 37,
   "pois": [
     {
       "id": "osm-n3199472843",
@@ -674,6 +674,133 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n3250391662",
+      "osmId": 3250391662,
+      "osmType": "node",
+      "name": "Ruamrudee International School",
+      "nameTh": null,
+      "lat": 13.7825674,
+      "lng": 100.7299673,
+      "category": "other",
+      "profile": {
+        "outdoorness": 0.25,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.45,
+        "heatTolerance": 0.6,
+        "confidence": 0.3
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11064177305",
+      "osmId": 11064177305,
+      "osmType": "node",
+      "name": "H",
+      "nameTh": null,
+      "lat": 13.78617,
+      "lng": 100.7141309,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11064177306",
+      "osmId": 11064177306,
+      "osmType": "node",
+      "name": "B",
+      "nameTh": null,
+      "lat": 13.7874425,
+      "lng": 100.714198,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11064177307",
+      "osmId": 11064177307,
+      "osmType": "node",
+      "name": "โพนพะเนา-นางC F00156",
+      "nameTh": null,
+      "lat": 13.7872061,
+      "lng": 100.7142536,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11064177405",
+      "osmId": 11064177405,
+      "osmType": "node",
+      "name": "โพนพะเนา-นางเอ F0012",
+      "nameTh": null,
+      "lat": 13.7873754,
+      "lng": 100.7141141,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11064199105",
+      "osmId": 11064199105,
+      "osmType": "node",
+      "name": "โพนพะเนา",
+      "nameTh": null,
+      "lat": 13.7874109,
+      "lng": 100.7141486,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:24:44.209Z"
 }

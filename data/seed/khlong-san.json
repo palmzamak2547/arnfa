@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:35:37.272Z",
-  "count": 97,
+  "count": 104,
   "pois": [
     {
       "id": "osm-n1765313096",
@@ -2109,6 +2109,154 @@
         "outdoor_seating": "yes",
         "cuisine": "asian;thai;seafood;chicken;noodle;juice;diner;soup;fries;beer;alcohol"
       }
+    },
+    {
+      "id": "osm-n11081363160",
+      "osmId": 11081363160,
+      "osmType": "node",
+      "name": "Relax Thai Massage 3",
+      "nameTh": null,
+      "lat": 13.7237196,
+      "lng": 100.5092641,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11081431887",
+      "osmId": 11081431887,
+      "osmType": "node",
+      "name": "รีแล็กซ์สยาม มาสซาส",
+      "nameTh": "รีแล็กซ์สยาม มาสซาส",
+      "lat": 13.7226911,
+      "lng": 100.5091764,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-23:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n11081439027",
+      "osmId": 11081439027,
+      "osmType": "node",
+      "name": "รุ่งเรือง นวดแผนไทย",
+      "nameTh": "รุ่งเรือง นวดแผนไทย",
+      "lat": 13.7224081,
+      "lng": 100.5091543,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11081439028",
+      "osmId": 11081439028,
+      "osmType": "node",
+      "name": "นากายา",
+      "nameTh": "นากายา",
+      "lat": 13.7223768,
+      "lng": 100.5092066,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11765684264",
+      "osmId": 11765684264,
+      "osmType": "node",
+      "name": "Ideal Wellness",
+      "nameTh": null,
+      "lat": 13.7276879,
+      "lng": 100.498366,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 1,
+        "confidence": 0.65
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12650363497",
+      "osmId": 12650363497,
+      "osmType": "node",
+      "name": "icon cineconic",
+      "nameTh": null,
+      "lat": 13.7264349,
+      "lng": 100.5100827,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13458002101",
+      "osmId": 13458002101,
+      "osmType": "node",
+      "name": "Gold Crown Massage",
+      "nameTh": null,
+      "lat": 13.7248349,
+      "lng": 100.5089842,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:19:43.217Z"
 }

@@ -11,7 +11,7 @@
     104.3782366
   ],
   "fetchedAt": "2026-05-31T12:38:43.826Z",
-  "count": 42,
+  "count": 44,
   "pois": [
     {
       "id": "osm-n4561546691",
@@ -909,6 +909,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n4185374991",
+      "osmId": 4185374991,
+      "osmType": "node",
+      "name": "Nightclub",
+      "nameTh": null,
+      "lat": 15.8289133,
+      "lng": 104.1169975,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n7857265890",
+      "osmId": 7857265890,
+      "osmType": "node",
+      "name": "Major Cineplex",
+      "nameTh": null,
+      "lat": 15.8126628,
+      "lng": 104.1331387,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:53:07.888Z"
 }

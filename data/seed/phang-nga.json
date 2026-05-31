@@ -11,7 +11,7 @@
     98.6187198
   ],
   "fetchedAt": "2026-05-31T12:34:09.538Z",
-  "count": 39,
+  "count": 43,
   "pois": [
     {
       "id": "osm-n1578550404",
@@ -848,6 +848,91 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n1641043444",
+      "osmId": 1641043444,
+      "osmType": "node",
+      "name": "ถ้ำพุงช้าง",
+      "nameTh": null,
+      "lat": 8.4428537,
+      "lng": 98.5160737,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6169742495",
+      "osmId": 6169742495,
+      "osmType": "node",
+      "name": "Phang Nga Wildlife Breeding Center",
+      "nameTh": null,
+      "lat": 8.4206991,
+      "lng": 98.488451,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10875783897",
+      "osmId": 10875783897,
+      "osmType": "node",
+      "name": "Katathong",
+      "nameTh": null,
+      "lat": 8.559463,
+      "lng": 98.4813257,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w770990100",
+      "osmId": 770990100,
+      "osmType": "way",
+      "name": "Sabai Jai - Elephant Sanctuary Park & Spa",
+      "nameTh": null,
+      "lat": 8.526687,
+      "lng": 98.4069557,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 08:30-17:30",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:29:37.526Z"
 }

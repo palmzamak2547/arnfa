@@ -11,7 +11,7 @@
     100.4177947
   ],
   "fetchedAt": "2026-05-31T12:37:00.121Z",
-  "count": 109,
+  "count": 114,
   "pois": [
     {
       "id": "osm-n1280320495",
@@ -2341,6 +2341,112 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n11196221798",
+      "osmId": 11196221798,
+      "osmType": "node",
+      "name": "น้ำตกตาดฟ้า หรือ น้ำตกนางฟ้า",
+      "nameTh": null,
+      "lat": 18.0053891,
+      "lng": 100.3093687,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11304580673",
+      "osmId": 11304580673,
+      "osmType": "node",
+      "name": "ถ้ำใหญ่",
+      "nameTh": null,
+      "lat": 18.1295746,
+      "lng": 100.3211337,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13668897225",
+      "osmId": 13668897225,
+      "osmType": "node",
+      "name": "ผาสิงห์ บ้านนาคูหา",
+      "nameTh": null,
+      "lat": 18.1292256,
+      "lng": 100.32137,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13671430194",
+      "osmId": 13671430194,
+      "osmType": "node",
+      "name": "น้ำตกแม่แคม",
+      "nameTh": null,
+      "lat": 18.1283303,
+      "lng": 100.295182,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13671457725",
+      "osmId": 13671457725,
+      "osmType": "node",
+      "name": "น้ำตกนาคูหา",
+      "nameTh": null,
+      "lat": 18.1183781,
+      "lng": 100.2998102,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:34:06.300Z"
 }

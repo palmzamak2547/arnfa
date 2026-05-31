@@ -11,7 +11,7 @@
     100.61
   ],
   "fetchedAt": "2026-05-31T12:20:46.176Z",
-  "count": 222,
+  "count": 227,
   "pois": [
     {
       "id": "osm-n965401529",
@@ -4755,6 +4755,112 @@
       },
       "openingHoursRaw": "Mo-Su 09:00-17:30",
       "tags": {}
+    },
+    {
+      "id": "osm-n9300447975",
+      "osmId": 9300447975,
+      "osmType": "node",
+      "name": "SF Cinema",
+      "nameTh": "เอสเอฟ ซีเนม่า",
+      "lat": 14.3317238,
+      "lng": 100.6096977,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w315724781",
+      "osmId": 315724781,
+      "osmType": "way",
+      "name": "วังช้างอยุธยา แล เพนียด",
+      "nameTh": "วังช้างอยุธยา แล เพนียด",
+      "lat": 14.352274,
+      "lng": 100.5588382,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w746174524",
+      "osmId": 746174524,
+      "osmType": "way",
+      "name": "หมู่บ้านช้างเพนียดหลวง",
+      "nameTh": "หมู่บ้านช้างเพนียดหลวง",
+      "lat": 14.3782341,
+      "lng": 100.5701288,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1006205219",
+      "osmId": 1006205219,
+      "osmType": "way",
+      "name": "สวนน้ำกรุงศรี",
+      "nameTh": null,
+      "lat": 14.3813242,
+      "lng": 100.5361915,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1102386869",
+      "osmId": 1102386869,
+      "osmType": "way",
+      "name": "The Rabbit Water Park",
+      "nameTh": "เดอะแร็บบิทวอเตอร์พาร์ค",
+      "lat": 14.3229398,
+      "lng": 100.6096103,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:33:37.506Z"
 }

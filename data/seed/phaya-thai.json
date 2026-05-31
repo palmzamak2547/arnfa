@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:48.704Z",
-  "count": 154,
+  "count": 156,
   "pois": [
     {
       "id": "osm-n1195167342",
@@ -3382,6 +3382,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n2104321156",
+      "osmId": 2104321156,
+      "osmType": "node",
+      "name": "bodytune",
+      "nameTh": null,
+      "lat": 13.7796822,
+      "lng": 100.545331,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12667646376",
+      "osmId": 12667646376,
+      "osmType": "node",
+      "name": "Akra_retreat",
+      "nameTh": null,
+      "lat": 13.7890401,
+      "lng": 100.5542605,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:29:52.025Z"
 }

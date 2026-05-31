@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:37:29.525Z",
-  "count": 142,
+  "count": 143,
   "pois": [
     {
       "id": "osm-n1098012379",
@@ -3074,6 +3074,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n12196330385",
+      "osmId": 12196330385,
+      "osmType": "node",
+      "name": "Dzen Onsen and Spa",
+      "nameTh": null,
+      "lat": 13.6718058,
+      "lng": 100.443196,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:06:13.180Z"
 }

@@ -11,7 +11,7 @@
     100.1067384
   ],
   "fetchedAt": "2026-05-31T12:49:28.525Z",
-  "count": 42,
+  "count": 43,
   "pois": [
     {
       "id": "osm-n1641043538",
@@ -898,6 +898,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n13619956792",
+      "osmId": 13619956792,
+      "osmType": "node",
+      "name": "เขาสะแกกรัง",
+      "nameTh": null,
+      "lat": 15.4024167,
+      "lng": 100.0166863,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:50:41.168Z"
 }

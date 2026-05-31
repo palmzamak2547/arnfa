@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:45:33.146Z",
-  "count": 122,
+  "count": 124,
   "pois": [
     {
       "id": "osm-n1255818005",
@@ -2658,6 +2658,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n7682611133",
+      "osmId": 7682611133,
+      "osmType": "node",
+      "name": "Printemps Spa Sai 1 - Ratchaphruek",
+      "nameTh": "แพรงตอง สปา ถนนราชพฤกษ์-พุทธมณฑลสาย1",
+      "lat": 13.7551141,
+      "lng": 100.4275591,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n10565757080",
+      "osmId": 10565757080,
+      "osmType": "node",
+      "name": "ZENVANA",
+      "nameTh": null,
+      "lat": 13.7492972,
+      "lng": 100.4461639,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:46:38.498Z"
 }

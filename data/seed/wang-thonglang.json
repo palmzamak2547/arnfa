@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:36:58.930Z",
-  "count": 55,
+  "count": 56,
   "pois": [
     {
       "id": "osm-n1705391791",
@@ -1215,6 +1215,28 @@
       },
       "openingHoursRaw": "Mo-Fr 09:00-17:00",
       "tags": {}
+    },
+    {
+      "id": "osm-n13442047965",
+      "osmId": 13442047965,
+      "osmType": "node",
+      "name": "Aromalife",
+      "nameTh": null,
+      "lat": 13.7689453,
+      "lng": 100.5980471,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:51:23.744Z"
 }

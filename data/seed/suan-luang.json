@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:37:01.250Z",
-  "count": 82,
+  "count": 84,
   "pois": [
     {
       "id": "osm-n566131232",
@@ -1787,6 +1787,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n5551832521",
+      "osmId": 5551832521,
+      "osmType": "node",
+      "name": "D&A massage",
+      "nameTh": null,
+      "lat": 13.7094244,
+      "lng": 100.6236832,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w1414871967",
+      "osmId": 1414871967,
+      "osmType": "way",
+      "name": "Little Zoo Garden Capybara Cafe",
+      "nameTh": null,
+      "lat": 13.7129141,
+      "lng": 100.6113188,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:45:03.367Z"
 }

@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:04.303Z",
-  "count": 86,
+  "count": 87,
   "pois": [
     {
       "id": "osm-n2361919535",
@@ -1855,6 +1855,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n12433695601",
+      "osmId": 12433695601,
+      "osmType": "node",
+      "name": "Happy masdage",
+      "nameTh": null,
+      "lat": 13.7696167,
+      "lng": 100.4851936,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:07:33.430Z"
 }

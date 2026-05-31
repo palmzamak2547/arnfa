@@ -11,7 +11,7 @@
     99.5928509
   ],
   "fetchedAt": "2026-05-31T12:23:02.099Z",
-  "count": 156,
+  "count": 164,
   "pois": [
     {
       "id": "osm-n1034288898",
@@ -3370,6 +3370,175 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n10201803431",
+      "osmId": 10201803431,
+      "osmType": "node",
+      "name": "เขาชนไก่",
+      "nameTh": null,
+      "lat": 14.1319959,
+      "lng": 99.3975527,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12292922550",
+      "osmId": 12292922550,
+      "osmType": "node",
+      "name": "ငရံ့တောင်",
+      "nameTh": null,
+      "lat": 13.8308982,
+      "lng": 99.1123842,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12499386666",
+      "osmId": 12499386666,
+      "osmType": "node",
+      "name": "Dee&Spa",
+      "nameTh": null,
+      "lat": 14.0383369,
+      "lng": 99.5146384,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "09:00-21:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12507302610",
+      "osmId": 12507302610,
+      "osmType": "node",
+      "name": "Khao Phu Rang",
+      "nameTh": null,
+      "lat": 14.0517024,
+      "lng": 99.5280656,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13201926466",
+      "osmId": 13201926466,
+      "osmType": "node",
+      "name": "Major Cineplex TMK Park Kanchanaburi",
+      "nameTh": null,
+      "lat": 14.0523809,
+      "lng": 99.5057653,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13754771018",
+      "osmId": 13754771018,
+      "osmType": "node",
+      "name": "Jadran",
+      "nameTh": null,
+      "lat": 14.0357081,
+      "lng": 99.5177838,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w242561358",
+      "osmId": 242561358,
+      "osmType": "way",
+      "name": "Tiger Temple",
+      "nameTh": null,
+      "lat": 14.1164395,
+      "lng": 99.230769,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1229829284",
+      "osmId": 1229829284,
+      "osmType": "way",
+      "name": "เมืองมัลลิกา ร.ศ.124",
+      "nameTh": "เมืองมัลลิกา ร.ศ.124",
+      "lat": 14.0874131,
+      "lng": 99.2789913,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:18:26.375Z"
 }

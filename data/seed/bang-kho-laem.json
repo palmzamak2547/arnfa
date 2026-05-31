@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:40:32.145Z",
-  "count": 101,
+  "count": 104,
   "pois": [
     {
       "id": "osm-n2074694255",
@@ -2221,6 +2221,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n2113561736",
+      "osmId": 2113561736,
+      "osmType": "node",
+      "name": "ลานเบียร์ช้าง",
+      "nameTh": null,
+      "lat": 13.7047784,
+      "lng": 100.5030733,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2156863362",
+      "osmId": 2156863362,
+      "osmType": "node",
+      "name": "Calypso Cabaret",
+      "nameTh": "Calypso Cabaret",
+      "lat": 13.7041393,
+      "lng": 100.5033962,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w199925704",
+      "osmId": 199925704,
+      "osmType": "way",
+      "name": "Siam Fantasy",
+      "nameTh": null,
+      "lat": 13.7043451,
+      "lng": 100.5036139,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:06:09.700Z"
 }

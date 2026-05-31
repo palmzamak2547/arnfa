@@ -11,7 +11,7 @@
     102.9622188
   ],
   "fetchedAt": "2026-05-31T12:49:17.864Z",
-  "count": 154,
+  "count": 159,
   "pois": [
     {
       "id": "osm-n623889215",
@@ -3339,6 +3339,112 @@
       },
       "openingHoursRaw": "Mo-Su 05:00-19:00",
       "tags": {}
+    },
+    {
+      "id": "osm-n2604541970",
+      "osmId": 2604541970,
+      "osmType": "node",
+      "name": "อีลีท อุดรธานี",
+      "nameTh": null,
+      "lat": 17.4019195,
+      "lng": 102.8007158,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 22:00-04:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n3951186688",
+      "osmId": 3951186688,
+      "osmType": "node",
+      "name": "SF Cinema City",
+      "nameTh": null,
+      "lat": 17.4090784,
+      "lng": 102.7922829,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11414000379",
+      "osmId": 11414000379,
+      "osmType": "node",
+      "name": "Marisa Bar & Massage",
+      "nameTh": null,
+      "lat": 17.406152,
+      "lng": 102.8023156,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12863642364",
+      "osmId": 12863642364,
+      "osmType": "node",
+      "name": "YoYoland Udon",
+      "nameTh": null,
+      "lat": 17.406078,
+      "lng": 102.8003734,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 10:00-21:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n13116562358",
+      "osmId": 13116562358,
+      "osmType": "node",
+      "name": "Siri Thai Massage",
+      "nameTh": "ศิริ นวดเพื่อสุขภาพ",
+      "lat": 17.4028428,
+      "lng": 102.7993812,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:50:39.234Z"
 }

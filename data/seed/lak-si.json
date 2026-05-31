@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:37:44.923Z",
-  "count": 48,
+  "count": 50,
   "pois": [
     {
       "id": "osm-n893975260",
@@ -1049,6 +1049,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n1689416666",
+      "osmId": 1689416666,
+      "osmType": "node",
+      "name": "Major Cineplex Chaengwatthana",
+      "nameTh": "เมเจอร์ ซีนีเพล็กซ์ แจ้งวัฒนะ",
+      "lat": 13.8949703,
+      "lng": 100.5589689,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6703687778",
+      "osmId": 6703687778,
+      "osmType": "node",
+      "name": "Kanya Massage&Spa",
+      "nameTh": null,
+      "lat": 13.8600738,
+      "lng": 100.5504336,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:21:45.754Z"
 }

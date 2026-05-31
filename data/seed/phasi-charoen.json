@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:35:39.694Z",
-  "count": 122,
+  "count": 123,
   "pois": [
     {
       "id": "osm-n1625414970",
@@ -2613,6 +2613,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n7194577829",
+      "osmId": 7194577829,
+      "osmType": "node",
+      "name": "Lalynn Massage and Spa",
+      "nameTh": null,
+      "lat": 13.7051779,
+      "lng": 100.4287937,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:29:42.388Z"
 }

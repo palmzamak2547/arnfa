@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:40:54.738Z",
-  "count": 170,
+  "count": 176,
   "pois": [
     {
       "id": "osm-n1158439467",
@@ -3717,6 +3717,133 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n3731340548",
+      "osmId": 3731340548,
+      "osmType": "node",
+      "name": "Major Cineplex Ratchadapisek",
+      "nameTh": null,
+      "lat": 13.7660589,
+      "lng": 100.569211,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n4142852844",
+      "osmId": 4142852844,
+      "osmType": "node",
+      "name": "Emmanuelle",
+      "nameTh": null,
+      "lat": 13.7767644,
+      "lng": 100.5728346,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4578582882",
+      "osmId": 4578582882,
+      "osmType": "node",
+      "name": "VIP",
+      "nameTh": null,
+      "lat": 13.7794661,
+      "lng": 100.5733195,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5144002621",
+      "osmId": 5144002621,
+      "osmType": "node",
+      "name": "Dr. Bear Massage",
+      "nameTh": null,
+      "lat": 13.7608999,
+      "lng": 100.5648741,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Tu-Su 12:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n10783470732",
+      "osmId": 10783470732,
+      "osmType": "node",
+      "name": "Sakura",
+      "nameTh": null,
+      "lat": 13.7866206,
+      "lng": 100.5704984,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12649208856",
+      "osmId": 12649208856,
+      "osmType": "node",
+      "name": "ANA Massage and Spa ( Rama 9 )",
+      "nameTh": null,
+      "lat": 13.756334,
+      "lng": 100.5634489,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 1,
+        "confidence": 0.65
+      },
+      "openingHoursRaw": "Mo-Su 09:00-00:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:15:21.856Z"
 }

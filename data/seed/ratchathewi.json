@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:36:06.922Z",
-  "count": 211,
+  "count": 216,
   "pois": [
     {
       "id": "osm-n2327064271",
@@ -4595,6 +4595,112 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n2512392197",
+      "osmId": 2512392197,
+      "osmType": "node",
+      "name": "Chamchan Oriental Spa",
+      "nameTh": null,
+      "lat": 13.75166,
+      "lng": 100.5358078,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6073924992",
+      "osmId": 6073924992,
+      "osmType": "node",
+      "name": "บัว",
+      "nameTh": null,
+      "lat": 13.7536538,
+      "lng": 100.5419041,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6339281873",
+      "osmId": 6339281873,
+      "osmType": "node",
+      "name": "Century Movie plaza",
+      "nameTh": null,
+      "lat": 13.761657,
+      "lng": 100.5372124,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6421035285",
+      "osmId": 6421035285,
+      "osmType": "node",
+      "name": "โรงละครอักษรา คิง เพาเวอร์",
+      "nameTh": "โรงละครอักษรา คิง เพาเวอร์",
+      "lat": 13.7596377,
+      "lng": 100.537579,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11951798169",
+      "osmId": 11951798169,
+      "osmType": "node",
+      "name": "Nikko Thai Massage",
+      "nameTh": null,
+      "lat": 13.7595786,
+      "lng": 100.5390787,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-00:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:37:55.948Z"
 }

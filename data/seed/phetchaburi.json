@@ -11,7 +11,7 @@
     100.0797305
   ],
   "fetchedAt": "2026-05-31T12:35:30.386Z",
-  "count": 97,
+  "count": 100,
   "pois": [
     {
       "id": "osm-n1137537795",
@@ -2079,6 +2079,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n13425559624",
+      "osmId": 13425559624,
+      "osmType": "node",
+      "name": "เขาบันไดอิฐ",
+      "nameTh": "เขาบันไดอิฐ",
+      "lat": 13.1063101,
+      "lng": 99.9291921,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13425559625",
+      "osmId": 13425559625,
+      "osmType": "node",
+      "name": "เขาวัง",
+      "nameTh": "เขาวัง",
+      "lat": 13.1089764,
+      "lng": 99.9368231,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13425579880",
+      "osmId": 13425579880,
+      "osmType": "node",
+      "name": "เขาหลวง",
+      "nameTh": "เขาหลวง",
+      "lat": 13.1370156,
+      "lng": 99.9338893,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:31:57.439Z"
 }

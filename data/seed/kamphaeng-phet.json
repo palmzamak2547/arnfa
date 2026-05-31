@@ -11,7 +11,7 @@
     99.7717008
   ],
   "fetchedAt": "2026-05-31T12:23:32.361Z",
-  "count": 251,
+  "count": 252,
   "pois": [
     {
       "id": "osm-n739818593",
@@ -5356,6 +5356,28 @@
       },
       "openingHoursRaw": "Mo-Su 09:00-18:00",
       "tags": {}
+    },
+    {
+      "id": "osm-n13200749615",
+      "osmId": 13200749615,
+      "osmType": "node",
+      "name": "เขาลับงา",
+      "nameTh": null,
+      "lat": 16.404357,
+      "lng": 99.4091055,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:17:55.156Z"
 }

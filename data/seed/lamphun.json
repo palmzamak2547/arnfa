@@ -11,7 +11,7 @@
     99.2253662
   ],
   "fetchedAt": "2026-05-31T12:41:56.881Z",
-  "count": 163,
+  "count": 164,
   "pois": [
     {
       "id": "osm-n1059078014",
@@ -3487,6 +3487,28 @@
       "tags": {
         "outdoor_seating": "yes"
       }
+    },
+    {
+      "id": "osm-n11263001094",
+      "osmId": 11263001094,
+      "osmType": "node",
+      "name": "ดอยขะม้อ",
+      "nameTh": "ดอยขะม้อ",
+      "lat": 18.5744734,
+      "lng": 99.1394666,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:22:18.292Z"
 }

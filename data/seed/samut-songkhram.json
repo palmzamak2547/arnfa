@@ -11,7 +11,7 @@
     100.0787728
   ],
   "fetchedAt": "2026-05-31T12:44:42.636Z",
-  "count": 57,
+  "count": 59,
   "pois": [
     {
       "id": "osm-n1091440179",
@@ -1247,6 +1247,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n1593730664",
+      "osmId": 1593730664,
+      "osmType": "node",
+      "name": "สุธารส  คาราโอเกะ",
+      "nameTh": "สุธารส  คาราโอเกะ",
+      "lat": 13.4175371,
+      "lng": 99.9944305,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4384704867",
+      "osmId": 4384704867,
+      "osmType": "node",
+      "name": "Massage",
+      "nameTh": null,
+      "lat": 13.4180215,
+      "lng": 99.980973,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:40:41.527Z"
 }

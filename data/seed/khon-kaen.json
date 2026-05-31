@@ -11,7 +11,7 @@
     103.0207649
   ],
   "fetchedAt": "2026-05-31T12:23:50.291Z",
-  "count": 288,
+  "count": 297,
   "pois": [
     {
       "id": "osm-n373165537",
@@ -6270,6 +6270,196 @@
       "tags": {
         "cuisine": "italian"
       }
+    },
+    {
+      "id": "osm-n734998979",
+      "osmId": 734998979,
+      "osmType": "node",
+      "name": "ESC Coworking Space",
+      "nameTh": null,
+      "lat": 16.4370358,
+      "lng": 102.8347273,
+      "category": "other",
+      "profile": {
+        "outdoorness": 0.25,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.45,
+        "heatTolerance": 0.6,
+        "confidence": 0.3
+      },
+      "openingHoursRaw": "10:00-20:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n827111912",
+      "osmId": 827111912,
+      "osmType": "node",
+      "name": "Open-air Theatre",
+      "nameTh": null,
+      "lat": 16.4459481,
+      "lng": 102.8145068,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n1975901630",
+      "osmId": 1975901630,
+      "osmType": "node",
+      "name": "เจ เจ นวดแผนไทย",
+      "nameTh": "เจ เจ นวดแผนไทย",
+      "lat": 16.4210751,
+      "lng": 102.8369396,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2696331274",
+      "osmId": 2696331274,
+      "osmType": "node",
+      "name": "บ้านชีวาศิลป์",
+      "nameTh": "บ้านชีวาศิลป์",
+      "lat": 16.4753675,
+      "lng": 102.8285331,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4327605789",
+      "osmId": 4327605789,
+      "osmType": "node",
+      "name": "Jump Space",
+      "nameTh": "จัมป์ สเปซ",
+      "lat": 16.43027,
+      "lng": 102.8217567,
+      "category": "other",
+      "profile": {
+        "outdoorness": 0.25,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.45,
+        "heatTolerance": 0.6,
+        "confidence": 0.3
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5057864221",
+      "osmId": 5057864221,
+      "osmType": "node",
+      "name": "dino water park",
+      "nameTh": "dino water park",
+      "lat": 16.4090183,
+      "lng": 102.8112605,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10556310867",
+      "osmId": 10556310867,
+      "osmType": "node",
+      "name": "The Library",
+      "nameTh": null,
+      "lat": 16.4280229,
+      "lng": 102.828794,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 20:00-02:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12645801001",
+      "osmId": 12645801001,
+      "osmType": "node",
+      "name": "99",
+      "nameTh": null,
+      "lat": 16.4284847,
+      "lng": 102.8285139,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1318044743",
+      "osmId": 1318044743,
+      "osmType": "way",
+      "name": "Khon Kaen Exotic Pets and Fountain show",
+      "nameTh": null,
+      "lat": 16.4596423,
+      "lng": 102.7930992,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:20:09.620Z"
 }

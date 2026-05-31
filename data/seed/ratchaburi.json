@@ -11,7 +11,7 @@
     99.9190755
   ],
   "fetchedAt": "2026-05-31T12:39:22.976Z",
-  "count": 99,
+  "count": 100,
   "pois": [
     {
       "id": "osm-n2406973640",
@@ -2125,6 +2125,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n9027347786",
+      "osmId": 9027347786,
+      "osmType": "node",
+      "name": "เขาแก่นจันทร์",
+      "nameTh": null,
+      "lat": 13.5231004,
+      "lng": 99.7860893,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:37:43.410Z"
 }

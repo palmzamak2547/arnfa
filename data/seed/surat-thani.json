@@ -11,7 +11,7 @@
     99.3959488
   ],
   "fetchedAt": "2026-05-31T12:47:17.606Z",
-  "count": 95,
+  "count": 97,
   "pois": [
     {
       "id": "osm-n978164391",
@@ -2075,6 +2075,49 @@
         "outdoor_seating": "yes",
         "cuisine": "thai"
       }
+    },
+    {
+      "id": "osm-n2503446690",
+      "osmId": 2503446690,
+      "osmType": "node",
+      "name": "Coliseum Cineplex",
+      "nameTh": null,
+      "lat": 9.1462364,
+      "lng": 99.3272777,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n9483273037",
+      "osmId": 9483273037,
+      "osmType": "node",
+      "name": "Aen Kai Health Massage",
+      "nameTh": null,
+      "lat": 9.1437733,
+      "lng": 99.3248472,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 11:00-23:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:45:43.007Z"
 }

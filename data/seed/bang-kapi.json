@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:11.087Z",
-  "count": 112,
+  "count": 113,
   "pois": [
     {
       "id": "osm-n1413472739",
@@ -2454,6 +2454,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n6278747288",
+      "osmId": 6278747288,
+      "osmType": "node",
+      "name": "\"Брати\"",
+      "nameTh": null,
+      "lat": 13.7659604,
+      "lng": 100.6450178,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 11:00-00:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:06:00.105Z"
 }

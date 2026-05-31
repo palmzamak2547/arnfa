@@ -11,7 +11,7 @@
     100.131853
   ],
   "fetchedAt": "2026-05-31T12:29:03.948Z",
-  "count": 137,
+  "count": 138,
   "pois": [
     {
       "id": "osm-n666827147",
@@ -2954,6 +2954,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-w556228420",
+      "osmId": 556228420,
+      "osmType": "way",
+      "name": "สวนสัตว์เทศบาลนครนครปฐม",
+      "nameTh": "สวนสัตว์เทศบาลนครนครปฐม",
+      "lat": 13.8202472,
+      "lng": 100.0499184,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 10:00-18:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:26:31.201Z"
 }

@@ -11,7 +11,7 @@
     99.9661124
   ],
   "fetchedAt": "2026-05-31T12:46:11.913Z",
-  "count": 200,
+  "count": 201,
   "pois": [
     {
       "id": "osm-n303946772",
@@ -4324,6 +4324,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n3218783110",
+      "osmId": 3218783110,
+      "osmType": "node",
+      "name": "ร้านรุ่งฟ้าเฟอร์นิเจอร์",
+      "nameTh": null,
+      "lat": 17.0087189,
+      "lng": 99.8163904,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:45:29.880Z"
 }

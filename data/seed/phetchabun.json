@@ -11,7 +11,7 @@
     101.5195486
   ],
   "fetchedAt": "2026-05-31T12:36:47.861Z",
-  "count": 28,
+  "count": 30,
   "pois": [
     {
       "id": "osm-n1496053172",
@@ -610,6 +610,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n2321001290",
+      "osmId": 2321001290,
+      "osmType": "node",
+      "name": "Major Cinema",
+      "nameTh": null,
+      "lat": 16.3968613,
+      "lng": 101.1377306,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3970808986",
+      "osmId": 3970808986,
+      "osmType": "node",
+      "name": "เขาผ้าขาว",
+      "nameTh": null,
+      "lat": 16.4552204,
+      "lng": 100.9776658,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:31:54.720Z"
 }

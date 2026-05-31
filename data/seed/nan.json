@@ -11,7 +11,7 @@
     100.81
   ],
   "fetchedAt": "2026-05-31T12:30:55.983Z",
-  "count": 183,
+  "count": 184,
   "pois": [
     {
       "id": "osm-n2536663210",
@@ -3943,6 +3943,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n3560534094",
+      "osmId": 3560534094,
+      "osmType": "node",
+      "name": "Major Cineplex",
+      "nameTh": null,
+      "lat": 18.7772562,
+      "lng": 100.7581565,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:28:24.343Z"
 }

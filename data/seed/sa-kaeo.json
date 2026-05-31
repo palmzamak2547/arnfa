@@ -11,7 +11,7 @@
     102.3257638
   ],
   "fetchedAt": "2026-05-31T12:44:57.315Z",
-  "count": 30,
+  "count": 31,
   "pois": [
     {
       "id": "osm-n1880989238",
@@ -648,6 +648,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n1110671207",
+      "osmId": 1110671207,
+      "osmType": "node",
+      "name": "น้ำตกปางสีดา",
+      "nameTh": "น้ำตกปางสีดา",
+      "lat": 13.9940769,
+      "lng": 102.2060563,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:38:59.904Z"
 }

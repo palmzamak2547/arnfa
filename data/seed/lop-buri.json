@@ -11,7 +11,7 @@
     100.8981406
   ],
   "fetchedAt": "2026-05-31T12:40:35.788Z",
-  "count": 89,
+  "count": 92,
   "pois": [
     {
       "id": "osm-n259720005",
@@ -1907,6 +1907,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n4235073889",
+      "osmId": 4235073889,
+      "osmType": "node",
+      "name": "Major Cineplex",
+      "nameTh": null,
+      "lat": 14.793488,
+      "lng": 100.672115,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n7033629310",
+      "osmId": 7033629310,
+      "osmType": "node",
+      "name": "bat cave",
+      "nameTh": null,
+      "lat": 14.8287152,
+      "lng": 100.771625,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13455605161",
+      "osmId": 13455605161,
+      "osmType": "node",
+      "name": "SF Cinema",
+      "nameTh": null,
+      "lat": 14.7756303,
+      "lng": 100.6932548,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:24:17.049Z"
 }

@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:40:58.767Z",
-  "count": 119,
+  "count": 121,
   "pois": [
     {
       "id": "osm-n2180487980",
@@ -2582,6 +2582,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n5840613086",
+      "osmId": 5840613086,
+      "osmType": "node",
+      "name": "Major Cineplex",
+      "nameTh": null,
+      "lat": 13.7898247,
+      "lng": 100.5152717,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w333233964",
+      "osmId": 333233964,
+      "osmType": "way",
+      "name": "หอวชิราวุธานุสรณ์",
+      "nameTh": "หอวชิราวุธานุสรณ์",
+      "lat": 13.7731613,
+      "lng": 100.5052219,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:15:28.061Z"
 }

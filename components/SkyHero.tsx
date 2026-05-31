@@ -90,11 +90,19 @@ export function SkyHero() {
         </Suspense>
       </Canvas>
 
-      {/* Readability scrim — paper fades up so editorial copy always sits on near-paper. */}
+      {/*
+        Readability scrim — paper fades up so editorial copy always sits on
+        near-paper. At NIGHT the sky behind is dark (#1F2638→#0F1320), which bled
+        into the headline; so the night scrim is taller + denser (paper rises
+        sooner, ~0.95 through the copy band) while the top quarter stays clear for
+        stars. Day keeps its airy ramp.
+      */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[72%]"
+        className={`pointer-events-none absolute inset-x-0 bottom-0 ${isNight ? "h-[90%]" : "h-[72%]"}`}
         style={{
-          background: "linear-gradient(to bottom, rgba(244,239,230,0) 0%, rgba(244,239,230,0.35) 32%, rgba(244,239,230,0.82) 60%, rgba(244,239,230,0.98) 100%)",
+          background: isNight
+            ? "linear-gradient(to bottom, rgba(244,239,230,0) 0%, rgba(244,239,230,0.5) 26%, rgba(244,239,230,0.85) 48%, rgba(244,239,230,0.96) 70%, rgba(244,239,230,1) 100%)"
+            : "linear-gradient(to bottom, rgba(244,239,230,0) 0%, rgba(244,239,230,0.35) 32%, rgba(244,239,230,0.82) 60%, rgba(244,239,230,0.98) 100%)",
         }}
       />
     </div>

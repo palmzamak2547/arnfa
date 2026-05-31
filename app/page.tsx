@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArnfaRibbon } from "@/components/ArnfaRibbon";
 import { HomeHero } from "@/components/HomeHero";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -71,7 +72,13 @@ export default function Home() {
 
       <footer className="arnfa-grid section-minor border-t border-hairline pad-safe-b">
         <div className="col-content flex flex-col sm:flex-row items-start justify-between gap-4 text-sm text-ink-faint">
-          <Logo className="text-lg" animate={false} />
+          <div className="flex flex-col gap-2">
+            <Logo className="text-lg" animate={false} />
+            <div className="flex gap-4">
+              <Link href="/plan" className="font-thai hover:text-ink transition-colors">วางแผนทริป</Link>
+              <Link href="/status" className="font-thai hover:text-ink transition-colors">สถานะระบบ</Link>
+            </div>
+          </div>
           <p className="font-thai max-w-md sm:text-right">
             ข้อมูลเปิดจาก Open-Meteo, MET Norway, OpenStreetMap, OpenFreeMap, RainViewer,
             และ Air4Thai (กรมควบคุมมลพิษ) — ทำเพื่อคนไทย

@@ -11,7 +11,7 @@
     104.4842135
   ],
   "fetchedAt": "2026-05-31T12:42:11.104Z",
-  "count": 131,
+  "count": 133,
   "pois": [
     {
       "id": "osm-n1206519661",
@@ -2815,6 +2815,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n12999103387",
+      "osmId": 12999103387,
+      "osmType": "node",
+      "name": "สวนสัตว์ สวนสมเด็จพระศรีนครินทร์ ศรีสะเกษ",
+      "nameTh": null,
+      "lat": 15.1049771,
+      "lng": 104.3029379,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w176281383",
+      "osmId": 176281383,
+      "osmType": "way",
+      "name": "ศูนย์แสดงพันธุ์สัตว์น้ำ เทศบาลเมืองศรีสะเกษ",
+      "nameTh": "ศูนย์แสดงพันธุ์สัตว์น้ำ เทศบาลเมืองศรีสะเกษ",
+      "lat": 15.0906474,
+      "lng": 104.3267981,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:43:32.530Z"
 }

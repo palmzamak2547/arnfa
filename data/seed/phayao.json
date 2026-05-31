@@ -11,7 +11,7 @@
     100.0270593
   ],
   "fetchedAt": "2026-05-31T12:33:58.314Z",
-  "count": 123,
+  "count": 131,
   "pois": [
     {
       "id": "osm-n1193876837",
@@ -2664,6 +2664,175 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n1193851808",
+      "osmId": 1193851808,
+      "osmType": "node",
+      "name": "Hollywood",
+      "nameTh": null,
+      "lat": 19.173038,
+      "lng": 99.8995378,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2082765051",
+      "osmId": 2082765051,
+      "osmType": "node",
+      "name": "ดอยหลวง",
+      "nameTh": "ดอยหลวง",
+      "lat": 19.133252,
+      "lng": 99.7591311,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5453743302",
+      "osmId": 5453743302,
+      "osmType": "node",
+      "name": "SF Cinema",
+      "nameTh": null,
+      "lat": 19.1858873,
+      "lng": 99.8938751,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6168197395",
+      "osmId": 6168197395,
+      "osmType": "node",
+      "name": "ดอยหนอก",
+      "nameTh": "ดอยหนอก",
+      "lat": 19.1398787,
+      "lng": 99.7492859,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6652541185",
+      "osmId": 6652541185,
+      "osmType": "node",
+      "name": "น้ำตกจำปาทอง",
+      "nameTh": null,
+      "lat": 19.2168023,
+      "lng": 99.7349504,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13469855017",
+      "osmId": 13469855017,
+      "osmType": "node",
+      "name": "ดอยจอมทอง",
+      "nameTh": null,
+      "lat": 19.1844851,
+      "lng": 99.8886293,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13483754601",
+      "osmId": 13483754601,
+      "osmType": "node",
+      "name": "Thai massage",
+      "nameTh": null,
+      "lat": 19.164719,
+      "lng": 99.8977975,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w738996879",
+      "osmId": 738996879,
+      "osmType": "way",
+      "name": "พระตำหนักกว๊านพะเยา",
+      "nameTh": "พระตำหนักกว๊านพะเยา",
+      "lat": 19.1605918,
+      "lng": 99.9152361,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:31:19.713Z"
 }

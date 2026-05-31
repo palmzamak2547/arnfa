@@ -11,7 +11,7 @@
     100.4200792
   ],
   "fetchedAt": "2026-05-31T12:44:45.456Z",
-  "count": 143,
+  "count": 144,
   "pois": [
     {
       "id": "osm-n1102859761",
@@ -3065,6 +3065,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n13861019553",
+      "osmId": 13861019553,
+      "osmType": "node",
+      "name": "มหาชัยราม่า",
+      "nameTh": null,
+      "lat": 13.5478587,
+      "lng": 100.2793492,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:40:38.710Z"
 }

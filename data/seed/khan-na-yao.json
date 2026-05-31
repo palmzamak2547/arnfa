@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:35:51.132Z",
-  "count": 96,
+  "count": 103,
   "pois": [
     {
       "id": "osm-n346317206",
@@ -2109,6 +2109,154 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n449805634",
+      "osmId": 449805634,
+      "osmType": "node",
+      "name": "Major Cineplex Fashion Island",
+      "nameTh": null,
+      "lat": 13.8261833,
+      "lng": 100.6783639,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11274288423",
+      "osmId": 11274288423,
+      "osmType": "node",
+      "name": "ปภานวดแผนไทย",
+      "nameTh": null,
+      "lat": 13.8449975,
+      "lng": 100.6532856,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11274288441",
+      "osmId": 11274288441,
+      "osmType": "node",
+      "name": "เรือนงามนวดเพื่อสุขภาพ",
+      "nameTh": null,
+      "lat": 13.8464368,
+      "lng": 100.6531829,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w205873179",
+      "osmId": 205873179,
+      "osmType": "way",
+      "name": "Chocolate Ville",
+      "nameTh": null,
+      "lat": 13.8113347,
+      "lng": 100.6641411,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Th 15:00-23:00; Fr-Su, PH 14:00-24:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w832285306",
+      "osmId": 832285306,
+      "osmType": "way",
+      "name": "Siam Amazing Park",
+      "nameTh": "สยามอะเมซิ่งพาร์ค",
+      "lat": 13.8067234,
+      "lng": 100.6964229,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1355626877",
+      "osmId": 1355626877,
+      "osmType": "way",
+      "name": "หาดเทียม",
+      "nameTh": "หาดเทียม",
+      "lat": 13.8049627,
+      "lng": 100.6985281,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1355635803",
+      "osmId": 1355635803,
+      "osmType": "way",
+      "name": "Dinner Theater",
+      "nameTh": null,
+      "lat": 13.8053611,
+      "lng": 100.6932563,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:18:35.784Z"
 }

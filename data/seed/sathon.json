@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:34:43.181Z",
-  "count": 185,
+  "count": 188,
   "pois": [
     {
       "id": "osm-n476307401",
@@ -4025,6 +4025,70 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n6979176385",
+      "osmId": 6979176385,
+      "osmType": "node",
+      "name": "ทิพย์ massage & spa",
+      "nameTh": null,
+      "lat": 13.7180745,
+      "lng": 100.5149356,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-23:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n7660243590",
+      "osmId": 7660243590,
+      "osmType": "node",
+      "name": "Printemps Spa Sathon",
+      "nameTh": "แพรงตอง สปา สาทร",
+      "lat": 13.7187,
+      "lng": 100.52737,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w1313224332",
+      "osmId": 1313224332,
+      "osmType": "way",
+      "name": "บ้านปลูกรัก",
+      "nameTh": "บ้านปลูกรัก",
+      "lat": 13.7239703,
+      "lng": 100.5463205,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:42:54.313Z"
 }

@@ -11,7 +11,7 @@
     100.4958728
   ],
   "fetchedAt": "2026-05-31T12:47:54.577Z",
-  "count": 100,
+  "count": 101,
   "pois": [
     {
       "id": "osm-n4401846592",
@@ -2152,6 +2152,28 @@
       "tags": {
         "cuisine": "coffee_shop"
       }
+    },
+    {
+      "id": "osm-n12172760833",
+      "osmId": 12172760833,
+      "osmType": "node",
+      "name": "มาตา นวดแผนไทย",
+      "nameTh": null,
+      "lat": 14.5776188,
+      "lng": 100.4561087,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:04:44.676Z"
 }

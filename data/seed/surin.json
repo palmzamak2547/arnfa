@@ -11,7 +11,7 @@
     103.6934874
   ],
   "fetchedAt": "2026-05-31T12:47:28.533Z",
-  "count": 56,
+  "count": 57,
   "pois": [
     {
       "id": "osm-n513430010",
@@ -1216,6 +1216,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n8259599979",
+      "osmId": 8259599979,
+      "osmType": "node",
+      "name": "TaraWaDee Thai Massage",
+      "nameTh": null,
+      "lat": 14.8887685,
+      "lng": 103.5009585,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 08:00-20:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:46:08.844Z"
 }

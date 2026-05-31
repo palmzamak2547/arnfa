@@ -11,7 +11,7 @@
     101.1440827
   ],
   "fetchedAt": "2026-05-31T12:25:06.533Z",
-  "count": 34,
+  "count": 36,
   "pois": [
     {
       "id": "osm-n4182792692",
@@ -738,6 +738,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-w949997354",
+      "osmId": 949997354,
+      "osmType": "way",
+      "name": "กิตติรามา",
+      "nameTh": null,
+      "lat": 13.6936595,
+      "lng": 101.0686664,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w951357134",
+      "osmId": 951357134,
+      "osmType": "way",
+      "name": "Major",
+      "nameTh": null,
+      "lat": 13.6898904,
+      "lng": 101.0558505,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:10:04.990Z"
 }

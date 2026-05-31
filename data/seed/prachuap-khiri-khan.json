@@ -11,7 +11,7 @@
     99.9109133
   ],
   "fetchedAt": "2026-05-31T12:32:40.898Z",
-  "count": 91,
+  "count": 102,
   "pois": [
     {
       "id": "osm-n1641043361",
@@ -1972,6 +1972,238 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n1902788387",
+      "osmId": 1902788387,
+      "osmType": "node",
+      "name": "เขาล้อมหมวก",
+      "nameTh": "เขาล้อมหมวก",
+      "lat": 11.7852841,
+      "lng": 99.8166977,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2501370842",
+      "osmId": 2501370842,
+      "osmType": "node",
+      "name": "เขาช่องกระจก",
+      "nameTh": "เขาช่องกระจก",
+      "lat": 11.8155076,
+      "lng": 99.798198,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2617404414",
+      "osmId": 2617404414,
+      "osmType": "node",
+      "name": "Khao Muang Lai [Prachuap Khiri Khan]",
+      "nameTh": null,
+      "lat": 11.8394838,
+      "lng": 99.8316171,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2640978276",
+      "osmId": 2640978276,
+      "osmType": "node",
+      "name": "เขาคลองวาฬ",
+      "nameTh": null,
+      "lat": 11.7537618,
+      "lng": 99.7967501,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2640978278",
+      "osmId": 2640978278,
+      "osmType": "node",
+      "name": "เขาตาม่องล่าย",
+      "nameTh": "เขาตาม่องล่าย",
+      "lat": 11.8467444,
+      "lng": 99.8296993,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2670198135",
+      "osmId": 2670198135,
+      "osmType": "node",
+      "name": "เขาน้อย",
+      "nameTh": null,
+      "lat": 11.9172479,
+      "lng": 99.7519481,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6030442102",
+      "osmId": 6030442102,
+      "osmType": "node",
+      "name": "แหลมอ่าวมะค่า",
+      "nameTh": "แหลมอ่าวมะค่า",
+      "lat": 11.6658795,
+      "lng": 99.7208066,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6288274182",
+      "osmId": 6288274182,
+      "osmType": "node",
+      "name": "Ranida Thai Massage",
+      "nameTh": null,
+      "lat": 11.8018093,
+      "lng": 99.7996674,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w199820479",
+      "osmId": 199820479,
+      "osmType": "way",
+      "name": "หาดอ่าวมะนาว",
+      "nameTh": null,
+      "lat": 11.7714312,
+      "lng": 99.7973065,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w253760909",
+      "osmId": 253760909,
+      "osmType": "way",
+      "name": "Waghor Aquarium",
+      "nameTh": null,
+      "lat": 11.7200494,
+      "lng": 99.7595528,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su,PH 09:00-16:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w253816464",
+      "osmId": 253816464,
+      "osmType": "way",
+      "name": "หาดหวากอ",
+      "nameTh": null,
+      "lat": 11.7136813,
+      "lng": 99.7549164,
+      "category": "nature",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.25,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:36:04.011Z"
 }

@@ -11,7 +11,7 @@
     100.55
   ],
   "fetchedAt": "2026-05-31T12:30:51.050Z",
-  "count": 152,
+  "count": 156,
   "pois": [
     {
       "id": "osm-n1099272107",
@@ -3282,6 +3282,91 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n10316327524",
+      "osmId": 10316327524,
+      "osmType": "node",
+      "name": "GAYA Body Massage",
+      "nameTh": null,
+      "lat": 13.8431576,
+      "lng": 100.48275,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10590146011",
+      "osmId": 10590146011,
+      "osmType": "node",
+      "name": "Great Massage",
+      "nameTh": null,
+      "lat": 13.8879222,
+      "lng": 100.5235741,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12317302189",
+      "osmId": 12317302189,
+      "osmType": "node",
+      "name": "Relax Express Bangkok",
+      "nameTh": "รีแล๊กซ์ เอ็กซ์เพรส แบงค็อก",
+      "lat": 13.8804718,
+      "lng": 100.5446524,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:30-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w260721380",
+      "osmId": 260721380,
+      "osmType": "way",
+      "name": "Esplande Cineplex Ngamwongwan-Khaerai",
+      "nameTh": "เอสพลานาด ซีนีเพล็กซ์ งามวงศ์วาน-แคราย",
+      "lat": 13.860362,
+      "lng": 100.5185366,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 1,
+        "confidence": 0.65
+      },
+      "openingHoursRaw": "Mo-Fr 10:30-22:00; Sa-Su 10:00-22:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:28:59.049Z"
 }

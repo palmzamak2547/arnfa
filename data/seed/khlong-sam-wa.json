@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:35:46.970Z",
-  "count": 65,
+  "count": 66,
   "pois": [
     {
       "id": "osm-n2558452831",
@@ -1407,6 +1407,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-w706259602",
+      "osmId": 706259602,
+      "osmType": "way",
+      "name": "ซาฟารีเวิลด์",
+      "nameTh": "ซาฟารีเวิลด์",
+      "lat": 13.8653744,
+      "lng": 100.7031496,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:18:40.054Z"
 }

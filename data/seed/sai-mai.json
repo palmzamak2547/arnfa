@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:37:15.991Z",
-  "count": 58,
+  "count": 60,
   "pois": [
     {
       "id": "osm-n4443059147",
@@ -1276,6 +1276,49 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n5355919692",
+      "osmId": 5355919692,
+      "osmType": "node",
+      "name": "Ban Chomnard",
+      "nameTh": null,
+      "lat": 13.9203494,
+      "lng": 100.6851717,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:00-21:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n10682661387",
+      "osmId": 10682661387,
+      "osmType": "node",
+      "name": "Sona Thai Massage",
+      "nameTh": null,
+      "lat": 13.9210553,
+      "lng": 100.6844987,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 09:00-21:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:39:03.054Z"
 }

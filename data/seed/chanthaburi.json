@@ -11,7 +11,7 @@
     102.2119963
   ],
   "fetchedAt": "2026-05-31T12:24:04.234Z",
-  "count": 253,
+  "count": 257,
   "pois": [
     {
       "id": "osm-n1674579689",
@@ -5644,6 +5644,91 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n7144476722",
+      "osmId": 7144476722,
+      "osmType": "node",
+      "name": "SF Cinema Robinson จันทบุรี",
+      "nameTh": null,
+      "lat": 12.5998285,
+      "lng": 102.1155427,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-21:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n7144496344",
+      "osmId": 7144496344,
+      "osmType": "node",
+      "name": "Major Cineplex จันทบุรี​",
+      "nameTh": null,
+      "lat": 12.5979448,
+      "lng": 102.0984919,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w553427876",
+      "osmId": 553427876,
+      "osmType": "way",
+      "name": "โรงหนังศรีบูรพา",
+      "nameTh": "โรงหนังศรีบูรพา",
+      "lat": 12.6085586,
+      "lng": 102.1084271,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w554492009",
+      "osmId": 554492009,
+      "osmType": "way",
+      "name": "สยามราม่า",
+      "nameTh": null,
+      "lat": 12.6092147,
+      "lng": 102.1098738,
+      "category": "entertainment",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:12:01.379Z"
 }

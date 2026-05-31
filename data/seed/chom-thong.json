@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:40:44.137Z",
-  "count": 69,
+  "count": 70,
   "pois": [
     {
       "id": "osm-n1496839207",
@@ -1494,6 +1494,28 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n7746507008",
+      "osmId": 7746507008,
+      "osmType": "node",
+      "name": "Chewadee Spa",
+      "nameTh": null,
+      "lat": 13.6746483,
+      "lng": 100.465698,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:14:47.265Z"
 }

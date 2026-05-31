@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:51.396Z",
-  "count": 34,
+  "count": 38,
   "pois": [
     {
       "id": "osm-n891270236",
@@ -766,6 +766,91 @@
       },
       "openingHoursRaw": null,
       "tags": {}
+    },
+    {
+      "id": "osm-n5406961578",
+      "osmId": 5406961578,
+      "osmType": "node",
+      "name": "Bua-Tong Thai Massage",
+      "nameTh": null,
+      "lat": 13.6989247,
+      "lng": 100.6044407,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n6384985286",
+      "osmId": 6384985286,
+      "osmType": "node",
+      "name": "Pimmalai spa",
+      "nameTh": null,
+      "lat": 13.7036267,
+      "lng": 100.6022111,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n8555940810",
+      "osmId": 8555940810,
+      "osmType": "node",
+      "name": "Chinda Spa",
+      "nameTh": null,
+      "lat": 13.6862093,
+      "lng": 100.620331,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "10:00-22:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12738205216",
+      "osmId": 12738205216,
+      "osmType": "node",
+      "name": "Coco Land",
+      "nameTh": null,
+      "lat": 13.7024202,
+      "lng": 100.6027848,
+      "category": "spa",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:32:36.858Z"
 }

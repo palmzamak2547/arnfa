@@ -11,7 +11,7 @@
   ],
   "adminLevel": 6,
   "fetchedAt": "2026-05-31T07:46:33.361Z",
-  "count": 99,
+  "count": 100,
   "pois": [
     {
       "id": "osm-n1490308670",
@@ -2148,6 +2148,28 @@
       },
       "openingHoursRaw": "Mo-Su 08:30-24:00",
       "tags": {}
+    },
+    {
+      "id": "osm-w205873179",
+      "osmId": 205873179,
+      "osmType": "way",
+      "name": "Chocolate Ville",
+      "nameTh": null,
+      "lat": 13.8113347,
+      "lng": 100.6641411,
+      "category": "themepark",
+      "profile": {
+        "outdoorness": 0.75,
+        "indoorness": 0.25,
+        "shade": 0.3,
+        "covered": 0.2,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Th 15:00-23:00; Fr-Su, PH 14:00-24:00",
+      "tags": {}
     }
-  ]
+  ],
+  "enrichedAt": "2026-05-31T13:09:28.908Z"
 }
