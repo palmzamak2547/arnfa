@@ -1,0 +1,884 @@
+{
+  "district": "nong-chok",
+  "districtTh": "หนองจอก",
+  "districtEn": "Nong Chok",
+  "osmRelationId": 3147501,
+  "bbox": [
+    13.7378123,
+    100.7873271,
+    13.9462063,
+    100.9386039
+  ],
+  "adminLevel": 6,
+  "fetchedAt": "2026-05-31T07:34:48.429Z",
+  "count": 41,
+  "pois": [
+    {
+      "id": "osm-n1561615353",
+      "osmId": 1561615353,
+      "osmType": "node",
+      "name": "วัดสีชมพู",
+      "nameTh": "วัดสีชมพู",
+      "lat": 13.9289871,
+      "lng": 100.8206597,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n1669526632",
+      "osmId": 1669526632,
+      "osmType": "node",
+      "name": "วัดทรัพย์สโมสรนิกรเกษม",
+      "nameTh": "วัดทรัพย์สโมสรนิกรเกษม",
+      "lat": 13.8507969,
+      "lng": 100.8030432,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n1669526680",
+      "osmId": 1669526680,
+      "osmType": "node",
+      "name": "วัดหนองจอก",
+      "nameTh": "วัดหนองจอก",
+      "lat": 13.8565753,
+      "lng": 100.8608707,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2006038962",
+      "osmId": 2006038962,
+      "osmType": "node",
+      "name": "บางกอกฟุตซอลอารีนา",
+      "nameTh": "บางกอกฟุตซอลอารีนา",
+      "lat": 13.8327241,
+      "lng": 100.8496271,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2037719495",
+      "osmId": 2037719495,
+      "osmType": "node",
+      "name": "ครัวเจ้านาย",
+      "nameTh": null,
+      "lat": 13.8175776,
+      "lng": 100.8425614,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n2736441870",
+      "osmId": 2736441870,
+      "osmType": "node",
+      "name": "มัสยิด ดารุ้ลมุกร้อดรอบีน (ลำหิน)",
+      "nameTh": null,
+      "lat": 13.8839708,
+      "lng": 100.8089845,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2845818594",
+      "osmId": 2845818594,
+      "osmType": "node",
+      "name": "มัสยิดอัตเตาฮีด",
+      "nameTh": null,
+      "lat": 13.9213239,
+      "lng": 100.8155109,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2850090237",
+      "osmId": 2850090237,
+      "osmType": "node",
+      "name": "วัดสามง่าม",
+      "nameTh": "วัดสามง่าม",
+      "lat": 13.8885977,
+      "lng": 100.8076509,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3012567233",
+      "osmId": 3012567233,
+      "osmType": "node",
+      "name": "เรือนแพร ฟิชชิ่งปาร์ค",
+      "nameTh": null,
+      "lat": 13.86318,
+      "lng": 100.7982251,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3022680847",
+      "osmId": 3022680847,
+      "osmType": "node",
+      "name": "สู้แค่หมด",
+      "nameTh": null,
+      "lat": 13.903532,
+      "lng": 100.7935104,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3048647486",
+      "osmId": 3048647486,
+      "osmType": "node",
+      "name": "food",
+      "nameTh": null,
+      "lat": 13.8591852,
+      "lng": 100.8606448,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3048684164",
+      "osmId": 3048684164,
+      "osmType": "node",
+      "name": "วัดประยงค์กิตติวนาราม",
+      "nameTh": "วัดประยงค์กิตติวนาราม",
+      "lat": 13.8972905,
+      "lng": 100.8694754,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3674405136",
+      "osmId": 3674405136,
+      "osmType": "node",
+      "name": "มัสยิดดารุ้ลมุตตะกีน",
+      "nameTh": null,
+      "lat": 13.8529625,
+      "lng": 100.8069521,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4381925609",
+      "osmId": 4381925609,
+      "osmType": "node",
+      "name": "บ้านสวน13",
+      "nameTh": null,
+      "lat": 13.8842468,
+      "lng": 100.8853282,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4527797513",
+      "osmId": 4527797513,
+      "osmType": "node",
+      "name": "Voodoo galler coffee valley",
+      "nameTh": null,
+      "lat": 13.8704566,
+      "lng": 100.8544068,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n7577260667",
+      "osmId": 7577260667,
+      "osmType": "node",
+      "name": "Jing Shop",
+      "nameTh": null,
+      "lat": 13.88703,
+      "lng": 100.8669645,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": "Mo-Fr 09:00-17:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n8605649966",
+      "osmId": 8605649966,
+      "osmType": "node",
+      "name": "Baan Rim Nam",
+      "nameTh": null,
+      "lat": 13.7931366,
+      "lng": 100.8196225,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10297856466",
+      "osmId": 10297856466,
+      "osmType": "node",
+      "name": "บ้านปลาทู&ปลาดาว",
+      "nameTh": null,
+      "lat": 13.8652306,
+      "lng": 100.8669619,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11083911189",
+      "osmId": 11083911189,
+      "osmType": "node",
+      "name": "วัดป่าวิศรุตรัตนาราม",
+      "nameTh": "วัดป่าวิศรุตรัตนาราม",
+      "lat": 13.9254923,
+      "lng": 100.901165,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11809736579",
+      "osmId": 11809736579,
+      "osmType": "node",
+      "name": "The Bung Steak Halal Food",
+      "nameTh": null,
+      "lat": 13.8541205,
+      "lng": 100.8290675,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "japanese;burger;thai;steak_house"
+      }
+    },
+    {
+      "id": "osm-n12253826780",
+      "osmId": 12253826780,
+      "osmType": "node",
+      "name": "วัดแสนเกษม",
+      "nameTh": "วัดแสนเกษม",
+      "lat": 13.9039182,
+      "lng": 100.8895997,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12253826781",
+      "osmId": 12253826781,
+      "osmType": "node",
+      "name": "วัดนารีราษฎร์ประดิษฐ์",
+      "nameTh": "วัดนารีราษฎร์ประดิษฐ์",
+      "lat": 13.9150565,
+      "lng": 100.863273,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12253826783",
+      "osmId": 12253826783,
+      "osmType": "node",
+      "name": "วัดกระทุ่มราย",
+      "nameTh": "วัดกระทุ่มราย",
+      "lat": 13.810863,
+      "lng": 100.9328982,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12253826784",
+      "osmId": 12253826784,
+      "osmType": "node",
+      "name": "วัดราษฎร์บำรุง",
+      "nameTh": "วัดราษฎร์บำรุง",
+      "lat": 13.8117203,
+      "lng": 100.877741,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12253826785",
+      "osmId": 12253826785,
+      "osmType": "node",
+      "name": "วัดอู่ตะเภา",
+      "nameTh": "วัดอู่ตะเภา",
+      "lat": 13.7911147,
+      "lng": 100.8131227,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12253826786",
+      "osmId": 12253826786,
+      "osmType": "node",
+      "name": "วัดลำผักชี",
+      "nameTh": "วัดลำผักชี",
+      "lat": 13.7834563,
+      "lng": 100.8286961,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12253826787",
+      "osmId": 12253826787,
+      "osmType": "node",
+      "name": "วัดเจียระดับ",
+      "nameTh": "วัดเจียระดับ",
+      "lat": 13.8123706,
+      "lng": 100.8453998,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12462654981",
+      "osmId": 12462654981,
+      "osmType": "node",
+      "name": "ม่วน คาเฟ่",
+      "nameTh": null,
+      "lat": 13.8490917,
+      "lng": 100.9027132,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w191194252",
+      "osmId": 191194252,
+      "osmType": "way",
+      "name": "มัสยิดคอยรุดดีน (ลำต้นกล้วย)",
+      "nameTh": null,
+      "lat": 13.8184114,
+      "lng": 100.850618,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w191550091",
+      "osmId": 191550091,
+      "osmType": "way",
+      "name": "สวนหนองจอก",
+      "nameTh": "สวนหนองจอก",
+      "lat": 13.8521074,
+      "lng": 100.8592656,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "05:00-20:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w212955378",
+      "osmId": 212955378,
+      "osmType": "way",
+      "name": "ศูนย์บริหารกิจการศาสนาอิสลามแห่งชาติเฉลิมพระเกียรติ",
+      "nameTh": "ศูนย์บริหารกิจการศาสนาอิสลามแห่งชาติเฉลิมพระเกียรติ",
+      "lat": 13.9237925,
+      "lng": 100.7958933,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w280981800",
+      "osmId": 280981800,
+      "osmType": "way",
+      "name": "มัสยิดอัลฮิดายะห์",
+      "nameTh": "มัสยิดอัลฮิดายะห์",
+      "lat": 13.8900401,
+      "lng": 100.8503352,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w446849448",
+      "osmId": 446849448,
+      "osmType": "way",
+      "name": "วัดใหม่เจริญราษฏร์",
+      "nameTh": "วัดใหม่เจริญราษฏร์",
+      "lat": 13.8880463,
+      "lng": 100.9063304,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w552416593",
+      "osmId": 552416593,
+      "osmType": "way",
+      "name": "สวนน้ำพุสี่ชั้น ม.มหานคร",
+      "nameTh": null,
+      "lat": 13.845325,
+      "lng": 100.8560034,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w552484619",
+      "osmId": 552484619,
+      "osmType": "way",
+      "name": "สวนบ่อน้ำ ม.มหานคร",
+      "nameTh": null,
+      "lat": 13.8447212,
+      "lng": 100.8570067,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w762156106",
+      "osmId": 762156106,
+      "osmType": "way",
+      "name": "บางกอก อารีนา",
+      "nameTh": "บางกอก อารีนา",
+      "lat": 13.8319333,
+      "lng": 100.8499095,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w904167968",
+      "osmId": 904167968,
+      "osmType": "way",
+      "name": "Nong Chok Market",
+      "nameTh": null,
+      "lat": 13.8562506,
+      "lng": 100.8664032,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1167736954",
+      "osmId": 1167736954,
+      "osmType": "way",
+      "name": "สเต็กลุงหยิก หนองจอก",
+      "nameTh": null,
+      "lat": 13.8494056,
+      "lng": 100.859359,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "steak_house"
+      }
+    },
+    {
+      "id": "osm-w1259654174",
+      "osmId": 1259654174,
+      "osmType": "way",
+      "name": "วัดลำพะอง",
+      "nameTh": "วัดลำพะอง",
+      "lat": 13.7685639,
+      "lng": 100.8342316,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1262065736",
+      "osmId": 1262065736,
+      "osmType": "way",
+      "name": "วัดลำวังคาสุทธาวาส",
+      "nameTh": "วัดลำวังคาสุทธาวาส",
+      "lat": 13.7457705,
+      "lng": 100.8766578,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1263171272",
+      "osmId": 1263171272,
+      "osmType": "way",
+      "name": "วัดใหม่กระทุ่มล้ม",
+      "nameTh": "วัดใหม่กระทุ่มล้ม",
+      "lat": 13.7796121,
+      "lng": 100.8715401,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    }
+  ]
+}

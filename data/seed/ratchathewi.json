@@ -1,0 +1,4600 @@
+{
+  "district": "ratchathewi",
+  "districtTh": "ราชเทวี",
+  "districtEn": "Ratchathewi",
+  "osmRelationId": 92064,
+  "bbox": [
+    13.7478553,
+    100.5190372,
+    13.7743399,
+    100.5649221
+  ],
+  "adminLevel": 6,
+  "fetchedAt": "2026-05-31T07:36:06.922Z",
+  "count": 211,
+  "pois": [
+    {
+      "id": "osm-n2327064271",
+      "osmId": 2327064271,
+      "osmType": "node",
+      "name": "วิคตอรี่ คอร์นเนอร์",
+      "nameTh": null,
+      "lat": 13.7637167,
+      "lng": 100.5378836,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2494606495",
+      "osmId": 2494606495,
+      "osmType": "node",
+      "name": "Dunkin'",
+      "nameTh": null,
+      "lat": 13.7498678,
+      "lng": 100.5400374,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "donut;coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n2494606496",
+      "osmId": 2494606496,
+      "osmType": "node",
+      "name": "McDonald's",
+      "nameTh": "แมคโดนัลด์",
+      "lat": 13.749953,
+      "lng": 100.5404602,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "24/7",
+      "tags": {
+        "cuisine": "burger"
+      }
+    },
+    {
+      "id": "osm-n2494606497",
+      "osmId": 2494606497,
+      "osmType": "node",
+      "name": "Starbucks",
+      "nameTh": "สตาร์บัคส์",
+      "lat": 13.750609,
+      "lng": 100.5384124,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n2494606498",
+      "osmId": 2494606498,
+      "osmType": "node",
+      "name": "Swensen's",
+      "nameTh": null,
+      "lat": 13.7501837,
+      "lng": 100.5396726,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "ice_cream"
+      }
+    },
+    {
+      "id": "osm-n2512416406",
+      "osmId": 2512416406,
+      "osmType": "node",
+      "name": "The Pizza Company",
+      "nameTh": "เดอะ พิซซ่า คอมปะนี",
+      "lat": 13.7517478,
+      "lng": 100.5364844,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "pizza"
+      }
+    },
+    {
+      "id": "osm-n2512680808",
+      "osmId": 2512680808,
+      "osmType": "node",
+      "name": "The Rock Pub",
+      "nameTh": null,
+      "lat": 13.7510722,
+      "lng": 100.5317067,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.3,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2512680820",
+      "osmId": 2512680820,
+      "osmType": "node",
+      "name": "73 Bar",
+      "nameTh": null,
+      "lat": 13.7514077,
+      "lng": 100.5317953,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.3,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2512680822",
+      "osmId": 2512680822,
+      "osmType": "node",
+      "name": "Chilling House cafe",
+      "nameTh": null,
+      "lat": 13.7506604,
+      "lng": 100.5321785,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.5,
+        "indoorness": 0.7,
+        "shade": 0.30000000000000004,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": "osm-n2512680824",
+      "osmId": 2512680824,
+      "osmType": "node",
+      "name": "Skate Cafe",
+      "nameTh": null,
+      "lat": 13.751545,
+      "lng": 100.531985,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.3,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2512680825",
+      "osmId": 2512680825,
+      "osmType": "node",
+      "name": "Your Steak",
+      "nameTh": null,
+      "lat": 13.751574,
+      "lng": 100.531808,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.3,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2512680827",
+      "osmId": 2512680827,
+      "osmType": "node",
+      "name": "Chang",
+      "nameTh": null,
+      "lat": 13.751652,
+      "lng": 100.532306,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.3,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2512680830",
+      "osmId": 2512680830,
+      "osmType": "node",
+      "name": "HoL KloM",
+      "nameTh": null,
+      "lat": 13.751671,
+      "lng": 100.532147,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.3,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2512680831",
+      "osmId": 2512680831,
+      "osmType": "node",
+      "name": "Muay Thai",
+      "nameTh": null,
+      "lat": 13.751683,
+      "lng": 100.532029,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.5,
+        "indoorness": 0.7,
+        "shade": 0.30000000000000004,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": "osm-n2512680832",
+      "osmId": 2512680832,
+      "osmType": "node",
+      "name": "Music Sciety",
+      "nameTh": null,
+      "lat": 13.75172,
+      "lng": 100.531831,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.3,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n2894977953",
+      "osmId": 2894977953,
+      "osmType": "node",
+      "name": "Quest Cafe",
+      "nameTh": null,
+      "lat": 13.7553631,
+      "lng": 100.5327535,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "06:00-22:00",
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n2896468788",
+      "osmId": 2896468788,
+      "osmType": "node",
+      "name": "8 Bit House",
+      "nameTh": null,
+      "lat": 13.7517447,
+      "lng": 100.5306258,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "07:00-21:00",
+      "tags": {
+        "cuisine": "breakfast"
+      }
+    },
+    {
+      "id": "osm-n2896616995",
+      "osmId": 2896616995,
+      "osmType": "node",
+      "name": "Gift Kae",
+      "nameTh": null,
+      "lat": 13.7544423,
+      "lng": 100.5322744,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n2962489061",
+      "osmId": 2962489061,
+      "osmType": "node",
+      "name": "พิพิธภัณฑ์แรงงานไทย",
+      "nameTh": null,
+      "lat": 13.7530368,
+      "lng": 100.5497571,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3078432038",
+      "osmId": 3078432038,
+      "osmType": "node",
+      "name": "T.S. Cuisine",
+      "nameTh": null,
+      "lat": 13.751705,
+      "lng": 100.531948,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3152433010",
+      "osmId": 3152433010,
+      "osmType": "node",
+      "name": "Sri Lanka",
+      "nameTh": null,
+      "lat": 13.7517868,
+      "lng": 100.5363661,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n3237436683",
+      "osmId": 3237436683,
+      "osmType": "node",
+      "name": "P'Aor Restaurant",
+      "nameTh": null,
+      "lat": 13.7554862,
+      "lng": 100.5293573,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n3303524182",
+      "osmId": 3303524182,
+      "osmType": "node",
+      "name": "Roti street stall",
+      "nameTh": null,
+      "lat": 13.7539331,
+      "lng": 100.5304155,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Evenings only. Closed Mondays.",
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n3595643248",
+      "osmId": 3595643248,
+      "osmType": "node",
+      "name": "ประจักษ์เบเกอรี่",
+      "nameTh": "ประจักษ์เบเกอรี่",
+      "lat": 13.7660025,
+      "lng": 100.5362439,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3644576293",
+      "osmId": 3644576293,
+      "osmType": "node",
+      "name": "Heap Cafe and Restaurant",
+      "nameTh": null,
+      "lat": 13.7660302,
+      "lng": 100.5378054,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.4,
+        "indoorness": 0.8,
+        "shade": 0.2,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "outdoor_seating": "yes",
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n3858706150",
+      "osmId": 3858706150,
+      "osmType": "node",
+      "name": "Burger King",
+      "nameTh": null,
+      "lat": 13.7505371,
+      "lng": 100.5386984,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "burger"
+      }
+    },
+    {
+      "id": "osm-n3858706151",
+      "osmId": 3858706151,
+      "osmType": "node",
+      "name": "คาเฟ่ อเมซอน",
+      "nameTh": "คาเฟ่ อเมซอน",
+      "lat": 13.7502671,
+      "lng": 100.5394636,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n3858706259",
+      "osmId": 3858706259,
+      "osmType": "node",
+      "name": "S&P",
+      "nameTh": null,
+      "lat": 13.7510062,
+      "lng": 100.5372968,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3858706261",
+      "osmId": 3858706261,
+      "osmType": "node",
+      "name": "Subway",
+      "nameTh": null,
+      "lat": 13.7505488,
+      "lng": 100.5384786,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "sandwich"
+      }
+    },
+    {
+      "id": "osm-n3951947032",
+      "osmId": 3951947032,
+      "osmType": "node",
+      "name": "Platinum Fashion Mall Food Curt",
+      "nameTh": null,
+      "lat": 13.7498876,
+      "lng": 100.5399471,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3952004863",
+      "osmId": 3952004863,
+      "osmType": "node",
+      "name": "Guptaji Ki Kitchen",
+      "nameTh": null,
+      "lat": 13.7539415,
+      "lng": 100.5393892,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "indian"
+      }
+    },
+    {
+      "id": "osm-n3952149219",
+      "osmId": 3952149219,
+      "osmType": "node",
+      "name": "Royal Dosa",
+      "nameTh": null,
+      "lat": 13.7539968,
+      "lng": 100.5394159,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "indian"
+      }
+    },
+    {
+      "id": "osm-n4038224948",
+      "osmId": 4038224948,
+      "osmType": "node",
+      "name": "Fada",
+      "nameTh": null,
+      "lat": 13.7549779,
+      "lng": 100.5308473,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4155951368",
+      "osmId": 4155951368,
+      "osmType": "node",
+      "name": "Surat Restaurant & Cafe",
+      "nameTh": null,
+      "lat": 13.7577339,
+      "lng": 100.5228604,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4219849290",
+      "osmId": 4219849290,
+      "osmType": "node",
+      "name": "Knang Heng",
+      "nameTh": null,
+      "lat": 13.7497755,
+      "lng": 100.5413607,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4242721200",
+      "osmId": 4242721200,
+      "osmType": "node",
+      "name": "Kuang Seafood",
+      "nameTh": null,
+      "lat": 13.759029,
+      "lng": 100.542291,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4250583489",
+      "osmId": 4250583489,
+      "osmType": "node",
+      "name": "Hong Gi Seafood",
+      "nameTh": null,
+      "lat": 13.7515717,
+      "lng": 100.5393524,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4330802201",
+      "osmId": 4330802201,
+      "osmType": "node",
+      "name": "Phyathai Palace",
+      "nameTh": null,
+      "lat": 13.7679929,
+      "lng": 100.5329418,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4339681593",
+      "osmId": 4339681593,
+      "osmType": "node",
+      "name": "Food Stands",
+      "nameTh": null,
+      "lat": 13.754243,
+      "lng": 100.5281288,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4356303994",
+      "osmId": 4356303994,
+      "osmType": "node",
+      "name": "Once upon a time",
+      "nameTh": null,
+      "lat": 13.752401,
+      "lng": 100.53809,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n4411709995",
+      "osmId": 4411709995,
+      "osmType": "node",
+      "name": "Sky Train Jazz Bar",
+      "nameTh": "Sky Train Jazz Bar",
+      "lat": 13.7612517,
+      "lng": 100.5365117,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.3,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4412535889",
+      "osmId": 4412535889,
+      "osmType": "node",
+      "name": "Ka - Tak Kafe",
+      "nameTh": "Ka - Tak Kafe",
+      "lat": 13.7590864,
+      "lng": 100.5311732,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4427633402",
+      "osmId": 4427633402,
+      "osmType": "node",
+      "name": "Canton",
+      "nameTh": "Canton",
+      "lat": 13.7556319,
+      "lng": 100.5328535,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "japanese;noodles;asian;thai"
+      }
+    },
+    {
+      "id": "osm-n4430017293",
+      "osmId": 4430017293,
+      "osmType": "node",
+      "name": "Baan Ajarn",
+      "nameTh": null,
+      "lat": 13.7590595,
+      "lng": 100.5418078,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4620569889",
+      "osmId": 4620569889,
+      "osmType": "node",
+      "name": "Original Thai Wonton Mee",
+      "nameTh": null,
+      "lat": 13.751623,
+      "lng": 100.5385454,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 09:00-15:00",
+      "tags": {
+        "cuisine": "noodle"
+      }
+    },
+    {
+      "id": "osm-n4783716653",
+      "osmId": 4783716653,
+      "osmType": "node",
+      "name": "มัสยิดดารุลฟะละฮ์",
+      "nameTh": "มัสยิดดารุลฟะละฮ์",
+      "lat": 13.7501142,
+      "lng": 100.5281757,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4800377421",
+      "osmId": 4800377421,
+      "osmType": "node",
+      "name": "Rich Coffee",
+      "nameTh": null,
+      "lat": 13.7564519,
+      "lng": 100.5304911,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5290113721",
+      "osmId": 5290113721,
+      "osmType": "node",
+      "name": "ส้มตำสาวอุบล",
+      "nameTh": null,
+      "lat": 13.7662249,
+      "lng": 100.537757,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 09:00-21:00",
+      "tags": {
+        "cuisine": "diner"
+      }
+    },
+    {
+      "id": "osm-n5425958021",
+      "osmId": 5425958021,
+      "osmType": "node",
+      "name": "A&W",
+      "nameTh": null,
+      "lat": 13.7509465,
+      "lng": 100.5375286,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5485728107",
+      "osmId": 5485728107,
+      "osmType": "node",
+      "name": "Ken Café",
+      "nameTh": null,
+      "lat": 13.7500226,
+      "lng": 100.5374018,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5626524923",
+      "osmId": 5626524923,
+      "osmType": "node",
+      "name": "rang nam rd. street food",
+      "nameTh": null,
+      "lat": 13.7613037,
+      "lng": 100.5368249,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n5694644158",
+      "osmId": 5694644158,
+      "osmType": "node",
+      "name": "Fat Cow On The Roof",
+      "nameTh": null,
+      "lat": 13.7506443,
+      "lng": 100.5466843,
+      "category": "bar",
+      "profile": {
+        "outdoorness": 0.5,
+        "indoorness": 0.7,
+        "shade": 0.30000000000000004,
+        "covered": 0.7,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.65,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": "osm-n5736005848",
+      "osmId": 5736005848,
+      "osmType": "node",
+      "name": "Hungry Nerd",
+      "nameTh": null,
+      "lat": 13.75182,
+      "lng": 100.53182,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "steak_house"
+      }
+    },
+    {
+      "id": "osm-n5743147230",
+      "osmId": 5743147230,
+      "osmType": "node",
+      "name": "B-Story Cafe",
+      "nameTh": null,
+      "lat": 13.7519076,
+      "lng": 100.5318453,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6044688796",
+      "osmId": 6044688796,
+      "osmType": "node",
+      "name": "Sutyot Kuatiao Rua Payak Noodle",
+      "nameTh": null,
+      "lat": 13.752889,
+      "lng": 100.5313293,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6146632985",
+      "osmId": 6146632985,
+      "osmType": "node",
+      "name": "Nagatuki",
+      "nameTh": null,
+      "lat": 13.7571867,
+      "lng": 100.542597,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "japanese"
+      }
+    },
+    {
+      "id": "osm-n6149039727",
+      "osmId": 6149039727,
+      "osmType": "node",
+      "name": "Sushi Masa",
+      "nameTh": null,
+      "lat": 13.7518421,
+      "lng": 100.5299249,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "japanese"
+      }
+    },
+    {
+      "id": "osm-n6149039728",
+      "osmId": 6149039728,
+      "osmType": "node",
+      "name": "Lazy Mary",
+      "nameTh": null,
+      "lat": 13.7518274,
+      "lng": 100.5298537,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop;bakery"
+      }
+    },
+    {
+      "id": "osm-n6165297985",
+      "osmId": 6165297985,
+      "osmType": "node",
+      "name": "Kay’s boutique breakfast",
+      "nameTh": null,
+      "lat": 13.7587352,
+      "lng": 100.541205,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "breakfast"
+      }
+    },
+    {
+      "id": "osm-n6169935485",
+      "osmId": 6169935485,
+      "osmType": "node",
+      "name": "Factory Coffee",
+      "nameTh": null,
+      "lat": 13.7594502,
+      "lng": 100.5354732,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop;cake"
+      }
+    },
+    {
+      "id": "osm-n6196917885",
+      "osmId": 6196917885,
+      "osmType": "node",
+      "name": "pee aor Tom yum goong",
+      "nameTh": null,
+      "lat": 13.7559344,
+      "lng": 100.5293927,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6259606788",
+      "osmId": 6259606788,
+      "osmType": "node",
+      "name": "Rife",
+      "nameTh": null,
+      "lat": 13.7517579,
+      "lng": 100.5293696,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n6259606789",
+      "osmId": 6259606789,
+      "osmType": "node",
+      "name": "Baan",
+      "nameTh": null,
+      "lat": 13.7517786,
+      "lng": 100.5295713,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6337370385",
+      "osmId": 6337370385,
+      "osmType": "node",
+      "name": "The Place 168",
+      "nameTh": null,
+      "lat": 13.7520117,
+      "lng": 100.5385924,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 10:00-21:00",
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n6339281869",
+      "osmId": 6339281869,
+      "osmType": "node",
+      "name": "Santa Fe Steak",
+      "nameTh": null,
+      "lat": 13.761609,
+      "lng": 100.5373523,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "steak_house"
+      }
+    },
+    {
+      "id": "osm-n6339281870",
+      "osmId": 6339281870,
+      "osmType": "node",
+      "name": "Shabushi",
+      "nameTh": null,
+      "lat": 13.7615505,
+      "lng": 100.5370337,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6339281871",
+      "osmId": 6339281871,
+      "osmType": "node",
+      "name": "yayoi",
+      "nameTh": null,
+      "lat": 13.7617353,
+      "lng": 100.5373034,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "japanese"
+      }
+    },
+    {
+      "id": "osm-n6339282686",
+      "osmId": 6339282686,
+      "osmType": "node",
+      "name": "Rest note Cafe",
+      "nameTh": null,
+      "lat": 13.7630834,
+      "lng": 100.5375235,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n6339282733",
+      "osmId": 6339282733,
+      "osmType": "node",
+      "name": "ข้าวมันไก่ตอนเจ๊วา",
+      "nameTh": null,
+      "lat": 13.7645819,
+      "lng": 100.5394811,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "chicken"
+      }
+    },
+    {
+      "id": "osm-n6339282734",
+      "osmId": 6339282734,
+      "osmType": "node",
+      "name": "Inari Izakaya",
+      "nameTh": null,
+      "lat": 13.7645142,
+      "lng": 100.5395871,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "japanese"
+      }
+    },
+    {
+      "id": "osm-n6906003485",
+      "osmId": 6906003485,
+      "osmType": "node",
+      "name": "สวีทตี้ เรสเตอรองก์",
+      "nameTh": null,
+      "lat": 13.7519476,
+      "lng": 100.5285327,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 11:00-23:55",
+      "tags": {
+        "cuisine": "international"
+      }
+    },
+    {
+      "id": "osm-n7010470187",
+      "osmId": 7010470187,
+      "osmType": "node",
+      "name": "船麵",
+      "nameTh": null,
+      "lat": 13.7614973,
+      "lng": 100.5372239,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n7037615985",
+      "osmId": 7037615985,
+      "osmType": "node",
+      "name": "Food Court",
+      "nameTh": null,
+      "lat": 13.7509211,
+      "lng": 100.5378642,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n7038120485",
+      "osmId": 7038120485,
+      "osmType": "node",
+      "name": "Grandmother Restaurant",
+      "nameTh": null,
+      "lat": 13.7515721,
+      "lng": 100.5318768,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n7118286113",
+      "osmId": 7118286113,
+      "osmType": "node",
+      "name": "Tor-Tom-Ton",
+      "nameTh": null,
+      "lat": 13.7551028,
+      "lng": 100.532959,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n7118312823",
+      "osmId": 7118312823,
+      "osmType": "node",
+      "name": "Garden Salad",
+      "nameTh": null,
+      "lat": 13.7550781,
+      "lng": 100.532942,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "salad;thai"
+      }
+    },
+    {
+      "id": "osm-n7140191274",
+      "osmId": 7140191274,
+      "osmType": "node",
+      "name": "Coffee Dee",
+      "nameTh": null,
+      "lat": 13.7598139,
+      "lng": 100.5398504,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n7928431785",
+      "osmId": 7928431785,
+      "osmType": "node",
+      "name": "Manel Lankan",
+      "nameTh": null,
+      "lat": 13.7527531,
+      "lng": 100.5421533,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 09:00-00:00",
+      "tags": {
+        "outdoor_seating": "no",
+        "cuisine": "sri_lankan;indian"
+      }
+    },
+    {
+      "id": "osm-n8755081241",
+      "osmId": 8755081241,
+      "osmType": "node",
+      "name": "Mobile Steak",
+      "nameTh": null,
+      "lat": 13.7606137,
+      "lng": 100.5385503,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.4,
+        "indoorness": 0.8,
+        "shade": 0.2,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "08:00-23:00",
+      "tags": {
+        "outdoor_seating": "yes",
+        "cuisine": "steak;thai;asian"
+      }
+    },
+    {
+      "id": "osm-n8755081242",
+      "osmId": 8755081242,
+      "osmType": "node",
+      "name": "อีสานรสเด็ด",
+      "nameTh": "อิสารรสเด็ด",
+      "lat": 13.7608848,
+      "lng": 100.5379561,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "PH,Mo-Su 10:30-22:00",
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n8797708205",
+      "osmId": 8797708205,
+      "osmType": "node",
+      "name": "ตึกใบหยก 2",
+      "nameTh": "ตึกใบหยก 2",
+      "lat": 13.754561,
+      "lng": 100.5403984,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n9591155561",
+      "osmId": 9591155561,
+      "osmType": "node",
+      "name": "ร้านนายอินทร์",
+      "nameTh": "ร้านนายอินทร์",
+      "lat": 13.7673039,
+      "lng": 100.5256883,
+      "category": "library",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.75
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n9805947366",
+      "osmId": 9805947366,
+      "osmType": "node",
+      "name": "Black Canyon Coffee & Eatery",
+      "nameTh": "แบล็คแคนยอน",
+      "lat": 13.768015,
+      "lng": 100.5279883,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n9943102422",
+      "osmId": 9943102422,
+      "osmType": "node",
+      "name": "วัวล้วนๆไม่มีควายผสม สาขาอนุสาวรีย์ชัยสมรภูมิ (เกาะพญาไท)",
+      "nameTh": "วัวล้วนๆ ไม่มีควายผสม",
+      "lat": 13.7638834,
+      "lng": 100.5384638,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n9943102423",
+      "osmId": 9943102423,
+      "osmType": "node",
+      "name": "สุกี้ตี๋น้อย อนุสาวรีย์ชัย",
+      "nameTh": null,
+      "lat": 13.7647312,
+      "lng": 100.5392539,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10269373109",
+      "osmId": 10269373109,
+      "osmType": "node",
+      "name": "เ.ขี.ย.ง.",
+      "nameTh": null,
+      "lat": 13.7551355,
+      "lng": 100.5329855,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n10672744225",
+      "osmId": 10672744225,
+      "osmType": "node",
+      "name": "Bearoffee",
+      "nameTh": null,
+      "lat": 13.751925,
+      "lng": 100.5359985,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n10784310506",
+      "osmId": 10784310506,
+      "osmType": "node",
+      "name": "After You Dessert",
+      "nameTh": null,
+      "lat": 13.7503482,
+      "lng": 100.5395413,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10845746593",
+      "osmId": 10845746593,
+      "osmType": "node",
+      "name": "Everything Halal Restaurant",
+      "nameTh": null,
+      "lat": 13.7525575,
+      "lng": 100.5412604,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.9500000000000001,
+        "confidence": 0.6000000000000001
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "tags": {
+        "cuisine": "indian;pakistani;burmese"
+      }
+    },
+    {
+      "id": "osm-n11189883080",
+      "osmId": 11189883080,
+      "osmType": "node",
+      "name": "บังเอิญ! อร่อย โรตีสายไหม อนุสาวรีย์ชัยฯ",
+      "nameTh": null,
+      "lat": 13.7651547,
+      "lng": 100.5393039,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189883081",
+      "osmId": 11189883081,
+      "osmType": "node",
+      "name": "Cafe Cloud",
+      "nameTh": null,
+      "lat": 13.7650994,
+      "lng": 100.5392995,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189883082",
+      "osmId": 11189883082,
+      "osmType": "node",
+      "name": "Bro-Sis Burger",
+      "nameTh": null,
+      "lat": 13.7652049,
+      "lng": 100.5392741,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "burger"
+      }
+    },
+    {
+      "id": "osm-n11189883083",
+      "osmId": 11189883083,
+      "osmType": "node",
+      "name": "Nomu Cafe",
+      "nameTh": null,
+      "lat": 13.7652257,
+      "lng": 100.5393041,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189883084",
+      "osmId": 11189883084,
+      "osmType": "node",
+      "name": "ข้าวต้ม By น้องอันดา",
+      "nameTh": null,
+      "lat": 13.7652673,
+      "lng": 100.5393368,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189886755",
+      "osmId": 11189886755,
+      "osmType": "node",
+      "name": "ก๋วยจั๊บน้ำข้น อนุสาวรีย์ชัยฯ",
+      "nameTh": null,
+      "lat": 13.7638563,
+      "lng": 100.5380426,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189886757",
+      "osmId": 11189886757,
+      "osmType": "node",
+      "name": "Puff & Pie",
+      "nameTh": null,
+      "lat": 13.7638658,
+      "lng": 100.5381925,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189886758",
+      "osmId": 11189886758,
+      "osmType": "node",
+      "name": "Fashion walk",
+      "nameTh": null,
+      "lat": 13.7636533,
+      "lng": 100.5384608,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189892388",
+      "osmId": 11189892388,
+      "osmType": "node",
+      "name": "Victory Hub",
+      "nameTh": null,
+      "lat": 13.7647135,
+      "lng": 100.5393008,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189903677",
+      "osmId": 11189903677,
+      "osmType": "node",
+      "name": "ก๋วยเตี๋ยวเรือเจ๊กลอย ซอยราชวิถี 10",
+      "nameTh": null,
+      "lat": 13.7655536,
+      "lng": 100.539365,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189903678",
+      "osmId": 11189903678,
+      "osmType": "node",
+      "name": "เจ๊กลอยตามสั่ง ซอยราชวิถี 10",
+      "nameTh": null,
+      "lat": 13.7656073,
+      "lng": 100.5392989,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189903679",
+      "osmId": 11189903679,
+      "osmType": "node",
+      "name": "ร้านหลานย่าโม อาหารตามสั่ง อนุสาวรีย์ชัยฯ",
+      "nameTh": null,
+      "lat": 13.765679,
+      "lng": 100.5392099,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189907920",
+      "osmId": 11189907920,
+      "osmType": "node",
+      "name": "ร้านอ้วนอร่อย ข้าวแกงปักษ์ใต้",
+      "nameTh": null,
+      "lat": 13.7659582,
+      "lng": 100.5379847,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189907921",
+      "osmId": 11189907921,
+      "osmType": "node",
+      "name": "XL Tea",
+      "nameTh": null,
+      "lat": 13.7659364,
+      "lng": 100.537964,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189907922",
+      "osmId": 11189907922,
+      "osmType": "node",
+      "name": "All About Coco Homemade Ice Cream",
+      "nameTh": null,
+      "lat": 13.7659011,
+      "lng": 100.537947,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189914027",
+      "osmId": 11189914027,
+      "osmType": "node",
+      "name": "ห้าดาว",
+      "nameTh": null,
+      "lat": 13.765959,
+      "lng": 100.5382981,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189914028",
+      "osmId": 11189914028,
+      "osmType": "node",
+      "name": "PonMaree Bakery",
+      "nameTh": null,
+      "lat": 13.7659874,
+      "lng": 100.538178,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189914030",
+      "osmId": 11189914030,
+      "osmType": "node",
+      "name": "Owl",
+      "nameTh": null,
+      "lat": 13.7659894,
+      "lng": 100.5380035,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189992528",
+      "osmId": 11189992528,
+      "osmType": "node",
+      "name": "ครัวกำไรทอง ก๋วยเตี๋ยวลูกชิ้นน้ำใส",
+      "nameTh": null,
+      "lat": 13.7646667,
+      "lng": 100.5373682,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189992533",
+      "osmId": 11189992533,
+      "osmType": "node",
+      "name": "Hana  Bubble Tea",
+      "nameTh": null,
+      "lat": 13.7648197,
+      "lng": 100.5373613,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189992536",
+      "osmId": 11189992536,
+      "osmType": "node",
+      "name": "BT Beverages ผลไม้ปั่น น้ำสมุนไพร",
+      "nameTh": null,
+      "lat": 13.7658612,
+      "lng": 100.5378959,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997437",
+      "osmId": 11189997437,
+      "osmType": "node",
+      "name": "ข้าวมันไก่ เบอร์ ๑",
+      "nameTh": null,
+      "lat": 13.7648446,
+      "lng": 100.5373607,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997438",
+      "osmId": 11189997438,
+      "osmType": "node",
+      "name": "กาแฟพันธุ์ไทย",
+      "nameTh": null,
+      "lat": 13.7646584,
+      "lng": 100.537418,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997439",
+      "osmId": 11189997439,
+      "osmType": "node",
+      "name": "โดนัทเนยสดญี่ปุ่น",
+      "nameTh": null,
+      "lat": 13.7658844,
+      "lng": 100.5379207,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "donut"
+      }
+    },
+    {
+      "id": "osm-n11189997440",
+      "osmId": 11189997440,
+      "osmType": "node",
+      "name": "บะหมี่เกี๊ยว ข้าวหมูแดง เบอร์ ๑",
+      "nameTh": null,
+      "lat": 13.7647542,
+      "lng": 100.5373558,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997441",
+      "osmId": 11189997441,
+      "osmType": "node",
+      "name": "ไจแอ้น ลูกชิ้นปลาระเบิด",
+      "nameTh": null,
+      "lat": 13.7657808,
+      "lng": 100.5378374,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997442",
+      "osmId": 11189997442,
+      "osmType": "node",
+      "name": "มะม่วง น้ำปลาหวาน มือทอง",
+      "nameTh": null,
+      "lat": 13.7643287,
+      "lng": 100.5374081,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997443",
+      "osmId": 11189997443,
+      "osmType": "node",
+      "name": "Blue Sky Coffee",
+      "nameTh": null,
+      "lat": 13.7658332,
+      "lng": 100.5378757,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997444",
+      "osmId": 11189997444,
+      "osmType": "node",
+      "name": "Inthanin",
+      "nameTh": null,
+      "lat": 13.7649182,
+      "lng": 100.5373939,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997447",
+      "osmId": 11189997447,
+      "osmType": "node",
+      "name": "ร้านขนมจีน & ลูกชิ้นปิ้ง เบอร์ ๑",
+      "nameTh": null,
+      "lat": 13.7647315,
+      "lng": 100.5373558,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997449",
+      "osmId": 11189997449,
+      "osmType": "node",
+      "name": "ไก่โตเกียว",
+      "nameTh": null,
+      "lat": 13.7643006,
+      "lng": 100.5374142,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997451",
+      "osmId": 11189997451,
+      "osmType": "node",
+      "name": "ไอ้ต้าว",
+      "nameTh": null,
+      "lat": 13.7643465,
+      "lng": 100.5374648,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997452",
+      "osmId": 11189997452,
+      "osmType": "node",
+      "name": "Gaga",
+      "nameTh": null,
+      "lat": 13.7646335,
+      "lng": 100.5374224,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11189997454",
+      "osmId": 11189997454,
+      "osmType": "node",
+      "name": "ก๋วยเตี๋ยวไก่ตุ๋น เบอร์ ๑",
+      "nameTh": null,
+      "lat": 13.7648221,
+      "lng": 100.5373889,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11237459267",
+      "osmId": 11237459267,
+      "osmType": "node",
+      "name": "Texas Chicken",
+      "nameTh": null,
+      "lat": 13.7646379,
+      "lng": 100.5393046,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "chicken"
+      }
+    },
+    {
+      "id": "osm-n11237459268",
+      "osmId": 11237459268,
+      "osmType": "node",
+      "name": "Café Amazon",
+      "nameTh": null,
+      "lat": 13.7646606,
+      "lng": 100.5392528,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n11240468506",
+      "osmId": 11240468506,
+      "osmType": "node",
+      "name": "ยามาซากิ",
+      "nameTh": "ยามาซากิ",
+      "lat": 13.769744,
+      "lng": 100.5279636,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11452114970",
+      "osmId": 11452114970,
+      "osmType": "node",
+      "name": "Kaizen",
+      "nameTh": null,
+      "lat": 13.7507378,
+      "lng": 100.5309138,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "japanese"
+      }
+    },
+    {
+      "id": "osm-n11505201592",
+      "osmId": 11505201592,
+      "osmType": "node",
+      "name": "GalileOasis",
+      "nameTh": null,
+      "lat": 13.7513469,
+      "lng": 100.5263925,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11548577058",
+      "osmId": 11548577058,
+      "osmType": "node",
+      "name": "Sudachi Sushi",
+      "nameTh": null,
+      "lat": 13.7557456,
+      "lng": 100.5294819,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "sushi"
+      }
+    },
+    {
+      "id": "osm-n11729671061",
+      "osmId": 11729671061,
+      "osmType": "node",
+      "name": "Śrī Bhavan",
+      "nameTh": "ศฺรีภวน",
+      "lat": 13.7541247,
+      "lng": 100.5406148,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "09:00-00:00",
+      "tags": {
+        "cuisine": "indian"
+      }
+    },
+    {
+      "id": "osm-n11821495800",
+      "osmId": 11821495800,
+      "osmType": "node",
+      "name": "Green and Sunny",
+      "nameTh": null,
+      "lat": 13.7517488,
+      "lng": 100.5305626,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "08:00-19:00",
+      "tags": {
+        "outdoor_seating": "no",
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n11954096555",
+      "osmId": 11954096555,
+      "osmType": "node",
+      "name": "นายฮวด ลูกชิ้นปลาทำเอง",
+      "nameTh": null,
+      "lat": 13.7524543,
+      "lng": 100.5263141,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "noodle"
+      }
+    },
+    {
+      "id": "osm-n11987391357",
+      "osmId": 11987391357,
+      "osmType": "node",
+      "name": "ต้นข้าวมันไก่",
+      "nameTh": null,
+      "lat": 13.7571066,
+      "lng": 100.5335224,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11987408028",
+      "osmId": 11987408028,
+      "osmType": "node",
+      "name": "เป็ดพะโล้บางเลน",
+      "nameTh": null,
+      "lat": 13.7571143,
+      "lng": 100.5334957,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11987408029",
+      "osmId": 11987408029,
+      "osmType": "node",
+      "name": "อาหารตามสั่ง ครัวพี่ปุ๋ย",
+      "nameTh": null,
+      "lat": 13.7571197,
+      "lng": 100.5334596,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11987408030",
+      "osmId": 11987408030,
+      "osmType": "node",
+      "name": "ครัวจรัสศรี (ป้าหาญ) อาหารตามสั่ง",
+      "nameTh": null,
+      "lat": 13.7571006,
+      "lng": 100.5334381,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12022646969",
+      "osmId": 12022646969,
+      "osmType": "node",
+      "name": "มาอีดะห์ เรสเทอรองท์",
+      "nameTh": "มาอีดะห์ เรสเทอรองท์",
+      "lat": 13.7537323,
+      "lng": 100.5397933,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12171849226",
+      "osmId": 12171849226,
+      "osmType": "node",
+      "name": "ร้านญาบิร",
+      "nameTh": "ร้านญาบิร",
+      "lat": 13.751031,
+      "lng": 100.5250683,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Sa 10:00-20:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12189422325",
+      "osmId": 12189422325,
+      "osmType": "node",
+      "name": "Kobe Steakhouse",
+      "nameTh": null,
+      "lat": 13.754569,
+      "lng": 100.5272806,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.9500000000000001,
+        "confidence": 0.6000000000000001
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "outdoor_seating": "no",
+        "cuisine": "steak_house"
+      }
+    },
+    {
+      "id": "osm-n12282893164",
+      "osmId": 12282893164,
+      "osmType": "node",
+      "name": "พระวิหารกรุงเทพ ประเทศไทย",
+      "nameTh": null,
+      "lat": 13.7495165,
+      "lng": 100.5625004,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12472987457",
+      "osmId": 12472987457,
+      "osmType": "node",
+      "name": "MO MO Kitchen - Thailand",
+      "nameTh": null,
+      "lat": 13.7518734,
+      "lng": 100.5296743,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.9500000000000001,
+        "confidence": 0.6000000000000001
+      },
+      "openingHoursRaw": "Mo-Su 09:00-21:00",
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n12606391495",
+      "osmId": 12606391495,
+      "osmType": "node",
+      "name": "Sam Cafe'",
+      "nameTh": null,
+      "lat": 13.751392,
+      "lng": 100.5294805,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mon-Fri 7.00-17.30, Sat 8.00-15.00, Close on Sunday",
+      "tags": {
+        "cuisine": "coffee_shop;cake;sandwich"
+      }
+    },
+    {
+      "id": "osm-n12686080201",
+      "osmId": 12686080201,
+      "osmType": "node",
+      "name": "Authentique",
+      "nameTh": null,
+      "lat": 13.7570664,
+      "lng": 100.5336992,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 07:00-18:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12692829001",
+      "osmId": 12692829001,
+      "osmType": "node",
+      "name": "26y coffee",
+      "nameTh": null,
+      "lat": 13.7524403,
+      "lng": 100.5363097,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13081424492",
+      "osmId": 13081424492,
+      "osmType": "node",
+      "name": "พิพิธภัณฑ์สตางค์ มงคลสุข",
+      "nameTh": "พิพิธภัณฑ์สตางค์ มงคลสุข",
+      "lat": 13.7653332,
+      "lng": 100.5247066,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13081957326",
+      "osmId": 13081957326,
+      "osmType": "node",
+      "name": "พิพิธภัณฑ์แร่-หิน",
+      "nameTh": "พิพิธภัณฑ์แร่-หิน",
+      "lat": 13.7631705,
+      "lng": 100.5265347,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13084033401",
+      "osmId": 13084033401,
+      "osmType": "node",
+      "name": "Zimt. German Bakery & Cafe",
+      "nameTh": null,
+      "lat": 13.7517777,
+      "lng": 100.5303864,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 07:00-18:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n13235067601",
+      "osmId": 13235067601,
+      "osmType": "node",
+      "name": "ชาตรามือ",
+      "nameTh": "ชาตรามือ",
+      "lat": 13.7506475,
+      "lng": 100.5376564,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n13383251601",
+      "osmId": 13383251601,
+      "osmType": "node",
+      "name": "Belinee's",
+      "nameTh": null,
+      "lat": 13.7489557,
+      "lng": 100.5612196,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13420264401",
+      "osmId": 13420264401,
+      "osmType": "node",
+      "name": "brew²",
+      "nameTh": null,
+      "lat": 13.7550355,
+      "lng": 100.5332753,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13430211038",
+      "osmId": 13430211038,
+      "osmType": "node",
+      "name": "NNP Kitchen",
+      "nameTh": "ึีครัวเอ็นเอ็นพี",
+      "lat": 13.7586209,
+      "lng": 100.5472377,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13789380701",
+      "osmId": 13789380701,
+      "osmType": "node",
+      "name": "The Quarter Bangkok",
+      "nameTh": null,
+      "lat": 13.7534716,
+      "lng": 100.5320972,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "outdoor_seating": "no"
+      }
+    },
+    {
+      "id": "osm-n13810432502",
+      "osmId": 13810432502,
+      "osmType": "node",
+      "name": "So Vegan สาขา Phenix ประตูน้ำ",
+      "nameTh": null,
+      "lat": 13.7508605,
+      "lng": 100.5371603,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 10:00-20:30",
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n13819279001",
+      "osmId": 13819279001,
+      "osmType": "node",
+      "name": "Indian express",
+      "nameTh": null,
+      "lat": 13.7526551,
+      "lng": 100.5458569,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "indian"
+      }
+    },
+    {
+      "id": "osm-n13819807601",
+      "osmId": 13819807601,
+      "osmType": "node",
+      "name": "Pasta Ama Ratchathewi",
+      "nameTh": null,
+      "lat": 13.7531813,
+      "lng": 100.5324155,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 08:00-00:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w31141565",
+      "osmId": 31141565,
+      "osmType": "way",
+      "name": "พันธุ์ทิพย์พลาซ่า",
+      "nameTh": "พันธุ์ทิพย์พลาซ่า",
+      "lat": 13.7504428,
+      "lng": 100.5372723,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": "Mo-Su 10:00-20:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w31141613",
+      "osmId": 31141613,
+      "osmType": "way",
+      "name": "The Platinum Fashion Mall",
+      "nameTh": "เดอะ แพลทินัม แฟชั่น มอลล์",
+      "lat": 13.7499939,
+      "lng": 100.5397144,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": "Mo-Fr 09:00-20:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w47062931",
+      "osmId": 47062931,
+      "osmType": "way",
+      "name": "Victory Point",
+      "nameTh": null,
+      "lat": 13.7638683,
+      "lng": 100.5384083,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w99029135",
+      "osmId": 99029135,
+      "osmType": "way",
+      "name": "สวนสันติภาพ",
+      "nameTh": "สวนสันติภาพ",
+      "lat": 13.7616096,
+      "lng": 100.5407085,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "05:00-21:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w158185684",
+      "osmId": 158185684,
+      "osmType": "way",
+      "name": "เซ็นจูรี่ เดอะ มูฟวี่ พลาซ่า",
+      "nameTh": null,
+      "lat": 13.7616777,
+      "lng": 100.5371138,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": "PH,Mo-Su 10:30-21:30",
+      "tags": {}
+    },
+    {
+      "id": "osm-w167534416",
+      "osmId": 167534416,
+      "osmType": "way",
+      "name": "สวนสาธารณะสวนเงิน",
+      "nameTh": "สวนสาธารณะสวนเงิน",
+      "lat": 13.7706176,
+      "lng": 100.529759,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w176332761",
+      "osmId": 176332761,
+      "osmType": "way",
+      "name": "เซ็นเตอร์วัน",
+      "nameTh": null,
+      "lat": 13.7639534,
+      "lng": 100.5392557,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w203906323",
+      "osmId": 203906323,
+      "osmType": "way",
+      "name": "วัดอภัยทายาราม",
+      "nameTh": "วัดอภัยทายาราม",
+      "lat": 13.7675508,
+      "lng": 100.5358134,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w203906328",
+      "osmId": 203906328,
+      "osmType": "way",
+      "name": "วิคตอรี่ มอลล์",
+      "nameTh": null,
+      "lat": 13.7641958,
+      "lng": 100.5390304,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w228097461",
+      "osmId": 228097461,
+      "osmType": "way",
+      "name": "Lahn Guyton Pratunam",
+      "nameTh": "ညစာ",
+      "lat": 13.7496017,
+      "lng": 100.5420536,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w229970775",
+      "osmId": 229970775,
+      "osmType": "way",
+      "name": "The Palladium World Shopping",
+      "nameTh": "เดอะพาลาเดียม เวิลด์ ช้อปปิ้ง",
+      "lat": 13.7505107,
+      "lng": 100.5422258,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": "Mo-Su 10:00-18:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w230860264",
+      "osmId": 230860264,
+      "osmType": "way",
+      "name": "ซิตี้ คอมเพล็กซ์ ประตูน้ำ",
+      "nameTh": "ซิตี้ คอมเพล็กซ์ ประตูน้ำ",
+      "lat": 13.75118,
+      "lng": 100.5396269,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w230860266",
+      "osmId": 230860266,
+      "osmType": "way",
+      "name": "กรุงทองพลาซ่า",
+      "nameTh": null,
+      "lat": 13.7511035,
+      "lng": 100.5391389,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w230860267",
+      "osmId": 230860267,
+      "osmType": "way",
+      "name": "Metro Fashion Mall",
+      "nameTh": null,
+      "lat": 13.7524892,
+      "lng": 100.5353874,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w230891857",
+      "osmId": 230891857,
+      "osmType": "way",
+      "name": "สวนผักกาด",
+      "nameTh": "สวนผักกาด",
+      "lat": 13.7567061,
+      "lng": 100.5372012,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": "Mo-Su 09:00-16:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w230903169",
+      "osmId": 230903169,
+      "osmType": "way",
+      "name": "Café de Norasingh",
+      "nameTh": null,
+      "lat": 13.7684147,
+      "lng": 100.532769,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-w230903171",
+      "osmId": 230903171,
+      "osmType": "way",
+      "name": "คิง เพาเวอร์ รางน้ำ",
+      "nameTh": "คิง เพาเวอร์ รางน้ำ",
+      "lat": 13.7599034,
+      "lng": 100.5379406,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w241883576",
+      "osmId": 241883576,
+      "osmType": "way",
+      "name": "Grand Diamond Plaza",
+      "nameTh": null,
+      "lat": 13.7505558,
+      "lng": 100.5385257,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w243729155",
+      "osmId": 243729155,
+      "osmType": "way",
+      "name": "วัดทัศนารุณสุนทริการาม",
+      "nameTh": "วัดทัศนารุณสุนทริการาม",
+      "lat": 13.7616016,
+      "lng": 100.5440077,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w303230139",
+      "osmId": 303230139,
+      "osmType": "way",
+      "name": "Shibuya 19",
+      "nameTh": null,
+      "lat": 13.7513765,
+      "lng": 100.538252,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w333177939",
+      "osmId": 333177939,
+      "osmType": "way",
+      "name": "วัดดิสหงษาราม",
+      "nameTh": "วัดดิสหงษาราม",
+      "lat": 13.7489885,
+      "lng": 100.5509841,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w391929732",
+      "osmId": 391929732,
+      "osmType": "way",
+      "name": "One food market",
+      "nameTh": null,
+      "lat": 13.753634,
+      "lng": 100.5390233,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": "Mo-Su 05:30-23:30",
+      "tags": {}
+    },
+    {
+      "id": "osm-w406447104",
+      "osmId": 406447104,
+      "osmType": "way",
+      "name": "ใบหยก แกลลอรี",
+      "nameTh": "ใบหยก แกลลอรี",
+      "lat": 13.7524576,
+      "lng": 100.5405372,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w556001590",
+      "osmId": 556001590,
+      "osmType": "way",
+      "name": "สวนพฤกษศาสตร์",
+      "nameTh": "สวนพฤกษศาสตร์",
+      "lat": 13.7655384,
+      "lng": 100.52509,
+      "category": "garden",
+      "profile": {
+        "outdoorness": 0.92,
+        "indoorness": 0.08,
+        "shade": 0.5,
+        "covered": 0.05,
+        "rainEnjoyment": 0.1,
+        "heatTolerance": 0.35,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w556003535",
+      "osmId": 556003535,
+      "osmType": "way",
+      "name": "Neoroscience's Park",
+      "nameTh": null,
+      "lat": 13.7695648,
+      "lng": 100.5274197,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w556004748",
+      "osmId": 556004748,
+      "osmType": "way",
+      "name": "Prapassaro's Garden",
+      "nameTh": null,
+      "lat": 13.7690161,
+      "lng": 100.5267411,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w605774415",
+      "osmId": 605774415,
+      "osmType": "way",
+      "name": "วัดนักบุญยวง บอสโก (วัดดอนบอสโก)",
+      "nameTh": null,
+      "lat": 13.7499696,
+      "lng": 100.5605968,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w636185707",
+      "osmId": 636185707,
+      "osmType": "way",
+      "name": "Ti Kong Shrine",
+      "nameTh": null,
+      "lat": 13.7524187,
+      "lng": 100.528422,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w637381858",
+      "osmId": 637381858,
+      "osmType": "way",
+      "name": "ตลาดสดกิ่งเพชร",
+      "nameTh": null,
+      "lat": 13.7528983,
+      "lng": 100.5283101,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w640786594",
+      "osmId": 640786594,
+      "osmType": "way",
+      "name": "Ti Kong Shrine[New]",
+      "nameTh": null,
+      "lat": 13.7531694,
+      "lng": 100.5289668,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w641160571",
+      "osmId": 641160571,
+      "osmType": "way",
+      "name": "สวนรมย์ราชเทวี",
+      "nameTh": null,
+      "lat": 13.7586927,
+      "lng": 100.5444852,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w641160572",
+      "osmId": 641160572,
+      "osmType": "way",
+      "name": "สวนราชเทวีภิรมย์",
+      "nameTh": null,
+      "lat": 13.7573965,
+      "lng": 100.5493073,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w832190063",
+      "osmId": 832190063,
+      "osmType": "way",
+      "name": "วัดพระยายังวรวิหาร",
+      "nameTh": "วัดพระยายังวรวิหาร",
+      "lat": 13.752292,
+      "lng": 100.5211173,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w862975823",
+      "osmId": 862975823,
+      "osmType": "way",
+      "name": "Science Cafe",
+      "nameTh": null,
+      "lat": 13.7652331,
+      "lng": 100.5259317,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.35,
+        "indoorness": 0.85,
+        "shade": 0.2,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Fr 07:00-15:45; Sa 07:00-14:45; Su off; PH 07:00-14:45",
+      "tags": {
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": "osm-w862975826",
+      "osmId": 862975826,
+      "osmType": "way",
+      "name": "STAFF coffee",
+      "nameTh": null,
+      "lat": 13.7650743,
+      "lng": 100.5258663,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w862975828",
+      "osmId": 862975828,
+      "osmType": "way",
+      "name": "Mini Milk Cafe",
+      "nameTh": null,
+      "lat": 13.7651858,
+      "lng": 100.525418,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-w863463383",
+      "osmId": 863463383,
+      "osmType": "way",
+      "name": "พระราชวังพญาไท",
+      "nameTh": null,
+      "lat": 13.7687313,
+      "lng": 100.5330582,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w897441588",
+      "osmId": 897441588,
+      "osmType": "way",
+      "name": "ผ้าไหมบ้านครัว",
+      "nameTh": "ผ้าไหมบ้านครัว",
+      "lat": 13.7498431,
+      "lng": 100.528452,
+      "category": "museum",
+      "profile": {
+        "outdoorness": 0.05,
+        "indoorness": 0.95,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.65,
+        "heatTolerance": 0.9,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w897909005",
+      "osmId": 897909005,
+      "osmType": "way",
+      "name": "สภาคริสตจักรในประเทศไทย",
+      "nameTh": "สภาคริสตจักรในประเทศไทย",
+      "lat": 13.7505338,
+      "lng": 100.5298066,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.55,
+        "confidence": 0.6000000000000001
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w898104325",
+      "osmId": 898104325,
+      "osmType": "way",
+      "name": "มัสยิดยามีอุลค็อยรียะห์",
+      "nameTh": null,
+      "lat": 13.7508753,
+      "lng": 100.5243258,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w943263643",
+      "osmId": 943263643,
+      "osmType": "way",
+      "name": "Let's say cafe",
+      "nameTh": null,
+      "lat": 13.7627514,
+      "lng": 100.5407586,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.35,
+        "indoorness": 0.85,
+        "shade": 0.2,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "24/7; Mo-Th 11:00-04:00",
+      "tags": {
+        "outdoor_seating": "yes",
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-w943263682",
+      "osmId": 943263682,
+      "osmType": "way",
+      "name": "อีสานร่มเย็น",
+      "nameTh": "อิสานล้านรส",
+      "lat": 13.7611882,
+      "lng": 100.5375436,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-w1021980895",
+      "osmId": 1021980895,
+      "osmType": "way",
+      "name": "Toto Inasal",
+      "nameTh": null,
+      "lat": 13.7555427,
+      "lng": 100.5420994,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Tu-Su 10:00-20:00",
+      "tags": {
+        "cuisine": "asian"
+      }
+    },
+    {
+      "id": "osm-w1021980896",
+      "osmId": 1021980896,
+      "osmType": "way",
+      "name": "Grey Ray",
+      "nameTh": null,
+      "lat": 13.7557163,
+      "lng": 100.5421415,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1021980897",
+      "osmId": 1021980897,
+      "osmType": "way",
+      "name": "Diyalo Griha",
+      "nameTh": null,
+      "lat": 13.7558095,
+      "lng": 100.5421026,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "asian"
+      }
+    },
+    {
+      "id": "osm-w1022211494",
+      "osmId": 1022211494,
+      "osmType": "way",
+      "name": "Hot Curry",
+      "nameTh": null,
+      "lat": 13.7563151,
+      "lng": 100.5427351,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1022211512",
+      "osmId": 1022211512,
+      "osmType": "way",
+      "name": "Rang Nam Beef Noodles",
+      "nameTh": null,
+      "lat": 13.7578328,
+      "lng": 100.5426563,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-w1022211523",
+      "osmId": 1022211523,
+      "osmType": "way",
+      "name": "Som Restaurant",
+      "nameTh": null,
+      "lat": 13.753818,
+      "lng": 100.5429626,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "asian"
+      }
+    },
+    {
+      "id": "osm-w1022214521",
+      "osmId": 1022214521,
+      "osmType": "way",
+      "name": "T Pochana Seafood Ratchaparop",
+      "nameTh": null,
+      "lat": 13.7575897,
+      "lng": 100.5421715,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "seafood"
+      }
+    },
+    {
+      "id": "osm-w1042039245",
+      "osmId": 1042039245,
+      "osmType": "way",
+      "name": "Chibi Chibi",
+      "nameTh": null,
+      "lat": 13.7586606,
+      "lng": 100.5417406,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "We-Mo 10:00-20:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-w1232616670",
+      "osmId": 1232616670,
+      "osmType": "way",
+      "name": "สะพานเฉลิมหล้า 56",
+      "nameTh": "สะพานเฉลิมหล้า 56",
+      "lat": 13.7492315,
+      "lng": 100.5312318,
+      "category": "viewpoint",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.05,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.25,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1364323531",
+      "osmId": 1364323531,
+      "osmType": "way",
+      "name": "มัสยิดดารุ้ลอะมาน",
+      "nameTh": "มัสยิดดารุ้ลอะมาน",
+      "lat": 13.7542634,
+      "lng": 100.5302354,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1387755622",
+      "osmId": 1387755622,
+      "osmType": "way",
+      "name": "พื้นที่เล่นทรายน้ำ",
+      "nameTh": "พื้นที่เล่นทรายน้ำ",
+      "lat": 13.7598014,
+      "lng": 100.5286105,
+      "category": "playground",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.3,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1410385852",
+      "osmId": 1410385852,
+      "osmType": "way",
+      "name": "คริสตจักรกรุงเทพ",
+      "nameTh": "คริสตจักรกรุงเทพ",
+      "lat": 13.7566283,
+      "lng": 100.5377395,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1464280476",
+      "osmId": 1464280476,
+      "osmType": "way",
+      "name": "แม็คโคร ถนนศรีอยุธยา",
+      "nameTh": "แม็คโคร ถนนศรีอยุธยา",
+      "lat": 13.7572028,
+      "lng": 100.5415279,
+      "category": "other",
+      "profile": {
+        "outdoorness": 0.25,
+        "indoorness": 0.7,
+        "shade": 0.2,
+        "covered": 0.7,
+        "rainEnjoyment": 0.45,
+        "heatTolerance": 0.6,
+        "confidence": 0.3
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1474394475",
+      "osmId": 1474394475,
+      "osmType": "way",
+      "name": "สวนกล้วยไม้",
+      "nameTh": "สวนกล้วยไม้",
+      "lat": 13.7602975,
+      "lng": 100.5397109,
+      "category": "garden",
+      "profile": {
+        "outdoorness": 0.92,
+        "indoorness": 0.08,
+        "shade": 0.5,
+        "covered": 0.05,
+        "rainEnjoyment": 0.1,
+        "heatTolerance": 0.35,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    }
+  ]
+}

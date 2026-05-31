@@ -3,6 +3,12 @@
 import { useTranslation } from "react-i18next";
 import { NumberTicker } from "./motion/NumberTicker";
 import { Reveal } from "./motion/Reveal";
+import { DISTRICTS } from "@/lib/poi/registry.generated";
+
+// Live, never-fabricated coverage numbers — read straight from the seeded registry
+// so the "0 fabricated numbers" claim stays literally true.
+const TOTAL_POIS = DISTRICTS.reduce((a, d) => a + d.count, 0);
+const AREA_COUNT = DISTRICTS.length;
 
 /**
  * DataSources — "ทุกการตัดสินใจ มีที่มา" provenance ledger.
@@ -109,14 +115,14 @@ export function DataSources() {
         {/* Honest credibility stat band — NumberTickers count up on scroll. */}
         <Reveal className="mt-14 grid grid-cols-2 gap-y-8 sm:grid-cols-4 border-t border-hairline pt-10">
           {[
-            { n: 428, suffix: "", th: "สถานที่จริง", en: "real places" },
+            { n: TOTAL_POIS, suffix: "", th: "สถานที่จริง", en: "real places" },
+            { n: AREA_COUNT, suffix: "", th: "ย่านทั่วกรุงเทพ", en: "areas across Bangkok" },
             { n: 6, suffix: "", th: "แหล่งข้อมูลเปิด", en: "open sources" },
-            { n: 24, suffix: "ชม.", enSuffix: "h", th: "พยากรณ์ล่วงหน้า", en: "forecast ahead" },
             { n: 0, suffix: "", th: "ตัวเลขที่กุขึ้น", en: "fabricated numbers" },
           ].map((s) => (
             <div key={s.en}>
               <div className="font-display text-4xl sm:text-5xl text-ink tabular-nums">
-                <NumberTicker value={s.n} suffix={en ? (s.enSuffix ?? s.suffix) : s.suffix} />
+                <NumberTicker value={s.n} suffix={s.suffix} />
               </div>
               <p className="font-thai text-sm text-ink-faint mt-1">{en ? s.en : s.th}</p>
             </div>

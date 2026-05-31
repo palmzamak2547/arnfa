@@ -14,19 +14,15 @@ import { ImageResponse } from "next/og";
  * searchParams: y = district key, t = time-budget minutes.
  */
 
+import { DISTRICTS } from "@/lib/poi/registry.generated";
+
 export const alt = "แพลนทริปจาก อ่านฟ้า · Arnfa";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 // Latin labels so the OG renders without a Thai font file (the page itself is Thai).
-const DISTRICT_LATIN: Record<string, string> = {
-  thonglor: "Thonglor",
-  ari: "Ari",
-  silom: "Silom",
-  siam: "Siam",
-  ekkamai: "Ekkamai",
-  phranakhon: "Phra Nakhon",
-};
+// Sourced from the district registry so every Bangkok district has a real name.
+const DISTRICT_LATIN: Record<string, string> = Object.fromEntries(DISTRICTS.map((d) => [d.key, d.en]));
 const BUDGET_LATIN: Record<string, string> = {
   "150": "a quick stop",
   "240": "a half day",

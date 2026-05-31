@@ -4,19 +4,13 @@ import { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { clsx } from "clsx";
-import thonglor from "@/data/seed/thonglor.json";
-import ari from "@/data/seed/ari.json";
-import silom from "@/data/seed/silom.json";
-import siam from "@/data/seed/siam.json";
-import ekkamai from "@/data/seed/ekkamai.json";
-import phranakhon from "@/data/seed/phranakhon.json";
 import {
   buildPlan,
-  districtCentroid,
   type SeedDistrict,
   type BuiltPlan,
   type TasteVector,
 } from "@/lib/plan/buildPlan";
+import { DISTRICT_KEYS, districtMeta, loadDistrict } from "@/lib/poi/districts";
 import type { HourlyForecast } from "@/lib/weather/types";
 import { injectRainAt } from "@/lib/plan/rainInject";
 import { decodePlanState, encodePlanState, DEFAULT_PLAN_STATE } from "@/lib/plan/shareState";
@@ -29,22 +23,13 @@ import { AirChip } from "@/components/AirChip";
 import { PoiVisual } from "@/components/PoiVisual";
 import { ShareButton } from "@/components/ShareButton";
 import { TasteQuiz } from "@/components/TasteQuiz";
+import { DistrictPicker } from "@/components/DistrictPicker";
 import { Logo } from "@/components/Logo";
 
 const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanMap), {
   ssr: false,
   loading: () => <div className="h-full w-full rounded-3xl border border-hairline bg-surface/60 animate-pulse" />,
 });
-
-const DISTRICTS: Record<string, SeedDistrict> = {
-  thonglor: thonglor as SeedDistrict,
-  ari: ari as SeedDistrict,
-  silom: silom as SeedDistrict,
-  siam: siam as SeedDistrict,
-  ekkamai: ekkamai as SeedDistrict,
-  phranakhon: phranakhon as SeedDistrict,
-};
-const DISTRICT_KEYS = Object.keys(DISTRICTS);
 
 const BUDGETS = [
   { label: "แวบเดียว", min: 150 },
@@ -74,8 +59,23 @@ function PlanInner() {
   const [taste, setTaste] = useState<TasteVector | null>(null);
   const [quizOpen, setQuizOpen] = useState(false);
 
-  const district = DISTRICTS[districtKey];
-  const center = useMemo(() => districtCentroid(district), [district]);
+  // District POIs load lazily (one chunk per district) so the bundle stays small
+  // across all of Bangkok. Centre comes from the registry metadata (mean of the
+  // district's POIs) and is available synchronously, so the forecast can fetch
+  // immediately while the POI list streams in.
+  const [districtData, setDistrictData] = useState<SeedDistrict | null>(null);
+  const meta = districtMeta(districtKey);
+  const districtTh = meta?.th ?? "";
+  const center = useMemo(() => ({ lat: meta?.lat ?? 13.7402, lng: meta?.lng ?? 100.5731 }), [meta?.lat, meta?.lng]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setDistrictData(null);
+    loadDistrict(districtKey)
+      .then((d) => { if (!cancelled) setDistrictData(d); })
+      .catch(() => { if (!cancelled) setError("โหลดข้อมูลย่านไม่ได้ ลองใหม่นะ"); });
+    return () => { cancelled = true; };
+  }, [districtKey]);
 
   // Load saved taste once; if none and the user hasn't dismissed, offer the quiz.
   useEffect(() => {
@@ -117,14 +117,14 @@ function PlanInner() {
   }, [forecast]);
 
   const basePlan: BuiltPlan | null = useMemo(() => {
-    if (!forecast) return null;
-    return buildPlan(district, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined });
-  }, [district, forecast, startHourIndex, budgetMin, center, taste]);
+    if (!forecast || !districtData) return null;
+    return buildPlan(districtData, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined });
+  }, [districtData, forecast, startHourIndex, budgetMin, center, taste]);
 
   const rainedPlan: BuiltPlan | null = useMemo(() => {
-    if (!forecast || rainSlot === null) return null;
-    return buildPlan(district, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, forecastOverride: injectRainAt(forecast, rainSlot, 2) });
-  }, [district, forecast, rainSlot, startHourIndex, budgetMin, center, taste]);
+    if (!forecast || !districtData || rainSlot === null) return null;
+    return buildPlan(districtData, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, forecastOverride: injectRainAt(forecast, rainSlot, 2) });
+  }, [districtData, forecast, rainSlot, startHourIndex, budgetMin, center, taste]);
 
   const activePlan = rainedPlan ?? basePlan;
 
@@ -146,7 +146,7 @@ function PlanInner() {
     const onPlan = new Set(basePlan.stops.map((s) => s.poi.id));
     let indoor: typeof exposed["poi"] | null = null;
     let bestScore = -1;
-    for (const p of district.pois) {
+    for (const p of districtData?.pois ?? []) {
       if (onPlan.has(p.id)) continue;
       const score = p.profile.indoorness * 0.6 + p.profile.rainEnjoyment * 0.4 + p.profile.covered * 0.2;
       if (score > bestScore) { bestScore = score; indoor = p; }
@@ -156,7 +156,7 @@ function PlanInner() {
       dropped: exposed,
       added: { ...exposed, poi: indoor, skyState: "clear" as const, reason: "ในร่มแบบดีตอนฝน หลบสบาย" },
     };
-  }, [basePlan, rainedPlan, district]);
+  }, [basePlan, rainedPlan, districtData]);
 
   const rainTargetSlot = useMemo(() => {
     if (!basePlan || basePlan.stops.length === 0) return null;
@@ -196,7 +196,7 @@ function PlanInner() {
       <section className="arnfa-grid">
         <div className="col-content">
           <h1 className="font-thai-serif fs-h2 font-light text-ink mb-2 text-balance">
-            วางแผนทริป — <span className="italic text-ink-muted">{district.districtTh}</span>
+            วางแผนทริป — <span className="italic text-ink-muted">{districtTh}</span>
           </h1>
           <div className="flex items-center gap-3 mb-7">
             <AirChip lat={center.lat} lng={center.lng} />
@@ -219,14 +219,7 @@ function PlanInner() {
           <div className="flex flex-wrap gap-x-8 gap-y-5">
             <div>
               <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">ย่าน</p>
-              <div className="flex flex-wrap gap-2">
-                {Object.entries(DISTRICTS).map(([key, d]) => (
-                  <button key={key} type="button" onClick={() => setDistrictKey(key)}
-                    className={clsx("font-thai rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)] min-h-[44px]", key === districtKey ? "bg-ink text-paper" : "border border-hairline text-ink hover:bg-surface")}>
-                    {d.districtTh}
-                  </button>
-                ))}
-              </div>
+              <DistrictPicker value={districtKey} onChange={setDistrictKey} />
             </div>
             <div>
               <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">เวลา</p>
@@ -252,10 +245,10 @@ function PlanInner() {
             </div>
           )}
 
-          {loading && (
+          {(!activePlan || loading) && !error && (
             <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
               <div>
-                <p className="font-thai text-sm text-ink-faint mb-4">กำลังอ่านฟ้า {district.districtTh}</p>
+                <p className="font-thai text-sm text-ink-faint mb-4">กำลังอ่านฟ้า {districtTh}</p>
                 <PlanSkeleton />
               </div>
               <div className="hidden lg:block h-[520px] rounded-3xl border border-hairline bg-surface/50 animate-pulse" />

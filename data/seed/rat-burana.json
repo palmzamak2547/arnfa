@@ -1,0 +1,428 @@
+{
+  "district": "rat-burana",
+  "districtTh": "ราษฎร์บูรณะ",
+  "districtEn": "Rat Burana",
+  "osmRelationId": 3147008,
+  "bbox": [
+    13.653956,
+    100.479293,
+    13.6953242,
+    100.5228322
+  ],
+  "adminLevel": 6,
+  "fetchedAt": "2026-05-31T07:36:10.133Z",
+  "count": 19,
+  "pois": [
+    {
+      "id": "osm-n975846068",
+      "osmId": 975846068,
+      "osmType": "node",
+      "name": "ห้องสมุดประชาชนกรุงเทพมหานคร",
+      "nameTh": null,
+      "lat": 13.6820367,
+      "lng": 100.5054036,
+      "category": "library",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.7,
+        "heatTolerance": 0.9,
+        "confidence": 0.75
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4560114091",
+      "osmId": 4560114091,
+      "osmType": "node",
+      "name": "โลตัสบางประกอก",
+      "nameTh": "โลตัสบางประกอก",
+      "lat": 13.6814026,
+      "lng": 100.4928654,
+      "category": "mall",
+      "profile": {
+        "outdoorness": 0.02,
+        "indoorness": 0.98,
+        "shade": 0,
+        "covered": 1,
+        "rainEnjoyment": 0.5,
+        "heatTolerance": 0.95,
+        "confidence": 0.7
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n8090143955",
+      "osmId": 8090143955,
+      "osmType": "node",
+      "name": "On a Cloud Cafe",
+      "nameTh": null,
+      "lat": 13.689253,
+      "lng": 100.4872395,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo, Tu, Th-Su 09:30-21:00",
+      "tags": {}
+    },
+    {
+      "id": "osm-n12334267663",
+      "osmId": 12334267663,
+      "osmType": "node",
+      "name": "Subway",
+      "nameTh": null,
+      "lat": 13.679946,
+      "lng": 100.4966823,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "sandwich"
+      }
+    },
+    {
+      "id": "osm-n12334267664",
+      "osmId": 12334267664,
+      "osmType": "node",
+      "name": "S&P",
+      "nameTh": null,
+      "lat": 13.6800595,
+      "lng": 100.4967241,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n12334267665",
+      "osmId": 12334267665,
+      "osmType": "node",
+      "name": "NDO",
+      "nameTh": null,
+      "lat": 13.6799954,
+      "lng": 100.496698,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "japanese"
+      }
+    },
+    {
+      "id": "osm-n12334267666",
+      "osmId": 12334267666,
+      "osmType": "node",
+      "name": "Ramen Ozawa",
+      "nameTh": null,
+      "lat": 13.6801305,
+      "lng": 100.4967436,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "japanese;ramen"
+      }
+    },
+    {
+      "id": "osm-n12355863621",
+      "osmId": 12355863621,
+      "osmType": "node",
+      "name": "วราภรณ์",
+      "nameTh": null,
+      "lat": 13.6556591,
+      "lng": 100.4991577,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "chinese"
+      }
+    },
+    {
+      "id": "osm-n12355863626",
+      "osmId": 12355863626,
+      "osmType": "node",
+      "name": "คาเฟ่ อเมซอน",
+      "nameTh": "คาเฟ่ อเมซอน",
+      "lat": 13.6557368,
+      "lng": 100.499399,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n12387882020",
+      "osmId": 12387882020,
+      "osmType": "node",
+      "name": "วัดประเสริฐสุทธาวาส",
+      "nameTh": "วัดประเสริฐสุทธาวาส",
+      "lat": 13.6797941,
+      "lng": 100.5037784,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n12594428769",
+      "osmId": 12594428769,
+      "osmType": "node",
+      "name": "ร้านกาแฟ",
+      "nameTh": null,
+      "lat": 13.6725466,
+      "lng": 100.5088388,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w378171108",
+      "osmId": 378171108,
+      "osmType": "way",
+      "name": "วัดสน",
+      "nameTh": "วัดสน",
+      "lat": 13.6729919,
+      "lng": 100.5135152,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w378171112",
+      "osmId": 378171112,
+      "osmType": "way",
+      "name": "วัดบางปะกอก",
+      "nameTh": "วัดบางปะกอก",
+      "lat": 13.6831979,
+      "lng": 100.4960182,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w378171189",
+      "osmId": 378171189,
+      "osmType": "way",
+      "name": "วัดราษฎร์บูรณะ",
+      "nameTh": "วัดราษฎร์บูรณะ",
+      "lat": 13.6829542,
+      "lng": 100.504725,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w378173860",
+      "osmId": 378173860,
+      "osmType": "way",
+      "name": "วัดแจงร้อน",
+      "nameTh": "วัดแจงร้อน",
+      "lat": 13.6763752,
+      "lng": 100.5199935,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w378277582",
+      "osmId": 378277582,
+      "osmType": "way",
+      "name": "วัดสารอด",
+      "nameTh": "วัดสารอด",
+      "lat": 13.6717279,
+      "lng": 100.5025986,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w544298846",
+      "osmId": 544298846,
+      "osmType": "way",
+      "name": "สวนวงแหวนสุขสวัสดิ์",
+      "nameTh": null,
+      "lat": 13.6631807,
+      "lng": 100.5165439,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w555913269",
+      "osmId": 555913269,
+      "osmType": "way",
+      "name": "Orchid Park",
+      "nameTh": null,
+      "lat": 13.6711409,
+      "lng": 100.5040463,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1311813672",
+      "osmId": 1311813672,
+      "osmType": "way",
+      "name": "วัดเกียรติประดิษฐ์",
+      "nameTh": "วัดเกียรติประดิษฐ์",
+      "lat": 13.686806,
+      "lng": 100.4889283,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "tags": {}
+    }
+  ]
+}
