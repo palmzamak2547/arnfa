@@ -51,6 +51,14 @@ export function nearestDistrict(lat: number, lng: number): DistrictMeta {
   return best;
 }
 
+/** The n districts closest to a point, nearest first (for the microclimate compare). */
+export function nearestDistricts(lat: number, lng: number, n: number): (DistrictMeta & { km: number })[] {
+  return DISTRICTS
+    .map((d) => ({ ...d, km: haversineKm(lat, lng, d.lat, d.lng) }))
+    .sort((a, b) => a.km - b.km)
+    .slice(0, n);
+}
+
 /** Group districts by zone in ZONE_ORDER, applying an optional text filter. */
 export function groupedDistricts(filter = ""): { zone: string; items: DistrictMeta[] }[] {
   const q = filter.trim().toLowerCase();

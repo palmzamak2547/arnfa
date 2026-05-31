@@ -18,7 +18,11 @@ import { loadTaste } from "@/lib/plan/taste";
 import { recordFeedback } from "@/lib/plan/feedback";
 import { dayAdvisory } from "@/lib/core/advisory";
 import type { AirReading } from "@/lib/air/air4thai";
+import { fetchActiveDeals, dealMatchesWeather, type Deal } from "@/lib/deals/deals";
 import { TodayAdvisory } from "@/components/TodayAdvisory";
+import { MerchantCTA } from "@/components/MerchantCTA";
+import { SkyAround } from "@/components/SkyAround";
+import { LiveCompanion } from "@/components/LiveCompanion";
 import { SkyChip } from "@/components/SkyChip";
 import { SwapCard } from "@/components/SwapCard";
 import { PlanSkeleton } from "@/components/PlanSkeleton";
@@ -92,6 +96,15 @@ function PlanInner() {
       .catch(() => { if (!cancelled) setAir(null); });
     return () => { cancelled = true; };
   }, [center.lat, center.lng]);
+
+  // Real merchant deals (arnfa.deal) — keyed by POI id. Empty today; a chip shows
+  // only when a real, weather-matching deal exists. Never fabricated.
+  const [deals, setDeals] = useState<Map<string, Deal>>(new Map());
+  useEffect(() => {
+    let cancelled = false;
+    fetchActiveDeals().then((m) => { if (!cancelled) setDeals(m); });
+    return () => { cancelled = true; };
+  }, []);
 
   // Load saved taste once; if none and the user hasn't dismissed, offer the quiz.
   useEffect(() => {
@@ -261,11 +274,15 @@ function PlanInner() {
         </div>
       </section>
 
-      {/* Today's prep — outfit / packing / safety, from the real forecast + PM2.5 */}
+      {/* Today's prep + microclimate compare + live companion — all from real data */}
       {advisory && (
         <section className="arnfa-grid mt-1">
-          <div className="col-content max-w-3xl">
+          <div className="col-content grid items-start gap-4 lg:grid-cols-2 max-w-4xl">
             <TodayAdvisory advisory={advisory} />
+            <div className="grid gap-4">
+              <SkyAround currentKey={districtKey} lat={center.lat} lng={center.lng} onPick={setDistrictKey} />
+              <LiveCompanion pois={districtData?.pois ?? []} />
+            </div>
           </div>
         </section>
       )}
@@ -317,7 +334,10 @@ function PlanInner() {
                 )}
 
                 <ol className="space-y-3">
-                  {activePlan.stops.map((stop, i) => (
+                  {activePlan.stops.map((stop, i) => {
+                    const deal = deals.get(stop.poi.id);
+                    const showDeal = !!deal && dealMatchesWeather(deal.weatherTrigger, stop.skyState);
+                    return (
                     <li key={stop.poi.id} className="flex items-start gap-4 rounded-2xl border border-hairline bg-surface/70 p-4">
                       <div className="relative shrink-0">
                         <PoiVisual id={stop.poi.id} category={stop.poi.category} skyState={stop.skyState} className="h-12 w-12" />
@@ -331,6 +351,14 @@ function PlanInner() {
                         <p className="font-thai text-sm text-ink-muted mt-1">
                           {categoryTh(stop.poi.category)} — {stop.reason}
                         </p>
+                        {showDeal && deal && (
+                          <a {...(deal.url ? { href: deal.url, target: "_blank", rel: "noopener noreferrer" } : {})}
+                            className="font-thai mt-1.5 inline-flex items-center gap-1.5 rounded-full border border-sun/40 bg-sun/[0.08] px-2.5 py-1 text-xs text-ink">
+                            <span aria-hidden>🏷️</span>
+                            <span className="font-medium">{deal.title}</span>
+                            <span className="text-ink-faint">· {deal.merchantName}</span>
+                          </a>
+                        )}
                         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
                           {stop.openStatus === "open" && <span className="text-success">เปิดอยู่</span>}
                           {stop.openStatus === "closed" && <span className="text-indoor-warm">ปิดตอนนี้</span>}
@@ -339,7 +367,7 @@ function PlanInner() {
                         </div>
                       </div>
                     </li>
-                  ))}
+                  ); })}
                 </ol>
 
                 {activePlan.stops.length === 0 && (
@@ -352,6 +380,9 @@ function PlanInner() {
                     <span className="font-thai text-xs text-ink-faint">ส่งให้เพื่อนเปิดแพลนเดียวกัน</span>
                   </div>
                 )}
+                <div className="mt-6 border-t border-hairline pt-5">
+                  <MerchantCTA />
+                </div>
               </div>
 
               <div className="h-[420px] lg:h-auto lg:min-h-[520px] lg:sticky lg:top-6">
