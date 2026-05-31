@@ -22,7 +22,9 @@ function makeClient() {
   if (!url || !key) return null;
   return createClient(url, key, {
     db: { schema: "arnfa" },
-    auth: { persistSession: false },
+    // Phase 2: magic-link auth for saved trips + cloud taste. Persist + auto-refresh
+    // the session; PKCE for the email-link exchange. Anonymous feedback still works.
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "pkce" },
   });
 }
 

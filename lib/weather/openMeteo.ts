@@ -22,7 +22,7 @@ export async function fetchOpenMeteo(
       "wind_speed_10m", "wind_direction_10m", "relative_humidity_2m",
     ].join(","),
     timezone: "Asia/Bangkok",
-    forecast_days: "2",
+    forecast_days: "7", // enough to plan "this weekend / next week"
   });
 
   const res = await fetch(`${ENDPOINT}?${params.toString()}`, { signal, headers: { "User-Agent": "Arnfa/0.1" } });

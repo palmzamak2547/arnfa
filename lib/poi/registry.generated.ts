@@ -4,7 +4,7 @@
 // full POI list loads lazily via DISTRICT_LOADERS so the bundle stays small.
 import type { SeedDistrict } from "@/lib/plan/buildPlan";
 
-export type DistrictTier = "neighborhood" | "district" | "province";
+export type DistrictTier = "neighborhood" | "spot" | "district" | "province";
 export interface DistrictMeta {
   key: string;
   th: string;
@@ -22,6 +22,25 @@ export const DISTRICTS: DistrictMeta[] = [
   { key: "silom", th: "สีลม", en: "silom", tier: "neighborhood", zone: "ย่านยอดนิยม", count: 174, lat: 13.72681, lng: 100.53142 },
   { key: "siam", th: "สยาม", en: "siam", tier: "neighborhood", zone: "ย่านยอดนิยม", count: 168, lat: 13.74702, lng: 100.53333 },
   { key: "ari", th: "อารีย์", en: "ari", tier: "neighborhood", zone: "ย่านยอดนิยม", count: 108, lat: 13.78248, lng: 100.54403 },
+  { key: "pattaya", th: "พัทยา", en: "Pattaya", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 384, lat: 12.92452, lng: 100.88106 },
+  { key: "nimman", th: "นิมมาน", en: "Nimman", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 340, lat: 18.79878, lng: 98.97197 },
+  { key: "ko-lanta", th: "เกาะลันตา", en: "Ko Lanta", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 291, lat: 7.60886, lng: 99.03551 },
+  { key: "ko-pha-ngan", th: "เกาะพะงัน", en: "Ko Pha-ngan", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 283, lat: 9.7307, lng: 100.01403 },
+  { key: "ko-samui", th: "เกาะสมุย", en: "Ko Samui", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 278, lat: 9.52605, lng: 100.03613 },
+  { key: "hua-hin", th: "หัวหิน", en: "Hua Hin", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 273, lat: 12.56165, lng: 99.95737 },
+  { key: "khao-lak", th: "เขาหลัก", en: "Khao Lak", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 272, lat: 8.65536, lng: 98.24847 },
+  { key: "ko-chang", th: "เกาะช้าง", en: "Ko Chang", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 239, lat: 12.04156, lng: 102.29798 },
+  { key: "patong", th: "ป่าตอง", en: "Patong", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 220, lat: 7.89322, lng: 98.29808 },
+  { key: "ao-nang", th: "อ่าวนาง", en: "Ao Nang", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 219, lat: 8.03339, lng: 98.82541 },
+  { key: "pai", th: "ปาย", en: "Pai", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 177, lat: 19.35854, lng: 98.44173 },
+  { key: "bang-saen", th: "บางแสน", en: "Bang Saen", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 78, lat: 13.28663, lng: 100.92355 },
+  { key: "ko-samet", th: "เกาะเสม็ด", en: "Ko Samet", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 62, lat: 12.56338, lng: 101.45883 },
+  { key: "amphawa", th: "อัมพวา", en: "Amphawa", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 59, lat: 13.42624, lng: 99.95636 },
+  { key: "wang-nam-khiao", th: "วังน้ำเขียว", en: "Wang Nam Khiao", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 43, lat: 14.42017, lng: 101.86834 },
+  { key: "khao-kho", th: "เขาค้อ", en: "Khao Kho", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 39, lat: 16.71236, lng: 101.03928 },
+  { key: "pak-chong", th: "ปากช่อง-เขาใหญ่", en: "Pak Chong (Khao Yai)", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 27, lat: 14.67943, lng: 101.40627 },
+  { key: "chiang-khan", th: "เชียงคาน", en: "Chiang Khan", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 25, lat: 17.89488, lng: 101.66002 },
+  { key: "suan-phueng", th: "สวนผึ้ง", en: "Suan Phueng", tier: "spot", zone: "จุดเที่ยวยอดนิยม", count: 8, lat: 13.54125, lng: 99.32557 },
   { key: "vadhana", th: "วัฒนา", en: "Vadhana", tier: "district", zone: "สุขุมวิท–ฝั่งใต้", count: 400, lat: 13.73342, lng: 100.57248 },
   { key: "khlong-toei", th: "คลองเตย", en: "Khlong Toei", tier: "district", zone: "สุขุมวิท–ฝั่งใต้", count: 338, lat: 13.72788, lng: 100.56733 },
   { key: "rat-burana", th: "ราษฎร์บูรณะ", en: "Rat Burana", tier: "district", zone: "ฝั่งธนบุรี", count: 334, lat: 13.71791, lng: 100.51367 },
@@ -158,6 +177,25 @@ export const DISTRICT_LOADERS: Record<string, () => Promise<SeedDistrict>> = {
   "silom": () => import("@/data/seed/silom.json").then((mod) => mod.default as unknown as SeedDistrict),
   "siam": () => import("@/data/seed/siam.json").then((mod) => mod.default as unknown as SeedDistrict),
   "ari": () => import("@/data/seed/ari.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "pattaya": () => import("@/data/seed/pattaya.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "nimman": () => import("@/data/seed/nimman.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "ko-lanta": () => import("@/data/seed/ko-lanta.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "ko-pha-ngan": () => import("@/data/seed/ko-pha-ngan.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "ko-samui": () => import("@/data/seed/ko-samui.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "hua-hin": () => import("@/data/seed/hua-hin.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "khao-lak": () => import("@/data/seed/khao-lak.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "ko-chang": () => import("@/data/seed/ko-chang.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "patong": () => import("@/data/seed/patong.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "ao-nang": () => import("@/data/seed/ao-nang.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "pai": () => import("@/data/seed/pai.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "bang-saen": () => import("@/data/seed/bang-saen.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "ko-samet": () => import("@/data/seed/ko-samet.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "amphawa": () => import("@/data/seed/amphawa.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "wang-nam-khiao": () => import("@/data/seed/wang-nam-khiao.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "khao-kho": () => import("@/data/seed/khao-kho.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "pak-chong": () => import("@/data/seed/pak-chong.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "chiang-khan": () => import("@/data/seed/chiang-khan.json").then((mod) => mod.default as unknown as SeedDistrict),
+  "suan-phueng": () => import("@/data/seed/suan-phueng.json").then((mod) => mod.default as unknown as SeedDistrict),
   "vadhana": () => import("@/data/seed/vadhana.json").then((mod) => mod.default as unknown as SeedDistrict),
   "khlong-toei": () => import("@/data/seed/khlong-toei.json").then((mod) => mod.default as unknown as SeedDistrict),
   "rat-burana": () => import("@/data/seed/rat-burana.json").then((mod) => mod.default as unknown as SeedDistrict),
@@ -289,6 +327,7 @@ export const DISTRICT_LOADERS: Record<string, () => Promise<SeedDistrict>> = {
 // Picker grouping order: Bangkok (neighbourhoods + zones) first, then the 6 ภาค.
 export const ZONE_ORDER: string[] = [
   "ย่านยอดนิยม",
+  "จุดเที่ยวยอดนิยม",
   "กรุงเทพชั้นใน",
   "สุขุมวิท–ฝั่งใต้",
   "รัชดา–ลาดพร้าว–เหนือ",

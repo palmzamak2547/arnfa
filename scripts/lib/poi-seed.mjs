@@ -76,6 +76,11 @@ export function buildRecords(elements) {
       lat, lng, category,
       profile: adjust(CATEGORY_DEFAULTS[category], t),
       openingHoursRaw: t.opening_hours || null,
+      // For real photos + detail: wikidata → a verified Commons image (client-side,
+      // on demand); website/image straight from OSM. Honest — only what OSM has.
+      wikidata: t.wikidata || null,
+      image: t.image || t["wikimedia_commons"] || null,
+      website: t.website || t["contact:website"] || null,
       tags: { covered: t.covered, indoor: t.indoor, outdoor_seating: t.outdoor_seating, cuisine: t.cuisine },
     };
   }).filter((r) => r.lat != null && r.lng != null);

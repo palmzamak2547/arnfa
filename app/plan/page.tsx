@@ -15,6 +15,7 @@ import { DISTRICT_KEYS, districtMeta, loadDistrict } from "@/lib/poi/districts";
 import type { HourlyForecast } from "@/lib/weather/types";
 import { injectRainAt } from "@/lib/plan/rainInject";
 import { decodePlanState, encodePlanState, DEFAULT_PLAN_STATE } from "@/lib/plan/shareState";
+import { availableDays, startIndexForDay } from "@/lib/plan/days";
 import { loadTaste } from "@/lib/plan/taste";
 import { recordFeedback } from "@/lib/plan/feedback";
 import { filterByGroups, availableGroups } from "@/lib/plan/categories";
@@ -31,9 +32,14 @@ import { SkyChip } from "@/components/SkyChip";
 import { SwapCard } from "@/components/SwapCard";
 import { PlanSkeleton } from "@/components/PlanSkeleton";
 import { AirChip } from "@/components/AirChip";
-import { PoiVisual } from "@/components/PoiVisual";
+import { PoiPhoto } from "@/components/PoiPhoto";
+import { mapsPoiUrl, mapsTripUrl } from "@/lib/poi/photo";
 import { ShareButton } from "@/components/ShareButton";
 import { TasteQuiz } from "@/components/TasteQuiz";
+import { AuthButton } from "@/components/AuthButton";
+import { AreaHighlights } from "@/components/AreaHighlights";
+import { useAuth } from "@/lib/auth/useAuth";
+import { saveTrip, loadCloudTaste, saveCloudTaste } from "@/lib/plan/trips";
 import { DistrictPicker } from "@/components/DistrictPicker";
 import { Logo } from "@/components/Logo";
 
@@ -60,6 +66,7 @@ function PlanInner() {
   // mismatch). The URL is read in an effect after mount and applied below.
   const [districtKey, setDistrictKey] = useState(DEFAULT_PLAN_STATE.district);
   const [budgetMin, setBudgetMin] = useState(DEFAULT_PLAN_STATE.budgetMin);
+  const [dayOffset, setDayOffset] = useState(DEFAULT_PLAN_STATE.day);
   const [urlApplied, setUrlApplied] = useState(false);
 
   useEffect(() => {
@@ -67,6 +74,7 @@ function PlanInner() {
     const s = decodePlanState(q, DISTRICT_KEYS);
     setDistrictKey(s.district);
     setBudgetMin(s.budgetMin);
+    setDayOffset(s.day);
     setUrlApplied(true);
   }, []);
   const [forecast, setForecast] = useState<HourlyForecast[] | null>(null);
@@ -76,6 +84,8 @@ function PlanInner() {
   const [rainSlot, setRainSlot] = useState<number | null>(null);
   const [taste, setTaste] = useState<TasteVector | null>(null);
   const [quizOpen, setQuizOpen] = useState(false);
+  const { user } = useAuth();
+  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved">("idle");
 
   // District POIs load lazily (one chunk per district) so the bundle stays small
   // across all of Bangkok. Centre comes from the registry metadata (mean of the
@@ -142,13 +152,30 @@ function PlanInner() {
     }
   }, []);
 
+  // When signed in, the cloud taste wins (syncs across devices); close the quiz.
+  useEffect(() => {
+    if (!user) return;
+    loadCloudTaste().then((v) => { if (v && Object.keys(v).length) { setTaste(v); setQuizOpen(false); } });
+  }, [user]);
+
+  async function doSave() {
+    if (!user || !activePlan || activePlan.stops.length === 0) return;
+    setSaveState("saving");
+    const title = `${districtTh}${dayOffset ? ` · ${days.find((d) => d.offset === dayOffset)?.th ?? ""}` : ""}`;
+    const stops = activePlan.stops.map((s) => ({ poiId: s.poi.id, slotIso: s.arrivalHourISO, score: s.score }));
+    const id = await saveTrip(user.id, districtKey, budgetMin, dayOffset, title, stops);
+    setSaveState(id ? "saved" : "idle");
+  }
+  // re-arm the Save button whenever the plan inputs change
+  useEffect(() => { setSaveState("idle"); }, [districtKey, budgetMin, dayOffset, rainSlot]);
+
   // Fetch forecast for the district centroid.
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
     setError(null);
     setRainSlot(null);
-    fetch(`/api/forecast?lat=${center.lat}&lng=${center.lng}&hours=24`)
+    fetch(`/api/forecast?lat=${center.lat}&lng=${center.lng}&hours=168`)
       .then((r) => { if (!r.ok) throw new Error(`forecast ${r.status}`); return r.json(); })
       .then((data) => { if (!cancelled) { setForecast(data.hours); setProvider(data.providerUsed ?? ""); } })
       .catch((e) => { if (!cancelled) setError(e instanceof Error ? e.message : String(e)); })
@@ -160,17 +187,17 @@ function PlanInner() {
   // Wait until the initial URL has been applied so we don't clobber ?y=... with defaults.
   useEffect(() => {
     if (typeof window === "undefined" || !urlApplied) return;
-    const qs = encodePlanState({ district: districtKey, budgetMin, rain: rainSlot !== null });
+    const qs = encodePlanState({ district: districtKey, budgetMin, rain: rainSlot !== null, day: dayOffset });
     window.history.replaceState(null, "", `${window.location.pathname}?${qs}`);
-  }, [districtKey, budgetMin, rainSlot, urlApplied]);
+  }, [districtKey, budgetMin, rainSlot, dayOffset, urlApplied]);
 
-  const startHourIndex = useMemo(() => {
-    if (!forecast) return 0;
-    const nowHour = new Date().getHours();
-    const startHour = nowHour >= 9 && nowHour <= 16 ? nowHour : 10;
-    const idx = forecast.findIndex((f) => new Date(f.hourISO).getHours() === startHour);
-    return idx >= 0 ? idx : 0;
-  }, [forecast]);
+  // Which days the forecast covers (today..+6) and the start-hour index for the
+  // chosen day — so you can plan "this weekend", not just today.
+  const days = useMemo(() => (forecast ? availableDays(forecast, new Date()) : []), [forecast]);
+  const startHourIndex = useMemo(
+    () => (forecast ? startIndexForDay(forecast, dayOffset, new Date()) : 0),
+    [forecast, dayOffset],
+  );
 
   // "เตรียมตัววันนี้" — outfit + packing + safety, from the trip-window forecast +
   // real PM2.5. Its outdoorPenalty is the safety lever fed to the planner below.
@@ -232,13 +259,14 @@ function PlanInner() {
   }, [basePlan, forecast]);
 
   const shareUrl = useMemo(
-    () => `/plan?${encodePlanState({ district: districtKey, budgetMin, rain: rainSlot !== null })}`,
-    [districtKey, budgetMin, rainSlot],
+    () => `/plan?${encodePlanState({ district: districtKey, budgetMin, rain: rainSlot !== null, day: dayOffset })}`,
+    [districtKey, budgetMin, rainSlot, dayOffset],
   );
 
   function finishQuiz(v: TasteVector) {
     setTaste(v);
     setQuizOpen(false);
+    if (user) saveCloudTaste(user.id, v); // sync taste to the account
   }
   function skipQuiz() {
     setQuizOpen(false);
@@ -253,7 +281,11 @@ function PlanInner() {
           <Link href="/" className="text-ink hover:text-ink-muted transition-colors">
             <Logo className="text-xl" animate={false} />
           </Link>
-          <span className="font-thai text-sm text-ink-faint">{provider && (en ? `sky via ${provider}` : `ฟ้าจาก ${provider}`)}</span>
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:inline font-thai text-sm text-ink-faint">{provider && (en ? `sky via ${provider}` : `ฟ้าจาก ${provider}`)}</span>
+            {user && <Link href="/trips" className="font-thai text-sm text-rain hover:underline">{en ? "My trips" : "ทริปของฉัน"}</Link>}
+            <AuthButton compact />
+          </div>
         </div>
       </header>
 
@@ -297,6 +329,19 @@ function PlanInner() {
                 ))}
               </div>
             </div>
+            {days.length > 1 && (
+              <div>
+                <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{en ? "Day" : "วัน"}</p>
+                <div className="flex flex-wrap gap-2">
+                  {days.map((d) => (
+                    <button key={d.offset} type="button" onClick={() => setDayOffset(d.offset)}
+                      className={clsx("font-thai rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)] min-h-[44px]", d.offset === dayOffset ? "bg-ink text-paper" : "border border-hairline text-ink hover:bg-surface")}>
+                      {en ? d.en : d.th}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="mt-5">
@@ -371,7 +416,7 @@ function PlanInner() {
                     return (
                     <li key={stop.poi.id} className="flex items-start gap-4 rounded-2xl border border-hairline bg-surface/70 p-4">
                       <div className="relative shrink-0">
-                        <PoiVisual id={stop.poi.id} category={stop.poi.category} skyState={stop.skyState} className="h-12 w-12" />
+                        <PoiPhoto poi={stop.poi} skyState={stop.skyState} className="h-14 w-14" />
                         <span className="absolute -top-1.5 -left-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-ink text-paper text-xs font-semibold ring-2 ring-surface">{i + 1}</span>
                       </div>
                       <div className="min-w-0 flex-1">
@@ -395,6 +440,8 @@ function PlanInner() {
                           {stop.openStatus === "closed" && <span className="text-indoor-warm">{en ? "closed now" : "ปิดตอนนี้"}</span>}
                           {stop.openStatus === "unknown" && <span className="text-ink-faint">{en ? "hours unclear" : "เวลาเปิดไม่แน่ชัด"}</span>}
                           {stop.poi.profile.confidence < 0.5 && <span className="text-ink-faint">{en ? "profile unsure" : "โปรไฟล์ยังไม่ชัด"}</span>}
+                          <a href={mapsPoiUrl(stop.poi.lat, stop.poi.lng, stop.poi.name)} target="_blank" rel="noopener noreferrer" className="text-rain hover:underline">{en ? "navigate ↗" : "นำทาง ↗"}</a>
+                          {stop.poi.website && <a href={stop.poi.website} target="_blank" rel="noopener noreferrer" className="text-rain hover:underline">{en ? "website ↗" : "เว็บไซต์ ↗"}</a>}
                         </div>
                       </div>
                     </li>
@@ -406,9 +453,22 @@ function PlanInner() {
                 )}
 
                 {activePlan.stops.length > 0 && (
-                  <div className="mt-6 flex items-center gap-3">
+                  <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
                     <ShareButton url={shareUrl} />
-                    <span className="font-thai text-xs text-ink-faint">{en ? "send a friend the same plan" : "ส่งให้เพื่อนเปิดแพลนเดียวกัน"}</span>
+                    {user ? (
+                      <button type="button" onClick={doSave} disabled={saveState !== "idle"}
+                        className="font-thai inline-flex h-11 items-center gap-1.5 rounded-full bg-ink px-5 text-sm text-paper transition-colors hover:bg-ink-muted disabled:opacity-60">
+                        {saveState === "saved" ? (en ? "Saved ✓" : "บันทึกแล้ว ✓") : saveState === "saving" ? (en ? "Saving…" : "กำลังเซฟ…") : (en ? "Save trip" : "เซฟทริป")}
+                      </button>
+                    ) : (
+                      <Link href="/trips" className="font-thai inline-flex h-11 items-center rounded-full border border-hairline px-5 text-sm text-ink transition-colors hover:bg-surface">
+                        {en ? "Sign in to save" : "เข้าสู่ระบบเพื่อเซฟ"}
+                      </Link>
+                    )}
+                    <a href={mapsTripUrl(activePlan.stops.map((s) => ({ lat: s.poi.lat, lng: s.poi.lng })))} target="_blank" rel="noopener noreferrer"
+                      className="font-thai inline-flex h-11 items-center gap-1.5 rounded-full border border-hairline px-5 text-sm text-ink transition-colors hover:bg-surface">
+                      {en ? "Open in Google Maps ↗" : "เปิดใน Google Maps ↗"}
+                    </a>
                   </div>
                 )}
                 <div className="mt-6 border-t border-hairline pt-5">
@@ -423,6 +483,9 @@ function PlanInner() {
           )}
         </div>
       </section>
+
+      {/* Real photos of notable, photo-linked places in this area (Wikimedia Commons) */}
+      {districtData && <AreaHighlights pois={districtData.pois} />}
     </main>
   );
 }

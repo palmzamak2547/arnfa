@@ -7,7 +7,7 @@ import { weatherFit, finalScore, type PoiProfile, type SlotForecast } from "@/li
 import { planTrip, type Candidate, type PlannerOutput } from "@/lib/core/planner";
 import { isOpenAtISO, type OpenStatus } from "@/lib/core/openingHours";
 import type { HourlyForecast } from "@/lib/weather/types";
-import { skyStateFrom, type SkyState } from "@/components/SkyChip";
+import { skyStateFrom, type SkyState } from "@/lib/core/skyState";
 
 export type SeedPoi = {
   id: string;
@@ -19,6 +19,10 @@ export type SeedPoi = {
   category: string;
   profile: PoiProfile;
   openingHoursRaw: string | null;
+  /** Optional real-detail fields (present once enriched). */
+  wikidata?: string | null;
+  image?: string | null;
+  website?: string | null;
   tags: Record<string, string | undefined>;
 };
 

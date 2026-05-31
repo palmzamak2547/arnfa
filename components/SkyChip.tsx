@@ -1,10 +1,13 @@
 "use client";
 
 import { clsx } from "clsx";
+import { skyStateFrom, type SkyState } from "@/lib/core/skyState";
 
 /** SkyChip — signature "forecast at arrival time" badge. Spec: 01-design-lock § Signature 2 */
 
-export type SkyState = "clear" | "partly" | "cloudy" | "rain" | "storm" | "night";
+// Re-exported for existing imports (`@/components/SkyChip`); defined in a server-safe module.
+export { skyStateFrom };
+export type { SkyState };
 
 export type SkyChipProps = {
   state: SkyState;
@@ -96,11 +99,3 @@ export function SkyChip({ state, arrivalLabel, tempC, rainProb, size = "md", cla
   );
 }
 
-export function skyStateFrom(o: { rainProb: number; rainIntensity: number; cloudCover: number; isNight: boolean }): SkyState {
-  if (o.isNight) return "night";
-  if (o.rainProb > 0.5 && o.rainIntensity > 0.6) return "storm";
-  if (o.rainProb > 0.35) return "rain";
-  if (o.cloudCover > 0.7) return "cloudy";
-  if (o.cloudCover > 0.35) return "partly";
-  return "clear";
-}

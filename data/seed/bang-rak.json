@@ -228,7 +228,9 @@
       "tags": {
         "outdoor_seating": "terrace",
         "cuisine": "mediterranean"
-      }
+      },
+      "wikidata": "Q4923611",
+      "website": "https://www.lebua.com/sirocco"
     },
     {
       "id": "osm-n415930638",
@@ -534,7 +536,8 @@
       "openingHoursRaw": null,
       "tags": {
         "cuisine": "french"
-      }
+      },
+      "wikidata": "Q95494621"
     },
     {
       "id": "osm-n2084089587",
@@ -643,7 +646,8 @@
         "confidence": 0.5
       },
       "openingHoursRaw": "Mo-Su 18:00-01:00",
-      "tags": {}
+      "tags": {},
+      "wikidata": "Q23306140"
     },
     {
       "id": "osm-n2397987931",
@@ -5354,7 +5358,10 @@
         "confidence": 0.6
       },
       "openingHoursRaw": "Tu-Su,PH 10:30-21:00; Mo closed",
-      "tags": {}
+      "tags": {},
+      "wikidata": "Q6632289",
+      "image": "Category:Thailand Creative & Design Center",
+      "website": "https://web.tcdc.or.th/"
     },
     {
       "id": "osm-n5181641024",
@@ -5903,5 +5910,6 @@
       "tags": {}
     }
   ],
-  "enrichedAt": "2026-05-31T13:07:26.796Z"
+  "enrichedAt": "2026-05-31T13:07:26.796Z",
+  "wikidataAt": "2026-05-31T15:26:48.885Z"
 }

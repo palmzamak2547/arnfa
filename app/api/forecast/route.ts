@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const lat = parseFloat(searchParams.get("lat") ?? "13.7563");
   const lng = parseFloat(searchParams.get("lng") ?? "100.5018");
-  const hours = Math.min(48, parseInt(searchParams.get("hours") ?? "24", 10));
+  const hours = Math.min(180, parseInt(searchParams.get("hours") ?? "24", 10)); // up to ~7 days
 
   if (!isFinite(lat) || !isFinite(lng)) {
     return NextResponse.json({ error: "bad lat/lng" }, { status: 400 });

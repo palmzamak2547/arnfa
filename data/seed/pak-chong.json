@@ -1,0 +1,697 @@
+{
+  "district": "pak-chong",
+  "districtTh": "ปากช่อง-เขาใหญ่",
+  "districtEn": "Pak Chong (Khao Yai)",
+  "kind": "spot",
+  "province": "นครราชสีมา",
+  "osmRelationId": null,
+  "bbox": [
+    14.61,
+    101.37,
+    14.73,
+    101.46
+  ],
+  "fetchedAt": "2026-05-31T15:20:10.978Z",
+  "count": 27,
+  "pois": [
+    {
+      "id": "osm-n2412639727",
+      "osmId": 2412639727,
+      "osmType": "node",
+      "name": "The Smoke House",
+      "nameTh": null,
+      "lat": 14.616719,
+      "lng": 101.4066483,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n3033909026",
+      "osmId": 3033909026,
+      "osmType": "node",
+      "name": "McDonald's",
+      "nameTh": "แมคโดนัลด์",
+      "lat": 14.6607541,
+      "lng": 101.3914376,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": "https://www.mcthai.co.th/",
+      "tags": {
+        "cuisine": "burger"
+      }
+    },
+    {
+      "id": "osm-n3552656740",
+      "osmId": 3552656740,
+      "osmType": "node",
+      "name": "HI Pak Chong",
+      "nameTh": null,
+      "lat": 14.7049454,
+      "lng": 101.411228,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n4559628598",
+      "osmId": 4559628598,
+      "osmType": "node",
+      "name": "ขนมจีน คุณวสุ",
+      "nameTh": null,
+      "lat": 14.6585566,
+      "lng": 101.382983,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 10:00-18:00",
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n4689978291",
+      "osmId": 4689978291,
+      "osmType": "node",
+      "name": "อ้อมกอด คาเฟ่",
+      "nameTh": "อ้อมกอด คาเฟ่",
+      "lat": 14.6620813,
+      "lng": 101.3993673,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "Mo-Su 07:30-19:00",
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "cuisine": "steak_house;ice_cream;sausage;tea;local;coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n6251492279",
+      "osmId": 6251492279,
+      "osmType": "node",
+      "name": "ซูเชฟ​ เสต็กบุฟเฟ่ต์​ สไตล์​ปิ้งย่าง",
+      "nameTh": null,
+      "lat": 14.6786857,
+      "lng": 101.4006922,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.4,
+        "indoorness": 0.8,
+        "shade": 0.2,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "outdoor_seating": "yes",
+        "cuisine": "barbecue"
+      }
+    },
+    {
+      "id": "osm-n8140735217",
+      "osmId": 8140735217,
+      "osmType": "node",
+      "name": "คาเฟ่ อเมซอน",
+      "nameTh": "คาเฟ่ อเมซอน",
+      "lat": 14.6109266,
+      "lng": 101.4047222,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-n9236753471",
+      "osmId": 9236753471,
+      "osmType": "node",
+      "name": "KP Steak Khao Yai",
+      "nameTh": null,
+      "lat": 14.6545401,
+      "lng": 101.4055496,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "cuisine": "steak_house;thai"
+      }
+    },
+    {
+      "id": "osm-n10277339264",
+      "osmId": 10277339264,
+      "osmType": "node",
+      "name": "Cafe  Inn",
+      "nameTh": null,
+      "lat": 14.6783154,
+      "lng": 101.4054749,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10678289305",
+      "osmId": 10678289305,
+      "osmType": "node",
+      "name": "Hormkubkao",
+      "nameTh": null,
+      "lat": 14.7004651,
+      "lng": 101.4080704,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n10694010978",
+      "osmId": 10694010978,
+      "osmType": "node",
+      "name": "Café Amazon",
+      "nameTh": null,
+      "lat": 14.6874944,
+      "lng": 101.4033231,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11686665307",
+      "osmId": 11686665307,
+      "osmType": "node",
+      "name": "Pagoda",
+      "nameTh": null,
+      "lat": 14.68545,
+      "lng": 101.3943551,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11686822777",
+      "osmId": 11686822777,
+      "osmType": "node",
+      "name": "ตลาดเทศบาลตำบลปากช่อง",
+      "nameTh": null,
+      "lat": 14.7058091,
+      "lng": 101.4139723,
+      "category": "market",
+      "profile": {
+        "outdoorness": 0.45,
+        "indoorness": 0.55,
+        "shade": 0.6,
+        "covered": 0.65,
+        "rainEnjoyment": 0.35,
+        "heatTolerance": 0.45,
+        "confidence": 0.5
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n11738306469",
+      "osmId": 11738306469,
+      "osmType": "node",
+      "name": "ก๋ยวเตี๋ยวนั่งเล่น",
+      "nameTh": null,
+      "lat": 14.6608383,
+      "lng": 101.3989614,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": "https://www.wongnai.com/restaurants/2504150WJ-ก๋วยเตี๋ยวนั่งเล่น-รสเด็ดปากช่อง",
+      "tags": {
+        "cuisine": "noodles;thai"
+      }
+    },
+    {
+      "id": "osm-n11885900558",
+      "osmId": 11885900558,
+      "osmType": "node",
+      "name": "บ้านทาร์ซาน อาหารป่า",
+      "nameTh": null,
+      "lat": 14.6934493,
+      "lng": 101.3896969,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 10:00-22:00",
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "cuisine": "อาหาร"
+      }
+    },
+    {
+      "id": "osm-n11890770923",
+      "osmId": 11890770923,
+      "osmType": "node",
+      "name": "อีหล่า สุกี้&ชาบู E-LA SHABU",
+      "nameTh": "อีหล่า สุกี้&ชาบู E-LA SHABU",
+      "lat": 14.7165425,
+      "lng": 101.4293376,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "Mo-Su 11:00-22:00",
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "cuisine": "ร้านอาหาร;ชาบู;สุกี้"
+      }
+    },
+    {
+      "id": "osm-n13008674043",
+      "osmId": 13008674043,
+      "osmType": "node",
+      "name": "ครัวเจ๊เตียบอาหารตามสั่ง",
+      "nameTh": "ครัวเจ๊เตียบอาหารตามสั่ง",
+      "lat": 14.7050738,
+      "lng": 101.4113575,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "06:00-15:30",
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n13013536560",
+      "osmId": 13013536560,
+      "osmType": "node",
+      "name": "กินข้าวบ้านเฮาส์",
+      "nameTh": "กินข้าวบ้านเฮาส์",
+      "lat": 14.6694451,
+      "lng": 101.3948588,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.4,
+        "indoorness": 0.8,
+        "shade": 0.2,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.9500000000000001,
+        "confidence": 0.6000000000000001
+      },
+      "openingHoursRaw": "Mo-We,Fr-Su 10:30-20:30; Th off",
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "outdoor_seating": "yes",
+        "cuisine": "thai"
+      }
+    },
+    {
+      "id": "osm-n13014745389",
+      "osmId": 13014745389,
+      "osmType": "node",
+      "name": "Brief Cafe",
+      "nameTh": null,
+      "lat": 14.704599,
+      "lng": 101.4111468,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "07:00-16:00",
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-n13377868211",
+      "osmId": 13377868211,
+      "osmType": "node",
+      "name": "Cyper Cafe",
+      "nameTh": null,
+      "lat": 14.7072216,
+      "lng": 101.4176429,
+      "category": "cafe",
+      "profile": {
+        "outdoorness": 0.15,
+        "indoorness": 0.85,
+        "shade": 0.1,
+        "covered": 0.9,
+        "rainEnjoyment": 0.75,
+        "heatTolerance": 0.85,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": "24/7",
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "cuisine": "coffee_shop"
+      }
+    },
+    {
+      "id": "osm-w752176445",
+      "osmId": 752176445,
+      "osmType": "way",
+      "name": "สวนสาธารณะ เขาแคน",
+      "nameTh": null,
+      "lat": 14.7013651,
+      "lng": 101.4086937,
+      "category": "park",
+      "profile": {
+        "outdoorness": 0.95,
+        "indoorness": 0.05,
+        "shade": 0.4,
+        "covered": 0.05,
+        "rainEnjoyment": 0.05,
+        "heatTolerance": 0.3,
+        "confidence": 0.6
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1123562177",
+      "osmId": 1123562177,
+      "osmType": "way",
+      "name": "วัดเขาไทรสายัฌห์",
+      "nameTh": null,
+      "lat": 14.6838796,
+      "lng": 101.3964341,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1249083797",
+      "osmId": 1249083797,
+      "osmType": "way",
+      "name": "Moyard Khaoyai",
+      "nameTh": null,
+      "lat": 14.6134178,
+      "lng": 101.4496788,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.4,
+        "indoorness": 0.8,
+        "shade": 0.2,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "sunrise-sunset",
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {
+        "outdoor_seating": "yes",
+        "cuisine": "thai;izakaya;japanese;italian"
+      }
+    },
+    {
+      "id": "osm-w1317554051",
+      "osmId": 1317554051,
+      "osmType": "way",
+      "name": "วัดเขาวันชัยนวรัตน์",
+      "nameTh": null,
+      "lat": 14.6962264,
+      "lng": 101.4096646,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1317554053",
+      "osmId": 1317554053,
+      "osmType": "way",
+      "name": "อุโบสถหินลายไม้",
+      "nameTh": null,
+      "lat": 14.6938006,
+      "lng": 101.4110896,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1388130872",
+      "osmId": 1388130872,
+      "osmType": "way",
+      "name": "วัดสิริสัมพันธ์",
+      "nameTh": "วัดสิริสัมพันธ์",
+      "lat": 14.6952853,
+      "lng": 101.4052731,
+      "category": "temple",
+      "profile": {
+        "outdoorness": 0.6,
+        "indoorness": 0.4,
+        "shade": 0.35,
+        "covered": 0.45,
+        "rainEnjoyment": 0.2,
+        "heatTolerance": 0.4,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": null,
+      "wikidata": null,
+      "image": null,
+      "website": null,
+      "tags": {}
+    },
+    {
+      "id": "osm-w1481015685",
+      "osmId": 1481015685,
+      "osmType": "way",
+      "name": "RoadHouse Khaoyai",
+      "nameTh": null,
+      "lat": 14.698618,
+      "lng": 101.4076144,
+      "category": "restaurant",
+      "profile": {
+        "outdoorness": 0.2,
+        "indoorness": 0.8,
+        "shade": 0.1,
+        "covered": 0.85,
+        "rainEnjoyment": 0.55,
+        "heatTolerance": 0.8,
+        "confidence": 0.55
+      },
+      "openingHoursRaw": "24/7",
+      "wikidata": null,
+      "image": null,
+      "website": "https://www.facebook.com/roadhousekhaoyai",
+      "tags": {
+        "cuisine": "regional;thai"
+      }
+    }
+  ]
+}

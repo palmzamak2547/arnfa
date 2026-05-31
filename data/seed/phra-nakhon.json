@@ -2628,7 +2628,9 @@
         "confidence": 0.7
       },
       "openingHoursRaw": "Sat-Sun 09:30-16:30",
-      "tags": {}
+      "tags": {},
+      "wikidata": "Q4856189",
+      "website": "https://www.botlc.or.th/museum"
     },
     {
       "id": "osm-n3568027060",
@@ -3608,7 +3610,9 @@
       "openingHoursRaw": "We-Sa 07:00-19:30",
       "tags": {
         "cuisine": "thai"
-      }
+      },
+      "wikidata": "Q47206330",
+      "image": "Category:Jay Fai"
     },
     {
       "id": "osm-n4444954090",
@@ -5703,7 +5707,8 @@
         "confidence": 0.6
       },
       "openingHoursRaw": null,
-      "tags": {}
+      "tags": {},
+      "wikidata": "Q1792381"
     },
     {
       "id": "osm-w1265994092",
@@ -5724,7 +5729,10 @@
         "confidence": 0.6
       },
       "openingHoursRaw": "Mo-Su 09:00-18:00; PH open",
-      "tags": {}
+      "tags": {},
+      "wikidata": "Q4921773",
+      "image": "Category:Sala Chaloem Krung",
+      "website": "http://www.salachalermkrung.com/"
     },
     {
       "id": "osm-w1434802192",
@@ -5748,5 +5756,6 @@
       "tags": {}
     }
   ],
-  "enrichedAt": "2026-05-31T13:33:41.714Z"
+  "enrichedAt": "2026-05-31T13:33:41.714Z",
+  "wikidataAt": "2026-05-31T15:24:04.096Z"
 }
