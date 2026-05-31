@@ -24,8 +24,6 @@ const trirong = Trirong({
 const newsreader = Newsreader({
   variable: "--font-display-en",
   subsets: ["latin"],
-  // NOTE: next/font forbids `axes` together with an explicit `weight` array.
-  // Newsreader's opsz still applies via its named weights; we just request weights.
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
@@ -46,10 +44,18 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://arnfa.vercel.app"),
-  title: "อ่านฟ้า · Arnfa",
-  description: "วางแผนทริปกรุงเทพให้เข้ากับฟ้า — decision engine ที่อ่านฟ้าให้คุณ",
+  title: {
+    default: "อ่านฟ้า · Arnfa — วางแผนทริปกรุงเทพตามฟ้า",
+    template: "%s · อ่านฟ้า",
+  },
+  description:
+    "อ่านฟ้า (Arnfa) — decision engine ที่อ่านฟ้าให้คุณ. วางแผนทริปกรุงเทพให้เข้ากับอากาศ ณ เวลาที่จะไปถึง ฝนมาเมื่อไหร่บอกที่ดีกว่าให้เอง.",
   applicationName: "Arnfa",
   authors: [{ name: "Palm" }],
+  keywords: [
+    "อ่านฟ้า", "Arnfa", "วางแผนทริป", "พยากรณ์อากาศ", "กรุงเทพ", "คาเฟ่",
+    "Bangkok weather", "trip planner", "decision engine",
+  ],
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
@@ -65,6 +71,12 @@ export const metadata: Metadata = {
     locale: "th_TH",
     alternateLocale: ["en_US"],
     type: "website",
+    siteName: "อ่านฟ้า · Arnfa",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "อ่านฟ้า · Arnfa",
+    description: "Decision engine ที่อ่านฟ้าให้คุณ",
   },
 };
 
@@ -73,6 +85,21 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+};
+
+/** JSON-LD — WebApplication, so search/social understand what Arnfa is. */
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "อ่านฟ้า (Arnfa)",
+  alternateName: "Arnfa",
+  url: "https://arnfa.vercel.app",
+  applicationCategory: "TravelApplication",
+  operatingSystem: "Web",
+  inLanguage: ["th", "en"],
+  offers: { "@type": "Offer", price: "0", priceCurrency: "THB" },
+  description:
+    "Decision engine that reads the Bangkok sky and plans a day that fits the weather at your arrival time. Open data: Open-Meteo, OpenStreetMap, Air4Thai.",
 };
 
 export default function RootLayout({
