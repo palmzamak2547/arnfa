@@ -25,6 +25,7 @@ import { SkyChip } from "@/components/SkyChip";
 import { SwapCard } from "@/components/SwapCard";
 import { PlanSkeleton } from "@/components/PlanSkeleton";
 import { AirChip } from "@/components/AirChip";
+import { PoiVisual } from "@/components/PoiVisual";
 import { ShareButton } from "@/components/ShareButton";
 import { TasteQuiz } from "@/components/TasteQuiz";
 import { Logo } from "@/components/Logo";
@@ -256,7 +257,10 @@ function PlanInner() {
                 <ol className="space-y-3">
                   {activePlan.stops.map((stop, i) => (
                     <li key={stop.poi.id} className="flex items-start gap-4 rounded-2xl border border-hairline bg-surface/70 p-4">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink text-paper text-sm font-semibold">{i + 1}</div>
+                      <div className="relative shrink-0">
+                        <PoiVisual id={stop.poi.id} category={stop.poi.category} skyState={stop.skyState} className="h-12 w-12" />
+                        <span className="absolute -top-1.5 -left-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-ink text-paper text-xs font-semibold ring-2 ring-surface">{i + 1}</span>
+                      </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
                           <h3 className="font-thai font-medium text-ink truncate">{stop.poi.name}</h3>
