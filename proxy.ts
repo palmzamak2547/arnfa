@@ -35,7 +35,7 @@ function csp(): string {
   ].join("; ");
 }
 
-export function middleware(_req: NextRequest) {
+export function proxy(_req: NextRequest) {
   const res = NextResponse.next();
   res.headers.set("Content-Security-Policy", csp());
   res.headers.set("Strict-Transport-Security", "max-age=63072000; includeSubDomains; preload");
