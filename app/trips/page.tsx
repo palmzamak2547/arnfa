@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { useAuth } from "@/lib/auth/useAuth";
 import { listTrips, deleteTrip, type SavedTrip } from "@/lib/plan/trips";
 import { districtMeta } from "@/lib/poi/districts";
@@ -11,10 +12,7 @@ import { AuthButton } from "@/components/AuthButton";
 import { Logo } from "@/components/Logo";
 
 export default function TripsPage() {
-  const { i18n } = useTranslation();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const en = mounted && i18n.language === "en";
+  const { en } = useLang();
   const { user, ready } = useAuth();
   const [trips, setTrips] = useState<SavedTrip[] | null>(null);
 
@@ -35,7 +33,10 @@ export default function TripsPage() {
       <header className="arnfa-grid section-minor pad-safe-t">
         <div className="col-content flex items-center justify-between gap-3">
           <Link href="/" className="text-ink hover:text-ink-muted transition-colors"><Logo className="text-xl" animate={false} /></Link>
-          <AuthButton />
+          <div className="flex items-center gap-4">
+            <AuthButton />
+            <LanguageToggle />
+          </div>
         </div>
       </header>
 

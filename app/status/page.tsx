@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
 import { Logo } from "@/components/Logo";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { DISTRICTS } from "@/lib/poi/districts";
 
 /**
@@ -30,12 +31,10 @@ const DOT: Record<Status, string> = {
 };
 
 export default function StatusPage() {
-  const { i18n } = useTranslation();
+  const { en } = useLang();
   const [checks, setChecks] = useState<Record<string, Check>>({});
   const [checkedAt, setCheckedAt] = useState<string>("");
   const [mounted, setMounted] = useState(false);
-  // Gate language on mount so SSR + first paint match (no React #418).
-  const en = mounted && i18n.language === "en";
 
   const runChecks = useCallback(async () => {
     setChecks(Object.fromEntries(SERVICES.map((s) => [s.key, { status: "checking" as Status, ms: 0 }])));
@@ -73,7 +72,10 @@ export default function StatusPage() {
       <header className="arnfa-grid section-minor pad-safe-t">
         <div className="col-content flex items-center justify-between">
           <Link href="/" className="text-ink hover:text-ink-muted transition-colors"><Logo className="text-xl" animate={false} /></Link>
-          <Link href="/plan" className="font-thai text-sm text-rain hover:underline">{en ? "Plan a trip →" : "วางแผนทริป →"}</Link>
+          <div className="flex items-center gap-4">
+            <Link href="/plan" className="font-thai text-sm text-rain hover:underline">{en ? "Plan a trip →" : "วางแผนทริป →"}</Link>
+            <LanguageToggle />
+          </div>
         </div>
       </header>
 

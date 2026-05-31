@@ -3,7 +3,8 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useTranslation } from "react-i18next";
+import { useLang } from "@/lib/i18n/useLang";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { clsx } from "clsx";
 import {
   buildPlan,
@@ -55,13 +56,9 @@ const BUDGETS = [
 ];
 
 function PlanInner() {
-  const { i18n } = useTranslation();
-  // Gate language on mount: SSR + the first client paint render the DEFAULT (Thai)
-  // so server and client agree (no hydration text-mismatch, React #418); the EN
-  // switch happens after mount. Same discipline as the motion `initial` gate.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const en = mounted && i18n.language === "en";
+  // SSR + first paint = Thai (hydration-safe); flips to the chosen language after
+  // global hydration, with no flash on client navigation. See lib/i18n/useLang.
+  const { en } = useLang();
   // Start from defaults so SSR and the first client render MATCH (no hydration
   // mismatch). The URL is read in an effect after mount and applied below.
   const [districtKey, setDistrictKey] = useState(DEFAULT_PLAN_STATE.district);
@@ -285,6 +282,7 @@ function PlanInner() {
             <span className="hidden sm:inline font-thai text-sm text-ink-faint">{provider && (en ? `sky via ${provider}` : `ฟ้าจาก ${provider}`)}</span>
             {user && <Link href="/trips" className="font-thai text-sm text-rain hover:underline">{en ? "My trips" : "ทริปของฉัน"}</Link>}
             <AuthButton compact />
+            <LanguageToggle />
           </div>
         </div>
       </header>

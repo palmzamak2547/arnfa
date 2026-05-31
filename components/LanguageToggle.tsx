@@ -1,14 +1,14 @@
 "use client";
 
-import { useTranslation } from "react-i18next";
 import { setLocale } from "@/lib/i18n/I18nProvider";
+import { useLang } from "@/lib/i18n/useLang";
 import { LOCALES, type Locale } from "@/lib/i18n/locales";
 import { clsx } from "clsx";
 
 /** LanguageToggle — minimal TH/EN switch. Editorial, hairline, no flags. */
 export function LanguageToggle({ className }: { className?: string }) {
-  const { i18n } = useTranslation();
-  const current = (i18n.language as Locale) ?? "th";
+  const { lang } = useLang();
+  const current = lang as Locale;
   return (
     <div className={clsx("inline-flex items-center gap-1 text-sm", className)}>
       {LOCALES.map((lng, i) => (
