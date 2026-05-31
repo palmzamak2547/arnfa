@@ -131,5 +131,23 @@ create policy trip_stop_write_own on arnfa.trip_stop for insert to authenticated
 -- feedback: a user may insert their own; reads are service/admin only (no select policy)
 create policy feedback_insert_own on arnfa.feedback for insert to authenticated
   with check (user_id = (select auth.uid()) or user_id is null);
+-- anonymous (Phase 1 logged-out) users may insert anonymous feedback (user_id null)
+create policy feedback_insert_anon on arnfa.feedback for insert to anon
+  with check (user_id is null);
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- API role grants — PostgREST needs schema USAGE + table privileges in addition
+-- to RLS (RLS still gates which ROWS; grants gate which TABLES the role can touch).
+-- ─────────────────────────────────────────────────────────────────────────────
+grant usage on schema arnfa to anon, authenticated, service_role;
+grant select on arnfa.poi, arnfa.poi_weather_profile to anon, authenticated;
+grant insert on arnfa.feedback to anon, authenticated;
+grant select on arnfa.feedback to authenticated;
+grant all on arnfa.user_taste, arnfa.trip, arnfa.trip_stop to authenticated;
+grant all on all tables in schema arnfa to service_role;
 
 comment on schema arnfa is 'Arnfa (อ่านฟ้า) weather-trip decision engine — namespaced to share the miracle-investment Supabase without colliding with public.*';
+
+-- NOTE (one-time, done via Management API, not SQL): expose `arnfa` to PostgREST —
+--   PATCH /v1/projects/<ref>/postgrest  {"db_schema":"public, graphql_public, arnfa"}
+-- Without it the REST client returns PGRST106 "Invalid schema: arnfa".

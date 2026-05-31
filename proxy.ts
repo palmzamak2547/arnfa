@@ -29,7 +29,7 @@ function csp(): string {
     "worker-src 'self' blob:",
     "child-src 'self' blob:",
     "img-src 'self' data: blob: https://tiles.openfreemap.org https://*.openfreemap.org https://upload.wikimedia.org https://commons.wikimedia.org https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org",
-    "connect-src 'self' https://api.open-meteo.com https://api.met.no https://overpass-api.de https://tiles.openfreemap.org https://*.openfreemap.org https://api.rainviewer.com https://tilecache.rainviewer.com https://query.wikidata.org",
+    "connect-src 'self' https://api.open-meteo.com https://api.met.no https://overpass-api.de https://tiles.openfreemap.org https://*.openfreemap.org https://api.rainviewer.com https://tilecache.rainviewer.com https://query.wikidata.org https://dcrbtlpiumqpiegzucpp.supabase.co wss://dcrbtlpiumqpiegzucpp.supabase.co",
     "manifest-src 'self'",
     "upgrade-insecure-requests",
   ].join("; ");

@@ -21,6 +21,7 @@ import type { HourlyForecast } from "@/lib/weather/types";
 import { injectRainAt } from "@/lib/plan/rainInject";
 import { decodePlanState, encodePlanState } from "@/lib/plan/shareState";
 import { loadTaste } from "@/lib/plan/taste";
+import { recordFeedback } from "@/lib/plan/feedback";
 import { SkyChip } from "@/components/SkyChip";
 import { SwapCard } from "@/components/SwapCard";
 import { PlanSkeleton } from "@/components/PlanSkeleton";
@@ -250,7 +251,15 @@ function PlanInner() {
                     <SwapCard active
                       from={{ name: swap.dropped.poi.name, skyState: "storm", arrivalLabel: swap.dropped.arrivalLabel, reason: `ฝนเข้า ${swap.dropped.arrivalLabel}` }}
                       to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: 5, why: swap.added.reason }}
-                      onAccept={() => setRainSlot(null)} onDismiss={() => setRainSlot(null)} />
+                      onAccept={() => {
+                        // flywheel: user took the rain-swap suggestion → that POI fits rain
+                        recordFeedback(swap.added.poi.id, "accept_swap", { from: swap.dropped.poi.id, district: districtKey });
+                        setRainSlot(null);
+                      }}
+                      onDismiss={() => {
+                        recordFeedback(swap.added.poi.id, "dismiss", { from: swap.dropped.poi.id, district: districtKey });
+                        setRainSlot(null);
+                      }} />
                   </div>
                 )}
 
