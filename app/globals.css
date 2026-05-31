@@ -103,6 +103,40 @@ body {
   a[role="button"], button, .tap-target { min-height: 44px; }
 }
 
+/*
+ * Editorial 12-column grid — the page "spine" (research Part A1).
+ * One shared grid; sections place content on named lines so blocks land on
+ * INTENTIONAL columns instead of all flush-left. `full` bleeds edge-to-edge
+ * (sky, ribbon); `content` is the readable measure.
+ */
+.arnfa-grid {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(1.25rem, 1fr)
+    [content-start] repeat(12, minmax(0, 1fr)) [content-end]
+    minmax(1.25rem, 1fr) [full-end];
+  column-gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+@media (min-width: 768px) {
+  .arnfa-grid { grid-template-columns:
+    [full-start] minmax(2rem, 1fr)
+    [content-start] repeat(12, minmax(0, 5.25rem)) [content-end]
+    minmax(2rem, 1fr) [full-end]; }
+}
+.col-full    { grid-column: full-start / full-end; }
+.col-content { grid-column: content-start / content-end; }
+/* desktop editorial anchors (mobile: everything spans content) */
+@media (min-width: 1024px) {
+  .col-left-7   { grid-column: content-start / span 7; }
+  .col-right-7  { grid-column: 7 / content-end; }       /* spans cols 7-12 */
+  .col-left-8   { grid-column: content-start / span 8; }
+  .col-mid-6    { grid-column: 4 / span 6; }
+}
+
+/* 2-step vertical rhythm (research A6) — major vs minor section padding. */
+.section-major { padding-block: clamp(4rem, 10vw, 8rem); }
+.section-minor { padding-block: clamp(2.5rem, 6vw, 4rem); }
+
 /* Thai serif headline utility — Trirong, the editorial broadsheet voice. */
 .font-thai-serif {
   font-family: var(--font-display-th), "Noto Serif Thai", Georgia, serif;
