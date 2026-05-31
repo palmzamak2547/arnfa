@@ -4,9 +4,11 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n/useLang";
 import Map, { Marker, Popup, NavigationControl, GeolocateControl, ScaleControl, Source, Layer, type MapRef } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { clsx } from "clsx";
 import type { EnrichedStop } from "@/lib/plan/buildPlan";
 import type { SkyState } from "./SkyChip";
 import { categoryLabel } from "@/lib/plan/categoryLabel";
+import { GIBS_LAYERS, gibsTileUrl, gibsDate, type GibsLayerKey } from "@/lib/satellite/gibs";
 
 /**
  * PlanMap — MapLibre + OpenFreeMap liberty. Stable + premium:
@@ -36,6 +38,8 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
   const initialView = useMemo(() => ({ longitude: center.lng, latitude: center.lat, zoom: 13.5 }), [center]);
   const [selected, setSelected] = useState<EnrichedStop | null>(null);
   const [mapError, setMapError] = useState(false);
+  // NASA GIBS satellite overlay (free, no key). "none" by default so the route is clear.
+  const [sat, setSat] = useState<GibsLayerKey | "none">("none");
 
   const fullPath = useMemo(() => stops.map((s) => [s.poi.lng, s.poi.lat] as [number, number]), [stops]);
 
@@ -89,8 +93,12 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
     );
   }
 
+  const routeLayerPresent = fullPath.length >= 2 && revealed >= 2;
+  const satLayer = sat === "none" ? null : GIBS_LAYERS.find((l) => l.key === sat) ?? null;
+  const satDate = satLayer ? gibsDate(new Date(), satLayer.lagDays) : "";
+
   return (
-    <div className="h-full w-full overflow-hidden rounded-3xl border border-hairline">
+    <div className="relative h-full w-full overflow-hidden rounded-3xl border border-hairline">
       <Map
         ref={mapRef}
         initialViewState={initialView}
@@ -102,6 +110,14 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
         <NavigationControl position="top-right" showCompass={false} />
         <GeolocateControl position="top-right" trackUserLocation positionOptions={{ enableHighAccuracy: false }} />
         <ScaleControl position="bottom-left" maxWidth={96} unit="metric" />
+
+        {/* NASA GIBS satellite raster — sits below the route line (beforeId) so the
+            plan always reads on top. Daily imagery, no key. Missing tiles just blank. */}
+        {satLayer && (
+          <Source key={sat} id="gibs-sat" type="raster" tiles={[gibsTileUrl(satLayer, satDate)]} tileSize={256} maxzoom={satLayer.maxNativeZoom} attribution="Imagery: NASA GIBS">
+            <Layer id="gibs-sat-layer" type="raster" beforeId={routeLayerPresent ? "route-line" : undefined} paint={{ "raster-opacity": satLayer.opacity }} />
+          </Source>
+        )}
 
         {fullPath.length >= 2 && revealed >= 2 && (
           <Source id="route" type="geojson" data={lineGeoJSON}>
@@ -136,6 +152,21 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
           </Popup>
         )}
       </Map>
+
+      {/* Satellite layer switcher (NASA GIBS · free · no key) */}
+      <div className="absolute left-3 top-3 z-10 flex gap-1 rounded-full border border-hairline bg-paper/90 p-1 shadow-sm backdrop-blur">
+        {[{ k: "none" as const, label: en ? "Map" : "แผนที่" }, ...GIBS_LAYERS.map((l) => ({ k: l.key, label: en ? l.en : l.th }))].map(({ k, label }) => (
+          <button key={k} type="button" onClick={() => setSat(k)}
+            className={clsx("font-thai rounded-full px-3 py-1 text-xs transition-colors", sat === k ? "bg-ink text-paper" : "text-ink-muted hover:bg-surface")}>
+            {label}
+          </button>
+        ))}
+      </div>
+      {satLayer && (
+        <div className="absolute left-3 top-12 z-10 rounded-full bg-paper/85 px-2.5 py-1 font-thai text-[0.65rem] text-ink-faint backdrop-blur">
+          {en ? `NASA daily image (${satDate})` : `ภาพดาวเทียม NASA รายวัน (${satDate})`}
+        </div>
+      )}
     </div>
   );
 }

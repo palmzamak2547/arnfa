@@ -39,6 +39,7 @@ import { ShareButton } from "@/components/ShareButton";
 import { TasteQuiz } from "@/components/TasteQuiz";
 import { AuthButton } from "@/components/AuthButton";
 import { AreaHighlights } from "@/components/AreaHighlights";
+import { SatelliteHaze } from "@/components/SatelliteHaze";
 import { useAuth } from "@/lib/auth/useAuth";
 import { saveTrip, loadCloudTaste, saveCloudTaste } from "@/lib/plan/trips";
 import { DistrictPicker } from "@/components/DistrictPicker";
@@ -356,6 +357,7 @@ function PlanInner() {
             <div className="grid gap-4">
               <SkyAround currentKey={districtKey} lat={center.lat} lng={center.lng} onPick={setDistrictKey} />
               <LiveCompanion pois={districtData?.pois ?? []} />
+              <SatelliteHaze lat={center.lat} lng={center.lng} airLevel={air?.level} />
             </div>
           </div>
         </section>
