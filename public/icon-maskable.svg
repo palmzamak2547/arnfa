@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Arnfa">
+  <!-- opaque full-bleed bg for Android adaptive mask -->
+  <rect width="512" height="512" fill="#F4EFE6"/>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#A8C6E8"/>
+      <stop offset="1" stop-color="#F4D9B8"/>
+    </linearGradient>
+  </defs>
+  <!-- content kept within ~80% safe zone (center 410px) -->
+  <circle cx="256" cy="238" r="118" fill="url(#sky)"/>
+  <circle cx="306" cy="196" r="32" fill="#F2A65A"/>
+  <path d="M168 290 a36 36 0 0 1 7 -70 a47 47 0 0 1 90 7 a31 31 0 0 1 -6 62 H176 a30 30 0 0 1 -8 -1 Z"
+        fill="#FFFFFF" stroke="#1A1F2B" stroke-width="9" stroke-linejoin="round"/>
+  <line x1="206" y1="312" x2="196" y2="344" stroke="#5B7FB8" stroke-width="10" stroke-linecap="round"/>
+  <line x1="248" y1="312" x2="238" y2="344" stroke="#5B7FB8" stroke-width="10" stroke-linecap="round"/>
+  <line x1="150" y1="350" x2="362" y2="350" stroke="#1A1F2B" stroke-width="7" stroke-linecap="round" opacity="0.5"/>
+</svg>
