@@ -83,7 +83,7 @@ body {
   --safe-b: env(safe-area-inset-bottom, 0px);
 
   /* Fluid type scale (min @360px → max @1280px viewport) */
-  --fs-display: clamp(2.75rem, 1.6rem + 5.8vw, 6rem);   /* hero headline */
+  --fs-display: clamp(2.5rem, 1.7rem + 3.4vw, 4.5rem);  /* hero headline — tuned so Thai doesn't fragment */
   --fs-h2:      clamp(1.9rem, 1.3rem + 2.8vw, 3.25rem); /* section headline */
   --fs-lead:    clamp(1.05rem, 0.95rem + 0.6vw, 1.3rem);/* lead paragraph */
 }

@@ -1,11 +1,17 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
-import { Sky, Stars } from "@react-three/drei";
+import { Sky, Stars, Cloud, Clouds } from "@react-three/drei";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import * as THREE from "three";
 import { RainLayer } from "./RainLayer";
-import { PuffClouds } from "./PuffClouds";
+
+/**
+ * Soft volumetric clouds use drei <Cloud>, but pointed at a SELF-HOSTED texture
+ * (/cloud.png, downloaded into public/) instead of drei's default githack CDN —
+ * so they're CSP-clean + offline-capable but keep the fluffy look (not low-poly).
+ */
+const CLOUD_TEXTURE = "/cloud.png";
 
 /**
  * SkyHero — R3F drei <Sky> with sun-position bound to the real Bangkok clock,
@@ -71,9 +77,15 @@ export function SkyHero() {
           ) : (
             <Sky sunPosition={sunVec} turbidity={6} rayleigh={2.5} mieCoefficient={0.005} mieDirectionalG={0.85} />
           )}
-          <ambientLight intensity={0.7} />
-          <directionalLight position={[sunPos[0] * 0.01, Math.max(2, sunPos[1] * 0.01), 5]} intensity={1.1} />
-          <PuffClouds reduced={reduced} clusters={isNight ? 2 : 4} />
+          {/* Very bright, even lighting so the cloud texture reads as airy white cumulus, never storm-grey. */}
+          <ambientLight intensity={1.35} />
+          <hemisphereLight args={["#FFFFFF", "#EEF3FA", 1.1]} />
+          {/* Clouds lifted high (y≈6) and pushed back so they sit ABOVE the headline band, lower opacity = soft. */}
+          <Clouds texture={CLOUD_TEXTURE} material={THREE.MeshLambertMaterial} limit={50}>
+            <Cloud seed={1} segments={24} bounds={[13, 1.6, 1.4]} volume={4.5} smallestVolume={0.3} concentrate="outside" color="#FFFFFF" fade={24} position={[-5, 6.2, -8]} opacity={0.4} growth={5} speed={reduced ? 0 : 0.12} />
+            <Cloud seed={9} segments={20} bounds={[11, 1.5, 1.4]} volume={3.8} smallestVolume={0.25} concentrate="outside" color="#FFFFFF" fade={20} position={[8, 7.2, -11]} opacity={0.32} growth={4.5} speed={reduced ? 0 : 0.09} />
+            <Cloud seed={17} segments={16} bounds={[9, 1.3, 1.2]} volume={3} smallestVolume={0.25} concentrate="outside" color="#FFFFFF" fade={18} position={[2, 5.4, -14]} opacity={0.26} growth={4} speed={reduced ? 0 : 0.07} />
+          </Clouds>
           {rainIntensity > 0.08 && <RainLayer intensity={rainIntensity} reduced={reduced} />}
         </Suspense>
       </Canvas>

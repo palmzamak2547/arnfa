@@ -9,18 +9,24 @@ import { MagneticButton } from "./motion/MagneticButton";
 export function HomeHero() {
   const { t } = useTranslation();
   return (
-    <section className="relative min-h-[88svh] overflow-hidden" style={{ minHeight: "max(88svh, 640px)" }}>
+    <section
+      className="relative flex flex-col overflow-hidden"
+      style={{ minHeight: "max(88svh, 600px)" }}
+    >
       <SkyHero />
-      <div className="absolute inset-x-0 bottom-0 px-6 sm:px-12 lg:px-20 pb-16 sm:pb-24 pad-safe-b">
-        <div className="max-w-[18ch]">
-          <p className="font-thai text-sm tracking-[0.2em] uppercase text-ink-muted mb-4">{t("hero.kicker")}</p>
-          <h1 className="font-thai-serif font-light fs-display leading-[0.98] text-ink tracking-tight text-balance">
-            <span>{t("hero.title1")}</span>
-            <br />
-            <span className="italic text-ink-muted">{t("hero.title2")}</span>
+      {/*
+        Hero copy in normal flow (flex-end), NOT absolute-bottom — so it can never
+        overlap the floating header: the column starts BELOW header height and the
+        headline grows downward. pt reserves the header band; mt-auto pins copy low.
+      */}
+      <div className="relative z-10 flex flex-1 flex-col px-6 sm:px-12 lg:px-20 pt-28 sm:pt-32 pb-16 sm:pb-24 pad-safe-b">
+        <div className="mt-auto max-w-[26ch] sm:max-w-[30ch]">
+          <h1 className="font-thai-serif font-light fs-display leading-[1.04] text-ink tracking-tight">
+            <span>{t("hero.title1")} </span>
+            <span className="italic text-ink-muted whitespace-nowrap">{t("hero.title2")}</span>
           </h1>
-          <p className="font-thai mt-8 max-w-[40ch] fs-lead leading-relaxed text-ink-muted">{t("hero.sub")}</p>
-          <div className="mt-12 flex flex-wrap gap-4">
+          <p className="font-thai mt-7 max-w-[40ch] fs-lead leading-relaxed text-ink-muted">{t("hero.sub")}</p>
+          <div className="mt-10 flex flex-wrap gap-4">
             <Link href="/plan" className="font-thai inline-flex h-12 items-center rounded-full bg-ink px-8 text-paper text-base font-medium transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-ink-muted">
               {t("hero.cta.plan")}
             </Link>
