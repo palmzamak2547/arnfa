@@ -69,8 +69,11 @@ export function SkyHero() {
   }, []);
 
   return (
-    <div className="absolute inset-0 arnfa-sky-surface" aria-label="ฟ้ากรุงเทพ ตามเวลา">
-      <Canvas camera={{ position: [0, 5, 12], fov: 55, near: 0.1, far: 1000 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }} style={{ position: "absolute", inset: 0 }}>
+    <div className="pointer-events-none absolute inset-0 arnfa-sky-surface" aria-label="ฟ้ากรุงเทพ ตามเวลา">
+      {/* Purely decorative sky — pointer-events:none so it never intercepts taps on
+          the hero buttons (a WebGL canvas hit-tests touch differently than mouse,
+          which silently swallowed taps on touchscreens). */}
+      <Canvas camera={{ position: [0, 5, 12], fov: 55, near: 0.1, far: 1000 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
         <Suspense fallback={null}>
           {isNight ? (
             <Stars radius={120} depth={50} count={2200} factor={4} saturation={0} fade speed={reduced ? 0 : 0.4} />

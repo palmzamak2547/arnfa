@@ -36,7 +36,9 @@ export function HomeHero() {
       className="relative flex flex-col overflow-hidden"
       style={{ minHeight: "max(88svh, 600px)" }}
     >
-      <motion.div style={{ y: skyY }} className="absolute inset-0">
+      {/* Decorative sky layer — pointer-events:none so taps always reach the hero
+          buttons below (a full-screen WebGL canvas was swallowing taps on touch). */}
+      <motion.div style={{ y: skyY }} className="pointer-events-none absolute inset-0">
         <SkyHero />
       </motion.div>
       {/*
