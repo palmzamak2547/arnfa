@@ -58,6 +58,9 @@ export function HomeHero() {
             <Link href="/plan" className="font-thai inline-flex h-12 items-center rounded-full bg-ink px-8 text-paper text-base font-medium transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-ink-muted">
               {t("hero.cta.plan")}
             </Link>
+            <Link href="/where" className="font-thai inline-flex h-12 items-center rounded-full border border-hairline px-8 text-ink text-base font-medium transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-surface">
+              {en ? "Where to go?" : "ไปไหนดี?"}
+            </Link>
             <Link href="#how" className="font-thai inline-flex h-12 items-center rounded-full border border-hairline px-8 text-ink text-base font-medium transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-surface">
               {t("hero.cta.how")}
             </Link>

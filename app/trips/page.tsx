@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n/useLang";
+import { SkyWatch } from "@/components/SkyWatch";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { useAuth } from "@/lib/auth/useAuth";
 import { listTrips, deleteTrip, type SavedTrip } from "@/lib/plan/trips";
@@ -27,6 +28,7 @@ export default function TripsPage() {
   }
 
   const dayLabel = (d: number) => (d === 0 ? (en ? "today" : "วันนี้") : en ? `+${d}d` : `+${d} วัน`);
+  const watchKeys = useMemo(() => [...new Set((trips ?? []).map((t) => t.district))], [trips]);
 
   return (
     <main className="relative z-10 min-h-screen">
@@ -56,6 +58,8 @@ export default function TripsPage() {
           {user && trips?.length === 0 && (
             <p className="font-thai text-ink-faint">{en ? "No saved trips yet — plan a day and tap Save." : "ยังไม่มีทริปที่เซฟ — ลองวางแผนแล้วกดเซฟดู"} <Link href="/plan" className="text-rain hover:underline">{en ? "Plan →" : "วางแผน →"}</Link></p>
           )}
+
+          {user && watchKeys.length > 0 && <SkyWatch keys={watchKeys} />}
 
           <ul className="space-y-3">
             {(trips ?? []).map((t) => {

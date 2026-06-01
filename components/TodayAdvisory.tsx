@@ -2,6 +2,7 @@
 
 import { useLang } from "@/lib/i18n/useLang";
 import type { Advisory } from "@/lib/core/advisory";
+import { GoldenHour } from "./GoldenHour";
 
 /**
  * TodayAdvisory — "เตรียมตัววันนี้": what to wear, what to pack, what to watch.
@@ -16,7 +17,7 @@ const SAFETY_STYLE: Record<Advisory["safety"][number]["level"], string> = {
   info: "border-hairline bg-surface text-ink-muted",
 };
 
-export function TodayAdvisory({ advisory }: { advisory: Advisory | null }) {
+export function TodayAdvisory({ advisory, lat, lng, dayOffset = 0 }: { advisory: Advisory | null; lat?: number; lng?: number; dayOffset?: number }) {
   const { en } = useLang();
   if (!advisory) return null;
   const { outfit, packing, safety } = advisory;
@@ -62,6 +63,9 @@ export function TodayAdvisory({ advisory }: { advisory: Advisory | null }) {
           </ul>
         </div>
       )}
+
+      {/* Sun line — sunrise · sunset · golden hour (computed locally, no API) */}
+      {lat != null && lng != null && <GoldenHour lat={lat} lng={lng} dayOffset={dayOffset} />}
     </section>
   );
 }

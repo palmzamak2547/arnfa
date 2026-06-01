@@ -73,11 +73,14 @@ export const metadata: Metadata = {
     alternateLocale: ["en_US"],
     type: "website",
     siteName: "อ่านฟ้า · Arnfa",
+    // Default sky card; /plan overrides per-area via generateMetadata.
+    images: [{ url: "/api/og", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "อ่านฟ้า · Arnfa",
     description: "Decision engine ที่อ่านฟ้าให้คุณ",
+    images: ["/api/og"],
   },
 };
 
