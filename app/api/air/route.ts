@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   try {
     const air = await fetchNearestAir(lat, lng);
     return NextResponse.json(air, {
-      headers: { "Cache-Control": "public, s-maxage=600, stale-while-revalidate=1800" },
+      headers: { "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=3600" },
     });
   } catch (e) {
     return NextResponse.json(

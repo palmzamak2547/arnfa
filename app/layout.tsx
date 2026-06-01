@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
-import { Trirong, Newsreader, Anuphan, Inter } from "next/font/google";
+import { Noto_Serif_Thai, Newsreader, Anuphan, Inter } from "next/font/google";
 import "./globals.css";
 import { ClientShell } from "@/components/ClientShell";
 
@@ -8,17 +8,18 @@ import { ClientShell } from "@/components/ClientShell";
  * Type system — "Tricolor Editorial" (research-locked 2026-05-31).
  * Thai serif headline = the editorial unlock (Bangkok broadsheet, not weather widget).
  * All four are Google Fonts + SIL-OFL → zero license risk for the hackathon.
- *   - Trirong   : Thai serif, high-contrast display headlines (the differentiator)
+ *   - Noto Serif Thai : Thai serif headlines — readable, correctly-positioned tone
+ *     marks (วรรณยุกต์). Replaces Trirong, whose high-contrast hairline marks at
+ *     light weights read as spindly/odd. Min weight 400 (no thin 300 headlines).
  *   - Newsreader: Latin serif, optical-size, display + editorial body
  *   - Anuphan   : Thai sans, UI + body
  *   - Inter     : Latin sans, UI
  */
 
-const trirong = Trirong({
+const notoSerifThai = Noto_Serif_Thai({
   variable: "--font-display-th",
   subsets: ["thai", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -118,7 +119,7 @@ export default async function RootLayout({
   return (
     <html
       lang={initialLocale}
-      className={`${trirong.variable} ${newsreader.variable} ${anuphan.variable} ${inter.variable} h-full antialiased`}
+      className={`${notoSerifThai.variable} ${newsreader.variable} ${anuphan.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col relative">
         <script

@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   try {
     const result = await getForecast(lat, lng, hours);
     return NextResponse.json(result, {
-      headers: { "Cache-Control": "public, s-maxage=900, stale-while-revalidate=1800" },
+      headers: { "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=7200" },
     });
   } catch (e) {
     return NextResponse.json({ error: "forecast_unavailable", detail: e instanceof Error ? e.message : String(e) }, { status: 503 });

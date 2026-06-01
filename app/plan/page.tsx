@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { districtMeta } from "@/lib/poi/districts";
 import { PlanClient } from "./PlanClient";
+
+const titleCase = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 /**
  * /plan — server wrapper. The interactive planner lives in PlanClient ("use client").
@@ -14,10 +17,14 @@ export async function generateMetadata({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   const sp = await searchParams;
+  const cookieStore = await cookies();
+  const en = cookieStore.get("arnfa.locale")?.value === "en";
   const area = typeof sp.y === "string" ? sp.y : "";
   const day = typeof sp.d === "string" ? sp.d : "0";
   const meta = districtMeta(area);
-  const title = meta ? `วางแผนทริปที่${meta.th} — อ่านฟ้า` : "วางแผนทริปตามฟ้า — อ่านฟ้า";
+  const title = meta
+    ? en ? `Plan a trip in ${titleCase(meta.en)} — Arnfa` : `วางแผนทริปที่${meta.th} — อ่านฟ้า`
+    : en ? "Plan a trip — Arnfa" : "วางแผนทริปตามฟ้า — อ่านฟ้า";
   const og = `/api/og?area=${encodeURIComponent(area)}&day=${day}`;
   return {
     title,

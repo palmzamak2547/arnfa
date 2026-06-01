@@ -22,9 +22,10 @@ const SERVICES = [
   { key: "nowcast", th: "ฝนใน 2 ชม.", en: "Rain nowcast", url: "/api/nowcast?lat=13.7563&lng=100.5018" },
   { key: "radar", th: "เรดาร์ฝน", en: "Rain radar", url: "/api/radar" },
   { key: "fires", th: "ไฟป่า/หมอกควัน (NASA FIRMS)", en: "Fires/haze (NASA FIRMS)", url: "/api/fires?lat=18.79&lng=98.98" },
+  { key: "marine", th: "ทะเล คลื่น (Open-Meteo Marine)", en: "Sea / waves (Open-Meteo Marine)", url: "/api/marine?lat=7.89&lng=98.30" },
 ];
 
-const SOURCES = ["Open-Meteo", "MET Norway", "OpenStreetMap", "OpenFreeMap", "Air4Thai (PCD)", "RainViewer", "NASA GIBS", "NASA FIRMS (VIIRS)"];
+const SOURCES = ["Open-Meteo", "Open-Meteo Marine", "MET Norway", "OpenStreetMap", "OpenFreeMap", "Air4Thai (PCD)", "RainViewer", "NASA GIBS", "NASA FIRMS (VIIRS)"];
 
 const DOT: Record<Status, string> = {
   checking: "var(--arnfa-ink-faint)", ok: "var(--arnfa-success)",

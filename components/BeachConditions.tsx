@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLang } from "@/lib/i18n/useLang";
+import { deferIdle } from "@/lib/util/deferIdle";
 import { SWIM_TH, SWIM_EN, SWIM_DOT, type SwimLevel } from "@/lib/marine/marine";
 
 /**
@@ -20,11 +21,14 @@ export function BeachConditions({ lat, lng }: { lat: number; lng: number }) {
   useEffect(() => {
     let cancelled = false;
     setD(null);
-    fetch(`/api/marine?lat=${lat}&lng=${lng}`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((x) => { if (!cancelled) setD(x); })
-      .catch(() => { if (!cancelled) setD(null); });
-    return () => { cancelled = true; };
+    // coastal-only + below-the-fold → fetch when idle, off the critical path
+    const cancel = deferIdle(() => {
+      fetch(`/api/marine?lat=${lat}&lng=${lng}`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((x) => { if (!cancelled) setD(x); })
+        .catch(() => { if (!cancelled) setD(null); });
+    });
+    return () => { cancelled = true; cancel(); };
   }, [lat, lng]);
 
   if (!d?.available || d.swim == null) return null;

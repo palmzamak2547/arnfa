@@ -35,6 +35,7 @@ const SOURCES: Source[] = [
     items: [
       { name: "Open-Meteo", role: "พยากรณ์รายชั่วโมง", roleEn: "Hourly forecast", href: "https://open-meteo.com" },
       { name: "MET Norway", role: "สำรองชั้นที่ 2", roleEn: "Fallback L2", href: "https://api.met.no" },
+      { name: "Open-Meteo Marine", role: "คลื่น + อุณหภูมิน้ำทะเล", roleEn: "Waves + sea temp", href: "https://open-meteo.com/en/docs/marine-weather-api" },
     ],
   },
   {
@@ -118,7 +119,7 @@ export function DataSources() {
           {[
             { n: TOTAL_POIS, suffix: "", th: "สถานที่จริง", en: "real places" },
             { n: AREA_COUNT, suffix: "", th: "พื้นที่ทั่วไทย", en: "areas across Thailand" },
-            { n: 8, suffix: "", th: "แหล่งข้อมูลเปิด", en: "open sources" },
+            { n: 9, suffix: "", th: "แหล่งข้อมูลเปิด", en: "open sources" },
             { n: 0, suffix: "", th: "ตัวเลขที่กุขึ้น", en: "fabricated numbers" },
           ].map((s) => (
             <div key={s.en}>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLang } from "@/lib/i18n/useLang";
+import { deferIdle } from "@/lib/util/deferIdle";
 
 /**
  * SatelliteHaze — "ไฟป่าจากดาวเทียม". Reads /api/fires (NASA FIRMS / VIIRS) for the
@@ -29,11 +30,14 @@ export function SatelliteHaze({ lat, lng, airLevel }: { lat: number; lng: number
   useEffect(() => {
     let cancelled = false;
     setData(null);
-    fetch(`/api/fires?lat=${lat}&lng=${lng}`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => { if (!cancelled) setData(d); })
-      .catch(() => { if (!cancelled) setData(null); });
-    return () => { cancelled = true; };
+    // below-the-fold + often hidden → fetch when idle, off the critical path
+    const cancel = deferIdle(() => {
+      fetch(`/api/fires?lat=${lat}&lng=${lng}`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => { if (!cancelled) setData(d); })
+        .catch(() => { if (!cancelled) setData(null); });
+    });
+    return () => { cancelled = true; cancel(); };
   }, [lat, lng]);
 
   if (!data?.available || !data.count) return null;
