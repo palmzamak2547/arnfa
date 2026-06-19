@@ -47,7 +47,7 @@ export function TransitNearby({ lat, lng }: { lat: number; lng: number }) {
                   className="group flex items-center gap-2.5 h-full rounded-xl border border-hairline bg-paper/40 p-3 transition-colors hover:bg-surface">
                   <span className="shrink-0 rounded px-1.5 py-0.5 text-[0.6rem] font-semibold text-white" style={{ background: meta?.color ?? "var(--arnfa-ink)" }}>{s.system}</span>
                   <span className="min-w-0 flex-1">
-                    <span className="block font-thai text-sm text-ink truncate group-hover:text-rain transition-colors">{s.th || s.en}</span>
+                    <span className="block font-thai text-sm text-ink truncate group-hover:text-rain transition-colors">{(s.th || s.en).replace(/^(BTS|MRT|ARL|SRT|Airport Rail)\s+/i, "")}</span>
                     <span className="block font-thai text-xs text-ink-faint tabular-nums">{s.km < 1 ? `${Math.round(s.km * 1000)} ม.` : `${s.km.toFixed(1)} กม.`}</span>
                   </span>
                 </a>
