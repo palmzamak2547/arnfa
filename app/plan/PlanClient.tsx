@@ -17,6 +17,7 @@ import type { HourlyForecast } from "@/lib/weather/types";
 import { injectRainAt } from "@/lib/plan/rainInject";
 import { decodePlanState, encodePlanState, DEFAULT_PLAN_STATE } from "@/lib/plan/shareState";
 import { availableDays, startIndexForDay } from "@/lib/plan/days";
+import { scoreDays, pickBestWorst } from "@/lib/core/dayScores";
 import { loadTaste } from "@/lib/plan/taste";
 import { recordFeedback } from "@/lib/plan/feedback";
 import { applyCrowdRows, type CrowdRow } from "@/lib/poi/crowdApply";
@@ -219,6 +220,11 @@ function PlanInner() {
   // Which days the forecast covers (today..+6) and the start-hour index for the
   // chosen day — so you can plan "this weekend", not just today.
   const days = useMemo(() => (forecast ? availableDays(forecast, new Date()) : []), [forecast]);
+  // "ไปวันไหนดี" — score each day's sky from the loaded forecast (no extra fetch) so the
+  // selector can flag the best + worst day this week and dot each day by its sky.
+  const dayScores = useMemo(() => (forecast ? scoreDays(forecast, new Date()) : []), [forecast]);
+  const dayVerdictByOffset = useMemo(() => new Map(dayScores.map((d) => [d.offset, d.verdict])), [dayScores]);
+  const { best: bestDay, worst: worstDay } = useMemo(() => pickBestWorst(dayScores), [dayScores]);
   const startHourIndex = useMemo(
     () => (forecast ? startIndexForDay(forecast, dayOffset, new Date()) : 0),
     [forecast, dayOffset],
@@ -382,13 +388,27 @@ function PlanInner() {
             {days.length > 1 && (
               <div>
                 <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{en ? "Day" : "วัน"}</p>
+                {bestDay && worstDay && (
+                  <button type="button" onClick={() => setDayOffset(bestDay.offset)}
+                    className="font-thai mb-2.5 inline-flex items-center gap-2 rounded-full border border-success/40 bg-success/[0.07] px-3.5 py-1.5 text-xs text-ink-muted transition-colors hover:bg-success/[0.12]">
+                    <span aria-hidden>💡</span>
+                    {en
+                      ? <>Best sky this week: <span className="font-medium text-ink">{days.find((d) => d.offset === bestDay.offset)?.en}</span> · avoid {days.find((d) => d.offset === worstDay.offset)?.en}</>
+                      : <>ฟ้าดีสุดสัปดาห์นี้ <span className="font-medium text-ink">{days.find((d) => d.offset === bestDay.offset)?.th}</span> · เลี่ยง {days.find((d) => d.offset === worstDay.offset)?.th}</>}
+                  </button>
+                )}
                 <div className="flex flex-wrap gap-2">
-                  {days.map((d) => (
-                    <button key={d.offset} type="button" onClick={() => setDayOffset(d.offset)}
-                      className={clsx("font-thai rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)] min-h-[44px]", d.offset === dayOffset ? "bg-ink text-paper" : "border border-hairline text-ink hover:bg-surface")}>
-                      {en ? d.en : d.th}
-                    </button>
-                  ))}
+                  {days.map((d) => {
+                    const v = dayVerdictByOffset.get(d.offset);
+                    const dot = v ? ({ clearish: "var(--arnfa-success)", ok: "var(--arnfa-accent-sun)", closing: "var(--arnfa-accent-rain)", poor: "var(--arnfa-accent-indoor-warm)" } as Record<string, string>)[v] : null;
+                    return (
+                      <button key={d.offset} type="button" onClick={() => setDayOffset(d.offset)}
+                        className={clsx("font-thai inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)] min-h-[44px]", d.offset === dayOffset ? "bg-ink text-paper" : "border border-hairline text-ink hover:bg-surface")}>
+                        {dot && <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: dot }} aria-hidden />}
+                        {en ? d.en : d.th}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
