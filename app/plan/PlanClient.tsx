@@ -35,6 +35,7 @@ import { MerchantCTA } from "@/components/MerchantCTA";
 import { BmaGreenSpaces } from "@/components/BmaGreenSpaces";
 import { CoolingNearby } from "@/components/CoolingNearby";
 import { SkyTimeline } from "@/components/SkyTimeline";
+import { TransitNearby } from "@/components/TransitNearby";
 import { SkyAround } from "@/components/SkyAround";
 import { LiveCompanion } from "@/components/LiveCompanion";
 import { SkyChip } from "@/components/SkyChip";
@@ -563,6 +564,7 @@ function PlanInner() {
                   </div>
                 )}
                 <div className="mt-6 space-y-4">
+                  <TransitNearby lat={center.lat} lng={center.lng} />
                   <CoolingNearby lat={center.lat} lng={center.lng} active={outdoorPenalty > 0.15 || (!!air && (air.pm25 ?? 0) > 37.5)} />
                   <BmaGreenSpaces lat={center.lat} lng={center.lng} />
                 </div>

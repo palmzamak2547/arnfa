@@ -6,7 +6,7 @@
  * data flagged, each with what it powers and a link. Iron Rule 0: if it's not real, it's
  * not here.
  */
-export type DataKind = "forecast" | "air" | "places" | "green" | "safety" | "map" | "satellite" | "routing";
+export type DataKind = "forecast" | "air" | "places" | "green" | "safety" | "map" | "satellite" | "routing" | "transit";
 
 export type DataSource = {
   key: string;
@@ -31,9 +31,10 @@ export const KIND_LABEL: Record<DataKind, { th: string; en: string }> = {
   map: { th: "แผนที่ + เรดาร์", en: "Map + radar" },
   satellite: { th: "ดาวเทียม", en: "Satellite" },
   routing: { th: "การเดินทาง", en: "Navigation" },
+  transit: { th: "ขนส่งสาธารณะ (รถไฟฟ้า)", en: "Public transit" },
 };
 
-export const KIND_ORDER: DataKind[] = ["forecast", "air", "green", "safety", "places", "map", "satellite", "routing"];
+export const KIND_ORDER: DataKind[] = ["forecast", "air", "green", "safety", "places", "map", "satellite", "transit", "routing"];
 
 export const DATA_SOURCES: DataSource[] = [
   { key: "open-meteo", name: "Open-Meteo", org: "Open-Meteo", orgEn: "Open-Meteo", url: "https://open-meteo.com", license: "CC-BY 4.0", kind: "forecast", role: "พยากรณ์รายชั่วโมง (หลัก)", roleEn: "Hourly forecast (primary)" },
@@ -56,6 +57,8 @@ export const DATA_SOURCES: DataSource[] = [
   { key: "nasa-gibs", name: "NASA GIBS", org: "NASA", orgEn: "NASA", url: "https://nasa-gibs.github.io/gibs-api-docs/", license: "NASA open data", kind: "satellite", role: "ภาพถ่ายดาวเทียม · ละอองลอย", roleEn: "Satellite imagery · aerosol" },
 
   { key: "ors", name: "OpenRouteService", org: "HeiGIT / OSM", orgEn: "HeiGIT / OSM", url: "https://openrouteservice.org", license: "open · key-gated", kind: "routing", role: "เวลาเดินจริง (เมื่อใส่ key)", roleEn: "Real walking times (when keyed)", dormant: true },
+
+  { key: "namtang", name: "Namtang transit", org: "สนข. · Namtang (OTP)", orgEn: "OTP / Namtang", url: "https://namtang.otp.go.th/", license: "open transit (GTFS)", kind: "transit", role: "สถานี BTS/MRT/ARL/SRT 454 สถานี — ไปย่านไหนด้วยรถไฟฟ้า", roleEn: "454 BTS/MRT/ARL/SRT stations", thaiGov: true },
 ];
 
 export const ACTIVE_SOURCE_COUNT = DATA_SOURCES.filter((s) => !s.dormant).length;
