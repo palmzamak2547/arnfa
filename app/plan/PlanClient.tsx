@@ -566,7 +566,8 @@ function PlanInner() {
                 )}
                 <div className="mt-6 space-y-4">
                   <TransitNearby lat={center.lat} lng={center.lng} />
-                  <RestAreasNearby lat={center.lat} lng={center.lng} />
+                  {/* Rest stops are a road-trip thing → only for drive-to destinations, not walkable city areas */}
+                  {(meta?.tier === "province" || meta?.tier === "spot") && <RestAreasNearby lat={center.lat} lng={center.lng} />}
                   <CoolingNearby lat={center.lat} lng={center.lng} active={outdoorPenalty > 0.15 || (!!air && (air.pm25 ?? 0) > 37.5)} />
                   <BmaGreenSpaces lat={center.lat} lng={center.lng} />
                 </div>

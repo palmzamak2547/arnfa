@@ -21,7 +21,7 @@ function km(aLat: number, aLng: number, bLat: number, bLng: number): number {
 
 /** Rest areas within `maxKm` of a point, nearest first (`dist` = km away; `km` stays the
  *  highway km-marker). Empty for dense city centres — the panel then simply doesn't render. */
-export function nearestRestAreas(lat: number, lng: number, n = 3, maxKm = 60): (RestArea & { dist: number })[] {
+export function nearestRestAreas(lat: number, lng: number, n = 3, maxKm = 75): (RestArea & { dist: number })[] {
   return AREAS
     .map((a) => ({ ...a, dist: km(lat, lng, a.lat, a.lng) }))
     .filter((a) => a.dist <= maxKm)

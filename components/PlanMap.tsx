@@ -9,7 +9,7 @@ import type { EnrichedStop } from "@/lib/plan/buildPlan";
 import type { SkyState } from "./SkyChip";
 import { categoryLabel } from "@/lib/plan/categoryLabel";
 import { GIBS_LAYERS, gibsTileUrl, gibsDate, type GibsLayerKey } from "@/lib/satellite/gibs";
-import { arnfaMapStyle } from "@/lib/map/arnfaMapStyle";
+import { ARNFA_MAP_STYLE_URL, applyArnfaRecolor } from "@/lib/map/arnfaMapStyle";
 
 /**
  * PlanMap — MapLibre on Arnfa's OWN editorial basemap (recoloured OpenFreeMap positron,
@@ -46,7 +46,6 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
   const mapRef = useRef<MapRef>(null);
   const reduced = useMemo(prefersReduced, []);
   const initialView = useMemo(() => ({ longitude: center.lng, latitude: center.lat, zoom: 13.5 }), [center]);
-  const mapStyle = useMemo(() => arnfaMapStyle(), []);
   const [selected, setSelected] = useState<EnrichedStop | null>(null);
   const [mapError, setMapError] = useState(false);
   // NASA GIBS satellite overlay (free, no key). "none" by default so the route is clear.
@@ -113,9 +112,10 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
       <Map
         ref={mapRef}
         initialViewState={initialView}
-        mapStyle={mapStyle}
+        mapStyle={ARNFA_MAP_STYLE_URL}
         attributionControl={{ compact: true }}
         style={{ width: "100%", height: "100%" }}
+        onLoad={(e) => applyArnfaRecolor(e.target as unknown as Parameters<typeof applyArnfaRecolor>[0])}
         onError={(e) => { if (/webgl|context|style/i.test(String(e?.error?.message || ""))) setMapError(true); }}
       >
         <NavigationControl position="top-right" showCompass={false} />
