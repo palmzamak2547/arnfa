@@ -283,6 +283,7 @@ function PlanInner() {
           </Link>
           <div className="flex items-center gap-4">
             <span className="hidden sm:inline font-thai text-sm text-ink-faint">{provider && (en ? `sky via ${provider}` : `ฟ้าจาก ${provider}`)}</span>
+            <Link href="/ai" className="font-thai text-sm text-rain hover:underline">{en ? "Ask AI" : "ถาม AI"}</Link>
             <Link href="/where" className="font-thai text-sm text-rain hover:underline">{en ? "Where to go" : "ไปไหนดี"}</Link>
             {user && <Link href="/trips" className="font-thai text-sm text-rain hover:underline">{en ? "My trips" : "ทริปของฉัน"}</Link>}
             <AuthButton compact />

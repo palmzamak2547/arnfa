@@ -71,6 +71,7 @@ export default function WherePage() {
         <div className="col-content flex items-center justify-between">
           <Link href="/" className="text-ink hover:text-ink-muted transition-colors"><Logo className="text-xl" animate={false} /></Link>
           <div className="flex items-center gap-4">
+            <Link href="/ai" className="font-thai text-sm text-rain hover:underline">{en ? "Ask AI" : "ถาม AI"}</Link>
             <Link href="/plan" className="font-thai text-sm text-rain hover:underline">{en ? "Plan a trip →" : "วางแผนทริป →"}</Link>
             <LanguageToggle />
           </div>

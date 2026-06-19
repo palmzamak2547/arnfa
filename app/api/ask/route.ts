@@ -1,0 +1,110 @@
+import { NextRequest, NextResponse } from "next/server";
+import { nimChat, nimConfigured, extractJson } from "@/lib/ai/nim";
+import { DISTRICTS } from "@/lib/poi/registry.generated";
+import { districtMeta, loadDistrict } from "@/lib/poi/districts";
+import { getForecast } from "@/lib/weather/chain";
+import { buildPlan } from "@/lib/plan/buildPlan";
+import { startIndexForDay } from "@/lib/plan/days";
+import { filterByGroups } from "@/lib/plan/categories";
+
+/**
+ * POST /api/ask — "Arnfa AI": an agent that turns a free-text Thai request into a
+ * REAL weather-fit plan. (1) NVIDIA NIM extracts intent → (2) the SAME engine the UI
+ * uses builds the plan from real forecast + POIs → (3) NIM narrates that real plan.
+ * Iron Rule 0: the model only summarises the engine's output — it never invents a
+ * place or the weather. Dormant-until-key ({ available:false } without NVIDIA_API_KEY).
+ */
+
+export const runtime = "nodejs";
+export const maxDuration = 30;
+
+const TH_DOW = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+const VIBES = ["cafe", "eat", "nature", "culture", "shopping", "relax"];
+
+type Intent = { area?: string; day?: number; budget?: number; vibes?: string[]; avoidRain?: boolean };
+
+export async function POST(req: NextRequest) {
+  if (!nimConfigured()) return NextResponse.json({ available: false, reason: "no_key" });
+
+  let message = "";
+  try {
+    const b = await req.json();
+    message = String(b?.message ?? "").slice(0, 500);
+  } catch { /* bad body */ }
+  if (!message.trim()) return NextResponse.json({ error: "empty" }, { status: 400 });
+
+  // Ground the day words to offsets (Bangkok local).
+  const bkk = new Date(Date.now() + 7 * 3600 * 1000);
+  const dow = bkk.getUTCDay();
+  const dayLines = Array.from({ length: 7 }, (_, o) => `${o}=${o === 0 ? "วันนี้" : o === 1 ? "พรุ่งนี้" : TH_DOW[(dow + o) % 7]}`).join(", ");
+  const areaList = DISTRICTS.map((d) => `${d.key}:${d.th}`).join("\n");
+
+  // 1) Extract intent (JSON) — grounded to real area keys + day offsets.
+  const extractSys =
+    `คุณคือตัวแยกความต้องการของแอป "อ่านฟ้า" (วางแผนเที่ยวตามสภาพอากาศในไทย) จากข้อความผู้ใช้ ตอบเป็น JSON เท่านั้น:\n` +
+    `{"area":"<areaKey ที่ตรงกับย่าน/สถานที่ที่พูดถึงมากสุด ถ้าไม่ระบุให้เลือกที่เหมาะกับแนวที่อยากได้>","day":<0-6>,"budget":<150|240|420>,"vibes":<ส่วนย่อยของ ${JSON.stringify(VIBES)}>,"avoidRain":<true|false>}\n` +
+    `วัน: ${dayLines} (default 0) · budget: 150=แวบเดียว 240=ครึ่งวัน 420=ทั้งวัน (default 240)\n` +
+    `พื้นที่ทั้งหมด (areaKey:ชื่อไทย):\n${areaList}\nตอบเป็น JSON อย่างเดียว ห้ามมีข้อความอื่น`;
+  const extractRaw = await nimChat(
+    [{ role: "system", content: extractSys }, { role: "user", content: message }],
+    { maxTokens: 220, temperature: 0.15 },
+  );
+  const intent = extractRaw ? extractJson<Intent>(extractRaw) : null;
+
+  // Resolve to a real area key (LLM key → fuzzy name-in-message → default).
+  let meta = intent?.area ? districtMeta(intent.area) : undefined;
+  if (!meta) {
+    const hit = DISTRICTS.find((d) => message.includes(d.th) || (d.en && message.toLowerCase().includes(d.en.toLowerCase())));
+    meta = hit ? districtMeta(hit.key) : districtMeta("thonglor");
+  }
+  if (!meta) return NextResponse.json({ error: "no_area" }, { status: 500 });
+
+  const day = Math.min(6, Math.max(0, Number(intent?.day) || 0));
+  const budget = [150, 240, 420].includes(Number(intent?.budget)) ? Number(intent!.budget) : 240;
+  const vibes = Array.isArray(intent?.vibes) ? intent!.vibes!.filter((v) => VIBES.includes(v)) : [];
+
+  // 2) Run the REAL engine (same pure code the UI uses).
+  let stops: { name: string; category: string; sky: string; arrival: string; tempC: number; rainProb: number; reason: string }[] = [];
+  let provider = "";
+  try {
+    const [district, forecast] = await Promise.all([loadDistrict(meta.key), getForecast(meta.lat, meta.lng, 168)]);
+    const pois = vibes.length ? filterByGroups(district.pois, new Set(vibes)) : district.pois;
+    const startHourIndex = startIndexForDay(forecast.hours, day, new Date());
+    const plan = buildPlan({ ...district, pois }, forecast.hours, { startHourIndex, budgetMin: budget, start: { lat: meta.lat, lng: meta.lng } });
+    provider = forecast.providerUsed ?? "";
+    stops = plan.stops.map((s) => ({
+      name: s.poi.name, category: s.poi.category, sky: s.skyState, arrival: s.arrivalLabel,
+      tempC: Math.round(s.tempC), rainProb: Math.round(s.rainProb * 100), reason: s.reason,
+    }));
+  } catch {
+    return NextResponse.json({ error: "engine_unavailable" }, { status: 503 });
+  }
+
+  const dayLabel = day === 0 ? "วันนี้" : day === 1 ? "พรุ่งนี้" : TH_DOW[(dow + day) % 7];
+
+  // 3) Narrate the REAL plan (the model only summarises what the engine produced).
+  const planText = stops.length
+    ? stops.map((s, i) => `${i + 1}. ${s.name} (${s.category}) ฟ้า:${s.sky} ${s.tempC}° ฝน${s.rainProb}% ~${s.arrival} — ${s.reason}`).join("\n")
+    : "ไม่มีสถานที่ที่เข้ากับเงื่อนไขในช่วงเวลานี้";
+  const narrateSys =
+    `คุณคือ "อ่านฟ้า" ผู้ช่วยวางแผนเที่ยวตามฟ้า ตอบเป็น "ย่อหน้าเดียว" ภาษาไทยอบอุ่นเป็นกันเอง 2-4 ประโยค สรุปแผนจริงด้านล่างแบบเพื่อนแนะนำ ` +
+    `⛔ ห้ามใส่ลิสต์ บูลเล็ต หัวข้อ ตัวหนา หรือเลขข้อ เด็ดขาด (ระบบโชว์การ์ดแผนให้อยู่แล้ว) ⛔ ห้ามแต่งชื่อสถานที่หรือสภาพอากาศเอง ใช้เฉพาะข้อมูลที่ให้ ` +
+    `ถ้าแผนช่วยหลบฝน/ฝุ่นให้บอกเหตุผลสั้นๆ`;
+  const narrateUser = `คำขอผู้ใช้: "${message}"\nพื้นที่: ${meta.th} · ${dayLabel}\nแผนจริงจาก engine:\n${planText}`;
+  let answer = await nimChat([{ role: "system", content: narrateSys }, { role: "user", content: narrateUser }], { maxTokens: 220, temperature: 0.55 });
+  // Keep only the prose intro — drop any list/header the model still tacks on (the UI shows the cards).
+  if (answer) answer = answer.replace(/\n\s*(?:\*\*|[-•*]|\d+[.)])[\s\S]*$/, "").replace(/\*\*/g, "").trim();
+  if (!answer) {
+    answer = stops.length
+      ? `จัดให้แล้วสำหรับ${meta.th} (${dayLabel}) — เริ่มที่ ${stops[0].name} แล้วไล่ตามฟ้าทั้งวัน`
+      : `ตอนนี้ยังไม่มีที่แนะนำใน${meta.th} ลองเปลี่ยนวันหรือแนวดูนะ`;
+  }
+
+  return NextResponse.json({
+    available: true,
+    answer,
+    plan: { areaKey: meta.key, areaTh: meta.th, areaEn: meta.en, day, dayLabel, budget, stops },
+    provider,
+    planUrl: `/plan?y=${meta.key}&d=${day}`,
+  });
+}
