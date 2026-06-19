@@ -15,36 +15,49 @@ const MODELS = ["deepseek-ai/deepseek-v4-flash", "meta/llama-3.1-8b-instruct"];
 
 export type ChatMsg = { role: "system" | "user" | "assistant"; content: string };
 
-export function nimConfigured(): boolean {
-  return !!process.env.NVIDIA_API_KEY;
+/** All configured NVIDIA keys (NVIDIA_API_KEY + optional NVIDIA_API_KEY_2, each may be
+ *  comma-separated). Multiple keys = more rate-limit headroom — a 429 on one key falls
+ *  to the next before dropping to the slower model. */
+function nimKeys(): string[] {
+  return [process.env.NVIDIA_API_KEY, process.env.NVIDIA_API_KEY_2]
+    .filter((k): k is string => !!k)
+    .flatMap((k) => k.split(",").map((s) => s.trim()).filter(Boolean));
 }
 
-/** One chat completion. Tries the primary model then the fallback. Returns text or null. */
+export function nimConfigured(): boolean {
+  return nimKeys().length > 0;
+}
+
+/** One chat completion. Tries each model, and within each model each key (a 429 on one
+ *  key falls to the next key; any other error moves to the next model). Text or null. */
 export async function nimChat(
   messages: ChatMsg[],
   opts: { maxTokens?: number; temperature?: number } = {},
 ): Promise<string | null> {
-  const key = process.env.NVIDIA_API_KEY;
-  if (!key) return null;
+  const keys = nimKeys();
+  if (!keys.length) return null;
   for (const model of MODELS) {
-    try {
-      const r = await fetch(NIM_URL, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model,
-          messages,
-          max_tokens: opts.maxTokens ?? 400,
-          temperature: opts.temperature ?? 0.5,
-        }),
-        signal: AbortSignal.timeout(12000),
-      });
-      if (!r.ok) continue;
-      const j = await r.json();
-      const c: string | undefined = j?.choices?.[0]?.message?.content;
-      if (c && c.trim()) return c.trim();
-    } catch {
-      /* timeout / network → try the next model */
+    for (const key of keys) {
+      try {
+        const r = await fetch(NIM_URL, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model,
+            messages,
+            max_tokens: opts.maxTokens ?? 400,
+            temperature: opts.temperature ?? 0.5,
+          }),
+          signal: AbortSignal.timeout(12000),
+        });
+        if (r.status === 429) continue; // rate-limited → try the next key
+        if (!r.ok) break;               // other model error → next model
+        const j = await r.json();
+        const c: string | undefined = j?.choices?.[0]?.message?.content;
+        if (c && c.trim()) return c.trim();
+      } catch {
+        /* timeout / network → try the next key */
+      }
     }
   }
   return null;

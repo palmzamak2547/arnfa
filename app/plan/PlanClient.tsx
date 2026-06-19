@@ -31,6 +31,7 @@ import type { AirReading } from "@/lib/air/air4thai";
 import { fetchActiveDeals, dealMatchesWeather, type Deal } from "@/lib/deals/deals";
 import { TodayAdvisory } from "@/components/TodayAdvisory";
 import { MerchantCTA } from "@/components/MerchantCTA";
+import { BmaGreenSpaces } from "@/components/BmaGreenSpaces";
 import { SkyAround } from "@/components/SkyAround";
 import { LiveCompanion } from "@/components/LiveCompanion";
 import { SkyChip } from "@/components/SkyChip";
@@ -515,6 +516,9 @@ function PlanInner() {
                     </a>
                   </div>
                 )}
+                <div className="mt-6">
+                  <BmaGreenSpaces lat={center.lat} lng={center.lng} />
+                </div>
                 <div className="mt-6 border-t border-hairline pt-5">
                   <MerchantCTA />
                 </div>
