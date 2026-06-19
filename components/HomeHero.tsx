@@ -56,22 +56,22 @@ export function HomeHero() {
             <span className="italic text-ink-muted whitespace-nowrap">{t("hero.title2")}</span>
           </h1>
           <p className="font-thai mt-7 max-w-[40ch] fs-lead leading-relaxed text-ink-muted">{t("hero.sub")}</p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <Link href="/plan" className="font-thai inline-flex h-12 items-center rounded-full bg-ink px-8 text-paper text-base font-medium transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-ink-muted">
+          {/* One confident primary action; everything else is an understated link —
+              editorial restraint reads as confidence (a wall of equal buttons reads AI). */}
+          <div className="mt-10 flex flex-col gap-5">
+            <Link href="/plan" className="font-thai inline-flex h-12 w-fit items-center rounded-full bg-ink px-9 text-paper text-base font-medium transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-ink-muted">
               {t("hero.cta.plan")}
             </Link>
-            <Link href="/ai" className="font-thai inline-flex h-12 items-center gap-2 rounded-full border border-sun/50 bg-sun/10 px-7 text-ink text-base font-medium transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-sun/20">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" className="text-sun" aria-hidden>
-                <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z" /><circle cx="18.5" cy="17.5" r="1.5" /><circle cx="5.5" cy="16" r="1" />
-              </svg>
-              {en ? "Ask Arnfa AI" : "ถามอ่านฟ้า AI"}
-            </Link>
-            <Link href="/where" className="font-thai inline-flex h-12 items-center rounded-full border border-hairline px-8 text-ink text-base font-medium transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-surface">
-              {en ? "Where to go?" : "ไปไหนดี?"}
-            </Link>
-            <Link href="#how" className="font-thai inline-flex h-12 items-center rounded-full border border-hairline px-8 text-ink text-base font-medium transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-surface">
-              {t("hero.cta.how")}
-            </Link>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-base">
+              <Link href="/ai" className="font-thai inline-flex items-center gap-1.5 text-ink-muted hover:text-ink transition-colors">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-sun" aria-hidden>
+                  <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z" /><circle cx="18.5" cy="17.5" r="1.5" /><circle cx="5.5" cy="16" r="1" />
+                </svg>
+                {en ? "Ask Arnfa AI" : "ถามอ่านฟ้า AI"}
+              </Link>
+              <Link href="/where" className="font-thai text-ink-muted hover:text-ink transition-colors">{en ? "Where to go?" : "ไปไหนดี?"}</Link>
+              <Link href="#how" className="font-thai text-ink-muted hover:text-ink transition-colors">{t("hero.cta.how")}</Link>
+            </div>
           </div>
         </div>
       </motion.div>

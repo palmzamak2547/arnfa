@@ -8,6 +8,7 @@ import { planTrip, type Candidate, type PlannerOutput } from "@/lib/core/planner
 import { isOpenAtISO, type OpenStatus } from "@/lib/core/openingHours";
 import type { HourlyForecast } from "@/lib/weather/types";
 import { skyStateFrom, type SkyState } from "@/lib/core/skyState";
+import { walkMinutes } from "@/lib/transport/route";
 
 export type SeedPoi = {
   id: string;
@@ -46,16 +47,9 @@ export const NEUTRAL_TASTE: TasteVector = {
   viewpoint: 0.7, playground: 0.3, other: 0.4,
 };
 
-const R = 6371;
-function haversineKm(aLat: number, aLng: number, bLat: number, bLng: number): number {
-  const dLat = ((bLat - aLat) * Math.PI) / 180;
-  const dLng = ((bLng - aLng) * Math.PI) / 180;
-  const la1 = (aLat * Math.PI) / 180;
-  const la2 = (bLat * Math.PI) / 180;
-  const h = Math.sin(dLat / 2) ** 2 + Math.cos(la1) * Math.cos(la2) * Math.sin(dLng / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
-}
-const walkMin = (aLat: number, aLng: number, bLat: number, bLng: number) => (haversineKm(aLat, aLng, bLat, bLng) / 5) * 60;
+// Road-realistic walking minutes (haversine × detour factor) — shared with the UI so
+// the plan's feasibility and the displayed hop times agree. See lib/transport/route.
+const walkMin = walkMinutes;
 
 const toSlot = (f: HourlyForecast): SlotForecast => ({
   hourISO: f.hourISO, rainProb: f.rainProb, rainIntensity: f.rainIntensity, heatIndex: f.heatIndex,

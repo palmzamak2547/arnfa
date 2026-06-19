@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { nimChat, nimConfigured, extractJson } from "@/lib/ai/nim";
+import { sovereignConfigured, sovereignChat } from "@/lib/ai/sovereign";
 import { DISTRICTS } from "@/lib/poi/registry.generated";
 import { districtMeta, loadDistrict } from "@/lib/poi/districts";
 import { getForecast } from "@/lib/weather/chain";
@@ -28,9 +29,11 @@ export async function POST(req: NextRequest) {
   if (!nimConfigured()) return NextResponse.json({ available: false, reason: "no_key" });
 
   let message = "";
+  let prior: Intent | null = null;
   try {
     const b = await req.json();
     message = String(b?.message ?? "").slice(0, 500);
+    if (b?.prior && typeof b.prior === "object") prior = b.prior as Intent;
   } catch { /* bad body */ }
   if (!message.trim()) return NextResponse.json({ error: "empty" }, { status: 400 });
 
@@ -46,8 +49,13 @@ export async function POST(req: NextRequest) {
     `{"area":"<areaKey ที่ตรงกับย่าน/สถานที่ที่พูดถึงมากสุด ถ้าไม่ระบุให้เลือกที่เหมาะกับแนวที่อยากได้>","day":<0-6>,"budget":<150|240|420>,"vibes":<ส่วนย่อยของ ${JSON.stringify(VIBES)}>,"avoidRain":<true|false>}\n` +
     `วัน: ${dayLines} (default 0) · budget: 150=แวบเดียว 240=ครึ่งวัน 420=ทั้งวัน (default 240)\n` +
     `พื้นที่ทั้งหมด (areaKey:ชื่อไทย):\n${areaList}\nตอบเป็น JSON อย่างเดียว ห้ามมีข้อความอื่น`;
+  // Multi-turn: if there's a prior intent, this message PATCHES it (keep unchanged fields)
+  // — "เปลี่ยนเป็นพรุ่งนี้" / "แล้วถ้าฝนตกล่ะ" / "ย่านอื่นบ้าง". The engine still owns the plan.
+  const priorCtx = prior
+    ? `[intent เดิมของผู้ใช้: ${JSON.stringify(prior)} — ข้อความนี้คือการแก้ไข/ต่อยอดจากอันนี้ คงค่าที่ผู้ใช้ไม่ได้เปลี่ยนไว้]\n`
+    : "";
   const extractRaw = await nimChat(
-    [{ role: "system", content: extractSys }, { role: "user", content: message }],
+    [{ role: "system", content: extractSys }, { role: "user", content: priorCtx + message }],
     { maxTokens: 220, temperature: 0.15 },
   );
   const intent = extractRaw ? extractJson<Intent>(extractRaw) : null;
@@ -94,7 +102,16 @@ export async function POST(req: NextRequest) {
     `⛔ ห้ามใส่ลิสต์ บูลเล็ต หัวข้อ ตัวหนา หรือเลขข้อ เด็ดขาด (ระบบโชว์การ์ดแผนให้อยู่แล้ว) ⛔ ห้ามแต่งชื่อสถานที่หรือสภาพอากาศเอง ใช้เฉพาะข้อมูลที่ให้ ` +
     `ถ้าแผนช่วยหลบฝน/ฝุ่นให้บอกเหตุผลสั้นๆ`;
   const narrateUser = `คำขอผู้ใช้: "${message}"\nพื้นที่: ${meta.th} · ${dayLabel}\nแผนจริงจาก engine:\n${planText}`;
-  let answer = await nimChat([{ role: "system", content: narrateSys }, { role: "user", content: narrateUser }], { maxTokens: 220, temperature: 0.55 });
+  // Thai-sovereign LLM narrates when configured (อธิปไตย AI), else NVIDIA NIM. Either way
+  // it only narrates the engine's real plan.
+  const narrateMsgs = [{ role: "system" as const, content: narrateSys }, { role: "user" as const, content: narrateUser }];
+  let llm = "nim";
+  let answer: string | null = null;
+  if (sovereignConfigured()) {
+    answer = await sovereignChat(narrateMsgs, { maxTokens: 220, temperature: 0.55 });
+    if (answer) llm = "thai-sovereign";
+  }
+  if (!answer) answer = await nimChat(narrateMsgs, { maxTokens: 220, temperature: 0.55 });
   // Keep only the prose intro — drop any list/header the model still tacks on (the UI shows the cards).
   if (answer) answer = answer.replace(/\n\s*(?:\*\*|[-•*]|\d+[.)])[\s\S]*$/, "").replace(/\*\*/g, "").trim();
   if (!answer) {
@@ -107,7 +124,9 @@ export async function POST(req: NextRequest) {
     available: true,
     answer,
     plan: { areaKey: meta.key, areaTh: meta.th, areaEn: meta.en, day, dayLabel, budget, stops },
+    intent: { area: meta.key, day, budget, vibes }, // echo for the next turn to patch
     provider,
+    llm,
     planUrl: `/plan?y=${meta.key}&d=${day}`,
   });
 }

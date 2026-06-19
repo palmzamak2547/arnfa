@@ -32,6 +32,8 @@ import { fetchActiveDeals, dealMatchesWeather, type Deal } from "@/lib/deals/dea
 import { TodayAdvisory } from "@/components/TodayAdvisory";
 import { MerchantCTA } from "@/components/MerchantCTA";
 import { BmaGreenSpaces } from "@/components/BmaGreenSpaces";
+import { CoolingNearby } from "@/components/CoolingNearby";
+import { SkyTimeline } from "@/components/SkyTimeline";
 import { SkyAround } from "@/components/SkyAround";
 import { LiveCompanion } from "@/components/LiveCompanion";
 import { SkyChip } from "@/components/SkyChip";
@@ -46,7 +48,7 @@ import { AuthButton } from "@/components/AuthButton";
 import { AreaHighlights } from "@/components/AreaHighlights";
 import { SatelliteHaze } from "@/components/SatelliteHaze";
 import { BeachConditions } from "@/components/BeachConditions";
-import { hopEstimate, hopLabel } from "@/lib/plan/transit";
+import { hopEstimate, hopLabel, routedHopLabel } from "@/lib/plan/transit";
 import { useAuth } from "@/lib/auth/useAuth";
 import { saveTrip, loadCloudTaste, saveCloudTaste } from "@/lib/plan/trips";
 import { DistrictPicker } from "@/components/DistrictPicker";
@@ -243,6 +245,28 @@ function PlanInner() {
 
   const activePlan = rainedPlan ?? basePlan;
 
+  // Upgrade the displayed hops to EXACT OpenRouteService walking times when an ORS key is
+  // configured (dormant otherwise — the road-realistic estimate stays). Keyed by the index
+  // of the stop the hop leads INTO.
+  const [routedHops, setRoutedHops] = useState<Record<number, { minutes: number; meters: number }>>({});
+  useEffect(() => {
+    setRoutedHops({});
+    const stops = activePlan?.stops ?? [];
+    if (stops.length < 2) return;
+    let cancelled = false;
+    const legs = stops.slice(1).map((s, i) => [[stops[i].poi.lng, stops[i].poi.lat], [s.poi.lng, s.poi.lat]]);
+    fetch("/api/route", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ legs }) })
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => {
+        if (cancelled || !d?.available) return;
+        const map: Record<number, { minutes: number; meters: number }> = {};
+        (d.legs ?? []).forEach((leg: { minutes: number; meters: number } | null, i: number) => { if (leg) map[i + 1] = leg; });
+        setRoutedHops(map);
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, [activePlan]);
+
   const swap = useMemo(() => {
     if (!basePlan || !rainedPlan) return null;
     // Primary: the planner genuinely reordered — a stop dropped, a new one added.
@@ -437,6 +461,8 @@ function PlanInner() {
                   </div>
                 )}
 
+                <SkyTimeline forecast={forecast ?? []} stops={activePlan.stops} startHourIndex={startHourIndex} />
+
                 <ol className="space-y-3">
                   {activePlan.stops.map((stop, i) => {
                     const deal = deals.get(stop.poi.id);
@@ -447,7 +473,7 @@ function PlanInner() {
                     {prev && (
                       <li className="flex items-center gap-2 pl-7 font-thai text-xs text-ink-faint" aria-hidden>
                         <span>↓</span>
-                        <span>{hopLabel(hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng), en)}</span>
+                        <span>{routedHops[i] ? `🧭 ${routedHopLabel(routedHops[i].minutes, routedHops[i].meters, en)}` : hopLabel(hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng), en)}</span>
                       </li>
                     )}
                     <li className="flex items-start gap-4 rounded-2xl border border-hairline border-l-[3px] bg-surface/70 p-4"
@@ -516,7 +542,8 @@ function PlanInner() {
                     </a>
                   </div>
                 )}
-                <div className="mt-6">
+                <div className="mt-6 space-y-4">
+                  <CoolingNearby lat={center.lat} lng={center.lng} active={outdoorPenalty > 0.15 || (!!air && (air.pm25 ?? 0) > 37.5)} />
                   <BmaGreenSpaces lat={center.lat} lng={center.lng} />
                 </div>
                 <div className="mt-6 border-t border-hairline pt-5">

@@ -1,19 +1,17 @@
 "use client";
 
-import { useId, useMemo } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
+import { useLang } from "@/lib/i18n/useLang";
 
-/** ArnfaRibbon — signature 6-hour brushstroke (thickness=humidity, dashes=rain, warmth=sun). Spec: 01-design-lock § Signature 3 */
-
+/**
+ * ArnfaRibbon — signature 6-hour brushstroke of the REAL Bangkok sky (thickness =
+ * humidity, warmth = sun, fade + rain-strokes = rain chance). Fetches live forecast;
+ * the caption is DERIVED from that data, never hard-coded. If the forecast is down it
+ * hides rather than show a fake sky (Iron Rule 0).
+ */
 export type HourSample = { hourISO: string; humidity: number; rainProb: number; sunStrength: number };
 
-const MOCK_NEXT_6H: HourSample[] = [
-  { hourISO: "13:00", humidity: 0.55, rainProb: 0.08, sunStrength: 0.85 },
-  { hourISO: "14:00", humidity: 0.6,  rainProb: 0.12, sunStrength: 0.9  },
-  { hourISO: "15:00", humidity: 0.7,  rainProb: 0.35, sunStrength: 0.7  },
-  { hourISO: "16:00", humidity: 0.78, rainProb: 0.55, sunStrength: 0.4  },
-  { hourISO: "17:00", humidity: 0.75, rainProb: 0.4,  sunStrength: 0.3  },
-  { hourISO: "18:00", humidity: 0.62, rainProb: 0.15, sunStrength: 0.15 },
-];
+const BKK = { lat: 13.7563, lng: 100.5018 };
 
 function warmColor(s: number): string {
   if (s > 0.6) return "#F2A65A";
@@ -22,18 +20,56 @@ function warmColor(s: number): string {
   return "#4A5878";
 }
 
-export function ArnfaRibbon({ hours = MOCK_NEXT_6H }: { hours?: HourSample[] }) {
-  const id = useId();
-  const W = 1000, H = 120, padX = 24, innerW = W - padX * 2, baseY = H * 0.55;
-  const xs = useMemo(() => hours.map((_, i) => padX + (i + 0.5) * (innerW / hours.length)), [hours, innerW]);
+function caption(s: HourSample[], en: boolean): string {
+  if (!s.length) return "";
+  const rainy = s.filter((x) => x.rainProb > 0.4);
+  const maxRain = Math.max(...s.map((x) => x.rainProb));
+  if (rainy.length) {
+    const from = rainy[0].hourISO, to = rainy[rainy.length - 1].hourISO;
+    return en ? `Rain likely ${from}–${to} — keep a cover in reach.` : `ฝนน่าจะมาช่วง ${from}–${to} เผื่อที่หลบไว้`;
+  }
+  if (maxRain > 0.2) return en ? "A few passing showers, mostly fine." : "อาจมีฝนปรอยบ้าง แต่ส่วนใหญ่ออกได้";
+  if (s.filter((x) => x.sunStrength > 0.5).length >= 4) return en ? "Clear skies the next 6 hours." : "ฟ้าเปิดตลอด 6 ชั่วโมงข้างหน้า";
+  return en ? "Cloudy but dry." : "ฟ้าครึ้มแต่ไม่มีฝน";
+}
 
-  const segs = useMemo(() => hours.map((h, i) => {
+export function ArnfaRibbon() {
+  const id = useId();
+  const { en } = useLang();
+  const [hours, setHours] = useState<HourSample[] | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`/api/forecast?lat=${BKK.lat}&lng=${BKK.lng}&hours=12`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => {
+        if (cancelled) return;
+        const next6 = (d.hours ?? []).slice(0, 6).map((f: { hourISO: string; humidity: number; rainProb: number; cloudCover: number; uvIndex: number }) => ({
+          hourISO: `${f.hourISO.slice(11, 13)}:00`,
+          humidity: f.humidity,
+          rainProb: f.rainProb,
+          sunStrength: f.uvIndex > 0 ? Math.max(0, 1 - f.cloudCover) : Math.max(0, 0.25 - f.cloudCover * 0.25),
+        }));
+        if (next6.length) setHours(next6); else setFailed(true);
+      })
+      .catch(() => { if (!cancelled) setFailed(true); });
+    return () => { cancelled = true; };
+  }, []);
+
+  const W = 1000, H = 120, padX = 24, innerW = W - padX * 2, baseY = H * 0.55;
+  const list = hours ?? [];
+  const xs = useMemo(() => list.map((_, i) => padX + (i + 0.5) * (innerW / Math.max(1, list.length))), [list, innerW]);
+  const segs = useMemo(() => list.map((h, i) => {
     const width = 10 + h.humidity * 30;
     return { key: `${id}-seg-${i}`, x: xs[i], width, height: width * 0.62, color: warmColor(h.sunStrength), dashOpacity: h.rainProb > 0.4 ? 0.25 : 0.95, sample: h };
-  }), [hours, xs, id]);
+  }), [list, xs, id]);
+
+  if (failed) return null;
+  if (!hours) return <div className="w-full h-[120px] rounded-2xl bg-surface/40 animate-pulse" aria-hidden />;
 
   return (
-    <div className="w-full" role="img" aria-label="พยากรณ์ 6 ชั่วโมงข้างหน้า">
+    <div className="w-full" role="img" aria-label={en ? "Next 6 hours forecast" : "พยากรณ์ 6 ชั่วโมงข้างหน้า"}>
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" preserveAspectRatio="none">
         <defs>
           <filter id={`${id}-grain`}>
@@ -56,12 +92,13 @@ export function ArnfaRibbon({ hours = MOCK_NEXT_6H }: { hours?: HourSample[] }) 
         ))}
         {segs.map((s, i) => (
           <text key={`${s.key}-l`} x={s.x} y={baseY + 44} textAnchor="middle" className="fill-[var(--arnfa-ink-faint)]" style={{ font: '11px var(--font-inter-tight), system-ui, sans-serif', letterSpacing: "0.06em" }}>
-            {hours[i].hourISO}
+            {list[i].hourISO}
           </text>
         ))}
       </svg>
-      <p className="font-thai text-sm text-ink-muted mt-2">
-        บ่ายเริ่มครึ้ม ฝนพรำ <span className="font-medium">15:00 – 17:00</span> — ค่อยกลับมาฟ้าใสตอน <span className="font-medium">18:00</span>
+      <p className="font-thai text-sm text-ink-muted mt-2">{caption(list, en)}</p>
+      <p className="font-thai text-[0.7rem] text-ink-faint mt-1">
+        {en ? "thickness = humidity · warmth = sun · rain strokes = rain chance" : "ความหนา = ความชื้น · สีอุ่น = แดด · เส้นฝน = โอกาสฝน"}
       </p>
     </div>
   );
