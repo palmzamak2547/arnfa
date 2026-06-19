@@ -18,6 +18,8 @@ export type RadarStatus = {
   nowcastFrames: number;
   /** ISO of the most recent past frame, if any */
   latestISO: string | null;
+  /** XYZ raster tile template for the latest frame (for a map overlay), if available */
+  tileUrl: string | null;
 };
 
 type MapsJson = {
@@ -34,11 +36,15 @@ export async function fetchRadarStatus(signal?: AbortSignal): Promise<RadarStatu
   const data = (await res.json()) as MapsJson;
   const past = data.radar?.past ?? [];
   const nowcast = data.radar?.nowcast ?? [];
-  const latest = past.length ? past[past.length - 1].time : null;
+  const latestFrame = past.length ? past[past.length - 1] : null;
+  // RainViewer tile template: {host}{path}/{size}/{z}/{x}/{y}/{colorScheme}/{smooth_snow}.png
+  // scheme 2 = universal blue→green→yellow→red; 1_1 = smoothed, show snow.
+  const tileUrl = latestFrame && data.host ? `${data.host}${latestFrame.path}/256/{z}/{x}/{y}/2/1_1.png` : null;
   return {
     available: past.length > 0,
     pastFrames: past.length,
     nowcastFrames: nowcast.length,
-    latestISO: latest ? new Date(latest * 1000).toISOString() : null,
+    latestISO: latestFrame ? new Date(latestFrame.time * 1000).toISOString() : null,
+    tileUrl,
   };
 }

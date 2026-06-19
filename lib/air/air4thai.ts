@@ -61,6 +61,35 @@ export const AIR_LABEL_TH: Record<AirLevel, string> = {
   unknown: "ไม่มีข้อมูล",
 };
 
+/** AQI-band colours for plotting stations on the map (green → purple). */
+export const AIR_COLOR: Record<AirLevel, string> = {
+  good: "#7BA68A",
+  moderate: "#E3B341",
+  warn: "#E08A3C",
+  unhealthy: "#D9534A",
+  "very-unhealthy": "#8B3A8B",
+  unknown: "#9AA0A6",
+};
+
+export type AirStation = { stationNameTh: string; lat: number; lng: number; pm25: number | null; level: AirLevel; distanceKm: number };
+
+/** The N nearest Air4Thai stations to a point, each with its PM2.5 reading + band.
+ *  For the map's air layer — the spatial dust picture, all real, never fabricated. */
+export async function fetchNearbyAir(lat: number, lng: number, n = 10, signal?: AbortSignal): Promise<AirStation[]> {
+  const res = await fetch(ENDPOINT, { signal, headers: { "User-Agent": "Arnfa/0.1" } });
+  if (!res.ok) throw new Error(`Air4Thai ${res.status}`);
+  const data = (await res.json()) as { stations?: Station[] };
+  const out: AirStation[] = [];
+  for (const st of data.stations ?? []) {
+    const sLat = Number(st.lat), sLng = Number(st.long);
+    if (!isFinite(sLat) || !isFinite(sLng)) continue;
+    const rawVal = st.AQILast?.PM25?.value;
+    const pm25 = rawVal != null && rawVal !== "-1" && rawVal !== "" && !Number.isNaN(Number(rawVal)) ? Number(rawVal) : null;
+    out.push({ stationNameTh: st.nameTH ?? "สถานี", lat: sLat, lng: sLng, pm25, level: pm25Level(pm25), distanceKm: Math.round(distKm(lat, lng, sLat, sLng) * 10) / 10 });
+  }
+  return out.sort((a, b) => a.distanceKm - b.distanceKm).slice(0, n);
+}
+
 export async function fetchNearestAir(
   lat: number,
   lng: number,

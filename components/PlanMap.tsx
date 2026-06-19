@@ -10,6 +10,7 @@ import type { SkyState } from "./SkyChip";
 import { categoryLabel } from "@/lib/plan/categoryLabel";
 import { GIBS_LAYERS, gibsTileUrl, gibsDate, type GibsLayerKey } from "@/lib/satellite/gibs";
 import { ARNFA_MAP_STYLE_URL, applyArnfaRecolor } from "@/lib/map/arnfaMapStyle";
+import { MapDataLayers, MAP_LAYERS, type MapLayerKey } from "@/components/MapDataLayers";
 
 /**
  * PlanMap — MapLibre on Arnfa's OWN editorial basemap (recoloured OpenFreeMap positron,
@@ -50,6 +51,10 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
   const [mapError, setMapError] = useState(false);
   // NASA GIBS satellite overlay (free, no key). "none" by default so the route is clear.
   const [sat, setSat] = useState<GibsLayerKey | "none">("none");
+  // Data-pipeline overlays (rail · parks · cooling · rest · rain). Off by default → calm map.
+  const [layers, setLayers] = useState<Set<MapLayerKey>>(new Set());
+  const [layersOpen, setLayersOpen] = useState(false);
+  const toggleLayer = (k: MapLayerKey) => setLayers((prev) => { const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n; });
 
   const fullPath = useMemo(() => stops.map((s) => [s.poi.lng, s.poi.lat] as [number, number]), [stops]);
 
@@ -137,6 +142,8 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
           </Source>
         )}
 
+        <MapDataLayers center={center} active={layers} routePresent={routeLayerPresent} />
+
         {stops.slice(0, shownMarkers).map((stop, i) => {
           const active = selected?.poi.id === stop.poi.id;
           return (
@@ -184,8 +191,35 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
         </div>
       )}
 
-      {/* Sky-colour legend — decodes the marker colours at a glance ("ดูง่าย") */}
-      <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2.5 rounded-full border border-hairline bg-paper/90 px-3 py-1.5 shadow-sm backdrop-blur">
+      {/* Data-layers control — toggle the pipeline onto the map (off by default → calm) */}
+      <div className="absolute bottom-9 right-2 z-10 flex flex-col items-end gap-1.5">
+        {layersOpen && (
+          <div className="flex flex-col gap-1 rounded-2xl border border-hairline bg-paper/95 p-1.5 shadow-md backdrop-blur">
+            {MAP_LAYERS.map((l) => {
+              const on = layers.has(l.key);
+              return (
+                <button key={l.key} type="button" onClick={() => toggleLayer(l.key)}
+                  className={clsx("font-thai flex items-center gap-2 rounded-xl px-2.5 py-1 text-xs transition-colors", on ? "bg-ink text-paper" : "text-ink-muted hover:bg-surface")}>
+                  <span aria-hidden style={{ fontSize: "12px" }}>{l.emoji}</span>
+                  <span className="flex-1 text-left">{en ? l.en : l.th}</span>
+                  <span className={clsx("h-2.5 w-2.5 rounded-full border", on ? "border-paper bg-paper" : "border-ink-faint")} style={on ? { background: l.color, borderColor: l.color } : undefined} />
+                </button>
+              );
+            })}
+          </div>
+        )}
+        <button type="button" onClick={() => setLayersOpen((o) => !o)} aria-expanded={layersOpen}
+          className={clsx("font-thai flex items-center gap-1.5 rounded-full border border-hairline px-3 py-1.5 text-xs shadow-sm backdrop-blur transition-colors", layersOpen || layers.size ? "bg-ink text-paper" : "bg-paper/90 text-ink-muted hover:bg-surface")}>
+          <span aria-hidden style={{ fontSize: "12px" }}>🗂️</span>
+          {en ? "Layers" : "ชั้นข้อมูล"}
+          {layers.size > 0 && <span className="ml-0.5 rounded-full bg-paper/30 px-1.5 text-[0.6rem] tabular-nums">{layers.size}</span>}
+        </button>
+      </div>
+
+      {/* Sky-colour legend — decodes the marker colours at a glance ("ดูง่าย").
+          Hidden on small screens to keep the map's bottom edge uncluttered (the sky state
+          also shows on each stop card + popup). */}
+      <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2.5 rounded-full border border-hairline bg-paper/90 px-3 py-1.5 shadow-sm backdrop-blur sm:flex">
         {SKY_LEGEND.map((s) => (
           <span key={s.state} className="flex items-center gap-1 font-thai text-[0.65rem] text-ink-muted">
             <span className="h-2.5 w-2.5 rounded-full ring-1 ring-white" style={{ background: SKY_COLOR[s.state] }} />
