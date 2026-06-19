@@ -24,6 +24,9 @@ export type SeedPoi = {
   image?: string | null;
   website?: string | null;
   tags: Record<string, string | undefined>;
+  /** Crowd-feedback signal overlaid at request time (the flywheel read-back):
+   *  n real weather-verdicts for this POI, okRate = share that said "โอเคตอนนี้". */
+  crowd?: { n: number; okRate: number };
 };
 
 export type SeedDistrict = {

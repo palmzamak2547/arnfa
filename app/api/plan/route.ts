@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getForecast } from "@/lib/weather/chain";
 import { buildPlan } from "@/lib/plan/buildPlan";
 import { loadDistrict, districtMeta } from "@/lib/poi/districts";
+import { overlayCrowd } from "@/lib/poi/crowd";
 import { startIndexForDay } from "@/lib/plan/days";
 
 /**
@@ -21,10 +22,11 @@ export async function GET(req: NextRequest) {
   const budgetMin = BUDGETS.has(budget) ? budget : 240;
 
   try {
-    const [district, forecast] = await Promise.all([
+    const [districtRaw, forecast] = await Promise.all([
       loadDistrict(area),
       getForecast(meta.lat, meta.lng, 168),
     ]);
+    const district = await overlayCrowd(districtRaw); // flywheel read-back (crowd-refined profiles)
     const startHourIndex = startIndexForDay(forecast.hours, day, new Date());
     const plan = buildPlan(district, forecast.hours, {
       startHourIndex, budgetMin, start: { lat: meta.lat, lng: meta.lng },
@@ -36,6 +38,7 @@ export async function GET(req: NextRequest) {
         name: s.poi.name, category: s.poi.category, lat: s.poi.lat, lng: s.poi.lng,
         arrival: s.arrivalLabel, sky: s.skyState, tempC: Math.round(s.tempC),
         rainProb: Math.round(s.rainProb * 100), reason: s.reason, openStatus: s.openStatus,
+        crowd: s.poi.crowd ?? null,
       })),
     }, { headers: { "Cache-Control": "public, s-maxage=600, stale-while-revalidate=1800" } });
   } catch (e) {

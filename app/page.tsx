@@ -4,8 +4,13 @@ import { HomeHero } from "@/components/HomeHero";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SkyWindow } from "@/components/SkyWindow";
 import { DataSources } from "@/components/DataSources";
+import { TodayPick } from "@/components/TodayPick";
 import { Logo } from "@/components/Logo";
 import { Reveal } from "@/components/motion/Reveal";
+
+// ISR — the home page renders a REAL "today's pick" from live forecast; regenerate
+// every 30 min so the Open-Meteo call is cached, not run per request.
+export const revalidate = 1800;
 
 export default function Home() {
   return (
@@ -28,22 +33,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TODAY'S PICK — left-anchored editorial block (cols 1–7) */}
-      <section className="arnfa-grid section-major">
-        <Reveal className="col-content col-left-7">
-          <p className="font-display text-xs uppercase tracking-[0.25em] text-ink-faint mb-6">
-            Today&apos;s pick
-          </p>
-          <h2 className="font-thai-serif fs-h2 font-light text-ink leading-[1.08] mb-8 text-balance">
-            บ่ายนี้ฟ้าเปิด — <span className="font-display italic text-sun">the rooftop</span> reads better than the cafe.
-          </h2>
-          <p className="font-thai fs-lead text-ink-muted leading-relaxed max-w-[52ch]">
-            หลังคาเปิด มุมลม แต่ไม่ร้อนเพราะร่ม. UV ปานกลาง 14:00–16:00.
-            ใกล้ MRT คลองเตย เดิน 6 นาที. ฝนตามพยากรณ์ 18% — Arnfa เผื่อทาง
-            ในร่มไว้ที่ห่าง 280 ม.
-          </p>
-        </Reveal>
-      </section>
+      {/* TODAY'S PICK — REAL live top area (was a fabricated mockup) */}
+      <TodayPick />
 
       {/* HOW ARNFA THINKS — right-anchored (cols 7–12), breaks the left rhythm */}
       <section id="how" className="arnfa-grid section-major border-t border-hairline">
@@ -60,9 +51,9 @@ export default function Home() {
             <em>มันดีขึ้น เมื่อฝนตก.</em>
           </p>
           <p className="font-thai fs-lead text-ink-muted leading-relaxed max-w-[54ch]">
-            Arnfa อ่านโปรไฟล์เหล่านี้จาก OpenStreetMap structured tags + รีวิวจริงของผู้ใช้ +
-            ฟ้าจาก Open-Meteo + เรดาร์ใกล้ตัวจาก RainViewer. ทุกคำแนะนำมี
-            <em> เหตุผล</em> เสมอ — ไม่ใช่กล่องดำ.
+            Arnfa เริ่มจาก OpenStreetMap structured tags + ฟ้าจริงจาก Open-Meteo
+            แล้ว <em>เรียนรู้จากฟีดแบ็กของคนที่ไปมาจริง</em> — โปรไฟล์ของแต่ละที่แม่นขึ้นทุกวัน.
+            ทุกคำแนะนำมีเหตุผลเสมอ ไม่ใช่กล่องดำ.
           </p>
         </Reveal>
       </section>

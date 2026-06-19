@@ -1,54 +1,94 @@
-# Arnfa — Strategy (target customer · MVP · business model)
+# Arnfa — Strategy (v2)
 
-> Sharpened for the BDI Hackathon 2026 Soft Pitch (Track 1: "Data for better Journey"),
-> per mentor feedback. One page, deliberately narrow. Vault copy: projects/arnfa/08-strategy.
+> Sharpened from a grounded multi-agent audit + the BDI Hackathon 2026 field notes
+> (19 Jun forum: Envi Link · City Signal · "FACT not estimation" · Agentic-from-start).
+> One page, deliberately narrow. For the Soft Pitch (10 Jul) → Demo Day (25 Jul).
 
-## 1 · Target customer + the pain (be specific)
-**Primary persona — "นักวางแผนสุดสัปดาห์ / the weekend optimizer"**: urban Thai, 22–35, Bangkok &
-big cities, plans café / market / park / day-trips, and *repeatedly gets burned* by rain, PM2.5,
-and heat that ruin the outing.
+## The one sentence
+**"บอกฟ้า แล้วได้ทริปที่ฝนพังไม่ได้." — Tell it the sky, get a trip the rain can't ruin.**
 
-**The pain (the wedge):** weather apps give a **forecast**, not a **decision**. The real question is
-*"มีเวลาว่าง อยากออกไป — แต่ไปไหน, ตอนไหน, เลี่ยงฝน/ฝุ่นยังไง?"* → decision paralysis, cancelled or
-wasted outings. Nobody turns the forecast into *where to go and in what order*.
+Verb-first, pain-first. Not "AI-powered", not "20,000 POIs", not "real-time data."
 
-**Why now:** chronic PM2.5 + erratic rain make "should I go out?" a daily Bangkok question, and
-open weather/air/satellite/POI data is finally free and good enough to answer it.
+## 1 · Customer + pain
+**"นักวางแผนสุดสัปดาห์ / the weekend optimizer"** — urban Thai 22–35 who plans café / market /
+park / day-trips and keeps getting **burned by rain, PM2.5, and heat**. Weather apps give a
+**forecast**; nobody turns it into a **decision** — *ไปไหน, ตอนไหน, เลี่ยงฝน/ฝุ่นยังไง*. Result:
+wasted, cancelled, or miserable outings. Chronic Bangkok PM2.5 + erratic monsoon make "should I
+go out, and where?" a **daily** question — and the open data to answer it is finally free + good.
 
-## 2 · MVP (one sharp product — not the kitchen sink)
-**Core MVP:** *input where + when → a day-plan that re-ranks places by the forecast **at arrival**,
-swaps outdoor→indoor the moment rain is due, with honest provenance* — plus **"ไปไหนดี"** (rank all
-of Thailand by today's sky). The signature "wow" = the warm-shift **swap card** + the nationwide pick.
+## 2 · MVP (one sharp product)
+Input *where + when* → a day-plan that **re-ranks places by the forecast at the hour you'll
+arrive**, swaps outdoor→indoor when rain is due, with on-screen provenance — plus **"ไปไหนดี"**
+(rank all Thailand by today's sky) and **Arnfa AI** (`/ai`, free-text Thai → the same engine,
+narrated). All live at arnfa.vercel.app.
 
-**The upgrade (this build) → "Arnfa AI":** natural language *("อยากไปคาเฟ่ชิลๆ เลี่ยงฝน พรุ่งนี้บ่าย")*
-→ an **agentic** layer understands the intent → calls Arnfa's real engine (forecast + POIs + air) →
-returns a plan **and** a friendly Thai explanation grounded in real data + sources. (Ticks the
-judges' **Thai-LLM / Agentic-AI** box; makes the engine usable without learning the UI.)
+**The ONE killer demo to obsess over — the rain-swap on a timeline.** Type "คาเฟ่ชิลๆ บ่ายนี้" →
+a plan appears → a sky-fit timeline pins each stop at its arrival hour, and the 16:00 stop
+**swaps outdoor→indoor exactly where the rain band hits**, the card warm-shifting with a one-line
+Thai reason. No generic LLM trip-planner can fake that — it needs Arnfa's per-hour fit data.
 
-**Explicitly NOT the MVP headline** (kept as depth, not the pitch): satellite layers, marine mode,
-accounts, MCP server. They prove "real data," they don't lead.
+## 3 · The moat: a flywheel, not an algorithm (the durability answer)
+**Honest diagnosis:** the "weather-fit profile" of each place started as ~40 category defaults
+(`lib/poi/profile.ts`) — reproducible by any model in an afternoon. **That is not a moat. The
+data it learns is.** So we ship the loop the BDI organizers explicitly blessed
+(*"มีน้อยดีกว่าไม่มี — ถ้าไม่เริ่มใช้ มันก็ไม่มีวันพัฒนา"*):
 
-## 3 · Business model (user stays FREE)
-- **Primary — B2B2C demand-routing.** Venues (cafés, malls, attractions) pay to be the
-  **weather-matched recommendation** — e.g. the indoor place Arnfa swaps you to when rain hits
-  nearby. Arnfa owns the *"where should I go given the weather right now"* moment → it routes
-  **weather-displaced foot traffic** to partner SMEs on the exact days they'd otherwise lose
-  customers. Already seeded: the honest deals rail + MerchantCTA (no fake deals, ever).
-- **Secondary — B2B engine / API + data.** License the weather→plan **engine** (REST + MCP, already
-  built) to tourism (TAT, hotels), city/gov (BMA), and other apps; sell **anonymized
-  "weather-displaced demand"** insight to retail/tourism (privacy-careful, aggregate only).
-- **Users: free forever** → mass adoption + civic good, aligned with the hackathon's public theme.
+- Every stop asks **"ฟ้าตรงไหมตรงนี้? 👍/👎"** → `arnfa.feedback` (private) + an instant public
+  aggregate `arnfa.poi_crowd`.
+- The engine **reads it back** (`lib/poi/crowdApply.ts`): crowd-confirmed places gain confidence,
+  and "good in the rain?" is **learned from real verdicts given while it was raining**.
+- A **"เรียนรู้จาก N ครั้ง"** chip makes the moat visible.
 
-## 4 · Moat (why Arnfa wins, not a weather app)
-1. Owns the **decision** moment (the plan), not just the forecast.
-2. **Honest provenance / data-as-trust** — which *is* the hackathon's "cite source + License" rule, built in.
-3. **Nationwide real data** (20k+ OSM POIs · NASA satellite/FIRMS · Thai-gov Air4Thai) — hard to copy fast.
-4. **Agentic + MCP-native** → composable, future-proof.
+Once thousands of real Thai visits label which cafés are *actually* good in rain, that dataset
+beats any zero-shot LLM heuristic **and is not on the open web to scrape.** It exists only because
+Arnfa is operated. As foundation models get better, Arnfa's agent gets a better reasoning engine
+*for free* while keeping its private data — **the moat widens, not narrows.**
 
-## 5 · Hackathon framing (Track 1 fit + judging map)
-- **Track 1 "Data for better Journey":** route/trip planning + weather/PM2.5/events + AI decision
-  assistant — Arnfa is the textbook fit.
-- **Judging:** real Thai problem ✓ · Thai-LLM / Agentic-AI ✓ (Arnfa AI) · working MVP ✓ (live) ·
-  social + business value ✓ (SME demand-routing) · **user validation = the one gap → go get N real users to confirm the pain before Demo Day.**
-- **Pitch arc (Mayday! Design Thinking):** user pain → the *decision gap* → live demo (the swap +
-  Arnfa AI) → validation/traction → business model. Lead with the pain, not the feature list.
+**Four durable moats** (a frontier model has no private senses): ① Thailand-specific,
+weather-conditioned POI ground truth · ② civic distribution + SME relationships (a model can't
+get itself deployed by BMA) · ③ trust through verifiable Thai provenance ("ดูข้อมูลดิบ" = the
+hackathon's *FACT not estimation*) · ④ habit — SkyWindow's daily go/wait/stay ritual.
+
+**STOP defending (frontier models commoditize these):** the NIM narration glue (swappable infra),
+generic itinerary UX, the `weatherFit()` algorithm itself (elegant but legible), and
+breadth-for-breadth data layers (marine/FIRMS/satellite — keep as proof, don't market or expand).
+
+## 4 · Business model (users free forever)
+- **First ฿1 = a geographic beachhead, not the platform.** Own ONE dense neighborhood
+  (Thonglor/Ari). Offer 3–5 SMEs: *"we send you foot traffic on rainy days you'd otherwise lose —
+  ฿300/month, 3-month pilot, ฿0 if we don't deliver a tracked visit."* One closed loop (user sees
+  rain-swap → goes to a paid venue → venue confirms) kills the cold-start objection.
+- **Distribution unlock = BMA.** The hackathon is partnered with กทม. and promises good ideas get
+  **deployed by the city** — that's Arnfa's 0→10k-user path (the channel it otherwise lacks).
+- **Endgame = B2B2C demand-routing** (venues pay to be the weather-matched rec) + a licensed
+  engine/API. **Don't build the merchant dashboard or pricing page until one café has paid.**
+
+## 5 · Roadmap
+- **P0 — before Demo Day (in progress):** ✅ kill the fabricated home stat → real live pick ·
+  ⏳ the feedback flywheel (built; one migration + flag from live) · sky-fit timeline · card
+  weather-tint · a Thai-LLM "sovereign mode" + 2 real BMA datasets (flood/cooling-centers) ·
+  pitch around the one-liner + BMA + the FACT ladder.
+- **P1 (post-Demo-Day):** multi-turn refine on `/ai` (patch intent, re-run the same grounded
+  engine — *not* a free-roaming tool-loop) · recruit 50 real users · 1 SME pilot live.
+- **P2:** auth-gated taste learning once ≥1k feedback events exist · merchant attribution *after*
+  the first paying café.
+- **Cut from the critical path:** MCP server, sky-photo vision, notification cron, GPU/cuDF,
+  Nemotron-for-prestige, more data sources.
+
+## 6 · BDI Hackathon positioning (Track 1)
+Arnfa **is** what BDI asked for: **Envi Link + City Signal** for Bangkok's environment, climbing
+their own ladder — **เข้าใจ** (real Open-Meteo + Air4Thai + BMA data, on-screen provenance =
+*FACT not estimation*) → **ทำนาย** (the engine re-ranks by forecast at arrival; the prediction
+model is "just one tool", exactly NVIDIA's Agentic framing) → **จัดการ** (the rain-swap changes
+your decision, and the feedback loop is the city getting smarter over time). Lead with the
+field-notes blessing: *"เราเริ่มด้วย POI profile ที่ยังไม่สมบูรณ์ แล้ว ship the loop ที่ทำให้มันฉลาดขึ้นทุกวัน"* —
+that turns the thin-profile weakness into the strategy. Adopt the **Thai LLM** (sovereign mode)
+and **2 BMA datasets** because they genuinely strengthen the product; skip Nemotron-for-prestige,
+GPU, and Blueprints (theater for a weather-decision engine).
+
+---
+**If you only do 3 things:** (1) finish + activate the feedback loop with read-back — it converts
+the moat 0%→real, *is* the durability answer, and is exactly what BDI told you to build. (2) Keep
+the home page honest (done) and ship the sky-fit timeline — the two surfaces judges see first.
+(3) Rewrite the pitch around the one-liner + BMA distribution + the FACT ladder, plus the Thai-LLM
+mode and 2 BMA datasets. Everything else waits.

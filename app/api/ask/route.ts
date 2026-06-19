@@ -4,6 +4,7 @@ import { DISTRICTS } from "@/lib/poi/registry.generated";
 import { districtMeta, loadDistrict } from "@/lib/poi/districts";
 import { getForecast } from "@/lib/weather/chain";
 import { buildPlan } from "@/lib/plan/buildPlan";
+import { overlayCrowd } from "@/lib/poi/crowd";
 import { startIndexForDay } from "@/lib/plan/days";
 import { filterByGroups } from "@/lib/plan/categories";
 
@@ -64,10 +65,11 @@ export async function POST(req: NextRequest) {
   const vibes = Array.isArray(intent?.vibes) ? intent!.vibes!.filter((v) => VIBES.includes(v)) : [];
 
   // 2) Run the REAL engine (same pure code the UI uses).
-  let stops: { name: string; category: string; sky: string; arrival: string; tempC: number; rainProb: number; reason: string }[] = [];
+  let stops: { name: string; category: string; sky: string; arrival: string; tempC: number; rainProb: number; reason: string; crowd: { n: number; okRate: number } | null }[] = [];
   let provider = "";
   try {
-    const [district, forecast] = await Promise.all([loadDistrict(meta.key), getForecast(meta.lat, meta.lng, 168)]);
+    const [districtRaw, forecast] = await Promise.all([loadDistrict(meta.key), getForecast(meta.lat, meta.lng, 168)]);
+    const district = await overlayCrowd(districtRaw); // flywheel read-back (crowd-refined profiles)
     const pois = vibes.length ? filterByGroups(district.pois, new Set(vibes)) : district.pois;
     const startHourIndex = startIndexForDay(forecast.hours, day, new Date());
     const plan = buildPlan({ ...district, pois }, forecast.hours, { startHourIndex, budgetMin: budget, start: { lat: meta.lat, lng: meta.lng } });
@@ -75,6 +77,7 @@ export async function POST(req: NextRequest) {
     stops = plan.stops.map((s) => ({
       name: s.poi.name, category: s.poi.category, sky: s.skyState, arrival: s.arrivalLabel,
       tempC: Math.round(s.tempC), rainProb: Math.round(s.rainProb * 100), reason: s.reason,
+      crowd: s.poi.crowd ?? null,
     }));
   } catch {
     return NextResponse.json({ error: "engine_unavailable" }, { status: 503 });

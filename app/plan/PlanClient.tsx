@@ -19,6 +19,10 @@ import { decodePlanState, encodePlanState, DEFAULT_PLAN_STATE } from "@/lib/plan
 import { availableDays, startIndexForDay } from "@/lib/plan/days";
 import { loadTaste } from "@/lib/plan/taste";
 import { recordFeedback } from "@/lib/plan/feedback";
+import { applyCrowdRows, type CrowdRow } from "@/lib/poi/crowdApply";
+import { CROWD_ENABLED } from "@/lib/poi/crowdEnabled";
+import { getSupabase } from "@/lib/supabase/client";
+import { StopFeedback } from "@/components/StopFeedback";
 import { filterByGroups, availableGroups } from "@/lib/plan/categories";
 import { categoryLabel } from "@/lib/plan/categoryLabel";
 import { CategoryFilter } from "@/components/CategoryFilter";
@@ -105,6 +109,23 @@ function PlanInner() {
     return () => { cancelled = true; };
   }, [districtKey]);
 
+  // Flywheel READ-BACK: pull the crowd aggregate (arnfa.poi_crowd, public read) for
+  // this area's POIs, so the plan ranks on crowd-refined profiles and each stop can
+  // show "เรียนรู้จาก N ครั้ง". Best-effort — no rows / no Supabase = seed profiles.
+  const [crowdRows, setCrowdRows] = useState<CrowdRow[] | null>(null);
+  useEffect(() => {
+    if (!CROWD_ENABLED) return;
+    let cancelled = false;
+    setCrowdRows(null);
+    if (!districtData) return;
+    const sb = getSupabase();
+    if (!sb) return;
+    const ids = districtData.pois.map((p) => p.id);
+    void sb.from("poi_crowd").select("poi_id, n, ok, bad, rain_ok, rain_bad").in("poi_id", ids)
+      .then((res: { data: CrowdRow[] | null }) => { if (!cancelled) setCrowdRows(res.data ?? null); });
+    return () => { cancelled = true; };
+  }, [districtData]);
+
   // Real Air4Thai reading for this area — drives BOTH the chip and the day advisory
   // (and, when PM2.5 is unhealthy, the planner's outdoor penalty). One fetch.
   const [air, setAir] = useState<AirReading | null>(null);
@@ -140,8 +161,9 @@ function PlanInner() {
   const planDistrict = useMemo(() => {
     if (!districtData) return null;
     const pois = filterByGroups(districtData.pois, catGroups);
-    return { ...districtData, pois };
-  }, [districtData, catGroups]);
+    // overlay crowd feedback so the engine ranks on refined profiles (the moat)
+    return applyCrowdRows({ ...districtData, pois }, crowdRows);
+  }, [districtData, catGroups, crowdRows]);
 
   // Load saved taste once; if none and the user hasn't dismissed, offer the quiz.
   useEffect(() => {
@@ -404,11 +426,11 @@ function PlanInner() {
                       to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: 5, why: swap.added.reason }}
                       onAccept={() => {
                         // flywheel: user took the rain-swap suggestion → that POI fits rain
-                        recordFeedback(swap.added.poi.id, "accept_swap", { from: swap.dropped.poi.id, district: districtKey });
+                        recordFeedback(swap.added.poi.id, "accept_swap", { inRain: true, context: { from: swap.dropped.poi.id, district: districtKey } });
                         setRainSlot(null);
                       }}
                       onDismiss={() => {
-                        recordFeedback(swap.added.poi.id, "dismiss", { from: swap.dropped.poi.id, district: districtKey });
+                        recordFeedback(swap.added.poi.id, "dismiss", { context: { from: swap.dropped.poi.id, district: districtKey } });
                         setRainSlot(null);
                       }} />
                   </div>
@@ -427,7 +449,8 @@ function PlanInner() {
                         <span>{hopLabel(hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng), en)}</span>
                       </li>
                     )}
-                    <li className="flex items-start gap-4 rounded-2xl border border-hairline bg-surface/70 p-4">
+                    <li className="flex items-start gap-4 rounded-2xl border border-hairline border-l-[3px] bg-surface/70 p-4"
+                      style={{ borderLeftColor: ({ clear: "var(--arnfa-accent-sun)", partly: "var(--arnfa-success)", cloudy: "var(--arnfa-hairline)", rain: "var(--arnfa-accent-rain)", storm: "var(--arnfa-accent-indoor-warm)", night: "#4A5878" } as Record<string, string>)[stop.skyState] ?? "var(--arnfa-hairline)" }}>
                       <div className="relative shrink-0">
                         <PoiPhoto poi={stop.poi} skyState={stop.skyState} className="h-14 w-14" />
                         <span className="absolute -top-1.5 -left-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-ink text-paper text-xs font-semibold ring-2 ring-surface">{i + 1}</span>
@@ -452,10 +475,17 @@ function PlanInner() {
                           {stop.openStatus === "open" && <span className="text-success">{en ? "open now" : "เปิดอยู่"}</span>}
                           {stop.openStatus === "closed" && <span className="text-indoor-warm">{en ? "closed now" : "ปิดตอนนี้"}</span>}
                           {stop.openStatus === "unknown" && <span className="text-ink-faint">{en ? "hours unclear" : "เวลาเปิดไม่แน่ชัด"}</span>}
-                          {stop.poi.profile.confidence < 0.5 && <span className="text-ink-faint">{en ? "profile unsure" : "โปรไฟล์ยังไม่ชัด"}</span>}
+                          {stop.poi.crowd && stop.poi.crowd.n >= 3 ? (
+                            <span className="inline-flex items-center gap-1 text-success" title={en ? "refined by real visitors" : "ปรับจากฟีดแบ็กจริงของคนที่ไปมา"}>
+                              <span aria-hidden>✦</span>{en ? `learned from ${stop.poi.crowd.n}` : `เรียนรู้จาก ${stop.poi.crowd.n} ครั้ง`} · {Math.round(stop.poi.crowd.okRate * 100)}% {en ? "ok" : "โอเค"}
+                            </span>
+                          ) : stop.poi.profile.confidence < 0.5 ? (
+                            <span className="text-ink-faint">{en ? "profile unsure" : "โปรไฟล์ยังไม่ชัด"}</span>
+                          ) : null}
                           <a href={mapsPoiUrl(stop.poi.lat, stop.poi.lng, stop.poi.name)} target="_blank" rel="noopener noreferrer" className="text-rain hover:underline">{en ? "navigate ↗" : "นำทาง ↗"}</a>
                           {stop.poi.website && <a href={stop.poi.website} target="_blank" rel="noopener noreferrer" className="text-rain hover:underline">{en ? "website ↗" : "เว็บไซต์ ↗"}</a>}
                         </div>
+                        {CROWD_ENABLED && <StopFeedback poiId={stop.poi.id} skyState={stop.skyState} rainProb={stop.rainProb} district={districtKey} en={en} />}
                       </div>
                     </li>
                     </Fragment>
