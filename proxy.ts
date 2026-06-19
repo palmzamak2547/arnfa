@@ -15,6 +15,12 @@ import { NextResponse, type NextRequest } from "next/server";
  */
 const isDev = process.env.NODE_ENV !== "production";
 
+// Derive the Supabase origin (https + wss for realtime) from env so the CSP ALWAYS
+// matches the actual project. A hardcoded host silently broke every client DB call on
+// prod when Arnfa moved to its dedicated project — never hardcode it again.
+const SB = (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").replace(/\/+$/, "");
+const sbConnect = SB ? `${SB} ${SB.replace(/^https:/, "wss:")}` : "";
+
 function csp(): string {
   return [
     "default-src 'self'",
@@ -29,7 +35,7 @@ function csp(): string {
     "worker-src 'self' blob:",
     "child-src 'self' blob:",
     "img-src 'self' data: blob: https://tiles.openfreemap.org https://*.openfreemap.org https://upload.wikimedia.org https://commons.wikimedia.org https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org https://gibs.earthdata.nasa.gov",
-    "connect-src 'self' https://api.open-meteo.com https://api.met.no https://overpass-api.de https://tiles.openfreemap.org https://*.openfreemap.org https://api.rainviewer.com https://tilecache.rainviewer.com https://www.wikidata.org https://query.wikidata.org https://commons.wikimedia.org https://gibs.earthdata.nasa.gov https://dcrbtlpiumqpiegzucpp.supabase.co wss://dcrbtlpiumqpiegzucpp.supabase.co",
+    `connect-src 'self' https://api.open-meteo.com https://api.met.no https://overpass-api.de https://tiles.openfreemap.org https://*.openfreemap.org https://api.rainviewer.com https://tilecache.rainviewer.com https://www.wikidata.org https://query.wikidata.org https://commons.wikimedia.org https://gibs.earthdata.nasa.gov ${sbConnect}`,
     "manifest-src 'self'",
     "upgrade-insecure-requests",
   ].join("; ");
