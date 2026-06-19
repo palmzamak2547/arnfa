@@ -4,7 +4,7 @@
  *
  * Server-only — `NVIDIA_API_KEY` is never NEXT_PUBLIC. Dormant-until-key (returns null
  * so the route degrades gracefully, never fabricates). Model picked by a live Thai test
- * (deepseek-v4-flash: best Thai + fastest ~1.4s); llama-3.3-70b is the reliable fallback.
+ * (deepseek-v4-flash: best Thai + fastest ~1.4s); llama-3.1-8b is the fast fallback (~1.6s).
  */
 
 const NIM_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
