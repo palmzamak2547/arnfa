@@ -9,9 +9,13 @@ import type { EnrichedStop } from "@/lib/plan/buildPlan";
 import type { SkyState } from "./SkyChip";
 import { categoryLabel } from "@/lib/plan/categoryLabel";
 import { GIBS_LAYERS, gibsTileUrl, gibsDate, type GibsLayerKey } from "@/lib/satellite/gibs";
+import { arnfaMapStyle } from "@/lib/map/arnfaMapStyle";
 
 /**
- * PlanMap — MapLibre + OpenFreeMap liberty. Stable + premium:
+ * PlanMap — MapLibre on Arnfa's OWN editorial basemap (recoloured OpenFreeMap positron,
+ * see lib/map/arnfaMapStyle). Stable + premium:
+ *   - warm-paper map so the route + weather-fit markers are what you read
+ *   - a sky-colour legend so the marker colours decode at a glance
  *   - dashed walking line draws ON between stops in order; markers drop staggered
  *   - the map flies to fit the plan when stops change
  *   - click a stop → popup (name · category · sky · time · temp)
@@ -20,11 +24,17 @@ import { GIBS_LAYERS, gibsTileUrl, gibsDate, type GibsLayerKey } from "@/lib/sat
  * Reduced-motion: full line + markers render instantly (no draw/fly).
  */
 
-const STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
-
 const SKY_COLOR: Record<SkyState, string> = {
   clear: "#F2A65A", partly: "#7BA68A", cloudy: "#4B5263", rain: "#5B7FB8", storm: "#D9534A", night: "#4A5878",
 };
+
+// The marker colours, decoded — shown as a small legend so the map reads at a glance.
+const SKY_LEGEND: { state: SkyState; th: string; en: string }[] = [
+  { state: "clear", th: "แดด", en: "Sun" },
+  { state: "partly", th: "ฟ้าโปร่ง", en: "Fair" },
+  { state: "cloudy", th: "ครึ้ม", en: "Cloud" },
+  { state: "rain", th: "ฝน", en: "Rain" },
+];
 
 function prefersReduced(): boolean {
   if (typeof window === "undefined") return false;
@@ -36,6 +46,7 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
   const mapRef = useRef<MapRef>(null);
   const reduced = useMemo(prefersReduced, []);
   const initialView = useMemo(() => ({ longitude: center.lng, latitude: center.lat, zoom: 13.5 }), [center]);
+  const mapStyle = useMemo(() => arnfaMapStyle(), []);
   const [selected, setSelected] = useState<EnrichedStop | null>(null);
   const [mapError, setMapError] = useState(false);
   // NASA GIBS satellite overlay (free, no key). "none" by default so the route is clear.
@@ -102,7 +113,7 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
       <Map
         ref={mapRef}
         initialViewState={initialView}
-        mapStyle={STYLE_URL}
+        mapStyle={mapStyle}
         attributionControl={{ compact: true }}
         style={{ width: "100%", height: "100%" }}
         onError={(e) => { if (/webgl|context|style/i.test(String(e?.error?.message || ""))) setMapError(true); }}
@@ -122,22 +133,27 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
         {fullPath.length >= 2 && revealed >= 2 && (
           <Source id="route" type="geojson" data={lineGeoJSON}>
             <Layer id="route-line" type="line" layout={{ "line-cap": "round", "line-join": "round" }}
-              paint={{ "line-color": "#1A1F2B", "line-width": 2.5, "line-dasharray": [1.5, 1.2], "line-opacity": 0.55 }} />
+              paint={{ "line-color": "#1A1F2B", "line-width": 2.5, "line-dasharray": [1.5, 1.2], "line-opacity": 0.7 }} />
           </Source>
         )}
 
-        {stops.slice(0, shownMarkers).map((stop, i) => (
+        {stops.slice(0, shownMarkers).map((stop, i) => {
+          const active = selected?.poi.id === stop.poi.id;
+          return (
           <Marker key={stop.poi.id} longitude={stop.poi.lng} latitude={stop.poi.lat} anchor="bottom"
             onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(stop); }}>
             <button type="button" className="flex cursor-pointer flex-col items-center" title={stop.poi.name} aria-label={stop.poi.name}
               style={reduced ? undefined : { animation: "arnfa-drop 0.5s cubic-bezier(0.22,1,0.36,1) both" }}>
-              <div className="flex h-7 w-7 items-center justify-center rounded-full text-xs font-semibold text-white shadow-md ring-2 ring-white transition-transform hover:scale-110" style={{ background: SKY_COLOR[stop.skyState] }}>
+              <div className={clsx("flex items-center justify-center rounded-full font-semibold text-white ring-2 ring-white transition-all hover:scale-110",
+                  active ? "h-9 w-9 text-sm shadow-lg scale-110" : "h-7 w-7 text-xs shadow-md")}
+                style={{ background: SKY_COLOR[stop.skyState], boxShadow: active ? `0 0 0 3px ${SKY_COLOR[stop.skyState]}40, 0 6px 16px rgba(26,31,43,0.25)` : undefined }}>
                 {i + 1}
               </div>
-              <div className="h-2 w-2 -mt-1 rotate-45" style={{ background: SKY_COLOR[stop.skyState] }} />
+              <div className={clsx("-mt-1 rotate-45", active ? "h-2.5 w-2.5" : "h-2 w-2")} style={{ background: SKY_COLOR[stop.skyState] }} />
             </button>
           </Marker>
-        ))}
+          );
+        })}
 
         {selected && (
           <Popup longitude={selected.poi.lng} latitude={selected.poi.lat} anchor="bottom" offset={28} closeButton closeOnClick={false}
@@ -167,6 +183,16 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
           {en ? `NASA daily image (${satDate})` : `ภาพดาวเทียม NASA รายวัน (${satDate})`}
         </div>
       )}
+
+      {/* Sky-colour legend — decodes the marker colours at a glance ("ดูง่าย") */}
+      <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2.5 rounded-full border border-hairline bg-paper/90 px-3 py-1.5 shadow-sm backdrop-blur">
+        {SKY_LEGEND.map((s) => (
+          <span key={s.state} className="flex items-center gap-1 font-thai text-[0.65rem] text-ink-muted">
+            <span className="h-2.5 w-2.5 rounded-full ring-1 ring-white" style={{ background: SKY_COLOR[s.state] }} />
+            {en ? s.en : s.th}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

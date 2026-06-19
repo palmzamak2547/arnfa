@@ -59,6 +59,7 @@ export const DATA_SOURCES: DataSource[] = [
   { key: "ors", name: "OpenRouteService", org: "HeiGIT / OSM", orgEn: "HeiGIT / OSM", url: "https://openrouteservice.org", license: "open · key-gated", kind: "routing", role: "เวลาเดินจริง (เมื่อใส่ key)", roleEn: "Real walking times (when keyed)", dormant: true },
 
   { key: "namtang", name: "Namtang transit", org: "สนข. · Namtang (OTP)", orgEn: "OTP / Namtang", url: "https://namtang.otp.go.th/", license: "open transit (GTFS)", kind: "transit", role: "สถานี BTS/MRT/ARL/SRT 454 สถานี — ไปย่านไหนด้วยรถไฟฟ้า", roleEn: "454 BTS/MRT/ARL/SRT stations", thaiGov: true },
+  { key: "doh-restarea", name: "จุดพักรถ ทางหลวง", org: "กรมทางหลวง (ทล.)", orgEn: "Dept. of Highways", url: "https://dohgis.doh.go.th/dohtotravel/", license: "ข้อมูลเปิดภาครัฐไทย", kind: "transit", role: "จุดพักรถระหว่างทาง 139 จุด — พักรถทริปต่างจังหวัด", roleEn: "139 highway rest areas", thaiGov: true },
 ];
 
 export const ACTIVE_SOURCE_COUNT = DATA_SOURCES.filter((s) => !s.dormant).length;
