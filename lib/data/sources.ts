@@ -40,7 +40,8 @@ export const DATA_SOURCES: DataSource[] = [
   { key: "met-norway", name: "MET Norway", org: "สถาบันอุตุนิยมวิทยานอร์เวย์", orgEn: "Norwegian Met Institute", url: "https://api.met.no", license: "NLOD / CC-BY 4.0", kind: "forecast", role: "พยากรณ์สำรองชั้น 2", roleEn: "Forecast fallback L2" },
   { key: "open-meteo-marine", name: "Open-Meteo Marine", org: "Open-Meteo", orgEn: "Open-Meteo", url: "https://open-meteo.com/en/docs/marine-weather-api", license: "CC-BY 4.0", kind: "forecast", role: "คลื่น + อุณหภูมิน้ำทะเล", roleEn: "Waves + sea temp" },
 
-  { key: "air4thai", name: "Air4Thai", org: "กรมควบคุมมลพิษ (คพ.)", orgEn: "Thai Pollution Control Dept", url: "http://air4thai.pcd.go.th", license: "ข้อมูลเปิดภาครัฐไทย", kind: "air", role: "PM2.5 รายสถานี", roleEn: "PM2.5 by station", thaiGov: true },
+  { key: "air4thai", name: "Air4Thai", org: "กรมควบคุมมลพิษ (คพ.)", orgEn: "Thai Pollution Control Dept", url: "http://air4thai.pcd.go.th", license: "ข้อมูลเปิดภาครัฐไทย", kind: "air", role: "PM2.5 รายสถานี (เรียลไทม์)", roleEn: "PM2.5 by station (real-time)", thaiGov: true },
+  { key: "bma-district-air", name: "PM2.5 รายเขต กทม.", org: "กรุงเทพมหานคร", orgEn: "Bangkok (BMA)", url: "https://data.bangkok.go.th/dataset/hdv2026", license: "ข้อมูลเปิด กทม.", kind: "air", role: "ฝุ่นรายจุดตรวจ (รายเดือน) — บริบทตามฤดู", roleEn: "PM2.5 by monitoring point (monthly context)", thaiGov: true },
   { key: "nasa-firms", name: "NASA FIRMS", org: "NASA", orgEn: "NASA", url: "https://firms.modaps.eosdis.nasa.gov", license: "NASA open data", kind: "air", role: "จุดความร้อน/ไฟ · หมอกควัน (VIIRS)", roleEn: "Active fire / haze (VIIRS)" },
 
   { key: "bma-parks", name: "สวนสาธารณะ กทม.", org: "กรุงเทพมหานคร", orgEn: "Bangkok (BMA)", url: "https://data.bangkok.go.th/dataset/park", license: "ข้อมูลเปิด กทม.", kind: "green", role: "สวนทางการ 47 แห่ง (พิกัด+เวลา+ขนาด)", roleEn: "47 official parks", thaiGov: true },

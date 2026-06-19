@@ -6,6 +6,7 @@ import { Logo } from "@/components/Logo";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { DISTRICTS } from "@/lib/poi/registry.generated";
 import { DATA_SOURCES, KIND_LABEL, KIND_ORDER, ACTIVE_SOURCE_COUNT, THAI_GOV_COUNT, type DataKind } from "@/lib/data/sources";
+import districtAir from "@/lib/data/bmaDistrictAir.snapshot.json";
 
 /**
  * /data — "FACT not estimation" made auditable. Every real source Arnfa runs on, with its
@@ -79,6 +80,22 @@ export default function DataPage() {
               </div>
             ))}
           </div>
+
+          {/* official monthly PM2.5 by monitoring point — the "เข้าใจเมือง" context layer */}
+          {districtAir.districts.length > 0 && (
+            <div className="mt-10">
+              <h2 className="font-display text-xs uppercase tracking-[0.18em] text-ink-faint mb-1">{en ? "PM2.5 by monitoring point · BMA (latest month)" : "PM2.5 รายจุดตรวจ กทม. (เดือนล่าสุด)"}</h2>
+              <p className="font-thai text-sm text-ink-muted mb-3">{en ? "Official monthly context — which areas usually carry the most dust. Real-time PM2.5 comes from Air4Thai (above)." : "บริบทตามฤดูจากข้อมูลทางการ — จุดไหนฝุ่นเยอะเป็นปกติ (ค่าเรียลไทม์มาจาก Air4Thai ด้านบน)"}</p>
+              <ul className="grid gap-x-6 gap-y-0 sm:grid-cols-2">
+                {districtAir.districts.slice(0, 8).map((d) => (
+                  <li key={d.district} className="flex items-baseline justify-between gap-3 py-1.5 border-b border-hairline/60">
+                    <span className="font-thai text-sm text-ink truncate">{d.district}</span>
+                    <span className="font-thai text-xs text-ink-faint shrink-0 tabular-nums">{d.avg} µg/m³ · {en ? `${d.exceedDays}d over std` : `เกินมาตรฐาน ${d.exceedDays} วัน`}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* honesty note */}
           <div className="mt-10 rounded-2xl border border-hairline bg-surface/50 p-5">
