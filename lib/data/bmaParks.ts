@@ -5,6 +5,8 @@
  * estimation). Parsed defensively: a malformed or out-of-bounds row is skipped, never
  * fabricated.
  */
+import snapshot from "./bmaParks.snapshot.json"; // bundled real data — portal blocks Vercel
+
 export type BmaPark = {
   id: string;
   name: string;
@@ -71,10 +73,17 @@ export function parseBmaParks(csv: string): BmaPark[] {
  *  degrades honestly — never invents a park). Cached at the data layer for a day. */
 export async function fetchBmaParks(): Promise<BmaPark[]> {
   try {
-    const r = await fetch(BMA_PARK_CSV, { signal: AbortSignal.timeout(15000), next: { revalidate: 86400 } });
-    if (!r.ok) return [];
-    return parseBmaParks(await r.text());
+    const r = await fetch(BMA_PARK_CSV, { signal: AbortSignal.timeout(8000), next: { revalidate: 86400 } });
+    if (r.ok) {
+      const live = parseBmaParks(await r.text());
+      if (live.length) return live; // freshest, when the portal is reachable
+    }
   } catch {
-    return [];
+    /* portal blocks/throttles cloud IPs (e.g. Vercel) → fall through to the snapshot */
   }
+  // Bundled snapshot of the same official CSV — guarantees prod has the real data.
+  return parseBmaParks((snapshot as { csv: string }).csv);
 }
+
+/** The date the bundled snapshot was captured from the portal (for honest provenance). */
+export const BMA_PARK_SNAPSHOT_DATE = (snapshot as { date: string }).date;
