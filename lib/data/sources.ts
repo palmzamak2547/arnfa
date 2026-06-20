@@ -6,7 +6,7 @@
  * data flagged, each with what it powers and a link. Iron Rule 0: if it's not real, it's
  * not here.
  */
-export type DataKind = "forecast" | "air" | "places" | "green" | "safety" | "map" | "satellite" | "routing" | "transit";
+export type DataKind = "forecast" | "air" | "places" | "green" | "safety" | "civic" | "map" | "satellite" | "routing" | "transit";
 
 export type DataSource = {
   key: string;
@@ -28,13 +28,14 @@ export const KIND_LABEL: Record<DataKind, { th: string; en: string }> = {
   places: { th: "สถานที่", en: "Places" },
   green: { th: "พื้นที่สีเขียว (ทางการ)", en: "Green space (official)" },
   safety: { th: "ความปลอดภัย (ทางการ)", en: "Safety (official)" },
+  civic: { th: "เสียงประชาชน (สด)", en: "Citizen feedback (live)" },
   map: { th: "แผนที่ + เรดาร์", en: "Map + radar" },
   satellite: { th: "ดาวเทียม", en: "Satellite" },
   routing: { th: "การเดินทาง", en: "Navigation" },
   transit: { th: "ขนส่งสาธารณะ (รถไฟฟ้า)", en: "Public transit" },
 };
 
-export const KIND_ORDER: DataKind[] = ["forecast", "air", "green", "safety", "places", "map", "satellite", "transit", "routing"];
+export const KIND_ORDER: DataKind[] = ["forecast", "air", "green", "safety", "civic", "places", "map", "satellite", "transit", "routing"];
 
 export const DATA_SOURCES: DataSource[] = [
   { key: "open-meteo", name: "Open-Meteo", org: "Open-Meteo", orgEn: "Open-Meteo", url: "https://open-meteo.com", license: "CC-BY 4.0", kind: "forecast", role: "พยากรณ์รายชั่วโมง (หลัก)", roleEn: "Hourly forecast (primary)" },
@@ -48,6 +49,8 @@ export const DATA_SOURCES: DataSource[] = [
   { key: "bma-parks", name: "สวนสาธารณะ กทม.", org: "กรุงเทพมหานคร", orgEn: "Bangkok (BMA)", url: "https://data.bangkok.go.th/dataset/park", license: "ข้อมูลเปิด กทม.", kind: "green", role: "สวนทางการ 47 แห่ง (พิกัด+เวลา+ขนาด)", roleEn: "47 official parks", thaiGov: true },
 
   { key: "bma-cooling", name: "ห้องหลบร้อน กทม.", org: "กรุงเทพมหานคร", orgEn: "Bangkok (BMA)", url: "https://bmamap.bangkok.go.th", license: "ข้อมูลเปิด กทม.", kind: "safety", role: "ที่หลบร้อน/ฝุ่นทางการ 592 จุด", roleEn: "592 official heat/haze refuges", thaiGov: true },
+
+  { key: "traffy", name: "Traffy Fondue", org: "Traffy Fondue (NECTEC) + กทม.", orgEn: "Traffy Fondue (NECTEC) + Bangkok", url: "https://www.traffy.in.th", license: "open citizen-report API", kind: "civic", role: "เรื่องที่ประชาชนแจ้งสดๆ แถวพื้นที่ (น้ำท่วม/ทางเท้า/ถนน) — City Signal", roleEn: "Live citizen reports near the area (flood/footpath/road)", thaiGov: true },
 
   { key: "osm", name: "OpenStreetMap", org: "OSM Foundation", orgEn: "OSM Foundation", url: "https://www.openstreetmap.org", license: "ODbL", kind: "places", role: "สถานที่ + แท็กโครงสร้าง (20k+ จุด)", roleEn: "POIs + structured tags (20k+)" },
 
