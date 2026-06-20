@@ -9,7 +9,7 @@ import { DATA_SOURCES, KIND_LABEL, KIND_ORDER, ACTIVE_SOURCE_COUNT, THAI_GOV_COU
 import districtAir from "@/lib/data/bmaDistrictAir.snapshot.json";
 
 /**
- * /data — "FACT not estimation" made auditable. Every real source Arnfa runs on, with its
+ * /data — "FACT not estimation" made auditable. Every real source Arnfah runs on, with its
  * organisation, license, and what it powers — the BDI "cite source + License" rule as a page.
  * Derived from lib/data/sources so it can never drift from what the app actually uses.
  */
@@ -45,7 +45,7 @@ export default function DataPage() {
           <h1 className="font-thai-serif fs-h2 font-light text-ink mb-4 text-balance">{en ? "Every number, traced to its source" : "ทุกตัวเลข สืบไปถึงแหล่งที่มาได้"}</h1>
           <p className="font-thai fs-lead text-ink-muted leading-relaxed mb-6">
             {en
-              ? "Arnfa is built on open data — including official Thai-government datasets. Nothing here is invented: when the data isn't available, the app says so."
+              ? "Arnfah is built on open data — including official Thai-government datasets. Nothing here is invented: when the data isn't available, the app says so."
               : "อ่านฟ้าสร้างบนข้อมูลเปิด รวมถึงชุดข้อมูลทางการของรัฐไทย ไม่มีการกุข้อมูลขึ้นเอง ถ้าไม่มีข้อมูล แอปจะบอกตรงๆ"}
           </p>
 

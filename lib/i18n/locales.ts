@@ -7,12 +7,12 @@ export const resources = {
   th: {
     translation: {
       brand: "อ่านฟ้า",
-      "hero.kicker": "อ่านฟ้า — Arnfa",
+      "hero.kicker": "อ่านฟ้า — Arnfah",
       "hero.title1": "วันนี้ฟ้าเปิด",
       "hero.title2": "— ไปไหนดี?",
-      "hero.sub": "Decision engine ที่อ่านฟ้าให้คุณ. วางแผนทริปทั่วไทยให้ลงล็อกกับอากาศ ณ เวลาที่จะไปถึง — ฝนมาเมื่อไหร่ Arnfa บอกที่ดีกว่าให้เอง.",
+      "hero.sub": "Decision engine ที่อ่านฟ้าให้คุณ. วางแผนทริปทั่วไทยให้ลงล็อกกับอากาศ ณ เวลาที่จะไปถึง — ฝนมาเมื่อไหร่ Arnfah บอกที่ดีกว่าให้เอง.",
       "hero.cta.plan": "เริ่มวางแผนวันนี้",
-      "hero.cta.how": "Arnfa คิดยังไง",
+      "hero.cta.how": "Arnfah คิดยังไง",
       "plan.title": "วางแผนทริป",
       "plan.area": "ย่าน",
       "plan.time": "เวลา",
@@ -26,13 +26,13 @@ export const resources = {
   },
   en: {
     translation: {
-      brand: "Arnfa",
-      "hero.kicker": "อ่านฟ้า — Arnfa",
+      brand: "Arnfah",
+      "hero.kicker": "อ่านฟ้า — Arnfah",
       "hero.title1": "Clear skies today",
       "hero.title2": "— where to?",
-      "hero.sub": "A decision engine that reads the sky for you. Plan a day anywhere in Thailand that fits the weather at the moment you arrive — when rain comes, Arnfa names a better place.",
+      "hero.sub": "A decision engine that reads the sky for you. Plan a day anywhere in Thailand that fits the weather at the moment you arrive — when rain comes, Arnfah names a better place.",
       "hero.cta.plan": "Plan today",
-      "hero.cta.how": "How Arnfa thinks",
+      "hero.cta.how": "How Arnfah thinks",
       "plan.title": "Plan a trip",
       "plan.area": "Area",
       "plan.time": "Time",

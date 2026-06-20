@@ -32,7 +32,7 @@ export function DataSources() {
         </h2>
         <p className="font-thai text-lg text-ink-muted leading-relaxed max-w-2xl mb-12">
           {en
-            ? "Every Arnfa recommendation traces to verifiable open sources — including official Thai-government data. We never fabricate a forecast; if the data isn't there, we say so."
+            ? "Every Arnfah recommendation traces to verifiable open sources — including official Thai-government data. We never fabricate a forecast; if the data isn't there, we say so."
             : "ทุกคำแนะนำของอ่านฟ้ามาจากแหล่งข้อมูลเปิดที่ตรวจสอบได้ รวมถึงข้อมูลทางการของรัฐไทย เราไม่กุตัวเลขพยากรณ์ ถ้าไม่มีข้อมูล เราบอกตรงๆ"}
         </p>
 

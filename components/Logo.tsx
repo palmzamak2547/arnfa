@@ -42,7 +42,7 @@ export function Logo({ className, animate = true }: { className?: string; animat
 
 export function LogoMark({ size = 28, className }: { size?: number; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 48 48" className={className} role="img" aria-label="Arnfa">
+    <svg width={size} height={size} viewBox="0 0 48 48" className={className} role="img" aria-label="Arnfah">
       <defs>
         <clipPath id="arnfa-cloud-clip">
           <rect x="0" y="26" width="48" height="22" />

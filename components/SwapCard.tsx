@@ -44,7 +44,7 @@ export function SwapCard({ from, to, active, onAccept, onDismiss }: SwapCardProp
           </>
         ) : (
           <>
-            ตอนนี้ <span className="font-semibold">{from.name}</span> ยังโอเค — แต่ถ้าฝนมา Arnfa มี <span className="font-semibold">{to.name}</span> เผื่อไว้แล้ว
+            ตอนนี้ <span className="font-semibold">{from.name}</span> ยังโอเค — แต่ถ้าฝนมา Arnfah มี <span className="font-semibold">{to.name}</span> เผื่อไว้แล้ว
           </>
         )}
       </p>

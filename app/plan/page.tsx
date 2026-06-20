@@ -23,8 +23,8 @@ export async function generateMetadata({
   const day = typeof sp.d === "string" ? sp.d : "0";
   const meta = districtMeta(area);
   const title = meta
-    ? en ? `Plan a trip in ${titleCase(meta.en)} — Arnfa` : `วางแผนทริปที่${meta.th} — อ่านฟ้า`
-    : en ? "Plan a trip — Arnfa" : "วางแผนทริปตามฟ้า — อ่านฟ้า";
+    ? en ? `Plan a trip in ${titleCase(meta.en)} — Arnfah` : `วางแผนทริปที่${meta.th} — อ่านฟ้า`
+    : en ? "Plan a trip — Arnfah" : "วางแผนทริปตามฟ้า — อ่านฟ้า";
   const og = `/api/og?area=${encodeURIComponent(area)}&day=${day}`;
   return {
     title,

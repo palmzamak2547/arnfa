@@ -110,7 +110,7 @@ export function LiveCompanion({ pois }: { pois: SeedPoi[] }) {
 
       {!active && (
         <>
-          <p className="font-thai mt-2 text-sm text-ink-muted">{en ? "While you're out, Arnfa watches the rain at your spot and warns you ~25 min ahead — with the nearest place to duck into." : "ระหว่างออกไปข้างนอก Arnfa จะคอยดูฝนตรงที่คุณอยู่ แล้วเตือนล่วงหน้า ~25 นาที พร้อมที่หลบใกล้สุด"}</p>
+          <p className="font-thai mt-2 text-sm text-ink-muted">{en ? "While you're out, Arnfah watches the rain at your spot and warns you ~25 min ahead — with the nearest place to duck into." : "ระหว่างออกไปข้างนอก Arnfah จะคอยดูฝนตรงที่คุณอยู่ แล้วเตือนล่วงหน้า ~25 นาที พร้อมที่หลบใกล้สุด"}</p>
           <p className="font-thai mt-2 text-[0.7rem] text-ink-faint">{en ? "Your location is used only for the forecast — never stored." : "ตำแหน่งใช้เพื่อเช็คฟ้าเท่านั้น ไม่เก็บขึ้นเซิร์ฟเวอร์"}</p>
         </>
       )}

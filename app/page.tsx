@@ -40,7 +40,7 @@ export default function Home() {
       <section id="how" className="arnfa-grid section-major border-t border-hairline">
         <Reveal className="col-content col-right-7">
           <p className="font-display text-xs uppercase tracking-[0.25em] text-ink-faint mb-6">
-            How Arnfa thinks
+            How Arnfah thinks
           </p>
           <h2 className="font-thai-serif fs-h2 font-light text-ink leading-snug mb-8 text-balance">
             แต่ละสถานที่มี <em>โปรไฟล์ความเข้ากับอากาศ</em> ของตัวเอง.
@@ -51,7 +51,7 @@ export default function Home() {
             <em>มันดีขึ้น เมื่อฝนตก.</em>
           </p>
           <p className="font-thai fs-lead text-ink-muted leading-relaxed max-w-[54ch]">
-            Arnfa เริ่มจาก OpenStreetMap structured tags + ฟ้าจริงจาก Open-Meteo
+            Arnfah เริ่มจาก OpenStreetMap structured tags + ฟ้าจริงจาก Open-Meteo
             แล้ว <em>เรียนรู้จากฟีดแบ็กของคนที่ไปมาจริง</em> — โปรไฟล์ของแต่ละที่แม่นขึ้นทุกวัน.
             ทุกคำแนะนำมีเหตุผลเสมอ ไม่ใช่กล่องดำ.
           </p>

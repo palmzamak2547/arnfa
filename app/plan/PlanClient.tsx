@@ -463,7 +463,7 @@ function PlanInner() {
                 {rainTargetSlot !== null && rainSlot === null && (
                   <button type="button" onClick={() => setRainSlot(rainTargetSlot)}
                     className="font-thai mb-5 w-full rounded-2xl border border-dashed border-rain/40 bg-rain/5 px-5 py-4 text-left text-sm text-ink-muted transition-colors hover:bg-rain/10 min-h-[44px]">
-                    <span className="font-medium text-rain">{en ? "Try:" : "ลองดู:"}</span> {en ? "what if it rains this afternoon?" : "ถ้าฝนตกตอนบ่าย Arnfa จะทำยังไง?"} →
+                    <span className="font-medium text-rain">{en ? "Try:" : "ลองดู:"}</span> {en ? "what if it rains this afternoon?" : "ถ้าฝนตกตอนบ่าย Arnfah จะทำยังไง?"} →
                   </button>
                 )}
 

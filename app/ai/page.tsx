@@ -46,7 +46,7 @@ export default function AiPage() {
     const idx = turns.length;
     setTurns((t) => [...t, { q: message, resp: null, error: "" }]);
     setLoading(true);
-    const fail = en ? "Arnfa AI is resting right now — you can still plan directly." : "ตอนนี้ AI ยังไม่พร้อม ลองวางแผนเองที่หน้าวางแผนได้นะ";
+    const fail = en ? "Arnfah AI is resting right now — you can still plan directly." : "ตอนนี้ AI ยังไม่พร้อม ลองวางแผนเองที่หน้าวางแผนได้นะ";
     try {
       const r = await fetch("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, prior }) });
       const d = await r.json();
@@ -77,7 +77,7 @@ export default function AiPage() {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-sun" aria-hidden>
               <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z" fill="currentColor" /><circle cx="18.5" cy="17.5" r="1.6" fill="currentColor" /><circle cx="5.5" cy="16" r="1" fill="currentColor" />
             </svg>
-            <h1 className="font-thai-serif fs-h2 font-light text-ink">{en ? "Ask Arnfa" : "ถามอ่านฟ้า"}</h1>
+            <h1 className="font-thai-serif fs-h2 font-light text-ink">{en ? "Ask Arnfah" : "ถามอ่านฟ้า"}</h1>
           </div>
           <p className="font-thai text-ink-muted mb-7 max-w-xl">
             {en ? "Say what you feel like doing — the AI reads the real sky and lays out a plan. Then keep chatting: change the day, dodge rain, try another area." : "พิมพ์สิ่งที่อยากทำ แล้ว AI จะอ่านฟ้าจริงแล้วจัดแผนให้ คุยต่อได้เลย เช่น เปลี่ยนวัน เลี่ยงฝน หรือลองย่านอื่น"}
@@ -115,7 +115,7 @@ export default function AiPage() {
                 <p className="font-thai ml-auto max-w-[85%] w-fit rounded-3xl rounded-br-lg bg-ink px-5 py-3 text-sm text-paper">{turn.q}</p>
 
                 {!turn.resp && !turn.error && loading && ti === turns.length - 1 && (
-                  <p className="font-thai text-ink-faint animate-pulse">{en ? "Arnfa is reading the sky and planning…" : "อ่านฟ้ากำลังคิดแผนให้…"}</p>
+                  <p className="font-thai text-ink-faint animate-pulse">{en ? "Arnfah is reading the sky and planning…" : "อ่านฟ้ากำลังคิดแผนให้…"}</p>
                 )}
                 {turn.error && <p className="font-thai rounded-3xl border border-hairline bg-surface/70 px-5 py-4 text-sm text-ink-muted">{turn.error} <Link href="/plan" className="text-rain hover:underline">{en ? "Plan →" : "วางแผนเอง →"}</Link></p>}
 
@@ -162,8 +162,8 @@ export default function AiPage() {
 
           <p className="font-thai text-[0.7rem] text-ink-faint mt-10">
             {lastResp?.llm === "thai-sovereign"
-              ? (en ? "Powered by a Thai-sovereign LLM — narrates Arnfa's real engine output only; never invents a place or the weather." : "ขับเคลื่อนด้วย Thai-LLM (อธิปไตย AI) — เล่าเฉพาะแผนจริงจาก engine ของอ่านฟ้า ไม่แต่งสถานที่หรือสภาพอากาศเอง")
-              : (en ? "Powered by NVIDIA NIM (Thai-LLM ready) — narrates Arnfa's real engine output only; never invents a place or the weather." : "ขับเคลื่อนด้วย NVIDIA NIM (พร้อมรองรับ Thai-LLM) — เล่าเฉพาะแผนจริงจาก engine ของอ่านฟ้า ไม่แต่งสถานที่หรือสภาพอากาศเอง")}
+              ? (en ? "Powered by a Thai-sovereign LLM — narrates Arnfah's real engine output only; never invents a place or the weather." : "ขับเคลื่อนด้วย Thai-LLM (อธิปไตย AI) — เล่าเฉพาะแผนจริงจาก engine ของอ่านฟ้า ไม่แต่งสถานที่หรือสภาพอากาศเอง")
+              : (en ? "Powered by NVIDIA NIM (Thai-LLM ready) — narrates Arnfah's real engine output only; never invents a place or the weather." : "ขับเคลื่อนด้วย NVIDIA NIM (พร้อมรองรับ Thai-LLM) — เล่าเฉพาะแผนจริงจาก engine ของอ่านฟ้า ไม่แต่งสถานที่หรือสภาพอากาศเอง")}
           </p>
         </div>
       </section>

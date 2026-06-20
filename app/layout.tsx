@@ -47,15 +47,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://arnfa.vercel.app"),
   title: {
-    default: "อ่านฟ้า · Arnfa — วางแผนทริปทั่วไทยตามฟ้า",
+    default: "อ่านฟ้า · Arnfah — วางแผนทริปทั่วไทยตามฟ้า",
     template: "%s · อ่านฟ้า",
   },
   description:
-    "อ่านฟ้า (Arnfa) — decision engine ที่อ่านฟ้าให้คุณ. วางแผนทริปทั่วไทยให้เข้ากับอากาศ ณ เวลาที่จะไปถึง ฝนมาเมื่อไหร่บอกที่ดีกว่าให้เอง.",
-  applicationName: "Arnfa",
+    "อ่านฟ้า (Arnfah) — decision engine ที่อ่านฟ้าให้คุณ. วางแผนทริปทั่วไทยให้เข้ากับอากาศ ณ เวลาที่จะไปถึง ฝนมาเมื่อไหร่บอกที่ดีกว่าให้เอง.",
+  applicationName: "Arnfah",
   authors: [{ name: "Palm" }],
   keywords: [
-    "อ่านฟ้า", "Arnfa", "วางแผนทริป", "พยากรณ์อากาศ", "ทั่วไทย", "กรุงเทพ", "เชียงใหม่", "ภูเก็ต", "คาเฟ่",
+    "อ่านฟ้า", "Arnfah", "วางแผนทริป", "พยากรณ์อากาศ", "ทั่วไทย", "กรุงเทพ", "เชียงใหม่", "ภูเก็ต", "คาเฟ่",
     "Thailand weather", "Bangkok weather", "trip planner", "decision engine",
   ],
   manifest: "/manifest.webmanifest",
@@ -68,18 +68,18 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
-    title: "อ่านฟ้า · Arnfa",
+    title: "อ่านฟ้า · Arnfah",
     description: "Decision engine ที่อ่านฟ้าให้คุณ — ฝนมาแล้วบอกที่ดีกว่า",
     locale: "th_TH",
     alternateLocale: ["en_US"],
     type: "website",
-    siteName: "อ่านฟ้า · Arnfa",
+    siteName: "อ่านฟ้า · Arnfah",
     // Default sky card; /plan overrides per-area via generateMetadata.
     images: [{ url: "/api/og", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "อ่านฟ้า · Arnfa",
+    title: "อ่านฟ้า · Arnfah",
     description: "Decision engine ที่อ่านฟ้าให้คุณ",
     images: ["/api/og"],
   },
@@ -92,12 +92,12 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-/** JSON-LD — WebApplication, so search/social understand what Arnfa is. */
+/** JSON-LD — WebApplication, so search/social understand what Arnfah is. */
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  name: "อ่านฟ้า (Arnfa)",
-  alternateName: "Arnfa",
+  name: "อ่านฟ้า (Arnfah)",
+  alternateName: "Arnfah",
   url: "https://arnfa.vercel.app",
   applicationCategory: "TravelApplication",
   operatingSystem: "Web",

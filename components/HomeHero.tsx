@@ -67,7 +67,7 @@ export function HomeHero() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-sun" aria-hidden>
                   <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z" /><circle cx="18.5" cy="17.5" r="1.5" /><circle cx="5.5" cy="16" r="1" />
                 </svg>
-                {en ? "Ask Arnfa AI" : "ถามอ่านฟ้า AI"}
+                {en ? "Ask Arnfah AI" : "ถามอ่านฟ้า AI"}
               </Link>
               <Link href="/where" className="font-thai text-ink-muted hover:text-ink transition-colors">{en ? "Where to go?" : "ไปไหนดี?"}</Link>
               <Link href="#how" className="font-thai text-ink-muted hover:text-ink transition-colors">{t("hero.cta.how")}</Link>

@@ -54,7 +54,7 @@ export async function TodayPick() {
           // Honest fallback — no fabricated numbers when the forecast isn't available
           <>
             <h2 className="font-thai-serif fs-h2 font-light text-ink leading-[1.08] mb-6 text-balance">
-              ทุกบ่ายฟ้ากรุงเทพไม่เหมือนกัน — Arnfa อ่านฟ้า <span className="font-display italic text-sun">ณ เวลาที่คุณจะไปถึง</span>.
+              ทุกบ่ายฟ้ากรุงเทพไม่เหมือนกัน — Arnfah อ่านฟ้า <span className="font-display italic text-sun">ณ เวลาที่คุณจะไปถึง</span>.
             </h2>
             <p className="font-thai fs-lead text-ink-muted leading-relaxed max-w-[52ch] mb-7">
               เลือกย่านกับเวลา แล้วเราจัดทริปให้ — ฝนมาช่วงไหน สลับเป็นที่ในร่มที่ &ldquo;ดีขึ้นเพราะฝน&rdquo; ให้ตรงนั้น.

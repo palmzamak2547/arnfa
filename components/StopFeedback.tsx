@@ -6,7 +6,7 @@ import type { SkyState } from "@/lib/core/skyState";
 
 /**
  * StopFeedback — the flywheel's WRITE surface, on every stop. "ฟ้าตรงไหมตรงนี้?" → 👍/👎.
- * This is what turns Arnfa from a static lookup into a dataset that compounds with use:
+ * This is what turns Arnfah from a static lookup into a dataset that compounds with use:
  * each verdict bumps arnfa.poi_crowd (instantly), refining that POI's profile for the
  * next person. The "ฉลาดขึ้นอีกนิด" reply makes the loop FELT. Best-effort, anonymous.
  */
@@ -33,7 +33,7 @@ export function StopFeedback({
   if (voted) {
     return (
       <p className="font-thai mt-2 text-xs text-success">
-        {en ? "Thanks — Arnfa just got a little sharper." : "ขอบคุณ — Arnfa ฉลาดขึ้นอีกนิดแล้ว"}
+        {en ? "Thanks — Arnfah just got a little sharper." : "ขอบคุณ — Arnfah ฉลาดขึ้นอีกนิดแล้ว"}
       </p>
     );
   }
