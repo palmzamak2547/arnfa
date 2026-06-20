@@ -1,23 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { HourlyForecast } from "@/lib/weather/types";
+import { skyFrom, skyTone, type Sky } from "@/lib/core/skyTone";
 
 /**
  * SkyBackdrop — the animated front-page sky from the Arnfa brand book, driven by the REAL
  * current Bangkok sky (not a toggle): a glowing sun with slowly-rotating rays when it's clear,
  * drifting clouds when overcast, clouds + falling rain-streaks when it's raining. Sits behind
- * the masthead + nameplate. Decorative — all motion is dropped under prefers-reduced-motion
- * (handled in globals.css), and it never blocks interaction (pointer-events:none).
+ * the masthead + nameplate, AND lays a faint full-page wash so the whole page's mood breathes
+ * with the actual weather (the brand's core idea). Decorative — all motion is dropped under
+ * prefers-reduced-motion (handled in globals.css), and it never blocks interaction.
  */
-
-type Sky = "clear" | "clouds" | "rain";
-
-function skyFrom(f: HourlyForecast): Sky {
-  if (f.rainProb >= 0.4 || f.rainProb * f.rainIntensity > 0.18) return "rain";
-  if (f.cloudCover >= 0.55 || f.rainProb >= 0.2) return "clouds";
-  return "clear";
-}
 
 const RAIN = [
   { l: "7%", t: 70, h: 26, d: "1.4s", dl: "0s" }, { l: "15%", t: 120, h: 22, d: "1.7s", dl: ".5s" },
@@ -41,7 +34,11 @@ export function SkyBackdrop() {
   }, []);
 
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[560px] overflow-hidden"
+    <>
+      {/* faint full-page wash — the whole page's mood breathes with the REAL current sky */}
+      {sky && <div aria-hidden className="pointer-events-none fixed inset-0 z-0" style={{ background: skyTone(sky).wash }} />}
+
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[560px] overflow-hidden"
       style={{ maskImage: "linear-gradient(to bottom, #000 68%, transparent)", WebkitMaskImage: "linear-gradient(to bottom, #000 68%, transparent)" }}>
       {/* SUN — glow + slow rotating rays */}
       {sky === "clear" && (
@@ -72,6 +69,7 @@ export function SkyBackdrop() {
           ))}
         </>
       )}
-    </div>
+      </div>
+    </>
   );
 }

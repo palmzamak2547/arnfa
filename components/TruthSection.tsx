@@ -31,7 +31,7 @@ export function TruthSection() {
       <div className="arnfa-grid section-major">
         <div className="col-content">
           <div className="af-rise mb-12 flex items-baseline justify-between gap-4 border-b border-paper/15 pb-5">
-            <p className="font-display text-xs uppercase tracking-[0.25em] text-paper/50">ภาค ๔ · The Iron Rule</p>
+            <p className="font-display text-xs uppercase tracking-[0.25em] text-paper/50">ภาค ๓ · The Iron Rule</p>
             <p className="font-thai-serif text-sm italic text-paper/50">{en ? "Every call has a source" : "ทุกการตัดสินใจ มีที่มา"}</p>
           </div>
 

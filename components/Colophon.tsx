@@ -31,8 +31,8 @@ export function Colophon() {
   return (
     <section id="colophon" className="relative z-10 mx-auto max-w-[1360px] px-4 py-[clamp(48px,7vw,92px)] sm:px-[clamp(16px,4vw,46px)]">
       <div className="af-rise mb-[clamp(30px,4vw,56px)] flex flex-wrap items-baseline justify-between gap-4 border-t pt-3" style={{ borderColor: "var(--arnfa-ink)" }}>
-        <span className="font-display text-[0.72rem] uppercase tracking-[0.24em] text-ink-muted">ภาค ๕ · Colophon</span>
-        <span className="font-display text-[0.86rem] italic text-ink-faint">{en ? "Type · Ink · Motion" : "ตัวพิมพ์ · หมึก · จังหวะ"}</span>
+        <span className="font-display text-[0.72rem] uppercase tracking-[0.24em] text-ink-muted">ภาค ๔ · Colophon</span>
+        <span className="font-display text-[0.86rem] italic text-ink-faint">{en ? "Type, ink & motion" : "ตัวพิมพ์ หมึก และจังหวะ"}</span>
       </div>
 
       <div className="grid items-start gap-[clamp(20px,3vw,40px)] [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">

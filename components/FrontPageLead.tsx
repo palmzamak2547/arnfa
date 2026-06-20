@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { dayVerdict } from "@/lib/core/verdict";
 import { SkyChip, skyStateFrom } from "@/components/SkyChip";
+import { skyFrom, skyTone } from "@/lib/core/skyTone";
 import { AIR_LABEL_TH, AIR_COLOR, type AirLevel } from "@/lib/air/air4thai";
 import type { HourlyForecast } from "@/lib/weather/types";
 import { useMounted } from "@/lib/useMounted";
@@ -48,6 +49,8 @@ export function FrontPageLead() {
   }, [hours]);
 
   const updatedAt = mounted ? hhmm(new Date().toISOString()) : "—";
+  // the sky-now box gradient breathes with the REAL current sky (not a fixed colour)
+  const boxBg = data ? skyTone(skyFrom(data.cur)).box : "linear-gradient(180deg,#C9D6E4,#F1E2CC)";
 
   return (
     <section className="relative z-10 mx-auto max-w-[1360px] px-4 pb-[clamp(28px,4vw,52px)] sm:px-[clamp(16px,4vw,46px)]">
@@ -70,8 +73,9 @@ export function FrontPageLead() {
             {en ? "Read by " : "อ่านโดย "}<span className="italic text-ink">Arnfah</span>{en ? " · updated " : " · ปรับล่าสุด "}<span className="tabular-nums">{updatedAt}</span>{en ? " · Bangkok" : " · กรุงเทพมหานคร"}
           </p>
 
-          {/* editorial body — the brand voice (pain-first, verb-first) */}
-          <div className="mt-4 text-justify text-ink [column-gap:30px] [column-rule:1px_solid_var(--arnfa-hairline)] md:[column-count:2]" style={{ fontSize: "0.98rem", lineHeight: 1.62, hyphens: "auto" }}>
+          {/* editorial body — the brand voice (pain-first, verb-first); left-aligned + airy reads
+              intentional, not the ragged auto-justify that screams "generated" */}
+          <div className="mt-5 text-ink [column-gap:42px] [column-rule:1px_solid_var(--arnfa-hairline)] md:[column-count:2]" style={{ fontSize: "1rem", lineHeight: 1.72 }}>
             <p className="mb-[1em]"><span className="font-display font-semibold tracking-[0.02em]">{en ? "Bangkok —" : "กรุงเทพฯ —"}</span> {en ? "We plan everything well here — except the sky. The monsoon doesn't read calendars; it dumps on the Saturday afternoon you set aside and wrecks the whole day in 20 minutes." : "คนกรุงเก่งเรื่องวางแผนทุกอย่าง ยกเว้นฟ้า. มรสุมที่นี่ไม่อ่านปฏิทิน มันเทลงบ่ายวันเสาร์ที่คุณตั้งใจไว้ แล้วพังทริปทั้งวันใน ๒๐ นาที."}</p>
             <p className="mb-[1em]">{en ? "So Arnfah doesn't say \"60% rain tomorrow\" and leave you guessing. It reads the real hourly sky, matches it to places that suit that weather, and tells you " : "อ่านฟ้าจึงไม่ได้บอก “พรุ่งนี้ฝน ๖๐%” แล้วปล่อยให้คุณเดาต่อ. มันอ่านฟ้าจริงรายชั่วโมง จับคู่กับสถานที่ที่เข้ากับอากาศตอนนั้น แล้วบอกตรงๆ ว่า "}<span className="font-display italic">{en ? "where to go, and when." : "ควรไปไหน ตอนกี่โมง."}</span></p>
             <p className="m-0">{en ? "And if the sky changes mid-trip — it prints a correction at once." : "และถ้าฟ้าเปลี่ยนใจกลางทาง — มันจะพิมพ์ฉบับแก้ให้ทันที."}</p>
@@ -93,7 +97,7 @@ export function FrontPageLead() {
         {/* SKY BOX — real current Bangkok weather */}
         <aside className="af-rise" style={{ animationDelay: "140ms" }}>
           <div className="overflow-hidden rounded-2xl border" style={{ borderColor: "var(--arnfa-ink)" }}>
-            <div className="px-[18px] pb-3.5 pt-[18px]" style={{ background: "linear-gradient(180deg,#C9D6E4,#F1E2CC)" }}>
+            <div className="px-[18px] pb-3.5 pt-[18px] transition-[background] duration-700" style={{ background: boxBg }}>
               <p className="m-0 font-display text-[0.62rem] uppercase tracking-[0.2em] text-ink-muted">{en ? "Bangkok sky now" : "ฟ้ากรุงเทพฯ ตอนนี้"}</p>
               <p className="m-0 mt-1.5 font-thai-serif font-light tabular-nums" style={{ fontSize: "2.6rem", lineHeight: 1 }}>
                 {data ? `${Math.round(data.cur.tempC)}°` : "—"}
