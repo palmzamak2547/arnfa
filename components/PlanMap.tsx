@@ -148,7 +148,7 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
           </Source>
         )}
 
-        <MapDataLayers center={center} active={layers} routePresent={routeLayerPresent} />
+        <MapDataLayers center={center} active={layers} routePresent={routeLayerPresent} en={en} />
 
         {stops.slice(0, shownMarkers).map((stop, i) => {
           const active = selected?.poi.id === stop.poi.id;
@@ -206,9 +206,9 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
               return (
                 <button key={l.key} type="button" onClick={() => toggleLayer(l.key)}
                   className={clsx("font-thai flex items-center gap-2 rounded-xl px-2.5 py-1 text-xs transition-colors", on ? "bg-ink text-paper" : "text-ink-muted hover:bg-surface")}>
-                  <span aria-hidden style={{ fontSize: "12px" }}>{l.emoji}</span>
+                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: l.color }} aria-hidden />
                   <span className="flex-1 text-left">{en ? l.en : l.th}</span>
-                  <span className={clsx("h-2.5 w-2.5 rounded-full border", on ? "border-paper bg-paper" : "border-ink-faint")} style={on ? { background: l.color, borderColor: l.color } : undefined} />
+                  <span className={clsx("h-2.5 w-2.5 shrink-0 rounded-full border", on ? "border-paper bg-paper" : "border-current opacity-40")} aria-hidden />
                 </button>
               );
             })}
@@ -216,7 +216,7 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
         )}
         <button type="button" onClick={() => setLayersOpen((o) => !o)} aria-expanded={layersOpen}
           className={clsx("font-thai flex items-center gap-1.5 rounded-full border border-hairline px-3 py-1.5 text-xs shadow-sm backdrop-blur transition-colors", layersOpen || layers.size ? "bg-ink text-paper" : "bg-paper/90 text-ink-muted hover:bg-surface")}>
-          <span aria-hidden style={{ fontSize: "12px" }}>🗂️</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden><path d="M12 3 3 8l9 5 9-5-9-5Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" /><path d="m3 13 9 5 9-5M3 17.5l9 5 9-5" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" opacity=".5" /></svg>
           {en ? "Layers" : "ชั้นข้อมูล"}
           {layers.size > 0 && <span className="ml-0.5 rounded-full bg-paper/30 px-1.5 text-[0.6rem] tabular-nums">{layers.size}</span>}
         </button>

@@ -51,7 +51,7 @@ export function CoolingNearby({ lat, lng, active }: { lat: number; lng: number; 
                 className="group block h-full rounded-xl border border-hairline bg-paper/40 p-3 transition-colors hover:bg-surface">
                 <p className="font-thai text-sm font-medium text-ink leading-snug line-clamp-2 group-hover:text-indoor-warm transition-colors">{c.name}</p>
                 <p className="font-thai text-xs text-ink-faint mt-0.5">
-                  {c.district} · {c.km < 1 ? `${Math.round(c.km * 1000)} ม.` : `${c.km.toFixed(1)} กม.`}
+                  {c.district} · {c.km < 1 ? `${Math.round(c.km * 1000)} ${en ? "m" : "ม."}` : `${c.km.toFixed(1)} ${en ? "km" : "กม."}`}
                 </p>
                 {c.time && <p className="font-thai text-xs text-ink-muted mt-1 line-clamp-1">{c.time}</p>}
               </a>

@@ -43,12 +43,12 @@ export function RestAreasNearby({ lat, lng }: { lat: number; lng: number }) {
             <a href={mapsPoiUrl(a.lat, a.lng, a.name)} target="_blank" rel="noopener noreferrer"
               className="group flex h-full flex-col gap-1 rounded-xl border border-hairline bg-paper/40 p-3 transition-colors hover:bg-surface">
               <div className="flex items-center gap-2">
-                <span className="shrink-0 rounded bg-ink/85 px-1.5 py-0.5 text-[0.6rem] font-semibold text-paper">ทล. {a.route}</span>
-                <span className="font-thai text-xs text-ink-faint tabular-nums">{a.dist < 1 ? `${Math.round(a.dist * 1000)} ม.` : `${a.dist.toFixed(1)} กม.`}</span>
+                <span className="shrink-0 rounded bg-ink/85 px-1.5 py-0.5 text-[0.6rem] font-semibold text-paper">{en ? `Hwy ${a.route}` : `ทล. ${a.route}`}</span>
+                <span className="font-thai text-xs text-ink-faint tabular-nums">{a.dist < 1 ? `${Math.round(a.dist * 1000)} ${en ? "m" : "ม."}` : `${a.dist.toFixed(1)} ${en ? "km" : "กม."}`}</span>
               </div>
               <span className="font-thai text-sm text-ink leading-snug line-clamp-2 group-hover:text-rain transition-colors">{a.name}</span>
               <span className="font-thai text-[0.7rem] text-ink-faint">
-                กม.{a.km}{a.parking ? ` · จอด ${a.parking} คัน` : ""}{SIZE_LABEL[a.size] ? ` · ${en ? SIZE_LABEL[a.size].en : SIZE_LABEL[a.size].th}` : ""}
+                {en ? `km ${a.km}` : `กม.${a.km}`}{a.parking ? (en ? ` · ${a.parking} parking` : ` · จอด ${a.parking} คัน`) : ""}{SIZE_LABEL[a.size] ? ` · ${en ? SIZE_LABEL[a.size].en : SIZE_LABEL[a.size].th}` : ""}
               </span>
             </a>
           </li>

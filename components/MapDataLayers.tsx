@@ -25,7 +25,7 @@ export const MAP_LAYERS: { key: MapLayerKey; th: string; en: string; emoji: stri
   { key: "rest", th: "จุดพักรถ", en: "Rest stops", emoji: "🛣️", color: "#7C6F5A" },
 ];
 
-type Pt = { lat: number; lng: number; label: string; sub: string; color: string; emoji: string };
+type Pt = { lat: number; lng: number; label: string; subTh: string; subEn: string; color: string; emoji: string };
 
 function dist2(aLat: number, aLng: number, bLat: number, bLng: number) {
   const dx = (bLng - aLng) * Math.cos((aLat * Math.PI) / 180), dy = bLat - aLat;
@@ -50,12 +50,12 @@ function usePointLayer(show: boolean, url: string, mapFn: (d: unknown) => Pt[]):
 }
 
 const stripSys = (n: string) => (n || "").replace(/^(BTS|MRT|ARL|SRT|Airport Rail)\s+/i, "");
-const railFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({ lat: s.lat, lng: s.lng, label: stripSys(s.th || s.en || ""), sub: s.system, color: SYSTEM_META[s.system]?.color ?? "#1964B7", emoji: "🚉" }));
-const restFn = (d: any): Pt[] => (d.areas ?? []).map((a: any) => ({ lat: a.lat, lng: a.lng, label: a.name, sub: `ทล. ${a.route}`, color: "#7C6F5A", emoji: "🛣️" }));
-const coolFn = (d: any): Pt[] => (d.centers ?? []).map((c: any) => ({ lat: c.lat, lng: c.lng, label: c.name, sub: c.district ?? "", color: "#3B82C4", emoji: "❄️" }));
-const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({ lat: s.lat, lng: s.lng, label: s.stationNameTh, sub: s.pm25 != null ? `PM2.5 ${s.pm25} · ${AIR_LABEL_TH[s.level as keyof typeof AIR_LABEL_TH] ?? ""}` : "ไม่มีข้อมูล", color: AIR_COLOR[s.level as keyof typeof AIR_COLOR] ?? "#9AA0A6", emoji: "💨" }));
+const railFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({ lat: s.lat, lng: s.lng, label: stripSys(s.th || s.en || ""), subTh: s.system, subEn: s.system, color: SYSTEM_META[s.system]?.color ?? "#1964B7", emoji: "🚉" }));
+const restFn = (d: any): Pt[] => (d.areas ?? []).map((a: any) => ({ lat: a.lat, lng: a.lng, label: a.name, subTh: `ทล. ${a.route}`, subEn: `Hwy ${a.route}`, color: "#7C6F5A", emoji: "🛣️" }));
+const coolFn = (d: any): Pt[] => (d.centers ?? []).map((c: any) => ({ lat: c.lat, lng: c.lng, label: c.name, subTh: c.district ?? "", subEn: c.district ?? "", color: "#3B82C4", emoji: "❄️" }));
+const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({ lat: s.lat, lng: s.lng, label: s.stationNameTh, subTh: s.pm25 != null ? `PM2.5 ${s.pm25} · ${AIR_LABEL_TH[s.level as keyof typeof AIR_LABEL_TH] ?? ""}` : "ไม่มีข้อมูล", subEn: s.pm25 != null ? `PM2.5 ${s.pm25} µg/m³` : "no data", color: AIR_COLOR[s.level as keyof typeof AIR_COLOR] ?? "#9AA0A6", emoji: "💨" }));
 
-export function MapDataLayers({ center, active, routePresent }: { center: { lat: number; lng: number }; active: Set<MapLayerKey>; routePresent: boolean }) {
+export function MapDataLayers({ center, active, routePresent, en }: { center: { lat: number; lng: number }; active: Set<MapLayerKey>; routePresent: boolean; en: boolean }) {
   const c = `lat=${center.lat}&lng=${center.lng}`;
   const rail = usePointLayer(active.has("rail"), `/api/transit?${c}&n=8`, railFn);
   const rest = usePointLayer(active.has("rest"), `/api/rest-areas?${c}&n=6`, restFn);
@@ -77,7 +77,7 @@ export function MapDataLayers({ center, active, routePresent }: { center: { lat:
           .filter((p: any) => typeof p.lat === "number" && typeof p.lng === "number")
           .sort((a: any, b: any) => dist2(center.lat, center.lng, a.lat, a.lng) - dist2(center.lat, center.lng, b.lat, b.lng))
           .slice(0, 12)
-          .map((p: any) => ({ lat: p.lat, lng: p.lng, label: p.name ?? "สวน", sub: p.area ? `${p.area} ไร่` : "", color: "#5E8C61", emoji: "🌳" }));
+          .map((p: any) => ({ lat: p.lat, lng: p.lng, label: p.name ?? "สวน", subTh: p.area ? `${p.area} ไร่` : "", subEn: p.area ? `${p.area} rai` : "", color: "#5E8C61", emoji: "🌳" }));
         setParks(near);
       })
       .catch(() => { if (!cancelled) setParks([]); });
@@ -103,16 +103,19 @@ export function MapDataLayers({ center, active, routePresent }: { center: { lat:
   // Don't leave an orphan popup when its layer is toggled off or the area changes.
   useEffect(() => { setSelected(null); }, [active, center.lat, center.lng]);
 
-  const dot = (p: Pt, _i: number, kind: string) => (
-    <Marker key={`${kind}-${p.lat},${p.lng}`} longitude={p.lng} latitude={p.lat} anchor="center"
-      onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(p); }}>
-      <span title={`${p.label}${p.sub ? " · " + p.sub : ""}`}
-        className="flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-full text-[9px] ring-2 ring-white shadow-sm transition-transform hover:scale-125"
-        style={{ background: p.color }}>
-        <span className="leading-none" style={{ fontSize: "9px" }}>{p.emoji}</span>
-      </span>
-    </Marker>
-  );
+  const dot = (p: Pt, _i: number, kind: string) => {
+    const sub = en ? p.subEn : p.subTh;
+    return (
+      <Marker key={`${kind}-${p.lat},${p.lng}`} longitude={p.lng} latitude={p.lat} anchor="center"
+        onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(p); }}>
+        <span title={`${p.label}${sub ? " · " + sub : ""}`}
+          className="flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-full text-[9px] ring-2 ring-white shadow-sm transition-transform hover:scale-125"
+          style={{ background: p.color }}>
+          <span className="leading-none" style={{ fontSize: "9px" }}>{p.emoji}</span>
+        </span>
+      </Marker>
+    );
+  };
 
   return (
     <>
@@ -136,7 +139,7 @@ export function MapDataLayers({ center, active, routePresent }: { center: { lat:
             <p className="flex items-center gap-1.5 text-sm font-medium leading-snug text-ink">
               <span aria-hidden style={{ fontSize: "12px" }}>{selected.emoji}</span>{selected.label}
             </p>
-            {selected.sub && <p className="mt-0.5 text-xs text-ink-muted">{selected.sub}</p>}
+            {(en ? selected.subEn : selected.subTh) && <p className="mt-0.5 text-xs text-ink-muted">{en ? selected.subEn : selected.subTh}</p>}
           </div>
         </Popup>
       )}
