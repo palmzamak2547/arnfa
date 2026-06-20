@@ -15,6 +15,7 @@ export function SiteFooter() {
           <Logo className="text-lg" animate={false} />
           <div className="flex gap-4">
             <Link href="/plan" className="font-thai transition-colors hover:text-ink">{en ? "Plan a trip" : "วางแผนทริป"}</Link>
+            <Link href="/signals" className="font-thai transition-colors hover:text-ink">{en ? "City signals" : "สัญญาณเมือง"}</Link>
             <Link href="/data" className="font-thai transition-colors hover:text-ink">{en ? "Sources" : "ที่มาข้อมูล"}</Link>
             <Link href="/status" className="font-thai transition-colors hover:text-ink">{en ? "Status" : "สถานะระบบ"}</Link>
           </div>
