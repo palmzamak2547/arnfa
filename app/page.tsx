@@ -3,7 +3,7 @@ import { ArnfaRibbon } from "@/components/ArnfaRibbon";
 import { HomeHero } from "@/components/HomeHero";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SkyWindow } from "@/components/SkyWindow";
-import { DataSources } from "@/components/DataSources";
+import { TruthSection } from "@/components/TruthSection";
 import { TodayPick } from "@/components/TodayPick";
 import { Logo } from "@/components/Logo";
 import { Reveal } from "@/components/motion/Reveal";
@@ -58,8 +58,8 @@ export default function Home() {
         </Reveal>
       </section>
 
-      {/* PROVENANCE — data-as-trust (BDI differentiator) */}
-      <DataSources />
+      {/* ความจริง · THE IRON RULE — honesty-as-brand: 0 fabricated numbers + sources colophon */}
+      <TruthSection />
 
       <footer className="arnfa-grid section-minor border-t border-hairline pad-safe-b">
         <div className="col-content flex flex-col sm:flex-row items-start justify-between gap-4 text-sm text-ink-faint">
