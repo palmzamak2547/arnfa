@@ -157,6 +157,38 @@ body {
 .arnfa-travel { animation: af-travel 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
 @media (prefers-reduced-motion: reduce) { .arnfa-travel { animation: none; left: calc(50% - 9px); } }
 
+/* ============ Brand-book sky + editorial motion (af-*) ============ */
+@keyframes af-glow { 0%,100% { opacity: .55; } 50% { opacity: .95; } }
+@keyframes af-spin { to { transform: rotate(360deg); } }
+@keyframes af-cloud-cross { from { transform: translateX(-26vw); } to { transform: translateX(120vw); } }
+@keyframes af-rain { 0% { transform: translateY(-26px); opacity: 0; } 18% { opacity: .5; } 100% { transform: translateY(150px); opacity: 0; } }
+@keyframes af-sunrise2 { 0% { transform: translateY(40%) scale(.7); opacity: 0; } 100% { transform: translateY(0) scale(1); opacity: 1; } }
+@keyframes af-draw { from { stroke-dashoffset: 1400; } to { stroke-dashoffset: 0; } }
+@keyframes af-arc { 0% { transform: translateY(.22em) scaleY(.4); opacity: 0; } 100% { transform: translateY(0) scaleY(1); opacity: 1; } }
+@keyframes af-blink { 0%,72%,100% { opacity: 1; } 80%,92% { opacity: .25; } }
+@keyframes af-pulse-ring { 0% { transform: scale(.6); opacity: .55; } 80%,100% { transform: scale(2.6); opacity: 0; } }
+@keyframes af-rise { 0% { opacity: 0; transform: translateY(28px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes af-floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+
+.af-glow { animation: af-glow 6s ease-in-out infinite; }
+.af-spin { animation: af-spin 110s linear infinite; transform-origin: center; }
+.af-cloud { animation: af-cloud-cross 58s linear infinite; }
+.af-rain { animation: af-rain 1.5s linear infinite; }
+.af-sunrise2 { animation: af-sunrise2 1.6s cubic-bezier(0.22,1,0.36,1) both; }
+.af-draw { stroke-dasharray: 1400; animation: af-draw 2.4s cubic-bezier(0.22,1,0.36,1) .5s both; }
+.af-arc { animation: af-arc 1.3s cubic-bezier(0.22,1,0.36,1) .7s both; transform-origin: bottom center; }
+.af-blink { animation: af-blink 2.8s steps(1) infinite; }
+.af-pulse-ring { animation: af-pulse-ring 2.6s cubic-bezier(0.22,1,0.36,1) infinite; }
+.af-rise { animation: af-rise .9s cubic-bezier(0.22,1,0.36,1) both; }
+.af-floaty { animation: af-floaty 6s ease-in-out infinite; }
+
+/* Decorative motion respects reduced-motion; info-carrying colour/state stays (brand rule). */
+@media (prefers-reduced-motion: reduce) {
+  .af-glow, .af-spin, .af-cloud, .af-rain, .af-floaty, .af-pulse-ring { animation: none !important; }
+  .af-sunrise2, .af-arc, .af-rise { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .af-draw { animation: none !important; stroke-dashoffset: 0 !important; }
+}
+
 /* Logo sun rises on load (info-light flourish; reduced-motion keeps it static-up). */
 @keyframes arnfa-sunrise {
   from { transform: translateY(0.18em) scaleY(0.6); opacity: 0; }

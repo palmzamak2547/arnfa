@@ -54,9 +54,9 @@ export function FrontPageLead() {
       <div className="grid items-start gap-[clamp(20px,3vw,42px)] lg:grid-cols-[1.62fr_1px_1fr]">
 
         {/* LEAD ARTICLE */}
-        <article>
+        <article className="af-rise">
           <p className="mb-4 flex items-center gap-2.5 font-display text-[0.72rem] uppercase tracking-[0.26em]" style={{ color: "var(--arnfa-accent-indoor-warm)" }}>
-            <span className="h-[7px] w-[7px] animate-pulse rounded-full" style={{ background: "var(--arnfa-accent-indoor-warm)" }} />
+            <span className="af-blink h-[7px] w-[7px] rounded-full" style={{ background: "var(--arnfa-accent-indoor-warm)" }} />
             {en ? "Today's Verdict" : "คำตัดสินประจำวัน"}
           </p>
           <h1 className="font-thai-serif font-light text-ink" style={{ fontSize: "clamp(2.3rem, 1.2rem + 4.6vw, 5rem)", lineHeight: 1.18, letterSpacing: "-0.01em" }}>
@@ -91,7 +91,7 @@ export function FrontPageLead() {
         <div className="hidden bg-hairline lg:block" style={{ width: 1, height: "100%" }} />
 
         {/* SKY BOX — real current Bangkok weather */}
-        <aside>
+        <aside className="af-rise" style={{ animationDelay: "140ms" }}>
           <div className="overflow-hidden rounded-2xl border" style={{ borderColor: "var(--arnfa-ink)" }}>
             <div className="px-[18px] pb-3.5 pt-[18px]" style={{ background: "linear-gradient(180deg,#C9D6E4,#F1E2CC)" }}>
               <p className="m-0 font-display text-[0.62rem] uppercase tracking-[0.2em] text-ink-muted">{en ? "Bangkok sky now" : "ฟ้ากรุงเทพฯ ตอนนี้"}</p>

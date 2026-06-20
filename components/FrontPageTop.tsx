@@ -44,7 +44,7 @@ export function FrontPageTop() {
       <div className="py-[clamp(18px,3.2vw,38px)] text-center">
         <div className="inline-block font-thai-serif font-light leading-[1.04] tracking-tight text-ink" style={{ fontSize: "clamp(3.4rem, 1.6rem + 9.5vw, 9rem)" }}>
           อ่าน<span className="relative">ฟ้า
-            <svg viewBox="0 0 40 22" aria-hidden className="arnfa-sunrise absolute overflow-visible" style={{ top: "-0.16em", right: "0.04em", height: "0.28em", width: "0.58em", transformOrigin: "bottom center" }}>
+            <svg viewBox="0 0 40 22" aria-hidden className="af-arc absolute overflow-visible" style={{ top: "-0.16em", right: "0.04em", height: "0.28em", width: "0.58em" }}>
               <path d="M2 20 A18 18 0 0 1 38 20" fill="none" stroke="var(--arnfa-accent-sun)" strokeWidth="3.4" strokeLinecap="round" />
             </svg>
           </span>

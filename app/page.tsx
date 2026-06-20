@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArnfaRibbon } from "@/components/ArnfaRibbon";
 import { Masthead } from "@/components/Masthead";
+import { SkyBackdrop } from "@/components/SkyBackdrop";
 import { FrontPageTop } from "@/components/FrontPageTop";
 import { FrontPageLead } from "@/components/FrontPageLead";
 import { TheSkySection } from "@/components/TheSkySection";
@@ -16,13 +17,16 @@ export const revalidate = 1800;
 export default function Home() {
   return (
     <main className="relative z-10 flex flex-col">
+      {/* animated sky behind the front page — real current Bangkok sky (sun / clouds / rain) */}
+      <SkyBackdrop />
+
       <Masthead />
 
       {/* FRONT PAGE — broadsheet folio + nameplate (the editorial front page, per the brand book) */}
       <FrontPageTop />
 
       {/* ALIVE WEATHER STRIP — the อ่านฟ้า ribbon (real forecast), the broadsheet's living masthead band */}
-      <section className="arnfa-grid section-minor border-b border-hairline">
+      <section className="relative z-10 arnfa-grid section-minor border-b border-hairline">
         <div className="col-content">
           <p className="font-display text-xs uppercase tracking-[0.25em] text-ink-faint mb-4">
             อ่านฟ้า — next six hours
