@@ -47,7 +47,7 @@ export async function TodayPick() {
               </Link>
             </div>
             <p className="font-thai text-[0.7rem] text-ink-faint mt-6">
-              จัดอันดับจากพยากรณ์จริง Open-Meteo · อัปเดตทุก ~30 นาที · เรียงตามฟ้า (ยังไม่รวมฝุ่น)
+              จัดอันดับจากพยากรณ์จริง Open-Meteo อัปเดตทุก ~30 นาที เรียงตามฟ้า (ยังไม่รวมฝุ่น)
             </p>
           </>
         ) : (

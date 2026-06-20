@@ -9,7 +9,7 @@ import type { EnrichedStop } from "@/lib/plan/buildPlan";
 import type { SkyState } from "./SkyChip";
 import { categoryLabel } from "@/lib/plan/categoryLabel";
 import { GIBS_LAYERS, gibsTileUrl, gibsDate, type GibsLayerKey } from "@/lib/satellite/gibs";
-import { ARNFA_MAP_STYLE_URL, applyArnfaRecolor } from "@/lib/map/arnfaMapStyle";
+import { ARNFA_MAP_STYLE_URL, ARNFA_LAND, applyArnfaRecolor } from "@/lib/map/arnfaMapStyle";
 import { MapDataLayers, MAP_LAYERS, type MapLayerKey } from "@/components/MapDataLayers";
 
 /**
@@ -121,6 +121,12 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
         attributionControl={{ compact: true }}
         style={{ width: "100%", height: "100%" }}
         onLoad={(e) => applyArnfaRecolor(e.target as unknown as Parameters<typeof applyArnfaRecolor>[0])}
+        onStyleData={(e) => {
+          // Re-assert the Open Sky palette only if the style actually reverted (rare full reload):
+          // cheap one-property check, so adding satellite/radar sources (which also fire styledata) is a no-op.
+          const m = e.target as unknown as Parameters<typeof applyArnfaRecolor>[0] & { getPaintProperty?: (l: string, p: string) => unknown };
+          try { if (m.getPaintProperty?.("background", "background-color") !== ARNFA_LAND) applyArnfaRecolor(m); } catch { /* style not ready */ }
+        }}
         onError={(e) => { if (/webgl|context|style/i.test(String(e?.error?.message || ""))) setMapError(true); }}
       >
         <NavigationControl position="top-right" showCompass={false} />

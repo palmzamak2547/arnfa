@@ -34,6 +34,7 @@ export async function getForecast(lat: number, lng: number, hoursAhead = 24): Pr
     const controller = new AbortController();
     try {
       const hours = await withTimeout(provider.fetch(lat, lng, hoursAhead, controller.signal), provider.timeoutMs);
+      if (!hours.length) throw new Error("returned 0 hours"); // empty ≠ success — fall through to the next provider
       attempts.push({ name: provider.name, ok: true });
       return { hours, providerUsed: provider.name, attempts };
     } catch (e) {

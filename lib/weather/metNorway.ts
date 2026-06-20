@@ -8,6 +8,20 @@ import type { HourlyForecast } from "./types";
 const ENDPOINT = "https://api.met.no/weatherapi/locationforecast/2.0/compact";
 const UA = "Arnfa/0.1 (https://arnfa.vercel.app)";
 
+/**
+ * MET Norway returns UTC times with a `Z` suffix, but Open-Meteo (the primary) and the whole
+ * engine assume Bangkok wall-clock naive strings (`2026-06-20T10:00`). Without this, every
+ * arrival time / open-closed gate / day-bucket would be 7h off on the fallback path. Bangkok
+ * is UTC+7, no DST, so we shift the instant +7h and read the UTC components.
+ */
+function toBangkokNaive(utcISO: string): string {
+  const t = Date.parse(utcISO);
+  if (Number.isNaN(t)) return utcISO; // leave untouched if unparseable
+  const b = new Date(t + 7 * 3600 * 1000);
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${b.getUTCFullYear()}-${p(b.getUTCMonth() + 1)}-${p(b.getUTCDate())}T${p(b.getUTCHours())}:${p(b.getUTCMinutes())}`;
+}
+
 export async function fetchMetNorway(
   lat: number,
   lng: number,
@@ -29,7 +43,7 @@ export async function fetchMetNorway(
     const next6 = point.data.next_6_hours?.details ?? null;
     const tempC = d.air_temperature ?? 0;
     out.push({
-      hourISO: point.time,
+      hourISO: toBangkokNaive(point.time),
       tempC,
       apparentTempC: tempC,
       rainProb: estRain(next1, next6),

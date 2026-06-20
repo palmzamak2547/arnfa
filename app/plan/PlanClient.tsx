@@ -41,6 +41,7 @@ import { SkyAround } from "@/components/SkyAround";
 import { LiveCompanion } from "@/components/LiveCompanion";
 import { SkyChip } from "@/components/SkyChip";
 import { SwapCard } from "@/components/SwapCard";
+import { walkMinutes } from "@/lib/transport/route";
 import { PlanSkeleton } from "@/components/PlanSkeleton";
 import { AirChip } from "@/components/AirChip";
 import { PoiPhoto } from "@/components/PoiPhoto";
@@ -470,7 +471,7 @@ function PlanInner() {
                   <div className="mb-5">
                     <SwapCard active
                       from={{ name: swap.dropped.poi.name, skyState: "storm", arrivalLabel: swap.dropped.arrivalLabel, reason: `ฝนเข้า ${swap.dropped.arrivalLabel}` }}
-                      to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: 5, why: swap.added.reason }}
+                      to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: Math.max(1, Math.round(walkMinutes(swap.dropped.poi.lat, swap.dropped.poi.lng, swap.added.poi.lat, swap.added.poi.lng))), why: swap.added.reason }}
                       onAccept={() => {
                         // flywheel: user took the rain-swap suggestion → that POI fits rain
                         recordFeedback(swap.added.poi.id, "accept_swap", { inRain: true, context: { from: swap.dropped.poi.id, district: districtKey } });

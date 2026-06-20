@@ -38,9 +38,10 @@ export async function fetchPoiImage(poi: SeedPoi): Promise<string | null> {
 export const hasLinkedImage = (poi: SeedPoi): boolean =>
   !!(poi.image || (poi.wikidata && /^Q\d+$/.test(poi.wikidata)));
 
-/** Google Maps deep-links — honest "getting around", no API key needed. */
-export const mapsPoiUrl = (lat: number, lng: number, name?: string) =>
-  `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}${name ? `&destination_place_id=` : ""}`;
+/** Google Maps deep-links — honest "getting around", no API key needed. Navigates to the
+ *  exact coordinates (we have no Google Place ID, so a place-id param would be empty/wrong). */
+export const mapsPoiUrl = (lat: number, lng: number, _name?: string) =>
+  `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
 
 export const mapsTripUrl = (stops: { lat: number; lng: number }[]) =>
   stops.length === 0 ? "" : `https://www.google.com/maps/dir/${stops.map((s) => `${s.lat},${s.lng}`).join("/")}`;

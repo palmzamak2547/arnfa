@@ -66,6 +66,7 @@ export function MapDataLayers({ center, active, routePresent }: { center: { lat:
   const [parks, setParks] = useState<Pt[]>([]);
   const showParks = active.has("parks");
   useEffect(() => {
+    setParks([]); // clear when toggled off OR when the area changes (no stale parks at the new centre)
     if (!showParks) return;
     let cancelled = false;
     fetch("/api/bma-parks")
@@ -83,23 +84,27 @@ export function MapDataLayers({ center, active, routePresent }: { center: { lat:
     return () => { cancelled = true; };
   }, [showParks, center.lat, center.lng]);
 
-  // Rain radar raster overlay (RainViewer latest frame), under the route line.
+  // Rain radar raster overlay (RainViewer latest frame), under the route line. Re-fetches
+  // each time the layer is switched on → picks up a fresh frame, and a single failed fetch
+  // (→ null, not a "" sentinel) doesn't permanently disable the layer.
   const [radarTile, setRadarTile] = useState<string | null>(null);
   const showRain = active.has("rain");
   useEffect(() => {
-    if (!showRain || radarTile !== null) return;
+    if (!showRain) return;
     let cancelled = false;
     fetch("/api/radar")
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d: any) => { if (!cancelled) setRadarTile(d.tileUrl ?? ""); })
-      .catch(() => { if (!cancelled) setRadarTile(""); });
+      .then((d: any) => { if (!cancelled) setRadarTile(d.tileUrl || null); })
+      .catch(() => { if (!cancelled) setRadarTile(null); });
     return () => { cancelled = true; };
-  }, [showRain, radarTile]);
+  }, [showRain]);
 
   const [selected, setSelected] = useState<Pt | null>(null);
+  // Don't leave an orphan popup when its layer is toggled off or the area changes.
+  useEffect(() => { setSelected(null); }, [active, center.lat, center.lng]);
 
-  const dot = (p: Pt, i: number, kind: string) => (
-    <Marker key={`${kind}-${i}`} longitude={p.lng} latitude={p.lat} anchor="center"
+  const dot = (p: Pt, _i: number, kind: string) => (
+    <Marker key={`${kind}-${p.lat},${p.lng}`} longitude={p.lng} latitude={p.lat} anchor="center"
       onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(p); }}>
       <span title={`${p.label}${p.sub ? " · " + p.sub : ""}`}
         className="flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-full text-[9px] ring-2 ring-white shadow-sm transition-transform hover:scale-125"

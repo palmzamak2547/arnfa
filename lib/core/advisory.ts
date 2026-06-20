@@ -88,5 +88,5 @@ export function dayAdvisory(window: HourlyForecast[], air: AirInput = null): Adv
   else if (s.maxHeatIndex >= 0.6) { safety.push({ level: "warn", th: "บ่ายร้อนระวังเพลีย — จิบน้ำบ่อยๆ", en: "hot afternoon — hydrate often" }); }
   if (s.maxRainIntensity >= 0.6) { safety.push({ level: "warn", th: "ฝนหนักเป็นช่วง — เผื่อเวลาเดินทาง", en: "heavy rain spells — pad your travel time" }); }
 
-  return { outfit: { th: outTh.join(" · "), en: outEn.join(" · ") }, packing, safety, outdoorPenalty };
+  return { outfit: { th: outTh.join(", "), en: outEn.join(", ") }, packing, safety, outdoorPenalty };
 }

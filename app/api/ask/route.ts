@@ -71,6 +71,7 @@ export async function POST(req: NextRequest) {
   const day = Math.min(6, Math.max(0, Number(intent?.day) || 0));
   const budget = [150, 240, 420].includes(Number(intent?.budget)) ? Number(intent!.budget) : 240;
   const vibes = Array.isArray(intent?.vibes) ? intent!.vibes!.filter((v) => VIBES.includes(v)) : [];
+  const avoidRain = !!intent?.avoidRain;
 
   // 2) Run the REAL engine (same pure code the UI uses).
   let stops: { name: string; category: string; sky: string; arrival: string; tempC: number; rainProb: number; reason: string; crowd: { n: number; okRate: number } | null }[] = [];
@@ -124,7 +125,7 @@ export async function POST(req: NextRequest) {
     available: true,
     answer,
     plan: { areaKey: meta.key, areaTh: meta.th, areaEn: meta.en, day, dayLabel, budget, stops },
-    intent: { area: meta.key, day, budget, vibes }, // echo for the next turn to patch
+    intent: { area: meta.key, day, budget, vibes, avoidRain }, // echo for the next turn to patch (keep avoidRain so follow-ups don't lose it)
     provider,
     llm,
     planUrl: `/plan?y=${meta.key}&d=${day}`,

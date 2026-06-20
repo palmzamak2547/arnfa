@@ -15,7 +15,8 @@
 
 export const ARNFA_MAP_STYLE_URL = "https://tiles.openfreemap.org/styles/positron";
 
-const PAPER = "#F4EEE2";      // land — warm brand paper
+export const ARNFA_LAND = "#F4EEE2"; // land — warm brand paper; also the sentinel for "is the map already recoloured?"
+const PAPER = ARNFA_LAND;
 const PAPER_SOFT = "#EFE7D8"; // residential / landuse wash
 const WATER = "#BFD6E6";      // dusty blue, clearly readable against paper
 const WATER_DEEP = "#AEC8DC";

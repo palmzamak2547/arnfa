@@ -41,10 +41,16 @@ export function SkyWindow() {
   }, []);
 
   const verdict: DayVerdict | null = useMemo(() => {
-    if (!hours) return null;
-    const nowHour = new Date().getHours();
-    const idx = hours.findIndex((f) => new Date(f.hourISO).getHours() === nowHour);
-    return dayVerdict(hours, idx >= 0 ? idx : 0);
+    if (!hours || !hours.length) return null;
+    // Pick the forecast hour NEAREST to right now (by timestamp), not the first hour whose
+    // clock-hour matches — so an empty match never silently falls back to hour 0 / midnight.
+    const now = Date.now();
+    let idx = 0, best = Infinity;
+    for (let i = 0; i < hours.length; i++) {
+      const dt = Math.abs(new Date(hours[i].hourISO).getTime() - now);
+      if (dt < best) { best = dt; idx = i; }
+    }
+    return dayVerdict(hours, idx);
   }, [hours]);
 
   const style = verdict ? KIND_STYLE[verdict.kind] : KIND_STYLE.go;
