@@ -1,22 +1,36 @@
 import type { ChatMsg } from "./nim";
 
 /**
- * sovereign — Thai-sovereign LLM mode (BDI/NECTEC ThaiLLM, or any OpenAI-compatible Thai
- * model). The BDI field notes push "อธิปไตยทาง AI": a Thai-language model for Thai service.
- * Dormant-until-env: set THAI_LLM_BASE_URL + THAI_LLM_API_KEY + THAI_LLM_MODEL and the agent
- * prefers it for Thai narration; otherwise it falls back to NVIDIA NIM. The engine still owns
- * the plan either way (Iron Rule 0) — the LLM only narrates.
+ * sovereign — Thai-sovereign LLM mode ("อธิปไตยทาง AI", per the BDI field notes): a Thai-language
+ * model serving Thai users. Wired to the **ThaiLLM Playground** — the BDI × NECTEC × VISTEC ×
+ * SCB10X national sovereign-AI initiative (thaillm.or.th) — which is OpenAI-compatible:
+ *
+ *     POST https://thaillm.or.th/api/v1/chat/completions      (Authorization: Bearer <key>)
+ *     model: e.g. "Typhoon-S-ThaiLLM-8B-Instruct"             (confirm the exact id on the Playground)
+ *
+ * Get a free API key at thaillm.or.th → "API Key" (free, explicitly for hackathon use). Dormant
+ * until set: provide THAI_LLM_API_KEY + THAI_LLM_MODEL (THAI_LLM_BASE_URL is OPTIONAL — it defaults
+ * to the ThaiLLM Playground). When configured, the agent prefers it for Thai narration; otherwise
+ * it falls back to NVIDIA NIM. The engine still owns the plan either way (Iron Rule 0) — the LLM
+ * only narrates, never invents a place or the weather.
+ *
+ * Using Thailand's national LLM is also the BDI-aligned hackathon story: BDI co-runs ThaiLLM, so
+ * "Arnfah's Thai voice runs on Thailand's own sovereign model" is a host-aligned differentiator.
  */
+const DEFAULT_BASE = "https://thaillm.or.th/api/v1";
+
 export function sovereignConfigured(): boolean {
-  return !!(process.env.THAI_LLM_BASE_URL && process.env.THAI_LLM_API_KEY && process.env.THAI_LLM_MODEL);
+  // base URL has a sensible default (the ThaiLLM Playground) — only the key + model are required.
+  return !!(process.env.THAI_LLM_API_KEY && process.env.THAI_LLM_MODEL);
 }
 
 export async function sovereignChat(
   messages: ChatMsg[],
   opts: { maxTokens?: number; temperature?: number } = {},
 ): Promise<string | null> {
-  const base = process.env.THAI_LLM_BASE_URL, key = process.env.THAI_LLM_API_KEY, model = process.env.THAI_LLM_MODEL;
-  if (!base || !key || !model) return null;
+  const base = process.env.THAI_LLM_BASE_URL || DEFAULT_BASE;
+  const key = process.env.THAI_LLM_API_KEY, model = process.env.THAI_LLM_MODEL;
+  if (!key || !model) return null;
   try {
     const r = await fetch(`${base.replace(/\/+$/, "")}/chat/completions`, {
       method: "POST",
