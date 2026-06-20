@@ -104,7 +104,7 @@ function PlanInner() {
   const [districtData, setDistrictData] = useState<SeedDistrict | null>(null);
   const meta = districtMeta(districtKey);
   const districtTh = meta?.th ?? "";
-  const districtEn = meta?.en ?? "";
+  const districtEn = meta?.en ? meta.en.charAt(0).toUpperCase() + meta.en.slice(1) : "";
   const center = useMemo(() => ({ lat: meta?.lat ?? 13.7402, lng: meta?.lng ?? 100.5731 }), [meta?.lat, meta?.lng]);
 
   useEffect(() => {

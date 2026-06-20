@@ -46,7 +46,7 @@
   /*
    * Tricolor Editorial type system.
    * font-display     = Latin serif headline (Newsreader)
-   * font-display-th  = Thai serif headline (Trirong) — the editorial unlock
+   * font-display-th  = Thai serif headline (Noto Serif Thai) — the editorial unlock
    * font-sans        = Latin UI (Inter)
    * font-thai        = Thai UI/body (Anuphan)
    * Use font-thai-serif on Thai headlines for the broadsheet feel.
@@ -137,7 +137,7 @@ body {
 .section-major { padding-block: clamp(4rem, 10vw, 8rem); }
 .section-minor { padding-block: clamp(2.5rem, 6vw, 4rem); }
 
-/* Thai serif headline utility — Trirong, the editorial broadsheet voice. */
+/* Thai serif headline utility — Noto Serif Thai, the editorial broadsheet voice. */
 .font-thai-serif {
   font-family: var(--font-display-th), "Noto Serif Thai", Georgia, serif;
 }

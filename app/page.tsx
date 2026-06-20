@@ -3,6 +3,7 @@ import { SkyBackdrop } from "@/components/SkyBackdrop";
 import { FrontPageTop } from "@/components/FrontPageTop";
 import { RibbonStrip } from "@/components/RibbonStrip";
 import { FrontPageLead } from "@/components/FrontPageLead";
+import { StopPress } from "@/components/StopPress";
 import { TheSkySection } from "@/components/TheSkySection";
 import { TruthSection } from "@/components/TruthSection";
 import { Colophon } from "@/components/Colophon";
@@ -29,6 +30,9 @@ export default function Home() {
 
       {/* FRONT-PAGE LEAD — Today's Verdict article + sky-now box (real forecast + air) */}
       <FrontPageLead />
+
+      {/* STOP PRESS — the live correction; prints ONLY when rain is genuinely moving in (else null) */}
+      <StopPress />
 
       {/* § THE SKY — how to read the sky / place weather-fit profiles */}
       <TheSkySection />
