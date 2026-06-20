@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { clsx } from "clsx";
 import { DISTRICTS, districtMeta, groupedDistricts, nearestDistrict } from "@/lib/poi/districts";
+import { useLang } from "@/lib/i18n/useLang";
 
 /**
  * DistrictPicker — covers all of Bangkok without drowning the user in 55 pills.
@@ -10,6 +11,7 @@ import { DISTRICTS, districtMeta, groupedDistricts, nearestDistrict } from "@/li
  * Closed by default so SSR and the first client render match (no hydration flash).
  */
 export function DistrictPicker({ value, onChange }: { value: string; onChange: (key: string) => void }) {
+  const { en } = useLang();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const [geoState, setGeoState] = useState<"idle" | "locating" | "denied" | "unsupported">("idle");
@@ -52,7 +54,7 @@ export function DistrictPicker({ value, onChange }: { value: string; onChange: (
           <path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z" stroke="currentColor" strokeWidth="1.7" />
           <circle cx="12" cy="10" r="2.5" stroke="currentColor" strokeWidth="1.7" />
         </svg>
-        <span className="max-w-[10rem] truncate">{current.th}</span>
+        <span className="max-w-[10rem] truncate">{en ? current.en : current.th}</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className={clsx("transition-transform duration-[var(--dur-fast)]", open && "rotate-180")} aria-hidden>
           <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -76,7 +78,7 @@ export function DistrictPicker({ value, onChange }: { value: string; onChange: (
                   ref={inputRef}
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
-                  placeholder={`ค้นเมือง/ย่าน · ${total} พื้นที่ทั่วไทย`}
+                  placeholder={en ? `Search ${total} areas across Thailand` : `ค้นหา ${total} พื้นที่ทั่วไทย`}
                   className="font-thai h-11 w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink-faint"
                 />
               </div>
@@ -89,15 +91,15 @@ export function DistrictPicker({ value, onChange }: { value: string; onChange: (
                   <circle cx="12" cy="12" r="3.2" stroke="currentColor" strokeWidth="1.8" />
                   <path d="M12 2v3M12 19v3M22 12h-3M5 12H2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
                 </svg>
-                {geoState === "locating" ? "กำลังหาตำแหน่ง…" : "ใกล้ฉัน"}
+                {geoState === "locating" ? (en ? "Locating…" : "กำลังหาตำแหน่ง…") : (en ? "Near me" : "ใกล้ฉัน")}
               </button>
-              {geoState === "denied" && <span className="font-thai ml-1 text-xs text-ink-faint">เปิดสิทธิ์ตำแหน่งไม่ได้ — เลือกเองได้เลย</span>}
-              {geoState === "unsupported" && <span className="font-thai ml-1 text-xs text-ink-faint">เครื่องนี้หาตำแหน่งไม่ได้</span>}
+              {geoState === "denied" && <span className="font-thai ml-1 text-xs text-ink-faint">{en ? "Couldn't get your location — just pick one" : "เปิดสิทธิ์ตำแหน่งไม่ได้ — เลือกเองได้เลย"}</span>}
+              {geoState === "unsupported" && <span className="font-thai ml-1 text-xs text-ink-faint">{en ? "Location isn't available on this device" : "เครื่องนี้หาตำแหน่งไม่ได้"}</span>}
             </div>
 
             <div className="max-h-[min(56vh,26rem)] overflow-y-auto overscroll-contain p-2">
               {groups.length === 0 && (
-                <p className="font-thai px-3 py-6 text-center text-sm text-ink-faint">ไม่พบย่าน “{q}”</p>
+                <p className="font-thai px-3 py-6 text-center text-sm text-ink-faint">{en ? `No area matches “${q}”` : `ไม่พบย่าน “${q}”`}</p>
               )}
               {groups.map((g) => (
                 <div key={g.zone} className="mb-1">

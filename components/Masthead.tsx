@@ -3,18 +3,21 @@
 import Link from "next/link";
 import { useLang } from "@/lib/i18n/useLang";
 import { LanguageToggle } from "./LanguageToggle";
+import { AuthButton } from "./AuthButton";
 import { LogoMark } from "./Logo";
 
 /**
- * Masthead — the home page's broadsheet masthead, from the Arnfa brand book ("THE ARNFAH
- * ALMANAC"). The sun-cloud-rain mark + อ่านฟ้า (Thai serif) + an italic "Arnfah" Latin tag,
- * an editorial uppercase nav to the app's real surfaces, and one primary "วางแผนทริป" CTA.
- * Floating over the front page with a paper scrim for legibility.
+ * Masthead — the app-wide broadsheet masthead, from the Arnfa brand book ("THE ARNFAH ALMANAC").
+ * The sun-cloud-rain mark + อ่านฟ้า (Thai serif) + an italic "Arnfah" Latin tag, an editorial
+ * uppercase nav to the app's real surfaces, one primary "วางแผนทริป" CTA, the account widget,
+ * and the language toggle. Shared by EVERY page so the whole app reads as one publication
+ * (zero-prop, self-sources language + auth). Sticky, with a paper scrim for legibility.
  */
 const NAV = [
   { href: "/where", th: "ไปไหนดี", en: "Where" },
   { href: "/ai", th: "ถาม AI", en: "Ask AI" },
   { href: "/data", th: "ที่มาข้อมูล", en: "Sources" },
+  { href: "/trips", th: "ทริปของฉัน", en: "Trips" },
 ];
 
 export function Masthead() {
@@ -40,6 +43,7 @@ export function Masthead() {
         </nav>
 
         <div className="flex flex-none items-center gap-3">
+          <div className="hidden sm:block"><AuthButton compact /></div>
           <Link href="/plan" className="rounded-full bg-ink px-4 py-2 font-thai text-sm leading-none text-paper transition-colors hover:bg-ink-muted">
             {en ? "Plan a trip" : "วางแผนทริป"}
           </Link>

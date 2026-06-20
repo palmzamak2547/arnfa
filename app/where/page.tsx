@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { clsx } from "clsx";
 import { useLang } from "@/lib/i18n/useLang";
-import { Logo } from "@/components/Logo";
-import { LanguageToggle } from "@/components/LanguageToggle";
+import { Masthead } from "@/components/Masthead";
+import { SiteFooter } from "@/components/SiteFooter";
 import { SKY_VERDICT_TH, SKY_VERDICT_EN, type SkyVerdict } from "@/lib/core/skyScore";
 
 /**
@@ -36,6 +36,13 @@ function dayLabel(offset: number, en: boolean): string {
 
 // zone display order: Bangkok neighbourhoods, then tourist spots, then the 6 regions
 const ZONE_ORDER = ["ย่านยอดนิยม", "จุดเที่ยวยอดนิยม", "ภาคเหนือ", "ภาคกลาง", "ภาคตะวันออกเฉียงเหนือ", "ภาคตะวันออก", "ภาคตะวันตก", "ภาคใต้"];
+const ZONE_EN: Record<string, string> = {
+  "ย่านยอดนิยม": "Popular areas", "จุดเที่ยวยอดนิยม": "Popular spots",
+  "ภาคเหนือ": "Northern Thailand", "ภาคกลาง": "Central Thailand",
+  "ภาคตะวันออกเฉียงเหนือ": "Northeast (Isan)", "ภาคตะวันออก": "Eastern Thailand",
+  "ภาคตะวันตก": "Western Thailand", "ภาคใต้": "Southern Thailand", "อื่นๆ": "Other",
+};
+const zoneLabel = (zone: string, en: boolean) => (en ? ZONE_EN[zone] ?? zone : zone);
 
 export default function WherePage() {
   const { en } = useLang();
@@ -67,16 +74,7 @@ export default function WherePage() {
 
   return (
     <main className="relative z-10 min-h-screen">
-      <header className="arnfa-grid section-minor pad-safe-t">
-        <div className="col-content flex items-center justify-between">
-          <Link href="/" className="text-ink hover:text-ink-muted transition-colors"><Logo className="text-xl" animate={false} /></Link>
-          <div className="flex items-center gap-4">
-            <Link href="/ai" className="font-thai text-sm text-rain hover:underline">{en ? "Ask AI" : "ถาม AI"}</Link>
-            <Link href="/plan" className="font-thai text-sm text-rain hover:underline">{en ? "Plan a trip →" : "วางแผนทริป →"}</Link>
-            <LanguageToggle />
-          </div>
-        </div>
-      </header>
+      <Masthead />
 
       <section className="arnfa-grid">
         <div className="col-content">
@@ -102,43 +100,49 @@ export default function WherePage() {
             </p>
           )}
 
-          {/* loading skeleton */}
+          {/* loading skeleton — list-shaped (matches the ranked list, no CLS) */}
           {!areas && !error && (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="border-y border-hairline divide-y divide-hairline">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="h-28 rounded-3xl border border-hairline bg-surface/50 animate-pulse" />
+                <div key={i} className="flex items-center gap-4 py-4">
+                  <div className="h-7 w-7 shrink-0 rounded-full bg-surface animate-pulse" />
+                  <div className="h-5 w-44 max-w-[60%] rounded bg-surface animate-pulse" />
+                  <div className="ml-auto h-4 w-16 rounded bg-surface animate-pulse" />
+                </div>
               ))}
             </div>
           )}
 
-          {/* top picks */}
+          {/* top picks — the answer, ranked, as an editorial list (not a card grid) */}
           {areas && top.length > 0 && (
             <>
-              <h2 className="font-thai-serif text-lg font-light text-ink mb-4">{en ? "Clearest right now" : "ฟ้าโปร่งสุด"}</h2>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <h2 className="font-thai-serif text-2xl font-light text-ink mb-5 text-balance">
+                {en ? "Clearest skies" : "ฟ้าโปร่งสุด"} — {dayLabel(day, en)}
+              </h2>
+              <ol className="mb-14 border-y border-hairline divide-y divide-hairline">
                 {top.map((a, i) => (
-                  <Link key={a.key} href={`/plan?y=${a.key}&d=${day}`}
-                    className="group rounded-3xl border border-hairline bg-surface/70 p-4 transition-colors hover:bg-surface">
-                    <div className="flex items-center justify-between">
-                      <span className="font-display text-xs text-ink-faint tabular-nums">#{i + 1}</span>
-                      <span className="inline-flex items-center gap-1.5 font-thai text-xs text-ink-muted">
-                        <span className="inline-block h-2 w-2 rounded-full" style={{ background: VDOT[a.verdict] }} aria-hidden />
-                        {en ? SKY_VERDICT_EN[a.verdict] : SKY_VERDICT_TH[a.verdict]}
+                  <li key={a.key}>
+                    <Link href={`/plan?y=${a.key}&d=${day}`} className="group flex items-center gap-4 py-4">
+                      <span className="w-8 shrink-0 font-display text-2xl font-light tabular-nums text-ink-faint">{i + 1}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="flex items-center gap-2">
+                          <span className="inline-block h-2 w-2 shrink-0 rounded-full" style={{ background: VDOT[a.verdict] }} aria-hidden />
+                          <span className="font-thai-serif text-xl font-light text-ink truncate transition-colors group-hover:text-ink-muted">{en ? a.en : a.th}</span>
+                        </span>
+                        <span className="font-thai text-xs text-ink-faint">{zoneLabel(a.zone, en)} — {en ? SKY_VERDICT_EN[a.verdict] : SKY_VERDICT_TH[a.verdict]}</span>
                       </span>
-                    </div>
-                    <h3 className="font-thai-serif text-xl font-light text-ink mt-2 group-hover:text-ink-muted transition-colors truncate">{en ? a.en : a.th}</h3>
-                    <p className="font-thai text-xs text-ink-faint mt-0.5 truncate">{a.zone}</p>
-                    <p className="font-thai text-sm text-ink-muted mt-2 tabular-nums">{a.tempC}° · {en ? "rain" : "ฝน"} {a.rainProb}%</p>
-                  </Link>
+                      <span className="shrink-0 font-thai text-sm text-ink-muted tabular-nums">{a.tempC}° · {en ? "rain" : "ฝน"} {a.rainProb}%</span>
+                    </Link>
+                  </li>
                 ))}
-              </div>
+              </ol>
 
               {/* full ranked list, grouped by region */}
               <h2 className="font-thai-serif text-lg font-light text-ink mt-12 mb-4">{en ? "All areas, by region" : "ทั้งหมด รายภาค"}</h2>
               <div className="grid gap-x-10 gap-y-8 lg:grid-cols-2">
                 {grouped.map(([zone, list]) => (
                   <div key={zone}>
-                    <h3 className="font-display text-xs uppercase tracking-[0.18em] text-ink-faint mb-3 pb-2 border-b border-hairline">{zone}</h3>
+                    <h3 className="font-display text-xs uppercase tracking-[0.18em] text-ink-faint mb-3 pb-2 border-b border-hairline">{zoneLabel(zone, en)}</h3>
                     <ul className="divide-y divide-hairline">
                       {list.map((a) => (
                         <li key={a.key}>
@@ -164,6 +168,7 @@ export default function WherePage() {
           )}
         </div>
       </section>
+      <SiteFooter />
     </main>
   );
 }

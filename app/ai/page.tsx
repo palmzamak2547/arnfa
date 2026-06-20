@@ -3,8 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n/useLang";
-import { Logo } from "@/components/Logo";
-import { LanguageToggle } from "@/components/LanguageToggle";
+import { Masthead } from "@/components/Masthead";
+import { SiteFooter } from "@/components/SiteFooter";
+import { LogoMark } from "@/components/Logo";
 
 /**
  * /ai — "ถามอ่านฟ้า": the agentic surface. Free-text wish → NVIDIA NIM reads the intent →
@@ -60,23 +61,12 @@ export default function AiPage() {
 
   return (
     <main className="relative z-10 min-h-screen">
-      <header className="arnfa-grid section-minor pad-safe-t">
-        <div className="col-content flex items-center justify-between">
-          <Link href="/" className="text-ink hover:text-ink-muted transition-colors"><Logo className="text-xl" animate={false} /></Link>
-          <div className="flex items-center gap-4">
-            <Link href="/where" className="font-thai text-sm text-rain hover:underline">{en ? "Where to go" : "ไปไหนดี"}</Link>
-            <Link href="/plan" className="font-thai text-sm text-rain hover:underline">{en ? "Plan" : "วางแผน"}</Link>
-            <LanguageToggle />
-          </div>
-        </div>
-      </header>
+      <Masthead />
 
       <section className="arnfa-grid">
         <div className="col-content max-w-2xl">
           <div className="flex items-center gap-2.5 mb-2">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="text-sun" aria-hidden>
-              <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3Z" fill="currentColor" /><circle cx="18.5" cy="17.5" r="1.6" fill="currentColor" /><circle cx="5.5" cy="16" r="1" fill="currentColor" />
-            </svg>
+            <LogoMark size={24} />
             <h1 className="font-thai-serif fs-h2 font-light text-ink">{en ? "Ask Arnfah" : "ถามอ่านฟ้า"}</h1>
           </div>
           <p className="font-thai text-ink-muted mb-7 max-w-xl">
@@ -115,7 +105,7 @@ export default function AiPage() {
                 <p className="font-thai ml-auto max-w-[85%] w-fit rounded-3xl rounded-br-lg bg-ink px-5 py-3 text-sm text-paper">{turn.q}</p>
 
                 {!turn.resp && !turn.error && loading && ti === turns.length - 1 && (
-                  <p className="font-thai text-ink-faint animate-pulse">{en ? "Arnfah is reading the sky and planning…" : "อ่านฟ้ากำลังคิดแผนให้…"}</p>
+                  <p className="font-thai flex items-center gap-2 text-ink-faint"><span className="af-blink h-2 w-2 rounded-full bg-sun" />{en ? "Arnfah is reading the sky and planning…" : "อ่านฟ้ากำลังคิดแผนให้…"}</p>
                 )}
                 {turn.error && <p className="font-thai rounded-3xl border border-hairline bg-surface/70 px-5 py-4 text-sm text-ink-muted">{turn.error} <Link href="/plan" className="text-rain hover:underline">{en ? "Plan →" : "วางแผนเอง →"}</Link></p>}
 
@@ -167,6 +157,7 @@ export default function AiPage() {
           </p>
         </div>
       </section>
+      <SiteFooter />
     </main>
   );
 }

@@ -4,7 +4,8 @@ import { Fragment, Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useLang } from "@/lib/i18n/useLang";
-import { LanguageToggle } from "@/components/LanguageToggle";
+import { Masthead } from "@/components/Masthead";
+import { SiteFooter } from "@/components/SiteFooter";
 import { clsx } from "clsx";
 import {
   buildPlan,
@@ -48,7 +49,6 @@ import { PoiPhoto } from "@/components/PoiPhoto";
 import { mapsPoiUrl, mapsTripUrl } from "@/lib/poi/photo";
 import { ShareButton } from "@/components/ShareButton";
 import { TasteQuiz } from "@/components/TasteQuiz";
-import { AuthButton } from "@/components/AuthButton";
 import { AreaHighlights } from "@/components/AreaHighlights";
 import { SatelliteHaze } from "@/components/SatelliteHaze";
 import { BeachConditions } from "@/components/BeachConditions";
@@ -56,7 +56,6 @@ import { hopEstimate, hopLabel, routedHopLabel } from "@/lib/plan/transit";
 import { useAuth } from "@/lib/auth/useAuth";
 import { saveTrip, loadCloudTaste, saveCloudTaste } from "@/lib/plan/trips";
 import { DistrictPicker } from "@/components/DistrictPicker";
-import { Logo } from "@/components/Logo";
 
 const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanMap), {
   ssr: false,
@@ -105,6 +104,7 @@ function PlanInner() {
   const [districtData, setDistrictData] = useState<SeedDistrict | null>(null);
   const meta = districtMeta(districtKey);
   const districtTh = meta?.th ?? "";
+  const districtEn = meta?.en ?? "";
   const center = useMemo(() => ({ lat: meta?.lat ?? 13.7402, lng: meta?.lng ?? 100.5731 }), [meta?.lat, meta?.lng]);
 
   useEffect(() => {
@@ -331,31 +331,17 @@ function PlanInner() {
 
   return (
     <main className="relative z-10 min-h-screen">
-      {/* Header */}
-      <header className="arnfa-grid section-minor pad-safe-t">
-        <div className="col-content flex items-center justify-between">
-          <Link href="/" className="text-ink hover:text-ink-muted transition-colors">
-            <Logo className="text-xl" animate={false} />
-          </Link>
-          <div className="flex items-center gap-4">
-            <span className="hidden sm:inline font-thai text-sm text-ink-faint">{provider && (en ? `sky via ${provider}` : `ฟ้าจาก ${provider}`)}</span>
-            <Link href="/ai" className="font-thai text-sm text-rain hover:underline">{en ? "Ask AI" : "ถาม AI"}</Link>
-            <Link href="/where" className="font-thai text-sm text-rain hover:underline">{en ? "Where to go" : "ไปไหนดี"}</Link>
-            {user && <Link href="/trips" className="font-thai text-sm text-rain hover:underline">{en ? "My trips" : "ทริปของฉัน"}</Link>}
-            <AuthButton compact />
-            <LanguageToggle />
-          </div>
-        </div>
-      </header>
+      <Masthead />
 
       {/* Controls */}
       <section className="arnfa-grid">
         <div className="col-content">
           <h1 className="font-thai-serif fs-h2 font-light text-ink mb-2 text-balance">
-            {en ? "Plan a trip" : "วางแผนทริป"} — <span className="italic text-ink-muted">{districtTh}</span>
+            {en ? "Plan a trip" : "วางแผนทริป"} — <span className="italic text-ink-muted">{en ? districtEn : districtTh}</span>
           </h1>
           <div className="flex items-center gap-3 mb-7">
             <AirChip lat={center.lat} lng={center.lng} reading={air} />
+            {provider && <span className="hidden font-thai text-xs text-ink-faint sm:inline">{en ? `sky via ${provider}` : `ฟ้าจาก ${provider}`}</span>}
             {!taste && !quizOpen && (
               <button type="button" onClick={() => setQuizOpen(true)} className="font-thai text-sm text-rain hover:underline min-h-[44px]">
                 {en ? "Tune to your taste →" : "ปรับให้ตรงใจ →"}
@@ -396,8 +382,8 @@ function PlanInner() {
                     className="font-thai mb-2.5 inline-flex items-center gap-2 rounded-full border border-success/40 bg-success/[0.07] px-3.5 py-1.5 text-xs text-ink-muted transition-colors hover:bg-success/[0.12]">
                     <span aria-hidden>💡</span>
                     {en
-                      ? <>Best sky this week: <span className="font-medium text-ink">{days.find((d) => d.offset === bestDay.offset)?.en}</span> · avoid {days.find((d) => d.offset === worstDay.offset)?.en}</>
-                      : <>ฟ้าดีสุดสัปดาห์นี้ <span className="font-medium text-ink">{days.find((d) => d.offset === bestDay.offset)?.th}</span> · เลี่ยง {days.find((d) => d.offset === worstDay.offset)?.th}</>}
+                      ? <>Best sky this week: <span className="font-medium text-ink">{days.find((d) => d.offset === bestDay.offset)?.en}</span> — avoid {days.find((d) => d.offset === worstDay.offset)?.en}</>
+                      : <>ฟ้าดีสุดสัปดาห์นี้ <span className="font-medium text-ink">{days.find((d) => d.offset === bestDay.offset)?.th}</span> — เลี่ยง {days.find((d) => d.offset === worstDay.offset)?.th}</>}
                   </button>
                 )}
                 <div className="flex flex-wrap gap-2">
@@ -450,7 +436,7 @@ function PlanInner() {
           {(!activePlan || loading) && !error && (
             <div className="grid gap-6 lg:grid-cols-[1.1fr_1fr]">
               <div>
-                <p className="font-thai text-sm text-ink-faint mb-4">{en ? `Reading the sky · ${districtTh}` : `กำลังอ่านฟ้า ${districtTh}`}</p>
+                <p className="font-thai text-sm text-ink-faint mb-4">{en ? `Reading the sky — ${districtEn}` : `กำลังอ่านฟ้า ${districtTh}`}</p>
                 <PlanSkeleton />
               </div>
               <div className="hidden lg:block h-[520px] rounded-3xl border border-hairline bg-surface/50 animate-pulse" />
@@ -470,8 +456,8 @@ function PlanInner() {
                 {swap && rainSlot !== null && (
                   <div className="mb-5">
                     <SwapCard active
-                      from={{ name: swap.dropped.poi.name, skyState: "storm", arrivalLabel: swap.dropped.arrivalLabel, reason: `ฝนเข้า ${swap.dropped.arrivalLabel}` }}
-                      to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: Math.max(1, Math.round(walkMinutes(swap.dropped.poi.lat, swap.dropped.poi.lng, swap.added.poi.lat, swap.added.poi.lng))), why: swap.added.reason }}
+                      from={{ name: swap.dropped.poi.name, skyState: "storm", arrivalLabel: swap.dropped.arrivalLabel, reason: en ? `rain by ${swap.dropped.arrivalLabel}` : `ฝนเข้า ${swap.dropped.arrivalLabel}` }}
+                      to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: Math.max(1, Math.round(walkMinutes(swap.dropped.poi.lat, swap.dropped.poi.lng, swap.added.poi.lat, swap.added.poi.lng))), why: en ? "a comfy indoor spot for the rain" : "ในร่มแบบดีตอนฝน หลบสบาย" }}
                       onAccept={() => {
                         // flywheel: user took the rain-swap suggestion → that POI fits rain
                         recordFeedback(swap.added.poi.id, "accept_swap", { inRain: true, context: { from: swap.dropped.poi.id, district: districtKey } });
@@ -587,6 +573,8 @@ function PlanInner() {
 
       {/* Real photos of notable, photo-linked places in this area (Wikimedia Commons) */}
       {districtData && <AreaHighlights pois={districtData.pois} />}
+
+      <SiteFooter />
     </main>
   );
 }

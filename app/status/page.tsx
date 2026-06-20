@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n/useLang";
-import { Logo } from "@/components/Logo";
-import { LanguageToggle } from "@/components/LanguageToggle";
+import { Masthead } from "@/components/Masthead";
+import { SiteFooter } from "@/components/SiteFooter";
 import { DISTRICTS } from "@/lib/poi/districts";
 
 /**
@@ -71,15 +71,7 @@ export default function StatusPage() {
 
   return (
     <main className="relative z-10 min-h-screen">
-      <header className="arnfa-grid section-minor pad-safe-t">
-        <div className="col-content flex items-center justify-between">
-          <Link href="/" className="text-ink hover:text-ink-muted transition-colors"><Logo className="text-xl" animate={false} /></Link>
-          <div className="flex items-center gap-4">
-            <Link href="/plan" className="font-thai text-sm text-rain hover:underline">{en ? "Plan a trip →" : "วางแผนทริป →"}</Link>
-            <LanguageToggle />
-          </div>
-        </div>
-      </header>
+      <Masthead />
 
       <section className="arnfa-grid">
         <div className="col-content max-w-2xl">
@@ -94,13 +86,13 @@ export default function StatusPage() {
             </p>
           </div>
 
-          {/* live service probes */}
-          <ul className="rounded-3xl border border-hairline bg-surface/70 divide-y divide-hairline overflow-hidden">
+          {/* live service probes — an editorial list, not a dashboard panel */}
+          <ul className="border-y border-hairline divide-y divide-hairline">
             {SERVICES.map((s) => {
               const c = checks[s.key];
               const st = c?.status ?? "checking";
               return (
-                <li key={s.key} className="flex items-center justify-between gap-3 px-5 py-3.5">
+                <li key={s.key} className="flex items-center justify-between gap-3 py-3.5">
                   <span className="flex items-center gap-2.5 min-w-0">
                     <span className="inline-block h-2 w-2 shrink-0 rounded-full" style={{ background: DOT[st] }} aria-hidden />
                     <span className="font-thai text-sm text-ink truncate">{en ? s.en : s.th}</span>
@@ -122,7 +114,7 @@ export default function StatusPage() {
 
           {/* coverage — straight from the registry, never fabricated */}
           <h2 className="font-thai-serif text-lg font-light text-ink mt-12 mb-4">{en ? "Coverage" : "ความครอบคลุม"}</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 rounded-3xl border border-hairline bg-surface/70 p-6">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 border-y border-hairline py-7">
             {[
               { n: DISTRICTS.length, th: "พื้นที่", en: "areas" },
               { n: provinces, th: "จังหวัด", en: "provinces" },
@@ -137,16 +129,16 @@ export default function StatusPage() {
           </div>
 
           <h2 className="font-thai-serif text-lg font-light text-ink mt-12 mb-3">{en ? "Data sources" : "แหล่งข้อมูล"}</h2>
-          <div className="flex flex-wrap gap-2">
-            {SOURCES.map((s) => (
-              <span key={s} className="font-thai inline-flex items-center rounded-full border border-hairline bg-paper px-3 py-1.5 text-xs text-ink-muted">{s}</span>
-            ))}
-          </div>
+          <p className="font-thai text-sm text-ink-muted">
+            {en ? `These probes run across ${SOURCES.length} open data sources.` : `การตรวจสอบนี้ครอบคลุม ${SOURCES.length} แหล่งข้อมูลเปิด`}{" "}
+            <Link href="/data" className="text-rain hover:underline">{en ? "See the full catalog with licenses →" : "ดูแคตตาล็อกพร้อมสัญญาอนุญาต →"}</Link>
+          </p>
           <p className="font-thai text-xs text-ink-faint mt-4">
             {en ? "Every status here is a live probe — we never fake uptime, and never fabricate a forecast." : "สถานะทุกอย่างเช็คสดจริง — เราไม่ปลอม uptime และไม่กุพยากรณ์อากาศ"}
           </p>
         </div>
       </section>
+      <SiteFooter />
     </main>
   );
 }

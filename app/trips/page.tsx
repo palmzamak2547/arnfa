@@ -4,13 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n/useLang";
 import { SkyWatch } from "@/components/SkyWatch";
-import { LanguageToggle } from "@/components/LanguageToggle";
+import { Masthead } from "@/components/Masthead";
+import { SiteFooter } from "@/components/SiteFooter";
 import { useAuth } from "@/lib/auth/useAuth";
 import { listTrips, deleteTrip, type SavedTrip } from "@/lib/plan/trips";
 import { districtMeta } from "@/lib/poi/districts";
 import { encodePlanState } from "@/lib/plan/shareState";
 import { AuthButton } from "@/components/AuthButton";
-import { Logo } from "@/components/Logo";
 
 export default function TripsPage() {
   const { en } = useLang();
@@ -32,15 +32,7 @@ export default function TripsPage() {
 
   return (
     <main className="relative z-10 min-h-screen">
-      <header className="arnfa-grid section-minor pad-safe-t">
-        <div className="col-content flex items-center justify-between gap-3">
-          <Link href="/" className="text-ink hover:text-ink-muted transition-colors"><Logo className="text-xl" animate={false} /></Link>
-          <div className="flex items-center gap-4">
-            <AuthButton />
-            <LanguageToggle />
-          </div>
-        </div>
-      </header>
+      <Masthead />
 
       <section className="arnfa-grid">
         <div className="col-content max-w-2xl">
@@ -54,7 +46,7 @@ export default function TripsPage() {
             </div>
           )}
 
-          {user && trips === null && <p className="font-thai text-ink-faint animate-pulse">{en ? "Loading…" : "กำลังโหลด…"}</p>}
+          {user && trips === null && <p className="font-thai flex items-center gap-2 text-ink-faint"><span className="af-blink h-2 w-2 rounded-full bg-sun" />{en ? "Loading…" : "กำลังโหลด…"}</p>}
           {user && trips?.length === 0 && (
             <p className="font-thai text-ink-faint">{en ? "No saved trips yet — plan a day and tap Save." : "ยังไม่มีทริปที่เซฟ — ลองวางแผนแล้วกดเซฟดู"} <Link href="/plan" className="text-rain hover:underline">{en ? "Plan →" : "วางแผน →"}</Link></p>
           )}
@@ -78,6 +70,7 @@ export default function TripsPage() {
           </ul>
         </div>
       </section>
+      <SiteFooter />
     </main>
   );
 }

@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useLang } from "@/lib/i18n/useLang";
-import { Logo } from "@/components/Logo";
-import { LanguageToggle } from "@/components/LanguageToggle";
+import { Masthead } from "@/components/Masthead";
+import { SiteFooter } from "@/components/SiteFooter";
 import { DISTRICTS } from "@/lib/poi/registry.generated";
 import { DATA_SOURCES, KIND_LABEL, KIND_ORDER, ACTIVE_SOURCE_COUNT, THAI_GOV_COUNT, type DataKind } from "@/lib/data/sources";
 import districtAir from "@/lib/data/bmaDistrictAir.snapshot.json";
@@ -14,6 +14,13 @@ import districtAir from "@/lib/data/bmaDistrictAir.snapshot.json";
  * Derived from lib/data/sources so it can never drift from what the app actually uses.
  */
 const TOTAL_POIS = DISTRICTS.reduce((a, d) => a + d.count, 0);
+
+// the two Thai-gov license strings that would otherwise stay Thai in EN mode
+const LICENSE_EN: Record<string, string> = {
+  "ข้อมูลเปิดภาครัฐไทย": "Thai open-gov data",
+  "ข้อมูลเปิด กทม.": "BMA open data",
+};
+const licenseLabel = (lic: string, en: boolean) => (en ? LICENSE_EN[lic] ?? lic : lic);
 
 export default function DataPage() {
   const { en } = useLang();
@@ -28,16 +35,7 @@ export default function DataPage() {
 
   return (
     <main className="relative z-10 min-h-screen">
-      <header className="arnfa-grid section-minor pad-safe-t">
-        <div className="col-content flex items-center justify-between">
-          <Link href="/" className="text-ink hover:text-ink-muted transition-colors"><Logo className="text-xl" animate={false} /></Link>
-          <div className="flex items-center gap-4">
-            <Link href="/status" className="font-thai text-sm text-rain hover:underline">{en ? "Live status" : "สถานะระบบ"}</Link>
-            <Link href="/plan" className="font-thai text-sm text-rain hover:underline">{en ? "Plan" : "วางแผน"}</Link>
-            <LanguageToggle />
-          </div>
-        </div>
-      </header>
+      <Masthead />
 
       <section className="arnfa-grid">
         <div className="col-content max-w-3xl">
@@ -68,12 +66,12 @@ export default function DataPage() {
                   {g.items.map((it) => (
                     <li key={it.key} className="py-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                       <div className="min-w-0">
-                        <a href={it.url} target="_blank" rel="noopener noreferrer" className="font-sans font-medium text-ink hover:text-rain transition-colors">{it.name}</a>
+                        <a href={it.url} target="_blank" rel="noopener noreferrer" className="font-thai font-medium text-ink hover:text-rain transition-colors">{it.name}</a>
                         {it.thaiGov && <span className="ml-2 font-thai text-[0.6rem] rounded-full bg-rain/10 px-1.5 py-0.5 text-rain align-middle">{en ? "Thai gov" : "ทางการ"}</span>}
                         {it.dormant && <span className="ml-2 font-thai text-[0.6rem] rounded-full bg-ink-faint/10 px-1.5 py-0.5 text-ink-faint align-middle">{en ? "ready (needs key)" : "พร้อม (รอ key)"}</span>}
                         <p className="font-thai text-sm text-ink-muted mt-0.5">{en ? it.roleEn : it.role} · <span className="text-ink-faint">{en ? it.orgEn : it.org}</span></p>
                       </div>
-                      <span className="font-thai text-xs text-ink-faint shrink-0">{it.license}</span>
+                      <span className="font-thai text-xs text-ink-faint shrink-0">{licenseLabel(it.license, en)}</span>
                     </li>
                   ))}
                 </ul>
@@ -112,6 +110,7 @@ export default function DataPage() {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </main>
   );
 }
