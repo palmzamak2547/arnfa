@@ -128,9 +128,17 @@ export default function AiPage() {
                       <Link href={turn.resp.planUrl} className="font-thai inline-flex h-10 items-center rounded-full bg-ink px-5 text-sm text-paper transition-colors hover:bg-ink-muted">
                         {en ? `Open the full plan for ${turn.resp.plan.areaEn} →` : `เปิดแผนเต็มของ${turn.resp.plan.areaTh} →`}
                       </Link>
-                      <span className="font-thai text-[0.7rem] text-ink-faint">
-                        {en ? `Real plan · sky via ${turn.resp.provider || "Open-Meteo"} · POIs OpenStreetMap` : `แผนจริง · ฟ้าจาก ${turn.resp.provider || "Open-Meteo"} · สถานที่จาก OpenStreetMap`}
-                      </span>
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="font-thai text-[0.7rem] text-ink-faint">{en ? "🔎 grounded on" : "🔎 อ้างอิงจริง"}</span>
+                        {[
+                          `${en ? "forecast" : "ฟ้า"} · ${turn.resp.provider || "Open-Meteo"}`,
+                          `${turn.resp.plan.stops.length} ${en ? "real POIs · OSM" : "สถานที่จริง · OSM"}`,
+                          en ? `area ${turn.resp.plan.areaEn}` : `ย่าน${turn.resp.plan.areaTh}`,
+                          turn.resp.plan.dayLabel,
+                        ].filter(Boolean).map((c, ci) => (
+                          <span key={ci} className="rounded-full border border-hairline px-2 py-0.5 font-thai text-[0.65rem] text-ink-muted">{c}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}

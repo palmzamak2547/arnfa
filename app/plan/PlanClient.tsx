@@ -39,6 +39,7 @@ import { SkyTimeline } from "@/components/SkyTimeline";
 import { TransitNearby } from "@/components/TransitNearby";
 import { RestAreasNearby } from "@/components/RestAreasNearby";
 import { CityReports } from "@/components/CityReports";
+import { GoThere } from "@/components/GoThere";
 import { SkyAround } from "@/components/SkyAround";
 import { LiveCompanion } from "@/components/LiveCompanion";
 import { SkyChip } from "@/components/SkyChip";
@@ -554,6 +555,7 @@ function PlanInner() {
                 )}
                 <div className="mt-6 space-y-4">
                   <TransitNearby lat={center.lat} lng={center.lng} />
+                  <GoThere districtKey={districtKey} areaTh={districtTh} areaEn={districtEn} stayIn={outdoorPenalty > 0.25} />
                   {/* Rest stops are a road-trip thing → only for drive-to destinations, not walkable city areas */}
                   {(meta?.tier === "province" || meta?.tier === "spot") && <RestAreasNearby lat={center.lat} lng={center.lng} />}
                   <CoolingNearby lat={center.lat} lng={center.lng} active={outdoorPenalty > 0.15 || (!!air && (air.pm25 ?? 0) > 37.5)} />
