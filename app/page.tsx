@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArnfaRibbon } from "@/components/ArnfaRibbon";
-import { HomeHero } from "@/components/HomeHero";
-import { SiteHeader } from "@/components/SiteHeader";
+import { Masthead } from "@/components/Masthead";
+import { FrontPageTop } from "@/components/FrontPageTop";
 import { SkyWindow } from "@/components/SkyWindow";
 import { TruthSection } from "@/components/TruthSection";
 import { TodayPick } from "@/components/TodayPick";
@@ -15,16 +15,13 @@ export const revalidate = 1800;
 export default function Home() {
   return (
     <main className="relative z-10 flex flex-col">
-      <SiteHeader />
+      <Masthead />
 
-      {/* HERO — full-bleed R3F sky with real BKK clock + weather */}
-      <HomeHero />
+      {/* FRONT PAGE — broadsheet folio + nameplate (the editorial front page, per the brand book) */}
+      <FrontPageTop />
 
-      {/* SKY WINDOW — today's go/wait/stay verdict (real forecast) */}
-      <SkyWindow />
-
-      {/* NOW STRIP — อ่านฟ้า ribbon, full-bleed, minor rhythm */}
-      <section className="arnfa-grid section-minor border-y border-hairline bg-surface/50 backdrop-blur-sm">
+      {/* ALIVE WEATHER STRIP — the อ่านฟ้า ribbon (real forecast), the broadsheet's living masthead band */}
+      <section className="arnfa-grid section-minor border-b border-hairline">
         <div className="col-content">
           <p className="font-display text-xs uppercase tracking-[0.25em] text-ink-faint mb-4">
             อ่านฟ้า — next six hours
@@ -32,6 +29,9 @@ export default function Home() {
           <ArnfaRibbon />
         </div>
       </section>
+
+      {/* SKY WINDOW — today's go/wait/stay verdict (real forecast) */}
+      <SkyWindow />
 
       {/* TODAY'S PICK — REAL live top area (was a fabricated mockup) */}
       <TodayPick />
