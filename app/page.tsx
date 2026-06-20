@@ -5,6 +5,7 @@ import { FrontPageTop } from "@/components/FrontPageTop";
 import { FrontPageLead } from "@/components/FrontPageLead";
 import { TheSkySection } from "@/components/TheSkySection";
 import { TruthSection } from "@/components/TruthSection";
+import { Colophon } from "@/components/Colophon";
 import { TodayPick } from "@/components/TodayPick";
 import { Logo } from "@/components/Logo";
 
@@ -41,6 +42,9 @@ export default function Home() {
 
       {/* ความจริง · THE IRON RULE — honesty-as-brand: 0 fabricated numbers + sources colophon */}
       <TruthSection />
+
+      {/* COLOPHON — the broadsheet's closing credits (type voices · ink = meaning · the drift) */}
+      <Colophon />
 
       <footer className="arnfa-grid section-minor border-t border-hairline pad-safe-b">
         <div className="col-content flex flex-col sm:flex-row items-start justify-between gap-4 text-sm text-ink-faint">

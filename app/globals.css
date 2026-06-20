@@ -148,6 +148,15 @@ body {
   to   { transform: translateY(0) scale(1); opacity: 1; }
 }
 
+/* af-travel — the colophon "drift" dot tracking left↔right (brand-book motion demo) */
+@keyframes af-travel {
+  0%   { left: 0; }
+  50%  { left: calc(100% - 18px); }
+  100% { left: 0; }
+}
+.arnfa-travel { animation: af-travel 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+@media (prefers-reduced-motion: reduce) { .arnfa-travel { animation: none; left: calc(50% - 9px); } }
+
 /* Logo sun rises on load (info-light flourish; reduced-motion keeps it static-up). */
 @keyframes arnfa-sunrise {
   from { transform: translateY(0.18em) scaleY(0.6); opacity: 0; }
