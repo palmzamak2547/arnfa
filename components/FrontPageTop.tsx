@@ -36,7 +36,7 @@ export function FrontPageTop() {
       {/* folio / edition line */}
       <div className="flex items-center justify-between gap-4 whitespace-nowrap border-y border-hairline py-2 font-display text-[0.6rem] uppercase tracking-[0.2em] text-ink-faint" style={{ borderTopColor: "var(--arnfa-ink)" }}>
         <span>{en ? "Daily sky edition" : "ฉบับฟ้าประจำวัน"}</span>
-        <span className="hidden tracking-[0.3em] md:inline">The Arnfah Almanac · หนังสือพิมพ์ฟ้า</span>
+        <span className="hidden tracking-[0.3em] md:inline">{en ? "The Arnfah Almanac" : "The Arnfah Almanac · หนังสือพิมพ์ฟ้า"}</span>
         <span className="tabular-nums">{dateStr || "—"} · {en ? "free" : "ฟรี"}</span>
       </div>
 

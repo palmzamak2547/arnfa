@@ -17,8 +17,12 @@ export type DayVerdict = {
   kind: VerdictKind;
   /** Short Thai headline, e.g. "ออกได้เลย" */
   headline: string;
+  /** English headline (for the TH/EN toggle) */
+  headlineEn: string;
   /** One-line Thai reason naming the real window/condition */
   reason: string;
+  /** English reason */
+  reasonEn: string;
   /** Label of the best window, e.g. "15:00–18:00" (empty for stay) */
   windowLabel: string;
   /** ISO of the best hour to be outside (for chip/scroll), null if none */
@@ -50,7 +54,7 @@ const hourLabel = (iso: string) => {
 export function dayVerdict(hours: HourlyForecast[], nowIndex = 0, lookahead = 9): DayVerdict {
   const slice = hours.slice(nowIndex, nowIndex + lookahead);
   if (slice.length === 0) {
-    return { kind: "stay", headline: "ยังอ่านฟ้าไม่ได้", reason: "ลองใหม่อีกครั้งนะ", windowLabel: "", bestHourISO: null, nowGoodness: 0, bestGoodness: 0 };
+    return { kind: "stay", headline: "ยังอ่านฟ้าไม่ได้", headlineEn: "Can't read the sky yet", reason: "ลองใหม่อีกครั้งนะ", reasonEn: "Try again in a moment", windowLabel: "", bestHourISO: null, nowGoodness: 0, bestGoodness: 0 };
   }
 
   const goodness = slice.map(outdoorGoodness);
@@ -75,9 +79,13 @@ export function dayVerdict(hours: HourlyForecast[], nowIndex = 0, lookahead = 9)
     return {
       kind: "go",
       headline: "ออกได้เลย",
+      headlineEn: "Step out now",
       reason: windowLabel
         ? `ฟ้ากำลังเป็นใจ — ดีไปถึงราว ${endLabel(slice, hi)}`
         : "ฟ้ากำลังเป็นใจ ออกไปข้างนอกได้",
+      reasonEn: windowLabel
+        ? `The sky's on your side — good until about ${endLabel(slice, hi)}`
+        : "The sky's on your side — head out",
       windowLabel,
       bestHourISO: slice[bestIdx].hourISO,
       nowGoodness,
@@ -91,7 +99,9 @@ export function dayVerdict(hours: HourlyForecast[], nowIndex = 0, lookahead = 9)
     return {
       kind: "wait",
       headline: `รอถึง ${hourLabel(slice[bestIdx].hourISO)}`,
+      headlineEn: `Wait until ${hourLabel(slice[bestIdx].hourISO)}`,
       reason: `${why} — ช่วงดีสุดคือ ${windowLabel}`,
+      reasonEn: `${reasonNowEn(f0, isNight)} — best window is ${windowLabel}`,
       windowLabel,
       bestHourISO: slice[bestIdx].hourISO,
       nowGoodness,
@@ -103,7 +113,9 @@ export function dayVerdict(hours: HourlyForecast[], nowIndex = 0, lookahead = 9)
   return {
     kind: "stay",
     headline: "วันนี้เก็บไว้ในร่ม",
+    headlineEn: "An indoor day",
     reason: stayReason(slice),
+    reasonEn: stayReasonEn(slice),
     windowLabel: "",
     bestHourISO: null,
     nowGoodness,
@@ -130,4 +142,19 @@ function stayReason(slice: HourlyForecast[]): string {
   if (maxRain > 0.3) return "ฝนคุมโซนเกือบทั้งช่วง — คาเฟ่/ในร่มคุ้มกว่า";
   if (maxHeat > 0.7) return "ร้อนจัดเกือบทั้งวัน — ในร่มที่มีแอร์สบายกว่า";
   return "ฟ้าไม่ค่อยเป็นใจ — กิจกรรมในร่มน่าจะดีกว่า";
+}
+
+function reasonNowEn(f: HourlyForecast, isNight: boolean): string {
+  if (isNight) return "It's night now";
+  if (f.rainProb * f.rainIntensity > 0.25) return `rain around now ~${Math.round(f.rainProb * 100)}%`;
+  if (f.heatIndex > 0.6) return "it's scorching right now";
+  return "the sky isn't fully open yet";
+}
+
+function stayReasonEn(slice: HourlyForecast[]): string {
+  const maxRain = Math.max(...slice.map((f) => f.rainProb * f.rainIntensity));
+  const maxHeat = Math.max(...slice.map((f) => f.heatIndex));
+  if (maxRain > 0.3) return "rain covers most of the window — a café or indoors is the better call";
+  if (maxHeat > 0.7) return "scorching most of the day — somewhere with AC is comfier";
+  return "the sky isn't cooperating — indoors is the better bet today";
 }

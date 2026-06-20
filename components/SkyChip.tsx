@@ -2,6 +2,7 @@
 
 import { clsx } from "clsx";
 import { skyStateFrom, type SkyState } from "@/lib/core/skyState";
+import { useLang } from "@/lib/i18n/useLang";
 
 /** SkyChip — signature "forecast at arrival time" badge. Spec: 01-design-lock § Signature 2 */
 
@@ -18,13 +19,13 @@ export type SkyChipProps = {
   className?: string;
 };
 
-const STATE_COPY: Record<SkyState, { th: string; stroke: string; bg: string }> = {
-  clear:  { th: "ฟ้าเปิด", stroke: "var(--arnfa-accent-sun)",         bg: "rgba(242,166,90,0.10)" },
-  partly: { th: "โปร่ง",   stroke: "var(--arnfa-success)",            bg: "rgba(123,166,138,0.10)" },
-  cloudy: { th: "ครึ้ม",   stroke: "var(--arnfa-ink-muted)",          bg: "rgba(75,82,99,0.08)" },
-  rain:   { th: "ฝนพรำ",   stroke: "var(--arnfa-accent-rain)",        bg: "rgba(91,127,184,0.12)" },
-  storm:  { th: "ฝนหนัก",  stroke: "var(--arnfa-accent-indoor-warm)", bg: "rgba(217,83,74,0.12)" },
-  night:  { th: "กลางคืน", stroke: "var(--arnfa-accent-rain)",        bg: "rgba(74,88,120,0.14)" },
+const STATE_COPY: Record<SkyState, { th: string; en: string; stroke: string; bg: string }> = {
+  clear:  { th: "ฟ้าเปิด", en: "Clear",      stroke: "var(--arnfa-accent-sun)",         bg: "rgba(242,166,90,0.10)" },
+  partly: { th: "โปร่ง",   en: "Fair",       stroke: "var(--arnfa-success)",            bg: "rgba(123,166,138,0.10)" },
+  cloudy: { th: "ครึ้ม",   en: "Cloudy",     stroke: "var(--arnfa-ink-muted)",          bg: "rgba(75,82,99,0.08)" },
+  rain:   { th: "ฝนพรำ",   en: "Light rain", stroke: "var(--arnfa-accent-rain)",        bg: "rgba(91,127,184,0.12)" },
+  storm:  { th: "ฝนหนัก",  en: "Heavy rain", stroke: "var(--arnfa-accent-indoor-warm)", bg: "rgba(217,83,74,0.12)" },
+  night:  { th: "กลางคืน", en: "Night",      stroke: "var(--arnfa-accent-rain)",        bg: "rgba(74,88,120,0.14)" },
 };
 
 function StateGlyph({ state, color }: { state: SkyState; color: string }) {
@@ -78,7 +79,9 @@ function StateGlyph({ state, color }: { state: SkyState; color: string }) {
 }
 
 export function SkyChip({ state, arrivalLabel, tempC, rainProb, size = "md", className }: SkyChipProps) {
+  const { en } = useLang();
   const copy = STATE_COPY[state];
+  const label = en ? copy.en : copy.th;
   const showRain = typeof rainProb === "number" && rainProb > 0.15;
   return (
     <span
@@ -88,10 +91,10 @@ export function SkyChip({ state, arrivalLabel, tempC, rainProb, size = "md", cla
         className,
       )}
       style={{ background: copy.bg }}
-      title={`ฟ้าตอน ${arrivalLabel}: ${copy.th}`}
+      title={en ? `Sky at ${arrivalLabel}: ${copy.en}` : `ฟ้าตอน ${arrivalLabel}: ${copy.th}`}
     >
       <StateGlyph state={state} color={copy.stroke} />
-      <span className="font-medium text-ink">{copy.th}</span>
+      <span className="font-medium text-ink">{label}</span>
       <span className="text-ink-faint tabular-nums">{arrivalLabel}</span>
       {typeof tempC === "number" && <span className="text-ink-muted tabular-nums">{Math.round(tempC)}°</span>}
       {showRain && <span className="text-rain tabular-nums">{Math.round(rainProb! * 100)}%</span>}

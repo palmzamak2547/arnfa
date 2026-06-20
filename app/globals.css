@@ -159,7 +159,7 @@ body {
 
 /* ============ Brand-book sky + editorial motion (af-*) ============ */
 @keyframes af-glow { 0%,100% { opacity: .55; } 50% { opacity: .95; } }
-@keyframes af-spin { to { transform: rotate(360deg); } }
+@keyframes af-spin { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
 @keyframes af-cloud-cross { from { transform: translateX(-26vw); } to { transform: translateX(120vw); } }
 @keyframes af-rain { 0% { transform: translateY(-26px); opacity: 0; } 18% { opacity: .5; } 100% { transform: translateY(150px); opacity: 0; } }
 @keyframes af-sunrise2 { 0% { transform: translateY(40%) scale(.7); opacity: 0; } 100% { transform: translateY(0) scale(1); opacity: 1; } }

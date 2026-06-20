@@ -41,7 +41,8 @@ export function SkyBackdrop() {
   }, []);
 
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[560px] overflow-hidden">
+    <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-0 h-[560px] overflow-hidden"
+      style={{ maskImage: "linear-gradient(to bottom, #000 68%, transparent)", WebkitMaskImage: "linear-gradient(to bottom, #000 68%, transparent)" }}>
       {/* SUN — glow + slow rotating rays */}
       {sky === "clear" && (
         <div className="absolute top-1.5 right-[5%] h-[min(34vw,400px)] w-[min(34vw,400px)]">

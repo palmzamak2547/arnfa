@@ -60,10 +60,10 @@ export function FrontPageLead() {
             {en ? "Today's Verdict" : "คำตัดสินประจำวัน"}
           </p>
           <h1 className="font-thai-serif font-light text-ink" style={{ fontSize: "clamp(2.3rem, 1.2rem + 4.6vw, 5rem)", lineHeight: 1.18, letterSpacing: "-0.01em" }}>
-            {data ? data.verdict.headline : (en ? "Reading the sky…" : "กำลังอ่านฟ้า…")}
+            {data ? (en ? data.verdict.headlineEn : data.verdict.headline) : (en ? "Reading the sky…" : "กำลังอ่านฟ้า…")}
           </h1>
           <p className="mt-4 max-w-[36ch] font-thai-serif font-light text-ink-muted" style={{ fontSize: "clamp(1.1rem, 1rem + 0.5vw, 1.45rem)", lineHeight: 1.45 }}>
-            {data ? data.verdict.reason : (en ? "Pulling Bangkok's real hourly forecast." : "กำลังดึงฟ้าจริงรายชั่วโมงของกรุงเทพฯ")}
+            {data ? (en ? data.verdict.reasonEn : data.verdict.reason) : (en ? "Pulling Bangkok's real hourly forecast." : "กำลังดึงฟ้าจริงรายชั่วโมงของกรุงเทพฯ")}
           </p>
 
           <p className="mt-6 border-b border-hairline pb-3.5 font-display text-[0.74rem] tracking-[0.04em] text-ink-faint">
