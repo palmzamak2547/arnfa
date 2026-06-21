@@ -14,11 +14,11 @@ import { LogoMark } from "./Logo";
  * (zero-prop, self-sources language + auth). Sticky, with a paper scrim for legibility.
  */
 const NAV = [
+  { href: "/explore", th: "เที่ยว กทม.", en: "Explore" },
   { href: "/where", th: "ไปไหนดี", en: "Where" },
   { href: "/ai", th: "ถาม AI", en: "Ask AI" },
   { href: "/signals", th: "สัญญาณเมือง", en: "Signals" },
   { href: "/data", th: "ที่มาข้อมูล", en: "Sources" },
-  { href: "/trips", th: "ทริปของฉัน", en: "Trips" },
 ];
 
 export function Masthead() {

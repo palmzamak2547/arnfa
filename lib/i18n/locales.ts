@@ -44,7 +44,27 @@ export const resources = {
       "budget.quick": "Quick stop",
     },
   },
+  zh: {
+    translation: {
+      brand: "Arnfah",
+      "hero.kicker": "อ่านฟ้า · Arnfah",
+      "hero.title1": "今天天气晴朗",
+      "hero.title2": "— 去哪儿好？",
+      "hero.sub": "为你读懂天气的决策引擎。规划泰国各地的行程，贴合你到达时的天气 — 下雨了，Arnfah 会帮你换个更合适的地方。",
+      "hero.cta.plan": "开始规划",
+      "hero.cta.how": "Arnfah 如何思考",
+      "plan.title": "规划行程",
+      "plan.area": "区域",
+      "plan.time": "时间",
+      "plan.loading": "正在读取天气",
+      "plan.error": "暂时无法读取天气",
+      "plan.empty": "暂无推荐 — 试试增加时间或换个区域",
+      "budget.half": "半天",
+      "budget.full": "全天",
+      "budget.quick": "快速",
+    },
+  },
 } as const;
 
 export type Locale = keyof typeof resources;
-export const LOCALES: Locale[] = ["th", "en"];
+export const LOCALES: Locale[] = ["th", "en", "zh"];

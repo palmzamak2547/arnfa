@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
  * it as the SSR + first-paint baseline so reload renders the chosen language with
  * NO Thai→English flash. Defaults to Thai.
  */
-export const LocaleContext = createContext<"th" | "en">("th");
+export const LocaleContext = createContext<"th" | "en" | "zh">("th");
 
 /**
  * useLang — the smooth language read. SSR and the FIRST client paint always report
@@ -45,5 +45,7 @@ export function useLang(): { en: boolean; lang: string } {
   const hydrated = useHydrated();
   const initial = useContext(LocaleContext);
   const lang = hydrated ? i18n.language : initial;
-  return { en: lang === "en", lang };
+  // `en` means "render the non-Thai string" — true for EN *and* ZH, so adding 中文 never breaks a
+  // component that only has en/th (ZH users see English); ZH-aware components branch on `lang`.
+  return { en: lang !== "th", lang };
 }

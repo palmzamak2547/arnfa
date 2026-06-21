@@ -28,7 +28,7 @@ export function I18nProvider({ children, initialLocale = "th" }: { children: Rea
     let lng: Locale = initialLocale;
     try {
       const saved = localStorage.getItem(STORAGE_KEY) as Locale | null;
-      if (saved === "th" || saved === "en") lng = saved;
+      if (saved === "th" || saved === "en" || saved === "zh") lng = saved;
     } catch { /* localStorage may be unavailable */ }
     if (lng !== i18n.language) i18n.changeLanguage(lng);
     markHydrated(); // AFTER changeLanguage, so the hydrated read sees the right language

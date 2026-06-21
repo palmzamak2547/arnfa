@@ -115,7 +115,8 @@ export default async function RootLayout({
   // Read the saved locale server-side so SSR renders in the user's language (no
   // Thai→English flash on reload for those who chose English). Thai by default.
   const cookieStore = await cookies();
-  const initialLocale = cookieStore.get("arnfa.locale")?.value === "en" ? "en" : "th";
+  const localeCookie = cookieStore.get("arnfa.locale")?.value;
+  const initialLocale = localeCookie === "en" ? "en" : localeCookie === "zh" ? "zh" : "th";
   return (
     <html
       lang={initialLocale}
