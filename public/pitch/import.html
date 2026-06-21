@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>อ่านฟ้า · Arnfah — Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Trirong:wght@300;400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4EFE6; --paper2:#EBE3D5; --panel:#E7DFCE;
+    --ink:#1A1F2B; --ink-soft:#5A5E68; --ink-faint:#8C8A82;
+    --sun:#F2A65A; --rain:#5B7FB8; --warm:#D9534A; --sage:#7BA68A;
+    --hair:rgba(26,31,43,.18); --hair-soft:rgba(26,31,43,.10);
+    --serif:"Fraunces","Trirong",Georgia,serif;
+    --thai-serif:"Trirong","Fraunces",serif;
+    --sans:"Inter","IBM Plex Sans Thai",sans-serif;
+    --thai-sans:"IBM Plex Sans Thai","Inter",sans-serif;
+    --mono:"IBM Plex Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#cfc7b8}
+  body{font-family:var(--thai-sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+  .slide{
+    position:relative;width:1920px;height:1080px;overflow:hidden;
+    background:var(--paper);color:var(--ink);
+    margin:0 auto;
+  }
+  .slide.alt{background:var(--paper2)}
+  /* uniform inner frame + chrome */
+  .frame{position:absolute;inset:74px 110px;display:flex;flex-direction:column}
+  .top{display:flex;justify-content:space-between;align-items:flex-start;
+    font-family:var(--mono);font-size:17px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);padding-bottom:18px;border-bottom:1px solid var(--hair)}
+  .top .brand{display:flex;align-items:center;gap:12px;color:var(--ink);letter-spacing:.10em}
+  .top .brand img{width:26px;height:28px;display:block}
+  .top .brand b{font-weight:500}
+  .bottom{margin-top:auto;display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:16px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-faint);padding-top:16px;border-top:1px solid var(--hair)}
+  .bottom .pg{color:var(--ink)}
+  .body{flex:1;display:flex;min-height:0;padding:0}
+
+  .kicker{display:block;margin-bottom:18px;font-family:var(--mono);font-size:19px;letter-spacing:.22em;text-transform:uppercase;color:var(--warm);font-weight:500}
+  h1,h2{font-family:var(--thai-serif);font-weight:400;line-height:1.04;letter-spacing:-.01em;color:var(--ink)}
+  .lead{font-family:var(--thai-sans);color:var(--ink-soft);font-weight:300}
+
+  /* screenshot plate */
+  .plate{position:relative;background:#fff;border:1px solid var(--hair);
+    box-shadow:0 30px 60px -28px rgba(26,31,43,.35),0 4px 14px -8px rgba(26,31,43,.25);overflow:hidden}
+  .plate img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+  .cap{font-family:var(--mono);font-size:15px;letter-spacing:.08em;color:var(--ink-faint);margin-top:14px;text-transform:none}
+  .cap b{color:var(--ink-soft);font-weight:500}
+
+  .pill{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair);border-radius:999px;
+    padding:9px 18px;font-family:var(--mono);font-size:16px;letter-spacing:.04em;color:var(--ink-soft);background:rgba(255,255,255,.4)}
+  .dot{width:9px;height:9px;border-radius:50%}
+
+  /* ---- slide 1 cover ---- */
+  .cover .body{align-items:stretch;gap:64px}
+  .cover .left{flex:1.15;display:flex;flex-direction:column;justify-content:center}
+  .cover .wordmark{font-family:var(--thai-serif);font-weight:400;font-size:200px;line-height:.92;color:var(--ink);letter-spacing:-.02em}
+  .cover .latin{font-family:var(--serif);font-weight:300;font-size:54px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);margin:14px 0 0 6px}
+  .cover .oneliner{font-family:var(--thai-serif);font-weight:400;font-size:50px;line-height:1.28;color:var(--ink);margin-top:54px;max-width:18ch}
+  .cover .oneliner em{font-style:italic;color:var(--warm)}
+  .cover .sub{font-family:var(--sans);font-style:italic;font-size:26px;color:var(--ink-faint);margin-top:20px}
+  .cover .right{flex:.85;position:relative;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(165deg,#AFC8E6 0%,#E9DcC4 52%,#F4D9B8 100%);border:1px solid var(--hair);overflow:hidden}
+  .cover .right .sun{position:absolute;width:330px;height:330px;border-radius:50%;background:#F2A65A;top:120px;right:120px;filter:blur(2px);opacity:.92}
+  .cover .right .mark{width:300px;height:auto;position:relative;z-index:2;filter:drop-shadow(0 18px 30px rgba(26,31,43,.25))}
+  .cover .meta{margin-top:54px;display:flex;gap:14px;flex-wrap:wrap}
+
+  /* ---- slide 2 pain ---- */
+  .pain .body{gap:70px;align-items:stretch}
+  .pain .l{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .pain h1{font-size:88px;max-width:13ch}
+  .pain .lead{font-size:30px;line-height:1.5;margin-top:34px;max-width:30ch}
+  .pain .stat{margin-top:48px;display:flex;align-items:baseline;gap:20px}
+  .pain .stat .n{font-family:var(--serif);font-size:120px;line-height:.9;color:var(--warm);font-weight:300}
+  .pain .stat .t{font-family:var(--thai-sans);font-size:24px;color:var(--ink-soft);max-width:16ch;line-height:1.35}
+  .pain .r{width:760px;display:flex;flex-direction:column}
+  .pain .r .plate{flex:1}
+
+  /* ---- slide 3 gap (typographic) ---- */
+  .gap .body{flex-direction:column;align-items:center;justify-content:center;text-align:center}
+  .gap .eq{font-family:var(--thai-serif);font-weight:400;font-size:132px;line-height:1.12;letter-spacing:-.02em}
+  .gap .eq .ne{color:var(--warm);font-style:italic;padding:0 10px}
+  .gap .sub{font-family:var(--thai-sans);font-weight:300;font-size:34px;line-height:1.55;color:var(--ink-soft);margin-top:54px;max-width:34ch}
+  .gap .sub b{color:var(--ink);font-weight:500}
+
+  /* ---- generic two-col section ---- */
+  .two .body{gap:74px;align-items:stretch}
+  .two .l{display:flex;flex-direction:column;justify-content:center}
+  .two .r{display:flex;flex-direction:column;justify-content:center}
+  .colhead h2{font-size:74px;max-width:14ch;margin-top:22px}
+
+  /* ---- slide 4 engine (3 steps) ---- */
+  .engine .body{flex-direction:column}
+  .engine .head{margin-bottom:30px}
+  .engine h2{font-size:66px;margin-top:18px;max-width:24ch}
+  .engine .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;margin-top:6px}
+  .engine .step{border-top:2px solid var(--ink);padding-top:20px}
+  .engine .step .s-k{font-family:var(--mono);font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:var(--warm)}
+  .engine .step h3{font-family:var(--thai-serif);font-weight:500;font-size:38px;margin-top:10px;color:var(--ink)}
+  .engine .step p{font-family:var(--thai-sans);font-weight:300;font-size:22px;line-height:1.45;color:var(--ink-soft);margin-top:10px}
+  .engine .strip{margin-top:40px;flex:1;min-height:0;display:flex;gap:24px}
+  .engine .strip .plate{flex:1}
+
+  /* ---- slide 5 demo (hero) ---- */
+  .demo .body{gap:56px;align-items:stretch}
+  .demo .big{flex:1.7;display:flex;flex-direction:column}
+  .demo .big .plate{flex:1}
+  .demo .side{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .demo h2{font-size:60px;max-width:13ch}
+  .demo .note{margin-top:30px;border-left:3px solid var(--warm);padding-left:24px}
+  .demo .note .t{font-family:var(--thai-sans);font-size:26px;line-height:1.5;color:var(--ink-soft);font-weight:300}
+  .demo .note .t b{color:var(--ink);font-weight:600}
+  .demo .punch{font-family:var(--thai-serif);font-style:italic;font-size:32px;line-height:1.4;color:var(--ink);margin-top:34px;max-width:18ch}
+
+  /* ---- slide 6 ai ---- */
+  .ai .l{width:600px}
+  .ai .l .plate{height:100%}
+  .ai .r{flex:1}
+  .ai h2{font-size:64px;max-width:13ch}
+  .ai .steps{margin-top:30px;display:flex;flex-direction:column;gap:16px}
+  .ai .steps .row{display:flex;gap:16px;align-items:baseline}
+  .ai .steps .row .i{font-family:var(--mono);font-size:18px;color:var(--warm);min-width:30px}
+  .ai .steps .row .x{font-family:var(--thai-sans);font-size:24px;line-height:1.4;color:var(--ink-soft);font-weight:300}
+  .ai .steps .row .x b{color:var(--ink);font-weight:500}
+  .ai .chips{margin-top:34px;display:flex;gap:12px;flex-wrap:wrap}
+
+  /* ---- slide 7 fact (big numbers) ---- */
+  .fact .body{gap:64px;align-items:stretch}
+  .fact .l{flex:1.25;display:flex;flex-direction:column;justify-content:center}
+  .fact .nums{display:flex;gap:70px;margin-top:8px}
+  .fact .nums .n .big{font-family:var(--serif);font-weight:300;font-size:230px;line-height:.82;color:var(--ink)}
+  .fact .nums .n.green .big{color:var(--sage)}
+  .fact .nums .n .lb{font-family:var(--thai-sans);font-size:24px;color:var(--ink-soft);margin-top:14px;max-width:14ch;line-height:1.35}
+  .fact h2{font-size:58px;max-width:18ch;margin-top:14px}
+  .fact .lead{font-size:25px;line-height:1.5;margin-top:24px;max-width:32ch}
+  .fact .r{width:560px;display:flex;flex-direction:column}
+  .fact .r .plate{flex:1}
+
+  /* ---- slide 8 moat (flywheel) ---- */
+  .moat .body{gap:64px;align-items:center}
+  .moat .l{flex:1}
+  .moat h2{font-size:66px;max-width:13ch}
+  .moat .lead{font-size:26px;line-height:1.55;margin-top:28px;max-width:30ch}
+  .moat .lead b{color:var(--ink);font-weight:600}
+  .moat .r{width:720px;height:640px;position:relative;display:flex;align-items:center;justify-content:center}
+
+  /* ---- slide 9 who+model ---- */
+  .who .body{gap:0;align-items:stretch}
+  .who .col{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 56px}
+  .who .col:first-child{padding-left:0;border-right:1px solid var(--hair)}
+  .who .col:last-child{padding-right:0}
+  .who .col .ck{font-family:var(--mono);font-size:18px;letter-spacing:.2em;text-transform:uppercase;color:var(--warm)}
+  .who h3{font-family:var(--thai-serif);font-weight:500;font-size:46px;margin-top:14px;line-height:1.1;max-width:14ch}
+  .who p{font-family:var(--thai-sans);font-weight:300;font-size:24px;line-height:1.5;color:var(--ink-soft);margin-top:18px;max-width:24ch}
+  .who p b{color:var(--ink);font-weight:600}
+  .who ul{margin-top:22px;list-style:none;display:flex;flex-direction:column;gap:12px}
+  .who li{font-family:var(--thai-sans);font-size:22px;color:var(--ink-soft);display:flex;gap:12px;align-items:baseline}
+  .who li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--sage);flex:none;transform:translateY(8px)}
+  .who .plate{margin-top:26px;height:230px}
+
+  /* ---- slide 10 close ---- */
+  .close{background:linear-gradient(168deg,#1A1F2B 0%,#222a3a 60%,#2b2536 100%);color:var(--paper)}
+  .close .top,.close .bottom{color:rgba(244,239,230,.55);border-color:rgba(244,239,230,.2)}
+  .close .top .brand{color:var(--paper)}
+  .close .bottom .pg{color:var(--paper)}
+  .close .body{gap:72px;align-items:center}
+  .close .l{flex:1.1;display:flex;flex-direction:column;justify-content:center}
+  .close .kicker{color:var(--sun)}
+  .close .one{font-family:var(--thai-serif);font-weight:400;font-size:78px;line-height:1.2;color:var(--paper);margin-top:24px;max-width:16ch}
+  .close .one em{font-style:italic;color:var(--sun)}
+  .close .meta{margin-top:40px;font-family:var(--mono);font-size:20px;letter-spacing:.06em;color:rgba(244,239,230,.7);line-height:2}
+  .close .meta b{color:var(--paper)}
+  .close .r{width:560px}
+  .close .checks{list-style:none;display:flex;flex-direction:column;gap:20px}
+  .close .checks li{font-family:var(--thai-sans);font-size:27px;color:var(--paper);display:flex;gap:18px;align-items:baseline}
+  .close .checks li .c{color:var(--sage);font-family:var(--mono);font-weight:500}
+  .close .gap{margin-top:30px;border-top:1px solid rgba(244,239,230,.2);padding-top:22px;
+    font-family:var(--thai-sans);font-size:22px;color:rgba(244,239,230,.7)}
+  .close .gap b{color:var(--sun);font-weight:600}
+  .close .mark{width:62px;height:auto;margin-bottom:6px}
+
+  /* screen presentation niceties (ignored in print) */
+  @media screen{
+    body{padding:30px 0}
+    .slide{box-shadow:0 40px 80px -30px rgba(0,0,0,.5);margin-bottom:30px}
+  }
+  @page{size:1920px 1080px;margin:0}
+  @media print{
+    html,body{background:#fff}
+    body{padding:0}
+    .slide{margin:0;box-shadow:none;page-break-after:always;break-after:page}
+    .slide:last-child{page-break-after:auto}
+  }
+</style>
+</head>
+<body>
+
+<!-- 1 · COVER -->
+<section class="slide cover" data-document-role="page" data-label="Cover">
+  <div class="frame">
+    <div class="top">
+      <span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span>
+      <span>BDI Bangkok Hackathon 2026 · Track 1</span>
+    </div>
+    <div class="body">
+      <div class="left">
+        <div class="wordmark">อ่านฟ้า</div>
+        <div class="latin">Arnfah</div>
+        <div class="oneliner">บอกฟ้า แล้วได้ทริป<br>ที่<em>ฝนพังไม่ได้</em>.</div>
+        <div class="sub">Tell it the sky, get a trip the rain can't ruin.</div>
+        <div class="meta">
+          <span class="pill"><span class="dot" style="background:var(--sage)"></span>LIVE · arnfa.vercel.app</span>
+          <span class="pill">TH / EN / 中文</span>
+          <span class="pill">PWA · MCP-native</span>
+        </div>
+      </div>
+      <div class="right">
+        <div class="sun"></div>
+        <img class="mark" src="https://arnfa.vercel.app/deck/logo-mark.png" alt="Arnfah">
+      </div>
+    </div>
+    <div class="bottom"><span>A weather-aware trip decision engine for Bangkok</span><span class="pg">01 / 10</span></div>
+  </div>
+</section>
+
+<!-- 2 · THE PAIN -->
+<section class="slide pain" data-document-role="page" data-label="The Pain">
+  <div class="frame">
+    <div class="top"><span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span><span>01 — Empathize</span></div>
+    <div class="body">
+      <div class="l">
+        <div class="kicker">ความจริงของกรุงเทพฯ</div>
+        <h1>มีเวลาว่าง อยากออกไป — แต่ฝนกับฝุ่นพังทริปอีกแล้ว</h1>
+        <p class="lead">แอปอากาศบอก “พยากรณ์” แต่ไม่มีใครเปลี่ยนมันเป็น “การตัดสินใจ”. คำถามจริงเกิดขึ้นทุกวัน — โดยเฉพาะกับนักท่องเที่ยว.</p>
+        <div class="stat">
+          <span class="t" style="font-family:var(--thai-serif);font-size:38px;color:var(--ink);line-height:1.3;max-width:24ch;font-weight:400">ฤดูฝนยาวหลายเดือน บวกฝุ่น PM2.5 หน้าหนาว — กรุงเทพฯ เจอทั้งสองอย่าง.</span>
+        </div>
+      </div>
+      <div class="r">
+        <div class="plate"><img src="https://arnfa.vercel.app/deck/home-sq.png" alt=""></div>
+        <div class="cap"><b>arnfa.vercel.app</b> — สภาพฟ้ากรุงเทพฯ ตอนนี้จริง ไม่ใช่ภาพจำลอง</div>
+      </div>
+    </div>
+    <div class="bottom"><span>The pain</span><span class="pg">02 / 10</span></div>
+  </div>
+</section>
+
+<!-- 3 · THE GAP -->
+<section class="slide gap alt" data-document-role="page" data-label="The Gap">
+  <div class="frame">
+    <div class="top"><span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span><span>02 — Define</span></div>
+    <div class="body">
+      <div class="eq">พยากรณ์อากาศ <span class="ne">≠</span><br>การตัดสินใจ</div>
+      <p class="sub">Google Maps บอก “มีอะไรใกล้” · พยากรณ์บอก “ฝน 60%” — <b>ไม่มีใครบอกว่า ไปไหน ตอนไหน เลี่ยงฝนกับฝุ่นยังไง</b> ในอีกสองชั่วโมงข้างหน้า.</p>
+    </div>
+    <div class="bottom"><span>The gap</span><span class="pg">03 / 10</span></div>
+  </div>
+</section>
+
+<!-- 4 · DECISION ENGINE -->
+<section class="slide engine" data-document-role="page" data-label="Decision Engine">
+  <div class="frame">
+    <div class="top"><span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span><span>03 — Ideate</span></div>
+    <div class="body">
+      <div class="head">
+        <div class="kicker">เครื่องยนต์ตัดสินใจ — ในกรอบของ BDI</div>
+        <h2>อ่านฟ้าอ่านสัญญาณเมือง 3 อย่าง แล้วเปลี่ยนเป็นการตัดสินใจ</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="s-k">Understand</div><h3>เข้าใจ</h3><p>ฟ้า + PM2.5 + เสียงประชาชน (Traffy Fondue) — สัญญาณสดของเมือง</p></div>
+        <div class="step"><div class="s-k">Predict</div><h3>ทำนาย</h3><p>ฝนใน 15 นาที (nowcast) + วันไหนฟ้าเปิดสุดในสัปดาห์</p></div>
+        <div class="step"><div class="s-k">Act</div><h3>จัดการ</h3><p>คำตัดสิน ไป/รอ/อยู่ + สลับแผนหนีฝน + ไปไหนดี</p></div>
+      </div>
+      <div class="strip">
+        <div class="plate"><img src="https://arnfa.vercel.app/deck/signals-wide.png" alt=""></div>
+      </div>
+    </div>
+    <div class="bottom"><span>Understand → Predict → Act · /signals</span><span class="pg">04 / 10</span></div>
+  </div>
+</section>
+
+<!-- 5 · LIVE DEMO -->
+<section class="slide demo" data-document-role="page" data-label="Live Demo">
+  <div class="frame">
+    <div class="top"><span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span><span>04 — Live demo</span></div>
+    <div class="body">
+      <div class="big">
+        <div class="plate"><img src="https://arnfa.vercel.app/deck/plan-wide.png" alt=""></div>
+        <div class="cap"><b>/plan</b> — ไทม์ไลน์ที่แต่ละจุดถูกตรึงไว้ที่ชั่วโมงคุณไปถึง</div>
+      </div>
+      <div class="side">
+        <div class="kicker">หัวใจของงาน</div>
+        <h2>ฝนเข้า → สลับแผนเอง</h2>
+        <div class="note"><div class="t">ฝนมา 16:00 → จุดกลางแจ้ง <b>สลับเป็นในร่ม</b>อัตโนมัติ การ์ดอุ่นขึ้น พร้อมเหตุผลภาษาไทยหนึ่งบรรทัด.</div></div>
+        <div class="punch">ไม่มี planner ไหน จับสถานที่กับฟ้าตอนคุณไปถึงแบบนี้.</div>
+      </div>
+    </div>
+    <div class="bottom"><span>The swap — the killer moment</span><span class="pg">05 / 10</span></div>
+  </div>
+</section>
+
+<!-- 6 · ARNFAH AI -->
+<section class="slide ai two" data-document-role="page" data-label="Arnfah AI">
+  <div class="frame">
+    <div class="top"><span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span><span>05 — Agentic</span></div>
+    <div class="body">
+      <div class="l">
+        <div class="plate"><img src="https://arnfa.vercel.app/deck/ai-port.png" alt=""></div>
+      </div>
+      <div class="r">
+        <div class="kicker">Arnfah AI</div>
+        <h2>พิมพ์ภาษาไทย ได้แผนจริงจากฟ้าจริง</h2>
+        <div class="steps">
+          <div class="row"><span class="i">01</span><span class="x"><b>NVIDIA NIM</b> อ่าน intent → ตีเป็นพื้นที่/เวลาจริง</span></div>
+          <div class="row"><span class="i">02</span><span class="x"><b>engine ตัวเดียวกับ UI</b> จัดแผนจากพยากรณ์ + POI จริง</span></div>
+          <div class="row"><span class="i">03</span><span class="x">AI <b>เล่าแผนนั้น</b> เป็นไทยอุ่น ๆ — คุยต่อได้ (multi-turn)</span></div>
+        </div>
+        <div class="punch" style="font-family:var(--thai-sans);font-style:normal;font-size:23px;color:var(--ink-soft);font-weight:300;margin-top:26px;max-width:30ch">Iron Rule 0 — โมเดลเป็นล่าม ไม่เคยแต่งสถานที่หรืออากาศเอง.</div>
+        <div class="chips">
+          <span class="pill">NVIDIA NIM</span><span class="pill">Nemotron</span>
+          <span class="pill">Thai-LLM (อธิปไตย)</span><span class="pill">MCP-native</span>
+        </div>
+      </div>
+    </div>
+    <div class="bottom"><span>ถามอ่านฟ้า · /ai</span><span class="pg">06 / 10</span></div>
+  </div>
+</section>
+
+<!-- 7 · FACT NOT ESTIMATION -->
+<section class="slide fact alt" data-document-role="page" data-label="FACT not estimation">
+  <div class="frame">
+    <div class="top"><span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span><span>06 — Data as trust</span></div>
+    <div class="body">
+      <div class="l">
+        <div class="kicker">FACT ไม่ใช่ประมาณการ</div>
+        <div class="nums">
+          <div class="n"><div class="big">15</div><div class="lb">แหล่งข้อมูลเปิด รวมข้อมูลรัฐไทย</div></div>
+          <div class="n green"><div class="big">0</div><div class="lb">ตัวเลขที่กุขึ้น — ทุกอย่างสืบถึงแหล่ง</div></div>
+        </div>
+        <h2>ทุกตัวเลขมี “License” กำกับ</h2>
+        <p class="lead">Air4Thai · สวน/ห้องหลบร้อน กทม. · รถไฟฟ้า · DOH · Traffy — กฎ “cite source + License” ของงาน เราทำมาในตัวตั้งแต่แรก.</p>
+      </div>
+      <div class="r">
+        <div class="plate"><img src="https://arnfa.vercel.app/deck/data-sq.png" alt=""></div>
+        <div class="cap"><b>/data</b> — แคตาล็อกแหล่งข้อมูลพร้อมสัญญาอนุญาต</div>
+      </div>
+    </div>
+    <div class="bottom"><span>Every number traced · zero fabricated</span><span class="pg">07 / 10</span></div>
+  </div>
+</section>
+
+<!-- 8 · THE MOAT -->
+<section class="slide moat" data-document-role="page" data-label="The Moat">
+  <div class="frame">
+    <div class="top"><span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span><span>07 — Defensibility</span></div>
+    <div class="body">
+      <div class="l">
+        <div class="kicker">คูเมือง = ฟลายวีล ไม่ใช่อัลกอริทึม</div>
+        <h2>ยิ่ง AI เก่งขึ้น คูเมืองยิ่งกว้าง</h2>
+        <p class="lead">โปรไฟล์ความเข้ากับฟ้าเริ่มจากค่ากลาง (ก็อปได้). สินทรัพย์จริงคือ <b>👍/👎 “ฟ้าตรงไหม”</b> ของผู้ใช้จริง → engine เรียนรู้ “ที่นี่ดีตอนฝนไหม”. เป็น field data ไทยที่ frontier model scrape ไม่ได้.</p>
+      </div>
+      <div class="r">
+        <svg width="700" height="620" viewBox="0 0 700 620" fill="none">
+          <defs>
+            <marker id="ah" markerWidth="11" markerHeight="11" refX="6" refY="5.5" orient="auto"><path d="M1 1 L9 5.5 L1 10" stroke="#D9534A" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></marker>
+          </defs>
+          <path d="M350 90 A220 220 0 0 1 540 430" stroke="#D9534A" stroke-width="2.5" fill="none" marker-end="url(#ah)" opacity=".75"/>
+          <path d="M520 470 A220 220 0 0 1 180 470" stroke="#D9534A" stroke-width="2.5" fill="none" marker-end="url(#ah)" opacity=".75"/>
+          <path d="M160 430 A220 220 0 0 1 320 95" stroke="#D9534A" stroke-width="2.5" fill="none" marker-end="url(#ah)" opacity=".75"/>
+          <g font-family="IBM Plex Sans Thai,sans-serif" text-anchor="middle">
+            <g><circle cx="350" cy="78" r="64" fill="#fff" stroke="#1A1F2B" stroke-width="2"/><text x="350" y="72" font-size="22" font-weight="600" fill="#1A1F2B">ผู้ใช้</text><text x="350" y="100" font-size="18" fill="#5A5E68">เห็นแผน</text></g>
+            <g><circle cx="560" cy="450" r="64" fill="#fff" stroke="#1A1F2B" stroke-width="2"/><text x="560" y="444" font-size="22" font-weight="600" fill="#1A1F2B">👍 / 👎</text><text x="560" y="472" font-size="18" fill="#5A5E68">ฟ้าตรงไหม</text></g>
+            <g><circle cx="140" cy="450" r="64" fill="#fff" stroke="#1A1F2B" stroke-width="2"/><text x="140" y="440" font-size="20" font-weight="600" fill="#1A1F2B">engine</text><text x="140" y="466" font-size="17" fill="#5A5E68">เรียนรู้</text></g>
+            <g><circle cx="350" cy="330" r="50" fill="#7BA68A"/><text x="350" y="326" font-size="19" font-weight="600" fill="#fff">คูเมือง</text><text x="350" y="350" font-size="15" fill="#eef3ee">กว้างขึ้น</text></g>
+          </g>
+        </svg>
+      </div>
+    </div>
+    <div class="bottom"><span>The flywheel — a learning loop · LIVE</span><span class="pg">08 / 10</span></div>
+  </div>
+</section>
+
+<!-- 9 · WHO + MODEL -->
+<section class="slide who" data-document-role="page" data-label="Market & Model">
+  <div class="frame">
+    <div class="top"><span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span><span>08 — Market & model</span></div>
+    <div class="body">
+      <div class="col">
+        <div class="ck">ใคร — นักท่องเที่ยวก่อน</div>
+        <h3>นักท่องเที่ยวจ่าย คนไทยปกป้อง</h3>
+        <p><b>นักท่องเที่ยว</b> weather-naive ในกรุงเทพฯ ใช้จ่ายสูง — กรุงเทพฯ ติดเมืองเที่ยวอันดับต้นของโลก. <b>คนไทย</b>คือ data moat ที่ทำให้ engine แม่นขึ้น.</p>
+        <div class="plate"><img src="https://arnfa.vercel.app/deck/explore-wide.png" alt=""></div>
+        <div class="cap"><b>/explore</b> — โหมดนักท่องเที่ยว (TH / EN / 中文) · Sukhumvit beachhead</div>
+      </div>
+      <div class="col">
+        <div class="ck">โมเดล — B2B demand-routing</div>
+        <h3>ขาย “ดีมานด์วันฝนตก” ให้ร้าน</h3>
+        <p>ฝนเข้า คนไม่รู้จะหลบไหน → อ่านฟ้าส่งเขาไปร้านในร่มที่เข้ากับอากาศ → <b>ร้านได้ลูกค้าที่ปกติจะเสียไป</b>. ผู้ใช้ฟรีตลอด.</p>
+        <ul>
+          <li>ค่าจัดวาง (เป็นตัวเลือกที่ฟ้าแนะนำ)</li>
+          <li>Grab / LINE MAN affiliate (เดินทาง)</li>
+          <li>MuvMi last-mile (เมนทอร์ของเรา)</li>
+          <li>กทม. — ช่องทางจาก 0 → 10,000</li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom"><span>Tourists fund it · locals defend it · venues pay</span><span class="pg">09 / 10</span></div>
+  </div>
+</section>
+
+<!-- 10 · WHY WE WIN + ASK -->
+<section class="slide close" data-document-role="page" data-label="Why We Win">
+  <div class="frame">
+    <div class="top"><span class="brand"><img src="https://arnfa.vercel.app/deck/logo-mark.png" alt=""><b>อ่านฟ้า · Arnfah</b></span><span>09 — Why we win</span></div>
+    <div class="body">
+      <div class="l">
+        <img class="mark" src="https://arnfa.vercel.app/deck/logo-mark.png" alt="">
+        <div class="kicker">ปิดท้าย</div>
+        <div class="one">บอกฟ้า แล้วได้ทริป<br>ที่<em>ฝนพังไม่ได้</em>.</div>
+        <div class="meta">
+          <b>arnfa.vercel.app</b> · LIVE · TH / EN / 中文<br>
+          Beachhead: <b>สุขุมวิท</b> · Mentor: <b>MuvMi</b>
+        </div>
+      </div>
+      <div class="r">
+        <ul class="checks">
+          <li><span class="c">✓</span> โจทย์คนไทยจริง</li>
+          <li><span class="c">✓</span> Sovereign Thai-LLM + NVIDIA Nemotron</li>
+          <li><span class="c">✓</span> MVP ใช้งานได้จริง — ทุกอย่าง LIVE</li>
+          <li><span class="c">✓</span> ข้อมูลหลายแหล่ง มี License กำกับ</li>
+          <li><span class="c">✓</span> คุณค่าทั้งสังคมและธุรกิจ</li>
+          <li><span class="c">✓</span> ฟลายวีลเรียนรู้ทำงานแล้ว (LIVE)</li>
+        </ul>
+        <div class="gap">เหลือช่องเดียวอย่างตรงไปตรงมา — <b>ผู้ใช้จริง</b> ก่อน Demo Day (กำลังทำ).</div>
+      </div>
+    </div>
+    <div class="bottom"><span>บอกฟ้า แล้วได้ทริปที่ฝนพังไม่ได้</span><span class="pg">10 / 10</span></div>
+  </div>
+</section>
+
+</body>
+</html>
