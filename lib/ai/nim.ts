@@ -11,7 +11,9 @@ const NIM_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
 // Primary = best Thai (deepseek-v4-flash ~1.4s). Fallback MUST also be fast: when the
 // primary is rate-limited (429), llama-3.1-8b answers in ~1.6s — NOT the 9s llama-3.3-70b
 // (which made the chain 24s under load). Both fast → bounded latency for the demo + Vercel.
-const MODELS = ["deepseek-ai/deepseek-v4-flash", "meta/llama-3.1-8b-instruct"];
+// Last tier = NVIDIA's OWN Nemotron (only reached if both fast models fail on every key, so
+// latency stays bounded) — makes "Arnfah's AI runs on NVIDIA Nemotron" genuinely true.
+const MODELS = ["deepseek-ai/deepseek-v4-flash", "meta/llama-3.1-8b-instruct", "nvidia/llama-3.1-nemotron-70b-instruct"];
 
 export type ChatMsg = { role: "system" | "user" | "assistant"; content: string };
 

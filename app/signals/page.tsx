@@ -29,7 +29,7 @@ type Nowcast = { rainInMin: number | null; maxMm: number } | null;
 type TopArea = { th: string; en: string; tempC: number; rainProb: number } | null;
 
 export default function SignalsPage() {
-  const { en } = useLang();
+  const { en, lang } = useLang();
   const [hours, setHours] = useState<Forecast | null>(null);
   const [air, setAir] = useState<Air>(null);
   const [nowcast, setNowcast] = useState<Nowcast>(null);
@@ -100,7 +100,7 @@ export default function SignalsPage() {
       {/* ACT */}
       <Stage n="๓" word={en ? "Act" : "ตัดสินใจ"} q={en ? "What should you do?" : "แล้วควรทำยังไง?"} last>
         <Signal label={en ? "Today's verdict" : "คำตัดสินวันนี้"} src="Arnfah engine">
-          {verdict ? (en ? verdict.headlineEn : verdict.headline) : "—"}
+          {verdict ? (lang === "zh" ? verdict.headlineZh : en ? verdict.headlineEn : verdict.headline) : "—"}
         </Signal>
         <Signal label={en ? "Where to go now" : "ไปไหนดีตอนนี้"} src="nationwide ranking">
           {topArea ? <>{en ? topArea.en : topArea.th} <span className="text-ink-faint text-sm">{topArea.tempC}° · {topArea.rainProb}%</span></> : "—"}

@@ -161,7 +161,7 @@ export default function AiPage() {
           <p className="font-thai text-[0.7rem] text-ink-faint mt-10">
             {lastResp?.llm === "thai-sovereign"
               ? (en ? "Powered by a Thai-sovereign LLM — narrates Arnfah's real engine output only; never invents a place or the weather." : "ขับเคลื่อนด้วย Thai-LLM (อธิปไตย AI) — เล่าเฉพาะแผนจริงจาก engine ของอ่านฟ้า ไม่แต่งสถานที่หรือสภาพอากาศเอง")
-              : (en ? "Powered by NVIDIA NIM (Thai-LLM ready) — narrates Arnfah's real engine output only; never invents a place or the weather." : "ขับเคลื่อนด้วย NVIDIA NIM (พร้อมรองรับ Thai-LLM) — เล่าเฉพาะแผนจริงจาก engine ของอ่านฟ้า ไม่แต่งสถานที่หรือสภาพอากาศเอง")}
+              : (en ? "Powered by NVIDIA NIM + Nemotron (Thai-LLM ready) — narrates Arnfah's real engine output only; never invents a place or the weather." : "ขับเคลื่อนด้วย NVIDIA NIM + Nemotron (พร้อมรองรับ Thai-LLM) — เล่าเฉพาะแผนจริงจาก engine ของอ่านฟ้า ไม่แต่งสถานที่หรือสภาพอากาศเอง")}
           </p>
         </div>
       </section>
