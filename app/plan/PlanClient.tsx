@@ -73,7 +73,7 @@ const BUDGETS = [
 function PlanInner() {
   // SSR + first paint = Thai (hydration-safe); flips to the chosen language after
   // global hydration, with no flash on client navigation. See lib/i18n/useLang.
-  const { en } = useLang();
+  const { en, lang } = useLang();
   // Start from defaults so SSR and the first client render MATCH (no hydration
   // mismatch). The URL is read in an effect after mount and applied below.
   const [districtKey, setDistrictKey] = useState(DEFAULT_PLAN_STATE.district);
@@ -339,7 +339,7 @@ function PlanInner() {
       <section className="arnfa-grid">
         <div className="col-content">
           <h1 className="font-thai-serif fs-h2 font-light text-ink mb-2 text-balance">
-            {en ? "Plan a trip" : "วางแผนทริป"} — <span className="italic text-ink-muted">{en ? districtEn : districtTh}</span>
+            {lang === "zh" ? "规划行程" : en ? "Plan a trip" : "วางแผนทริป"} — <span className="italic text-ink-muted">{en ? districtEn : districtTh}</span>
           </h1>
           <div className="flex items-center gap-3 mb-7">
             <AirChip lat={center.lat} lng={center.lng} reading={air} />
@@ -362,11 +362,11 @@ function PlanInner() {
 
           <div className="flex flex-wrap gap-x-8 gap-y-5">
             <div>
-              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{en ? "Area" : "ย่าน"}</p>
+              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{lang === "zh" ? "区域" : en ? "Area" : "ย่าน"}</p>
               <DistrictPicker value={districtKey} onChange={setDistrictKey} />
             </div>
             <div>
-              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{en ? "Time" : "เวลา"}</p>
+              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{lang === "zh" ? "时间" : en ? "Time" : "เวลา"}</p>
               <div className="flex gap-2">
                 {BUDGETS.map((b) => (
                   <button key={b.min} type="button" onClick={() => setBudgetMin(b.min)}
@@ -378,7 +378,7 @@ function PlanInner() {
             </div>
             {days.length > 1 && (
               <div>
-                <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{en ? "Day" : "วัน"}</p>
+                <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{lang === "zh" ? "日期" : en ? "Day" : "วัน"}</p>
                 {bestDay && worstDay && (
                   <button type="button" onClick={() => setDayOffset(bestDay.offset)}
                     className="font-thai mb-2.5 inline-flex items-center gap-2 rounded-full border border-success/40 bg-success/[0.07] px-3.5 py-1.5 text-xs text-ink-muted transition-colors hover:bg-success/[0.12]">
@@ -458,8 +458,8 @@ function PlanInner() {
                 {swap && rainSlot !== null && (
                   <div className="mb-5">
                     <SwapCard active
-                      from={{ name: swap.dropped.poi.name, skyState: "storm", arrivalLabel: swap.dropped.arrivalLabel, reason: en ? `rain by ${swap.dropped.arrivalLabel}` : `ฝนเข้า ${swap.dropped.arrivalLabel}` }}
-                      to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: Math.max(1, Math.round(walkMinutes(swap.dropped.poi.lat, swap.dropped.poi.lng, swap.added.poi.lat, swap.added.poi.lng))), why: en ? "a comfy indoor spot for the rain" : "ในร่มแบบดีตอนฝน หลบสบาย" }}
+                      from={{ name: swap.dropped.poi.name, skyState: "storm", arrivalLabel: swap.dropped.arrivalLabel, reason: lang === "zh" ? `${swap.dropped.arrivalLabel} 有雨` : en ? `rain by ${swap.dropped.arrivalLabel}` : `ฝนเข้า ${swap.dropped.arrivalLabel}` }}
+                      to={{ name: swap.added.poi.name, skyState: swap.added.skyState, arrivalLabel: swap.added.arrivalLabel, walkMin: Math.max(1, Math.round(walkMinutes(swap.dropped.poi.lat, swap.dropped.poi.lng, swap.added.poi.lat, swap.added.poi.lng))), why: lang === "zh" ? "适合避雨的舒适室内" : en ? "a comfy indoor spot for the rain" : "ในร่มแบบดีตอนฝน หลบสบาย" }}
                       onAccept={() => {
                         // flywheel: user took the rain-swap suggestion → that POI fits rain
                         recordFeedback(swap.added.poi.id, "accept_swap", { inRain: true, context: { from: swap.dropped.poi.id, district: districtKey } });

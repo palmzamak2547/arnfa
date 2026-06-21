@@ -20,6 +20,7 @@ export function SiteFooter() {
             <Link href="/trips" className="font-thai transition-colors hover:text-ink">{en ? "My trips" : "ทริปของฉัน"}</Link>
             <Link href="/data" className="font-thai transition-colors hover:text-ink">{en ? "Sources" : "ที่มาข้อมูล"}</Link>
             <Link href="/status" className="font-thai transition-colors hover:text-ink">{en ? "Status" : "สถานะระบบ"}</Link>
+            <Link href="/partner" className="font-thai transition-colors hover:text-ink">{en ? "For venues" : "สำหรับร้านค้า"}</Link>
           </div>
         </div>
         <p className="max-w-md font-thai sm:text-right">
