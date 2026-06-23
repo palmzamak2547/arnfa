@@ -66,8 +66,8 @@ export function SkyWindow() {
         initial={doEntrance ? { opacity: 0, y: 16 } : false}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-3xl rounded-[2rem] border border-hairline bg-surface/85 p-7 sm:p-9 shadow-[0_20px_60px_-30px_rgba(26,31,43,0.35)] backdrop-blur-md"
-        style={{ background: `linear-gradient(180deg, ${style.tint}, var(--arnfa-surface) 60%)` }}
+        className="arnfa-glass mx-auto max-w-3xl rounded-[2rem] p-7 sm:p-9"
+        style={{ background: `linear-gradient(180deg, ${style.tint}, rgba(255,255,255,0.42) 80%)` }}
       >
         <div className="flex items-center gap-2 mb-5">
           <span className="inline-block h-2 w-2 rounded-full" style={{ background: style.accent }} />

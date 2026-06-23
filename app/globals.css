@@ -142,6 +142,35 @@ body {
   font-family: var(--font-display-th), "Noto Serif Thai", Georgia, serif;
 }
 
+/* ── Liquid-glass surface (Aave-inspired) — for panels floating over the sky.
+ * ponytail: native backdrop-filter + specular edge + sheen ≈ 90% of Apple's
+ * Liquid Glass without the SVG feDisplacementMap refraction engine (Safari-
+ * fragile, over-built for a weather app). Background COLOR comes from the
+ * element's inline style so the tint can shift with the sky/verdict. Add the
+ * displacement engine later only if one hero element needs a real liquid bend. */
+.arnfa-glass {
+  position: relative;
+  isolation: isolate;
+  -webkit-backdrop-filter: blur(20px) saturate(175%) brightness(1.05);
+  backdrop-filter: blur(20px) saturate(175%) brightness(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 28px 64px -30px rgba(26, 31, 43, 0.45),    /* lift */
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.9),     /* top specular edge */
+    inset 0 -12px 26px -20px rgba(26, 31, 43, 0.10); /* base grounding */
+}
+.arnfa-glass::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 46%);
+  opacity: 0.6;
+}
+.arnfa-glass > * { position: relative; z-index: 1; }
+/* No backdrop-filter support → fall back to a solid frosted surface (still readable). */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .arnfa-glass { background-color: rgba(255, 255, 255, 0.92) !important; }
+}
+
 /* Map marker drop-in (staggered per stop). Reduced-motion: not applied (instant). */
 @keyframes arnfa-drop {
   from { transform: translateY(-14px) scale(0.6); opacity: 0; }
