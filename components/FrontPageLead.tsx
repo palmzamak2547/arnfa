@@ -96,7 +96,7 @@ export function FrontPageLead() {
 
         {/* SKY BOX — real current Bangkok weather */}
         <aside className="af-rise" style={{ animationDelay: "140ms" }}>
-          <div className="overflow-hidden rounded-2xl border" style={{ borderColor: "var(--arnfa-ink)" }}>
+          <div className="arnfa-glass overflow-hidden rounded-2xl" style={{ background: "rgba(255,255,255,0.32)" }}>
             <div className="px-[18px] pb-3.5 pt-[18px] transition-[background] duration-700" style={{ background: boxBg }}>
               <p className="m-0 font-display text-[0.62rem] uppercase tracking-[0.2em] text-ink-muted">{en ? "Bangkok sky now" : "ฟ้ากรุงเทพฯ ตอนนี้"}</p>
               <p className="m-0 mt-1.5 font-thai-serif font-light tabular-nums" style={{ fontSize: "2.6rem", lineHeight: 1 }}>
