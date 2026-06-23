@@ -26,7 +26,7 @@ export function TruthSection() {
 
   return (
     <section className="relative isolate z-10 overflow-hidden bg-ink text-paper">
-      <div aria-hidden className="pointer-events-none absolute -left-32 -top-24 h-96 w-96 rounded-full opacity-[0.07] blur-3xl" style={{ background: "var(--arnfa-accent-sun)" }} />
+      <div aria-hidden className="pointer-events-none absolute -left-32 -top-24 h-96 w-96 rounded-full bg-sun opacity-[0.07] blur-3xl" />
 
       <div className="arnfa-grid section-major">
         <div className="col-content">
@@ -38,11 +38,11 @@ export function TruthSection() {
           <div className="grid gap-12 md:grid-cols-12 md:gap-10">
             <div className="af-rise md:col-span-5">
               <p className="font-display text-xs uppercase tracking-[0.25em] text-paper/45 mb-5">{en ? "Fabricated numbers" : "ตัวเลขที่กุขึ้น"}</p>
-              <div aria-hidden className="mb-6 h-24 w-24 rounded-full border-[11px]" style={{ borderColor: "var(--arnfa-accent-sun)" }} />
+              <div aria-hidden className="mb-6 h-24 w-24 rounded-full border-[11px] border-sun" />
               <h2 className="font-thai-serif text-5xl font-light leading-[1.05] text-paper mb-6">
                 {en
-                  ? (<>Numbers we <em className="italic" style={{ color: "var(--arnfa-accent-sun)" }}>made up</em></>)
-                  : (<>ตัวเลขที่<em className="italic" style={{ color: "var(--arnfa-accent-sun)" }}>กุขึ้น</em></>)}
+                  ? (<>Numbers we <em className="italic text-sun">made up</em></>)
+                  : (<>ตัวเลขที่<em className="italic text-sun">กุขึ้น</em></>)}
               </h2>
               <p className="font-thai fs-lead leading-relaxed text-paper/70 max-w-[42ch]">
                 {en
@@ -56,16 +56,16 @@ export function TruthSection() {
               <ul>
                 {sources.map((s, i) => (
                   <li key={s.key} className="flex items-baseline gap-4 border-b border-paper/12 py-4">
-                    <span className="font-thai-serif text-lg shrink-0 w-5" style={{ color: "var(--arnfa-accent-sun)" }}>{TH_NUM[i]}</span>
+                    <span className="font-thai-serif text-lg shrink-0 w-5 text-sun">{TH_NUM[i]}</span>
                     <a href={s.src!.url} target="_blank" rel="noopener noreferrer"
-                      className="font-display text-base font-semibold text-paper hover:text-[var(--arnfa-accent-sun)] transition-colors w-40 shrink-0">
+                      className="font-display text-base font-semibold text-paper hover:text-sun transition-colors w-40 shrink-0">
                       {s.src!.name}
                     </a>
                     <span className="font-thai text-sm text-paper/55 leading-snug">{en ? s.en : s.th}</span>
                   </li>
                 ))}
               </ul>
-              <Link href="/data" className="group mt-6 inline-flex items-center gap-3 font-thai text-sm" style={{ color: "var(--arnfa-accent-sun)" }}>
+              <Link href="/data" className="group mt-6 inline-flex items-center gap-3 font-thai text-sm text-sun">
                 {en ? "See all the raw data" : "ดูข้อมูลดิบทั้งหมด"}
                 <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
               </Link>

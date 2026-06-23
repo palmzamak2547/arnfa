@@ -42,8 +42,7 @@ export function GoThere({ districtKey, areaTh, areaEn, stayIn }: { districtKey: 
         </a>
         {stayIn && (
           <a href="https://lineman.line.me/" target="_blank" rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full px-4 py-2 font-thai text-sm text-paper transition-colors"
-            style={{ background: "var(--arnfa-accent-indoor-warm)" }}>
+            className="group inline-flex items-center gap-2 rounded-full bg-indoor-warm px-4 py-2 font-thai text-sm text-paper transition-colors">
             <span aria-hidden>🍜</span>{en ? "Raining? Order in with LINE MAN" : "ฝนตก? อยู่บ้านสั่ง LINE MAN"}
           </a>
         )}

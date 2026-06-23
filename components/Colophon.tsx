@@ -30,7 +30,7 @@ export function Colophon() {
   const { en } = useLang();
   return (
     <section id="colophon" className="relative z-10 mx-auto max-w-[1360px] px-4 py-[clamp(48px,7vw,92px)] sm:px-[clamp(16px,4vw,46px)]">
-      <div className="af-rise mb-[clamp(30px,4vw,56px)] flex flex-wrap items-baseline justify-between gap-4 border-t pt-3" style={{ borderColor: "var(--arnfa-ink)" }}>
+      <div className="af-rise mb-[clamp(30px,4vw,56px)] flex flex-wrap items-baseline justify-between gap-4 border-t border-ink pt-3">
         <span className="font-display text-[0.72rem] uppercase tracking-[0.24em] text-ink-muted">ภาค ๔ · Colophon</span>
         <span className="font-display text-[0.86rem] italic text-ink-faint">{en ? "Type, ink & motion" : "ตัวพิมพ์ หมึก และจังหวะ"}</span>
       </div>
@@ -61,8 +61,8 @@ export function Colophon() {
               </div>
             ))}
             <div className="mt-1 flex items-center gap-3.5 border-t border-hairline pt-3.5">
-              <span className="h-[46px] w-[46px] flex-none rounded-lg border border-hairline" style={{ background: "var(--arnfa-paper)" }} />
-              <span className="h-[46px] w-[46px] flex-none rounded-lg" style={{ background: "var(--arnfa-ink)" }} />
+              <span className="h-[46px] w-[46px] flex-none rounded-lg border border-hairline bg-paper" />
+              <span className="h-[46px] w-[46px] flex-none rounded-lg bg-ink" />
               <span className="text-[0.82rem] text-ink-faint">{en ? "Warm paper + deep navy ink" : "กระดาษอุ่น + หมึกน้ำเงินเข้ม"}<br /><span className="tabular-nums">#F4EFE6 · #1A1F2B</span></span>
             </div>
           </div>
@@ -75,7 +75,7 @@ export function Colophon() {
             {en ? "Everything moves on one easing — soft, gliding, never bouncy. Like a drifting cloud, not a spring." : "ทุกการเคลื่อนไหวใช้อีสซิ่งเดียว — นุ่ม ลื่น ไม่เด้ง เหมือนเมฆลอย ไม่ใช่สปริง."}
           </p>
           <div className="relative mb-3.5 h-2 rounded-full bg-hairline">
-            <span className="arnfa-travel absolute top-1/2 -mt-[9px] h-[18px] w-[18px] rounded-full" style={{ background: "var(--arnfa-accent-sun)", boxShadow: "0 0 14px 2px rgba(242,166,90,.5)" }} />
+            <span className="arnfa-travel absolute top-1/2 -mt-[9px] h-[18px] w-[18px] rounded-full bg-sun" style={{ boxShadow: "0 0 14px 2px rgba(242,166,90,.5)" }} />
           </div>
           <p className="font-sans tabular-nums text-[0.78rem] text-ink-faint">cubic-bezier(0.22, 1, 0.36, 1)</p>
           <div className="mt-6 flex flex-wrap gap-2.5">

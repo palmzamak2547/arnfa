@@ -58,8 +58,8 @@ export function FrontPageLead() {
 
         {/* LEAD ARTICLE */}
         <article className="af-rise">
-          <p className="mb-4 flex items-center gap-2.5 font-display text-[0.72rem] uppercase tracking-[0.26em]" style={{ color: "var(--arnfa-accent-indoor-warm)" }}>
-            <span className="af-blink h-[7px] w-[7px] rounded-full" style={{ background: "var(--arnfa-accent-indoor-warm)" }} />
+          <p className="mb-4 flex items-center gap-2.5 font-display text-[0.72rem] uppercase tracking-[0.26em] text-indoor-warm">
+            <span className="af-blink h-[7px] w-[7px] rounded-full bg-indoor-warm" />
             {en ? "Today's Verdict" : "คำตัดสินประจำวัน"}
           </p>
           <h1 className="font-thai-serif font-light text-ink" style={{ fontSize: "clamp(2.3rem, 1.2rem + 4.6vw, 5rem)", lineHeight: 1.18, letterSpacing: "-0.01em" }}>
@@ -106,7 +106,7 @@ export function FrontPageLead() {
             </div>
             <div className="px-[18px] pb-3.5 pt-1">
               <Row label={en ? "Rain, now → later" : "โอกาสฝน ตอนนี้ → ช่วงหน้า"}>
-                {data ? <span className="tabular-nums font-display font-semibold">{Math.round(data.cur.rainProb * 100)}% → <span style={{ color: "var(--arnfa-accent-rain)" }}>{Math.round(data.laterRain * 100)}%</span></span> : "—"}
+                {data ? <span className="tabular-nums font-display font-semibold">{Math.round(data.cur.rainProb * 100)}% → <span className="text-rain">{Math.round(data.laterRain * 100)}%</span></span> : "—"}
               </Row>
               <Row label="PM2.5">
                 {air && air.pm25 != null ? <span className="tabular-nums font-display font-semibold">{air.pm25} <span className="text-[0.82rem] font-normal" style={{ color: AIR_COLOR[air.level] }}>{AIR_LABEL_TH[air.level]}</span></span> : <span className="text-ink-faint">—</span>}
@@ -114,7 +114,7 @@ export function FrontPageLead() {
               <Row label={en ? "Wind" : "ลม"} last>
                 {data ? <span className="tabular-nums font-display font-semibold">{Math.round(data.cur.windSpeedKmh)} {en ? "km/h" : "กม./ชม."}</span> : "—"}
               </Row>
-              <div className="flex flex-col gap-2 border-t pt-3.5" style={{ borderColor: "var(--arnfa-ink)" }}>
+              <div className="flex flex-col gap-2 border-t border-ink pt-3.5">
                 <span className="font-display text-[0.6rem] uppercase tracking-[0.18em] text-ink-faint">{en ? "Sky in the hours ahead" : "ฟ้าในชั่วโมงข้างหน้า"}</span>
                 {data && data.chips.length ? data.chips.map((f) => (
                   <SkyChip key={f.hourISO} state={chipState(f)} arrivalLabel={hhmm(f.hourISO)} tempC={f.tempC} rainProb={f.rainProb} size="sm" />

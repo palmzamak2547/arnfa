@@ -44,7 +44,7 @@ export function CityReports({ lat, lng }: { lat: number; lng: number }) {
           <li key={rp.ticketId || i} className="rounded-xl border border-hairline bg-paper/40 p-3">
             <div className="mb-1 flex flex-wrap items-center gap-x-2 gap-y-1">
               {rp.tripRelevant && (
-                <span className="rounded-full px-1.5 py-0.5 text-[0.6rem] font-medium" style={{ background: "var(--arnfa-accent-indoor-warm)", color: "#fff" }}>
+                <span className="rounded-full bg-indoor-warm px-1.5 py-0.5 text-[0.6rem] font-medium text-white">
                   {en ? "affects your trip" : "เกี่ยวกับการเดินทาง"}
                 </span>
               )}

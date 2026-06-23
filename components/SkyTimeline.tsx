@@ -77,7 +77,7 @@ export function SkyTimeline({ forecast, stops, startHourIndex }: {
 
       <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 font-thai text-[0.7rem] text-ink-faint">
         <span className="inline-flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: "rgba(91,127,184,0.8)" }} />{en ? "rain chance (cell)" : "โอกาสฝน (สีน้ำเงิน)"}</span>
-        <span className="inline-flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: "var(--arnfa-accent-indoor-warm)" }} />{en ? "indoor stop" : "จุดในร่ม (เลี่ยงฝน)"}</span>
+        <span className="inline-flex items-center gap-1"><span className="inline-block h-2.5 w-2.5 rounded-full bg-indoor-warm" />{en ? "indoor stop" : "จุดในร่ม (เลี่ยงฝน)"}</span>
         <span>{en ? "numbers = your stops" : "ตัวเลข = ลำดับจุดในแผน"}</span>
       </div>
     </section>

@@ -41,11 +41,11 @@ export function StopPress() {
 
   return (
     <section className="relative z-10 mx-auto max-w-[1360px] px-4 py-[clamp(16px,2.5vw,32px)] sm:px-[clamp(16px,4vw,46px)]">
-      <div className="af-rise overflow-hidden rounded-2xl border border-hairline border-l-[3px]" style={{ borderLeftColor: "var(--arnfa-accent-indoor-warm)" }}>
+      <div className="af-rise overflow-hidden rounded-2xl border border-hairline border-l-[3px] border-l-indoor-warm">
         <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:gap-6 sm:p-6">
           <div className="flex-1">
-            <p className="mb-2 flex items-center gap-2 font-display text-[0.7rem] uppercase tracking-[0.24em]" style={{ color: "var(--arnfa-accent-indoor-warm)" }}>
-              <span className="af-blink h-[7px] w-[7px] rounded-full" style={{ background: "var(--arnfa-accent-indoor-warm)" }} />
+            <p className="mb-2 flex items-center gap-2 font-display text-[0.7rem] uppercase tracking-[0.24em] text-indoor-warm">
+              <span className="af-blink h-[7px] w-[7px] rounded-full bg-indoor-warm" />
               {en ? "Stop Press" : "ข่าวด่วน · Stop Press"}
             </p>
             <h2 className="font-thai-serif text-2xl font-light leading-snug text-ink">{headline}</h2>
