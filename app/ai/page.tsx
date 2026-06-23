@@ -107,10 +107,10 @@ export default function AiPage() {
                 {!turn.resp && !turn.error && loading && ti === turns.length - 1 && (
                   <p className="font-thai flex items-center gap-2 text-ink-faint"><span className="af-blink h-2 w-2 rounded-full bg-sun" />{en ? "Arnfah is reading the sky and planning…" : "อ่านฟ้ากำลังคิดแผนให้…"}</p>
                 )}
-                {turn.error && <p className="font-thai rounded-3xl border border-hairline bg-surface/70 px-5 py-4 text-sm text-ink-muted">{turn.error} <Link href="/plan" className="text-rain hover:underline">{en ? "Plan →" : "วางแผนเอง →"}</Link></p>}
+                {turn.error && <p className="font-thai arnfa-glass rounded-3xl px-5 py-4 text-sm text-ink-muted" style={{ background: "rgba(255,255,255,0.4)" }}>{turn.error} <Link href="/plan" className="text-rain hover:underline">{en ? "Plan →" : "วางแผนเอง →"}</Link></p>}
 
                 {turn.resp && (
-                  <div className="rounded-3xl rounded-bl-lg border border-hairline bg-surface/70 p-5 sm:p-6">
+                  <div className="arnfa-glass rounded-3xl rounded-bl-lg p-5 sm:p-6" style={{ background: "rgba(255,255,255,0.45)" }}>
                     <p className="font-thai text-ink leading-relaxed">{turn.resp.answer}</p>
                     {turn.resp.plan.stops.length > 0 && (
                       <ol className="mt-5 space-y-2.5">
@@ -119,7 +119,7 @@ export default function AiPage() {
                             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink text-paper text-xs font-semibold">{i + 1}</span>
                             <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: SKY_COLOR[s.sky] ?? "#4B5263" }} aria-hidden />
                             <span className="font-thai min-w-0 flex-1 truncate text-sm text-ink">{s.name}</span>
-                            <span className="font-thai shrink-0 text-xs text-ink-faint tabular-nums">~{s.arrival} · {s.tempC}° · {en ? "rain" : "ฝน"} {s.rainProb}%</span>
+                            <span className="font-thai shrink-0 text-xs text-ink-faint tabular-nums">~{s.arrival}, {s.tempC}°, {en ? "rain" : "ฝน"} {s.rainProb}%</span>
                           </li>
                         ))}
                       </ol>

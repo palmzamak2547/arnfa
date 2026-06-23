@@ -11,6 +11,13 @@ import { skyVerdict, type SkyVerdict } from "@/lib/core/skyScore";
 
 type Best = { dayOffset: number; date: string; score: number; verdict: SkyVerdict; rainProb: number };
 
+// whole-day difference between two YYYY-MM-DD strings (tz-independent) — so dayOffset is
+// the true offset from today, not the loop index (robust if the window ever shifts).
+const diffDays = (a: string, b: string) => {
+  const [ay, am, ad] = a.split("-").map(Number); const [by, bm, bd] = b.split("-").map(Number);
+  return Math.round((Date.UTC(by, bm - 1, bd) - Date.UTC(ay, am - 1, ad)) / 86400000);
+};
+
 function bestDay(resp: { hourly?: Record<string, number[] | string[]> } | undefined): Best | null {
   const h = resp?.hourly;
   if (!h?.time) return null;
@@ -21,7 +28,7 @@ function bestDay(resp: { hourly?: Record<string, number[] | string[]> } | undefi
   const at = (h.apparent_temperature as number[]) ?? [];
   const dates = [...new Set(time.map((t) => t.slice(0, 10)))];
   let best: Best | null = null;
-  dates.forEach((date, offset) => {
+  dates.forEach((date) => {
     const idx: number[] = [];
     for (let i = 0; i < time.length; i++) { if (time[i].slice(0, 10) === date) { const hr = +time[i].slice(11, 13); if (hr >= 8 && hr <= 18) idx.push(i); } }
     if (!idx.length) return;
@@ -32,7 +39,7 @@ function bestDay(resp: { hourly?: Record<string, number[] | string[]> } | undefi
       const ap = at[i] ?? t2[i] ?? 30; if (ap > apM) apM = ap;
     }
     const score = scoreDay({ rainProbMean: rpS / idx.length, rainProbMax: rpM, cloudMean: clS / idx.length, apparentMaxC: apM });
-    if (!best || score > best.score) best = { dayOffset: offset, date, score: Math.round(score * 100) / 100, verdict: skyVerdict(score), rainProb: Math.round((rpS / idx.length) * 100) };
+    if (!best || score > best.score) best = { dayOffset: diffDays(dates[0], date), date, score: Math.round(score * 100) / 100, verdict: skyVerdict(score), rainProb: Math.round((rpS / idx.length) * 100) };
   });
   return best;
 }

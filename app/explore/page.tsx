@@ -67,11 +67,11 @@ export default function ExplorePage() {
       {best && (
         <section className="arnfa-grid section-minor">
           <div className="col-content">
-            <div className="af-rise overflow-hidden rounded-2xl border border-hairline border-l-[3px] bg-surface/40" style={{ borderLeftColor: "var(--arnfa-success)" }}>
+            <div className="af-rise overflow-hidden rounded-2xl arnfa-glass" style={{ background: "rgba(255,255,255,0.34)", borderLeft: "3px solid var(--arnfa-success)" }}>
               <div className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
                 <div>
-                  <p className="mb-1 flex items-center gap-2 font-display text-[0.7rem] uppercase tracking-[0.22em]" style={{ color: "var(--arnfa-success)" }}>
-                    <span className="af-blink h-[7px] w-[7px] rounded-full" style={{ background: "var(--arnfa-success)" }} />
+                  <p className="mb-1 flex items-center gap-2 font-display text-[0.7rem] uppercase tracking-[0.22em] text-success">
+                    <span className="af-blink h-[7px] w-[7px] rounded-full bg-success" />
                     {tx("ตอนนี้ฟ้าโปร่งสุด", "Clearest right now", "现在天气最好")}
                   </p>
                   <h2 className="font-thai-serif text-2xl font-light text-ink">{lang === "th" ? best.th : best.en}</h2>
@@ -111,7 +111,7 @@ export default function ExplorePage() {
       <section className="arnfa-grid section-minor">
         <div className="col-content grid gap-6 border-t border-hairline pt-7 sm:grid-cols-2">
           <div>
-            <p className="mb-1 font-display text-[0.7rem] uppercase tracking-[0.18em]" style={{ color: "var(--arnfa-accent-indoor-warm)" }}>{tx("ฝนมาก็ไม่พัง", "Rain won't ruin it", "下雨也不怕")}</p>
+            <p className="mb-1 font-display text-[0.7rem] uppercase tracking-[0.18em] text-indoor-warm">{tx("ฝนมาก็ไม่พัง", "Rain won't ruin it", "下雨也不怕")}</p>
             <p className="font-thai text-sm leading-relaxed text-ink-muted">{tx("ฝนเข้าเมื่อไหร่ Arnfah สลับให้เป็นคาเฟ่/ห้าง/พิพิธภัณฑ์ในร่มที่ดีกว่าตรงนั้น อัตโนมัติ", "When rain hits, Arnfah swaps your plan to a café, mall or museum that's better indoors — automatically.", "下雨时，Arnfah 自动把行程换成更适合的咖啡馆、商场或博物馆。")}</p>
           </div>
           <div>

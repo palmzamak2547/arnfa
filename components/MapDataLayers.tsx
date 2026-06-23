@@ -109,9 +109,9 @@ export function MapDataLayers({ center, active, routePresent, en }: { center: { 
       <Marker key={`${kind}-${p.lat},${p.lng}`} longitude={p.lng} latitude={p.lat} anchor="center"
         onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(p); }}>
         <span title={`${p.label}${sub ? " · " + sub : ""}`}
-          className="flex h-[18px] w-[18px] cursor-pointer items-center justify-center rounded-full text-[9px] ring-2 ring-white shadow-sm transition-transform hover:scale-125"
+          className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full ring-2 ring-white shadow-sm transition-transform hover:scale-110"
           style={{ background: p.color }}>
-          <span className="leading-none" style={{ fontSize: "9px" }}>{p.emoji}</span>
+          <span className="leading-none" style={{ fontSize: "13px" }}>{p.emoji}</span>
         </span>
       </Marker>
     );

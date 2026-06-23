@@ -96,7 +96,7 @@ export default function DataPage() {
           )}
 
           {/* honesty note */}
-          <div className="mt-10 rounded-2xl border border-hairline bg-surface/50 p-5">
+          <div className="arnfa-glass mt-10 rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.4)" }}>
             <p className="font-thai text-sm text-ink-muted leading-relaxed">
               {en
                 ? "Some Thai-government portals block cloud servers, so for those (e.g. BMA parks + cooling centers) we bundle a dated snapshot of the real official data and refresh it live whenever the portal is reachable — it's the official dataset either way."

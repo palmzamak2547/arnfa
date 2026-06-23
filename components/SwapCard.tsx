@@ -38,7 +38,7 @@ export function SwapCard({ from, to, active, onAccept, onDismiss }: SwapCardProp
         </span>
       </div>
 
-      <p className="font-thai text-lg sm:text-xl leading-relaxed" style={{ color: active ? "#FFFFFF" : "var(--arnfa-ink)" }}>
+      <p className="font-thai text-lg sm:text-xl leading-relaxed" style={{ color: active ? "var(--arnfa-surface)" : "var(--arnfa-ink)" }}>
         {active ? (
           <>
             <span className="line-through opacity-60">{from.name}</span>{" "}
@@ -60,11 +60,11 @@ export function SwapCard({ from, to, active, onAccept, onDismiss }: SwapCardProp
 
       <div className="flex gap-3 mt-6">
         <button type="button" onClick={onAccept} className="font-thai inline-flex h-10 items-center rounded-full px-6 text-sm font-medium transition-colors duration-[var(--dur-base)]"
-          style={active ? { background: "#FFFFFF", color: "var(--arnfa-accent-indoor-warm)" } : { background: "var(--arnfa-ink)", color: "var(--arnfa-paper)" }}>
+          style={active ? { background: "var(--arnfa-surface)", color: "var(--arnfa-accent-indoor-warm)" } : { background: "var(--arnfa-ink)", color: "var(--arnfa-paper)" }}>
           {active ? tx("ไปที่นั่น", "Take me there", "去那里") : tx("เห็นด้วย", "Sounds good", "好")}
         </button>
         <button type="button" onClick={onDismiss} className="font-thai inline-flex h-10 items-center rounded-full border px-6 text-sm font-medium transition-colors duration-[var(--dur-base)]"
-          style={active ? { borderColor: "rgba(255,255,255,0.4)", color: "#FFFFFF" } : { borderColor: "var(--arnfa-hairline)", color: "var(--arnfa-ink)" }}>
+          style={active ? { borderColor: "rgba(255,255,255,0.4)", color: "var(--arnfa-surface)" } : { borderColor: "var(--arnfa-hairline)", color: "var(--arnfa-ink)" }}>
           {tx("อยู่ต่อ", "Stay", "留下")}
         </button>
       </div>

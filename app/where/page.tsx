@@ -95,7 +95,7 @@ export default function WherePage() {
           </div>
 
           {error && (
-            <p className="font-thai rounded-2xl border border-hairline bg-surface p-6 text-ink-muted">
+            <p className="font-thai arnfa-glass rounded-2xl p-6 text-ink-muted" style={{ background: "rgba(255,255,255,0.4)" }}>
               {en ? "Couldn't read the skies right now — try again in a moment." : "อ่านฟ้าทั่วไทยไม่ได้ตอนนี้ ลองใหม่อีกที (เราไม่เดาให้)"}
             </p>
           )}

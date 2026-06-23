@@ -73,8 +73,8 @@ export default function PartnerPage() {
               <li>• {tx("ผู้ใช้ฟรีตลอด — เราโตไปด้วยกัน", "Users free forever — we grow together", "用户永久免费 — 共同成长")}</li>
             </ul>
           </div>
-          <div className="rounded-2xl border border-hairline bg-surface/40 p-5">
-            <p className="mb-3 font-display text-[0.7rem] uppercase tracking-[0.18em]" style={{ color: "var(--arnfa-success)" }}>{tx("เปิดรับร้านพาร์ทเนอร์ (early access)", "Partner early access", "合作招募（抢先体验）")}</p>
+          <div className="arnfa-glass rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.34)" }}>
+            <p className="mb-3 font-display text-[0.7rem] uppercase tracking-[0.18em] text-success">{tx("เปิดรับร้านพาร์ทเนอร์ (early access)", "Partner early access", "合作招募（抢先体验）")}</p>
             <MerchantCTA />
           </div>
         </div>

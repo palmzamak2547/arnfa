@@ -40,7 +40,7 @@ export default function TripsPage() {
           <p className="font-thai text-sm text-ink-muted mb-8">{en ? "Saved trips re-read the live sky each time you open them — always fresh." : "ทริปที่เซฟไว้จะอ่านฟ้าสดทุกครั้งที่เปิด — ใหม่เสมอ"}</p>
 
           {ready && !user && (
-            <div className="rounded-3xl border border-hairline bg-surface/70 p-6">
+            <div className="arnfa-glass rounded-3xl p-6" style={{ background: "rgba(255,255,255,0.4)" }}>
               <p className="font-thai text-ink mb-4">{en ? "Sign in to save trips and sync your taste across devices." : "เข้าสู่ระบบเพื่อเซฟทริปและซิงค์รสนิยมข้ามเครื่อง"}</p>
               <AuthButton />
             </div>
@@ -61,7 +61,7 @@ export default function TripsPage() {
                 <li key={t.id} className="flex items-center justify-between gap-3 rounded-2xl border border-hairline bg-surface/70 p-4">
                   <Link href={url} className="min-w-0 flex-1">
                     <p className="font-thai font-medium text-ink truncate">{t.title || (en ? meta?.en : meta?.th) || t.district}</p>
-                    <p className="font-thai text-xs text-ink-faint mt-0.5">{en ? meta?.en : meta?.th} · {t.budgetMin >= 420 ? (en ? "full day" : "เต็มวัน") : t.budgetMin >= 240 ? (en ? "half day" : "ครึ่งวัน") : (en ? "quick" : "แวบเดียว")} · {dayLabel(t.day)}</p>
+                    <p className="font-thai text-xs text-ink-faint mt-0.5">{en ? meta?.en : meta?.th}, {t.budgetMin >= 420 ? (en ? "full day" : "เต็มวัน") : t.budgetMin >= 240 ? (en ? "half day" : "ครึ่งวัน") : (en ? "quick" : "แวบเดียว")}, {dayLabel(t.day)}</p>
                   </Link>
                   <button type="button" onClick={() => remove(t.id)} className="font-thai shrink-0 text-xs text-ink-faint hover:text-indoor-warm">{en ? "delete" : "ลบ"}</button>
                 </li>

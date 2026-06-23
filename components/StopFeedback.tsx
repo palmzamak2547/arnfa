@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { recordFeedback } from "@/lib/plan/feedback";
 import type { SkyState } from "@/lib/core/skyState";
 
@@ -20,9 +20,12 @@ export function StopFeedback({
   en: boolean;
 }) {
   const [voted, setVoted] = useState<null | "ok" | "bad">(null);
+  const sent = useRef(false); // guard a fast double-tap from firing the write twice
   const inRain = skyState === "rain" || skyState === "storm" || rainProb > 0.4;
 
   function vote(kind: "weather_ok" | "weather_bad") {
+    if (sent.current) return;
+    sent.current = true;
     setVoted(kind === "weather_ok" ? "ok" : "bad");
     void recordFeedback(poiId, kind, {
       inRain,

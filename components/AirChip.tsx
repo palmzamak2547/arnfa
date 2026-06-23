@@ -40,7 +40,13 @@ export function AirChip({ lat, lng, reading }: { lat: number; lng: number; readi
   const air = controlled ? reading : fetched;
   if (!controlled && failed) return null; // air is a bonus signal; stay quiet if it can't load
   if (!air) {
-    return <span className="font-thai text-xs text-ink-faint animate-pulse">กำลังเช็คฝุ่น…</span>;
+    // skeleton chip (matches the real PM2.5 pill's shape — no layout shift on load)
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-2.5 py-1 animate-pulse" aria-busy="true" aria-label="กำลังเช็คฝุ่น">
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-ink/20" />
+        <span className="inline-block h-2.5 w-14 rounded bg-ink/10" />
+      </span>
+    );
   }
 
   const color = LEVEL_COLOR[air.level];

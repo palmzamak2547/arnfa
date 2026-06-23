@@ -10,14 +10,17 @@ export default function NotFound() {
       <h1 className="font-thai-serif text-4xl sm:text-5xl font-light text-ink mb-4">
         ฟ้าไม่มีหน้านี้
       </h1>
-      <p className="font-thai text-lg text-ink-muted max-w-md mb-8">
+      <p className="font-thai text-lg text-ink-muted max-w-md mb-2">
         ลิงก์อาจเก่าหรือพิมพ์ผิด — กลับไปเริ่มวางแผนวันนี้กันดีกว่า
+      </p>
+      <p className="font-thai text-base text-ink-faint max-w-md mb-8">
+        This page isn't in the sky — the link may be old or mistyped. Let's plan today instead.
       </p>
       <Link
         href="/"
         className="font-thai inline-flex h-11 items-center rounded-full bg-ink px-7 text-sm font-medium text-paper transition-colors hover:bg-ink-muted"
       >
-        กลับหน้าแรก
+        กลับหน้าแรก · Home
       </Link>
     </main>
   );
