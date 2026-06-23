@@ -24,7 +24,7 @@ const NAV = [
 export function Masthead() {
   const { en } = useLang();
   return (
-    <header className="sticky top-0 z-40 border-b border-hairline bg-paper/85 backdrop-blur-md pad-safe-t">
+    <header className="sticky top-0 z-40 border-b border-white/40 bg-paper/60 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.7)] pad-safe-t">
       <div className="mx-auto flex max-w-[1360px] items-center justify-between gap-4 px-4 py-2.5 sm:px-[clamp(16px,4vw,46px)]">
         {/* brand lockup */}
         <Link href="/" className="flex flex-none items-center gap-2.5 text-ink transition-colors hover:text-ink-muted" aria-label="อ่านฟ้า Arnfah">
