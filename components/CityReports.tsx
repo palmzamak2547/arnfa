@@ -30,7 +30,7 @@ export function CityReports({ lat, lng }: { lat: number; lng: number }) {
   const dist = (d: number) => (d < 1 ? `${Math.round(d * 1000)} ${en ? "m" : "ม."}` : `${d.toFixed(1)} ${en ? "km" : "กม."}`);
 
   return (
-    <section className="rounded-2xl border border-hairline bg-surface/50 p-4">
+    <section className="rounded-3xl border border-hairline bg-surface/70 p-5 sm:p-6">
       <div className="mb-1 flex items-baseline justify-between gap-3">
         <h3 className="font-thai-serif text-lg font-light text-ink">{en ? "The street, live" : "เสียงจากเมือง แถวนี้"}</h3>
         <span className="font-display text-[0.65rem] uppercase tracking-[0.18em] text-rain">{en ? "citizen feedback" : "ประชาชนแจ้ง"}</span>

@@ -106,7 +106,7 @@ export default function StatusPage() {
           </ul>
 
           <div className="mt-4 flex items-center gap-3">
-            <button type="button" onClick={runChecks} className="font-thai inline-flex min-h-[40px] items-center rounded-full border border-hairline px-4 text-sm text-ink transition-colors hover:bg-surface">
+            <button type="button" onClick={runChecks} className="font-thai inline-flex min-h-[44px] items-center rounded-full border border-hairline px-4 text-sm text-ink transition-colors hover:bg-surface">
               {en ? "Re-check" : "ตรวจอีกครั้ง"}
             </button>
             {checkedAt && <span className="font-thai text-xs text-ink-faint">{en ? `checked at ${checkedAt}` : `ตรวจเมื่อ ${checkedAt} น.`}</span>}

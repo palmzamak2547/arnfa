@@ -4,6 +4,7 @@ import { buildPlan } from "@/lib/plan/buildPlan";
 import { loadDistrict, districtMeta } from "@/lib/poi/districts";
 import { overlayCrowd } from "@/lib/poi/crowd";
 import { startIndexForDay } from "@/lib/plan/days";
+import { bkkNow } from "@/lib/bkkNow";
 
 /**
  * GET /api/plan?area=chiang-mai&budget=240&day=0  — the decision engine as an
@@ -27,7 +28,7 @@ export async function GET(req: NextRequest) {
       getForecast(meta.lat, meta.lng, 168),
     ]);
     const district = await overlayCrowd(districtRaw); // flywheel read-back (crowd-refined profiles)
-    const startHourIndex = startIndexForDay(forecast.hours, day, new Date());
+    const startHourIndex = startIndexForDay(forecast.hours, day, bkkNow());
     const plan = buildPlan(district, forecast.hours, {
       startHourIndex, budgetMin, start: { lat: meta.lat, lng: meta.lng },
     });

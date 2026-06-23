@@ -48,7 +48,8 @@ function prefersReduced(): boolean {
 
 export function SkyHero() {
   const sunPos = useMemo(() => sunPositionForBangkok(new Date()), []);
-  if (typeof window !== "undefined") paintBodyGradient(sunPos[1]);
+  // Paint the page sky-gradient as an effect, not in render (StrictMode double-fires render).
+  useEffect(() => { paintBodyGradient(sunPos[1]); }, [sunPos]);
   const sunVec = useMemo(() => new THREE.Vector3(...sunPos), [sunPos]);
   const isNight = sunPos[1] < -20;
   const reduced = useMemo(prefersReduced, []);

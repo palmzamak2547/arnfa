@@ -44,7 +44,7 @@ export function StopFeedback({
       <button
         type="button"
         onClick={() => vote("weather_ok")}
-        className="font-thai inline-flex items-center gap-1 rounded-full border border-hairline px-2.5 py-1 text-ink-muted transition-colors hover:border-success/50 hover:text-success min-h-[32px]"
+        className="font-thai inline-flex items-center gap-1 rounded-full border border-hairline px-2.5 py-1 text-ink-muted transition-colors hover:border-success/50 hover:text-success min-h-[44px]"
         aria-label={en ? "Sky matched" : "ฟ้าตรง"}
       >
         <span aria-hidden>👍</span> {en ? "yes" : "ตรง"}
@@ -52,7 +52,7 @@ export function StopFeedback({
       <button
         type="button"
         onClick={() => vote("weather_bad")}
-        className="font-thai inline-flex items-center gap-1 rounded-full border border-hairline px-2.5 py-1 text-ink-muted transition-colors hover:border-indoor-warm/50 hover:text-indoor-warm min-h-[32px]"
+        className="font-thai inline-flex items-center gap-1 rounded-full border border-hairline px-2.5 py-1 text-ink-muted transition-colors hover:border-indoor-warm/50 hover:text-indoor-warm min-h-[44px]"
         aria-label={en ? "Sky was off" : "ฟ้าไม่ตรง"}
       >
         <span aria-hidden>👎</span> {en ? "off" : "ไม่ตรง"}

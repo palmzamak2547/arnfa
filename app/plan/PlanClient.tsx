@@ -7,6 +7,7 @@ import { useLang } from "@/lib/i18n/useLang";
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { clsx } from "clsx";
+import { bkkNow } from "@/lib/bkkNow";
 import {
   buildPlan,
   type SeedDistrict,
@@ -224,14 +225,14 @@ function PlanInner() {
 
   // Which days the forecast covers (today..+6) and the start-hour index for the
   // chosen day — so you can plan "this weekend", not just today.
-  const days = useMemo(() => (forecast ? availableDays(forecast, new Date()) : []), [forecast]);
+  const days = useMemo(() => (forecast ? availableDays(forecast, bkkNow()) : []), [forecast]);
   // "ไปวันไหนดี" — score each day's sky from the loaded forecast (no extra fetch) so the
   // selector can flag the best + worst day this week and dot each day by its sky.
-  const dayScores = useMemo(() => (forecast ? scoreDays(forecast, new Date()) : []), [forecast]);
+  const dayScores = useMemo(() => (forecast ? scoreDays(forecast, bkkNow()) : []), [forecast]);
   const dayVerdictByOffset = useMemo(() => new Map(dayScores.map((d) => [d.offset, d.verdict])), [dayScores]);
   const { best: bestDay, worst: worstDay } = useMemo(() => pickBestWorst(dayScores), [dayScores]);
   const startHourIndex = useMemo(
-    () => (forecast ? startIndexForDay(forecast, dayOffset, new Date()) : 0),
+    () => (forecast ? startIndexForDay(forecast, dayOffset, bkkNow()) : 0),
     [forecast, dayOffset],
   );
 

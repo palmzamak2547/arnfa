@@ -8,6 +8,7 @@ import { buildPlan } from "@/lib/plan/buildPlan";
 import { overlayCrowd } from "@/lib/poi/crowd";
 import { startIndexForDay } from "@/lib/plan/days";
 import { filterByGroups } from "@/lib/plan/categories";
+import { bkkNow } from "@/lib/bkkNow";
 
 /**
  * POST /api/ask — "Arnfa AI": an agent that turns a free-text Thai request into a
@@ -80,7 +81,7 @@ export async function POST(req: NextRequest) {
     const [districtRaw, forecast] = await Promise.all([loadDistrict(meta.key), getForecast(meta.lat, meta.lng, 168)]);
     const district = await overlayCrowd(districtRaw); // flywheel read-back (crowd-refined profiles)
     const pois = vibes.length ? filterByGroups(district.pois, new Set(vibes)) : district.pois;
-    const startHourIndex = startIndexForDay(forecast.hours, day, new Date());
+    const startHourIndex = startIndexForDay(forecast.hours, day, bkkNow());
     const plan = buildPlan({ ...district, pois }, forecast.hours, { startHourIndex, budgetMin: budget, start: { lat: meta.lat, lng: meta.lng } });
     provider = forecast.providerUsed ?? "";
     stops = plan.stops.map((s) => ({

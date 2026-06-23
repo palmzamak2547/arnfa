@@ -91,7 +91,7 @@ export function ArnfaRibbon() {
           </g>
         ))}
         {segs.map((s, i) => (
-          <text key={`${s.key}-l`} x={s.x} y={baseY + 44} textAnchor="middle" className="fill-[var(--arnfa-ink-faint)]" style={{ font: '11px var(--font-inter-tight), system-ui, sans-serif', letterSpacing: "0.06em" }}>
+          <text key={`${s.key}-l`} x={s.x} y={baseY + 44} textAnchor="middle" className="fill-[var(--arnfa-ink-faint)]" style={{ font: '11px var(--font-ui-en), system-ui, sans-serif', letterSpacing: "0.06em" }}>
             {list[i].hourISO}
           </text>
         ))}

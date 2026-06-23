@@ -29,7 +29,7 @@ export function TransitNearby({ lat, lng }: { lat: number; lng: number }) {
   if (failed || (stations && stations.length === 0)) return null;
 
   return (
-    <section className="rounded-2xl border border-hairline bg-surface/50 p-4">
+    <section className="rounded-3xl border border-hairline bg-surface/70 p-5 sm:p-6">
       <div className="flex items-baseline justify-between gap-3 mb-3">
         <h3 className="font-thai-serif text-lg font-light text-ink">{en ? "Get here by train" : "ไปย่านนี้ด้วยรถไฟฟ้า"}</h3>
         <span className="font-thai text-[0.7rem] text-ink-faint">{en ? "nearest stations" : "สถานีใกล้สุด"}</span>

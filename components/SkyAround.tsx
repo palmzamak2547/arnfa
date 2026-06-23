@@ -55,7 +55,7 @@ export function SkyAround({ currentKey, lat, lng, onPick }: { currentKey: string
       <div className="flex items-center justify-between gap-3">
         <h2 className="font-thai-serif text-lg font-light text-ink">{en ? "Sky around you, now" : "ฟ้ารอบๆ ตอนนี้"}</h2>
         {status === "idle" && (
-          <button type="button" onClick={look} className="font-thai inline-flex min-h-[40px] items-center rounded-full border border-hairline px-4 text-sm text-ink transition-colors hover:bg-paper">
+          <button type="button" onClick={look} className="font-thai inline-flex min-h-[44px] items-center rounded-full border border-hairline px-4 text-sm text-ink transition-colors hover:bg-paper">
             {en ? "Check" : "ดูเลย"}
           </button>
         )}

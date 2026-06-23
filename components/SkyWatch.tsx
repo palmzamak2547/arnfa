@@ -21,11 +21,13 @@ const VDOT: Record<SkyVerdict, string> = {
 const TH_DOW = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์"];
 const EN_DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-function dayName(offset: number, en: boolean): string {
+function dayName(offset: number, en: boolean, date: string): string {
   if (offset === 0) return en ? "today" : "วันนี้";
   if (offset === 1) return en ? "tomorrow" : "พรุ่งนี้";
-  const d = new Date(Date.now() + offset * 86400000);
-  return (en ? EN_DOW : TH_DOW)[d.getDay()];
+  // weekday of the scored calendar date (from /api/best-days, Bangkok) — deterministic,
+  // not derived from the device clock (a tourist's phone may be in another timezone).
+  const [y, m, dd] = date.split("-").map(Number);
+  return (en ? EN_DOW : TH_DOW)[new Date(Date.UTC(y, (m || 1) - 1, dd || 1)).getUTCDay()];
 }
 
 export function SkyWatch({ keys }: { keys: string[] }) {
@@ -58,7 +60,7 @@ export function SkyWatch({ keys }: { keys: string[] }) {
                 <span className="font-thai text-sm text-ink truncate group-hover:text-rain transition-colors">{en ? a.en : a.th}</span>
               </span>
               <span className="font-thai shrink-0 text-xs text-ink-muted">
-                {en ? "best" : "ฟ้าดีสุด"} <b className="font-medium text-ink">{dayName(a.dayOffset, en)}</b> · {en ? SKY_VERDICT_EN[a.verdict] : SKY_VERDICT_TH[a.verdict]}
+                {en ? "best" : "ฟ้าดีสุด"} <b className="font-medium text-ink">{dayName(a.dayOffset, en, a.date)}</b> · {en ? SKY_VERDICT_EN[a.verdict] : SKY_VERDICT_TH[a.verdict]}
               </span>
             </Link>
           </li>

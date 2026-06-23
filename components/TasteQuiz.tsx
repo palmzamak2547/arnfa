@@ -39,7 +39,7 @@ export function TasteQuiz({
   }
 
   return (
-    <div className="rounded-3xl border border-hairline bg-surface/80 backdrop-blur-sm p-6 sm:p-8">
+    <div className="arnfa-glass rounded-3xl p-6 sm:p-8" style={{ background: "rgba(255,255,255,0.55)" }}>
       <div className="flex items-center justify-between mb-6">
         <p className="font-display text-xs uppercase tracking-[0.22em] text-ink-faint">
           รู้จักคุณสักนิด — {i + 1}/{TASTE_CARDS.length}

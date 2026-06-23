@@ -98,11 +98,11 @@ export function LiveCompanion({ pois }: { pois: SeedPoi[] }) {
       <div className="flex items-center justify-between gap-3">
         <h2 className="font-thai-serif text-lg font-light text-ink">{en ? "Travel mode" : "โหมดเดินทาง"}</h2>
         {!active ? (
-          <button type="button" onClick={start} className="font-thai inline-flex min-h-[40px] items-center rounded-full bg-ink px-4 text-sm text-paper transition-colors hover:bg-ink-muted">
+          <button type="button" onClick={start} className="font-thai inline-flex min-h-[44px] items-center rounded-full bg-ink px-4 text-sm text-paper transition-colors hover:bg-ink-muted">
             {en ? "Turn on" : "เปิด"}
           </button>
         ) : (
-          <button type="button" onClick={stop} className="font-thai inline-flex min-h-[40px] items-center rounded-full border border-hairline px-4 text-sm text-ink transition-colors hover:bg-paper">
+          <button type="button" onClick={stop} className="font-thai inline-flex min-h-[44px] items-center rounded-full border border-hairline px-4 text-sm text-ink transition-colors hover:bg-paper">
             {en ? "Turn off" : "ปิด"}
           </button>
         )}

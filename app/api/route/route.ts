@@ -13,11 +13,12 @@ export async function POST(req: NextRequest) {
   if (!Array.isArray(legs) || !legs.length || legs.length > 8) {
     return NextResponse.json({ error: "bad_legs" }, { status: 400 });
   }
-  const out = [];
-  for (const leg of legs as [number, number][][]) {
+  // Concurrent, not sequential: each orsRoute is 8s-capped, so awaiting up to 8 in a
+  // loop could stack to ~64s and 504 the whole request. Promise.all keeps it ≤ ~8s.
+  const out = await Promise.all((legs as [number, number][][]).map((leg) => {
     const [from, to] = leg ?? [];
-    out.push(Array.isArray(from) && Array.isArray(to) ? await orsRoute(from, to) : null);
-  }
+    return Array.isArray(from) && Array.isArray(to) ? orsRoute(from, to) : Promise.resolve(null);
+  }));
   return NextResponse.json(
     { available: true, legs: out },
     { headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" } },

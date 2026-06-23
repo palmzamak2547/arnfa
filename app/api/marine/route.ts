@@ -20,17 +20,19 @@ export async function GET(req: NextRequest) {
     const r = await fetch(url, { signal: AbortSignal.timeout(10000) });
     if (!r.ok) return NextResponse.json({ available: false, reason: `marine_${r.status}` });
     const d = await r.json();
-    const wave = d.current?.wave_height;
-    const sst = d.current?.sea_surface_temperature;
+    const sst = d.current?.sea_surface_temperature ?? null;
     const waveMax = d.daily?.wave_height_max?.[0] ?? null;
-    if (wave == null || sst == null) return NextResponse.json({ available: false, reason: "no_data" });
+    // Open-Meteo Marine often returns a valid daily wave_height_max while current.* is null
+    // for that cell/hour — the swim verdict needs the wave, not SST. Only bail if NO wave at all.
+    const waveNow = d.current?.wave_height ?? waveMax;
+    if (waveNow == null) return NextResponse.json({ available: false, reason: "no_data" });
 
     const km = Math.round(seaDistanceKm(lat, lng, d.latitude, d.longitude));
     if (km > 25) return NextResponse.json({ available: false, reason: "inland", km });
 
-    const forVerdict = Math.max(wave, waveMax ?? wave); // the roughest the sea gets today
+    const forVerdict = Math.max(waveNow, waveMax ?? waveNow); // the roughest the sea gets today
     return NextResponse.json(
-      { available: true, waveM: wave, waveMaxM: waveMax, seaTempC: sst, swim: swimVerdict(forVerdict), km },
+      { available: true, waveM: waveNow, waveMaxM: waveMax, seaTempC: sst, swim: swimVerdict(forVerdict), km },
       { headers: { "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=3600" } },
     );
   } catch {

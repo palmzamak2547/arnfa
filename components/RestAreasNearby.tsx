@@ -31,7 +31,7 @@ export function RestAreasNearby({ lat, lng }: { lat: number; lng: number }) {
   if (!areas || areas.length === 0) return null; // city centre / feed empty → don't render
 
   return (
-    <section className="rounded-2xl border border-hairline bg-surface/50 p-4">
+    <section className="rounded-3xl border border-hairline bg-surface/70 p-5 sm:p-6">
       <div className="flex items-baseline justify-between gap-3 mb-3">
         <h3 className="font-thai-serif text-lg font-light text-ink">{en ? "Rest stops on the way" : "จุดพักรถระหว่างทาง"}</h3>
         <span className="font-thai text-[0.7rem] text-ink-faint">{en ? "Dept. of Highways" : "กรมทางหลวง"}</span>
@@ -48,7 +48,7 @@ export function RestAreasNearby({ lat, lng }: { lat: number; lng: number }) {
               </div>
               <span className="font-thai text-sm text-ink leading-snug line-clamp-2 group-hover:text-rain transition-colors">{a.name}</span>
               <span className="font-thai text-[0.7rem] text-ink-faint">
-                {en ? `km ${a.km}` : `กม.${a.km}`}{a.parking ? (en ? ` · ${a.parking} parking` : ` · จอด ${a.parking} คัน`) : ""}{SIZE_LABEL[a.size] ? ` · ${en ? SIZE_LABEL[a.size].en : SIZE_LABEL[a.size].th}` : ""}
+                {en ? `km ${a.km}` : `กม.${a.km}`}{a.parking ? (en ? `, ${a.parking} parking` : `, จอด ${a.parking} คัน`) : ""}{SIZE_LABEL[a.size] ? `, ${en ? SIZE_LABEL[a.size].en : SIZE_LABEL[a.size].th}` : ""}
               </span>
             </a>
           </li>

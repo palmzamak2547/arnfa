@@ -93,7 +93,7 @@ export default function AiPage() {
             <div className="mt-5 flex flex-wrap gap-2">
               {examples.map((ex) => (
                 <button key={ex} type="button" onClick={() => ask(ex)}
-                  className="font-thai rounded-full border border-hairline px-4 py-2 text-sm text-ink-muted transition-colors hover:bg-surface min-h-[40px]">{ex}</button>
+                  className="font-thai rounded-full border border-hairline px-4 py-2 text-sm text-ink-muted transition-colors hover:bg-surface min-h-[44px]">{ex}</button>
               ))}
             </div>
           )}
@@ -151,7 +151,7 @@ export default function AiPage() {
                 <span className="font-thai text-xs text-ink-faint">{en ? "keep going:" : "คุยต่อ:"}</span>
                 {followUps.map((f) => (
                   <button key={f} type="button" onClick={() => ask(f)}
-                    className="font-thai rounded-full border border-hairline px-3.5 py-1.5 text-sm text-ink-muted transition-colors hover:bg-surface min-h-[36px]">{f}</button>
+                    className="font-thai rounded-full border border-hairline px-3.5 py-1.5 text-sm text-ink-muted transition-colors hover:bg-surface min-h-[44px]">{f}</button>
                 ))}
                 <button type="button" onClick={() => setTurns([])} className="font-thai text-sm text-rain hover:underline ml-1">{en ? "start over" : "เริ่มใหม่"}</button>
               </div>

@@ -103,6 +103,14 @@ body {
   a[role="button"], button, .tap-target { min-height: 44px; }
 }
 
+/* App-wide visible focus ring for keyboard users (was missing on most controls).
+ * :where() keeps specificity 0 so a component can still override per-element. */
+:where(a, button, [role="button"], input, select, textarea, summary):focus-visible {
+  outline: 2px solid var(--arnfa-accent-rain);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
 /*
  * Editorial 12-column grid — the page "spine" (research Part A1).
  * One shared grid; sections place content on named lines so blocks land on

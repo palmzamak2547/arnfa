@@ -42,7 +42,7 @@ export function SkyTimeline({ forecast, stops, startHourIndex }: {
   });
 
   return (
-    <section className="rounded-2xl border border-hairline bg-surface/50 p-4 mb-5">
+    <section className="rounded-3xl border border-hairline bg-surface/70 p-5 sm:p-6 mb-5">
       <div className="flex items-baseline justify-between gap-3 mb-3">
         <h3 className="font-thai-serif text-lg font-light text-ink">{en ? "Sky-fit timeline" : "ไทม์ไลน์ฟ้า"}</h3>
         <span className="font-thai text-[0.7rem] text-ink-faint">{en ? "each stop at its arrival hour" : "แต่ละจุด ณ เวลาที่ไปถึง"}</span>

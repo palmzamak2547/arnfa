@@ -66,7 +66,8 @@ export function DistrictPicker({ value, onChange }: { value: string; onChange: (
           <div className="fixed inset-0 z-30" onClick={() => setOpen(false)} aria-hidden />
           <div
             role="listbox"
-            className="absolute left-0 top-[calc(100%+0.5rem)] z-40 w-[min(92vw,22rem)] overflow-hidden rounded-3xl border border-hairline bg-surface shadow-[0_18px_50px_-20px_rgba(26,31,43,0.35)]"
+            className="absolute left-0 top-[calc(100%+0.5rem)] z-40 w-[min(92vw,22rem)] overflow-hidden rounded-3xl arnfa-glass"
+            style={{ background: "rgba(255,255,255,0.72)" }}
           >
             <div className="border-b border-hairline p-3">
               <div className="flex items-center gap-2 rounded-2xl bg-paper px-3">
@@ -85,7 +86,7 @@ export function DistrictPicker({ value, onChange }: { value: string; onChange: (
               <button
                 type="button"
                 onClick={locateMe}
-                className="font-thai mt-2 inline-flex min-h-[40px] items-center gap-1.5 rounded-full px-3 text-sm text-rain transition-colors hover:bg-rain/5"
+                className="font-thai mt-2 inline-flex min-h-[44px] items-center gap-1.5 rounded-full px-3 text-sm text-rain transition-colors hover:bg-rain/5"
               >
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <circle cx="12" cy="12" r="3.2" stroke="currentColor" strokeWidth="1.8" />

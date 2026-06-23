@@ -8,6 +8,7 @@ import { useLang } from "@/lib/i18n/useLang";
 import { dayVerdict } from "@/lib/core/verdict";
 import { scoreDays, pickBestWorst } from "@/lib/core/dayScores";
 import { availableDays } from "@/lib/plan/days";
+import { bkkNow } from "@/lib/bkkNow";
 import { AIR_LABEL_TH, AIR_COLOR, type AirLevel } from "@/lib/air/air4thai";
 import type { HourlyForecast } from "@/lib/weather/types";
 
@@ -50,10 +51,10 @@ export default function SignalsPage() {
   // derive
   const now = hours && hours.length ? hours[nearestIdx(hours)] : null;
   const verdict = hours && hours.length ? dayVerdict(hours, nearestIdx(hours)) : null;
-  const days = hours && hours.length ? availableDays(hours, new Date()) : [];
+  const days = hours && hours.length ? availableDays(hours, bkkNow()) : [];
   const best = (() => {
     if (!hours || !hours.length || days.length < 2) return null;
-    const bw = pickBestWorst(scoreDays(hours, new Date()));
+    const bw = pickBestWorst(scoreDays(hours, bkkNow()));
     if (!bw.best) return null;
     const d = days.find((x) => x.offset === bw.best!.offset);
     return d ? { th: d.th, en: d.en } : null;
