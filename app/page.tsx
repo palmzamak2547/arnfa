@@ -1,5 +1,6 @@
 import { Masthead } from "@/components/Masthead";
 import { SkyBackdrop } from "@/components/SkyBackdrop";
+import { LiquidGlass } from "@/components/LiquidGlass";
 import { FrontPageTop } from "@/components/FrontPageTop";
 import { RibbonStrip } from "@/components/RibbonStrip";
 import { FrontPageLead } from "@/components/FrontPageLead";
@@ -19,6 +20,8 @@ export default function Home() {
     <main className="relative z-10 flex flex-col">
       {/* animated sky behind the front page — real current Bangkok sky (sun / clouds / rain) */}
       <SkyBackdrop />
+      {/* defines the liquid-glass refraction filter + enables it on Chromium */}
+      <LiquidGlass />
 
       <Masthead />
 

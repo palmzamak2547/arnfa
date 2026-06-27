@@ -179,6 +179,14 @@ body {
   .arnfa-glass { background-color: rgba(255, 255, 255, 0.92) !important; }
 }
 
+/* Liquid glass — Chromium-only backdrop REFRACTION (feDisplacementMap), a progressive
+ * enhancement over .arnfa-glass. Gated by `html.liquid-ok` (set by <LiquidGlass/> only
+ * where backdrop-filter:url() actually renders) so Safari/Firefox keep the plain blur. */
+html.liquid-ok .arnfa-liquid {
+  -webkit-backdrop-filter: url(#arnfa-lens) blur(6px) saturate(1.7);
+  backdrop-filter: url(#arnfa-lens) blur(6px) saturate(1.7) brightness(1.04);
+}
+
 /* Map marker drop-in (staggered per stop). Reduced-motion: not applied (instant). */
 @keyframes arnfa-drop {
   from { transform: translateY(-14px) scale(0.6); opacity: 0; }
