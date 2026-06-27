@@ -12,7 +12,7 @@ import { SWIM_TH, SWIM_EN, SWIM_DOT, type SwimLevel } from "@/lib/marine/marine"
  * never invents a beach.
  */
 
-type Marine = { available: boolean; waveM?: number; waveMaxM?: number | null; seaTempC?: number; swim?: SwimLevel; km?: number };
+type Marine = { available: boolean; waveM?: number; waveMaxM?: number | null; seaTempC?: number | null; swim?: SwimLevel; km?: number };
 
 export function BeachConditions({ lat, lng }: { lat: number; lng: number }) {
   const { en } = useLang();
@@ -44,7 +44,7 @@ export function BeachConditions({ lat, lng }: { lat: number; lng: number }) {
       </div>
       <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 font-thai text-sm text-ink">
         <span>{en ? "Waves" : "คลื่น"} <b className="font-medium tabular-nums">{d.waveM?.toFixed(1)} m</b>{d.waveMaxM ? ` (${en ? "up to" : "สูงสุด"} ${d.waveMaxM.toFixed(1)} m)` : ""}</span>
-        <span>{en ? "Sea" : "น้ำทะเล"} <b className="font-medium tabular-nums">{Math.round(d.seaTempC!)}°</b></span>
+        {d.seaTempC != null && <span>{en ? "Sea" : "น้ำทะเล"} <b className="font-medium tabular-nums">{Math.round(d.seaTempC)}°</b></span>}
       </div>
       <p className="font-thai mt-2 text-[0.7rem] text-ink-faint">{en ? "Open-Meteo Marine — significant wave height" : "Open-Meteo Marine — ความสูงคลื่นนัยสำคัญ"}</p>
     </div>
