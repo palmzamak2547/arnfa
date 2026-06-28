@@ -16,6 +16,7 @@ import { LogoMark } from "./Logo";
 const NAV = [
   { href: "/explore", th: "เที่ยว กทม.", en: "Explore" },
   { href: "/where", th: "ไปไหนดี", en: "Where" },
+  { href: "/skymap", th: "แผนที่ฟ้า", en: "Sky Map" },
   { href: "/ai", th: "ถาม AI", en: "Ask AI" },
   { href: "/signals", th: "สัญญาณเมือง", en: "Signals" },
   { href: "/data", th: "ที่มาข้อมูล", en: "Sources" },
