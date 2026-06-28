@@ -48,7 +48,19 @@ export default function TripsPage() {
 
           {user && trips === null && <p className="font-thai flex items-center gap-2 text-ink-faint"><span className="af-blink h-2 w-2 rounded-full bg-sun" />{en ? "Loading…" : "กำลังโหลด…"}</p>}
           {user && trips?.length === 0 && (
-            <p className="font-thai text-ink-faint">{en ? "No saved trips yet — plan a day and tap Save." : "ยังไม่มีทริปที่เซฟ — ลองวางแผนแล้วกดเซฟดู"} <Link href="/plan" className="text-rain hover:underline">{en ? "Plan →" : "วางแผน →"}</Link></p>
+            <div className="arnfa-glass rounded-3xl p-8 text-center" style={{ background: "rgba(255,255,255,0.4)" }}>
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-sun/15">
+                <svg width="26" height="26" viewBox="0 0 48 48" aria-hidden><circle cx="24" cy="24" r="11" fill="var(--arnfa-accent-sun)" /></svg>
+              </div>
+              <p className="font-thai-serif text-xl font-light text-ink">{en ? "No saved trips yet" : "ยังไม่มีทริปที่เซฟ"}</p>
+              <p className="mx-auto mt-2 max-w-sm font-thai text-sm text-ink-muted">
+                {en ? "Plan a day, then tap Save — Arnfah keeps watching the sky for it and tells you the best day to go." : "ลองวางแผนสักวันแล้วกดเซฟ — อ่านฟ้าจะเฝ้าฟ้าให้ แล้วบอกว่าวันไหนควรไป"}
+              </p>
+              <div className="mt-5 flex flex-wrap justify-center gap-2.5">
+                <Link href="/plan" className="rounded-full bg-ink px-5 py-2.5 font-thai text-sm font-medium text-paper transition-colors hover:bg-ink-muted">{en ? "Plan a trip" : "วางแผนทริป"}</Link>
+                <Link href="/where" className="rounded-full border border-hairline px-5 py-2.5 font-thai text-sm text-ink transition-colors hover:bg-surface">{en ? "Where to go" : "ไปไหนดี"}</Link>
+              </div>
+            </div>
           )}
 
           {user && watchKeys.length > 0 && <SkyWatch keys={watchKeys} />}

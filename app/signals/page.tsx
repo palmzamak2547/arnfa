@@ -72,6 +72,7 @@ export default function SignalsPage() {
               ? "Arnfah doesn't just show weather — it turns the city's live signals into a decision. Here's the pipeline, running now."
               : "อ่านฟ้าไม่ได้แค่บอกอากาศ — แต่เปลี่ยนสัญญาณสดของเมืองให้เป็น “การตัดสินใจ” นี่คือกระบวนการที่กำลังทำงานอยู่ตอนนี้"}
           </p>
+          <div className="mt-5"><BangkokClock en={en} /></div>
         </div>
       </section>
 
@@ -146,10 +147,29 @@ function Stage({ n, word, q, last, children }: { n: string; word: string; q: str
 
 function Signal({ label, src, children }: { label: string; src: string; children: React.ReactNode }) {
   return (
-    <div>
+    <div className="af-lift rounded-2xl border border-hairline bg-surface/55 p-4">
       <p className="mb-1 font-display text-[0.7rem] uppercase tracking-[0.16em] text-ink-faint">{label}</p>
       <p className="font-thai-serif text-2xl font-light tabular-nums text-ink">{children}</p>
       <p className="mt-1 font-thai text-[0.7rem] italic text-ink-faint">{src}</p>
     </div>
+  );
+}
+
+/** A ticking Asia/Bangkok clock — makes "right now" literal. SSR-safe (renders "—" until mount). */
+function BangkokClock({ en }: { en: boolean }) {
+  const [t, setT] = useState("");
+  useEffect(() => {
+    const p = (n: number) => String(n).padStart(2, "0");
+    const tick = () => { const b = bkkNow(); setT(`${p(b.getHours())}:${p(b.getMinutes())}:${p(b.getSeconds())}`); };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full border border-hairline bg-surface/55 px-3.5 py-1.5 font-thai text-xs text-ink-muted">
+      <span className="af-blink h-2 w-2 rounded-full bg-success" aria-hidden />
+      <span className="tabular-nums text-ink">{t || "—"}</span>
+      <span className="text-ink-faint">{en ? "Bangkok now" : "เวลากรุงเทพฯ"}</span>
+    </span>
   );
 }
