@@ -483,8 +483,8 @@ function PlanInner() {
                     return (
                     <Fragment key={stop.poi.id}>
                     {prev && (
-                      <li className="flex items-center gap-2 pl-7 font-thai text-xs text-ink-faint" aria-hidden>
-                        <span>↓</span>
+                      <li className="-my-1 flex items-center gap-3 pl-[10px] font-thai text-xs text-ink-faint" aria-hidden>
+                        <span className="flex w-6 justify-center"><span className="h-7 w-px bg-hairline" /></span>
                         <span>{routedHops[i] ? `🧭 ${routedHopLabel(routedHops[i].minutes, routedHops[i].meters, en)}` : hopLabel(hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng), en)}</span>
                       </li>
                     )}

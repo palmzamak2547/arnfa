@@ -44,9 +44,22 @@ const ZONE_EN: Record<string, string> = {
 };
 const zoneLabel = (zone: string, en: boolean) => (en ? ZONE_EN[zone] ?? zone : zone);
 
+// region-filter chips → the exact a.zone string(s) each one keeps. "all" = show everything
+// (incl. the Bangkok-neighbourhood + tourist-spot zones, which have no chip of their own).
+const REGION_CHIPS: { key: string; th: string; en: string; zones: string[] | null }[] = [
+  { key: "all", th: "ทั้งหมด", en: "All", zones: null },
+  { key: "north", th: "เหนือ", en: "North", zones: ["ภาคเหนือ"] },
+  { key: "isan", th: "อีสาน", en: "Isan", zones: ["ภาคตะวันออกเฉียงเหนือ"] },
+  { key: "central", th: "กลาง", en: "Central", zones: ["ภาคกลาง", "ย่านยอดนิยม"] },
+  { key: "east", th: "ตะวันออก", en: "East", zones: ["ภาคตะวันออก"] },
+  { key: "west", th: "ตะวันตก", en: "West", zones: ["ภาคตะวันตก"] },
+  { key: "south", th: "ใต้", en: "South", zones: ["ภาคใต้"] },
+];
+
 export default function WherePage() {
   const { en } = useLang();
   const [day, setDay] = useState(0);
+  const [region, setRegion] = useState("all");
   const [areas, setAreas] = useState<Area[] | null>(null);
   const [date, setDate] = useState("");
   const [error, setError] = useState(false);
@@ -61,16 +74,23 @@ export default function WherePage() {
     return () => { cancelled = true; };
   }, [day]);
 
-  const top = areas?.slice(0, 8) ?? [];
+  // active region → matching zone strings (null = all). Filters BOTH the top picks + the grouped list.
+  const activeZones = REGION_CHIPS.find((c) => c.key === region)?.zones ?? null;
+  const filtered = useMemo(
+    () => (!areas ? null : activeZones ? areas.filter((a) => activeZones.includes(a.zone)) : areas),
+    [areas, activeZones],
+  );
+
+  const top = filtered?.slice(0, 8) ?? [];
   const grouped = useMemo(() => {
-    if (!areas) return [];
+    if (!filtered) return [];
     const by = new Map<string, Area[]>();
-    for (const a of areas) { const k = a.zone || "อื่นๆ"; (by.get(k) ?? by.set(k, []).get(k)!).push(a); }
+    for (const a of filtered) { const k = a.zone || "อื่นๆ"; (by.get(k) ?? by.set(k, []).get(k)!).push(a); }
     return [...by.entries()].sort((x, y) => {
       const ix = ZONE_ORDER.indexOf(x[0]); const iy = ZONE_ORDER.indexOf(y[0]);
       return (ix < 0 ? 99 : ix) - (iy < 0 ? 99 : iy);
     });
-  }, [areas]);
+  }, [filtered]);
 
   return (
     <main className="relative z-10 min-h-screen">
@@ -94,6 +114,20 @@ export default function WherePage() {
             ))}
           </div>
 
+          {/* region filter — narrows both the top picks and the full grouped list to one region */}
+          <div className="mb-8">
+            <p className="mb-2.5 font-display text-[0.72rem] uppercase tracking-[0.24em] text-ink-faint">{en ? "Filter by region" : "เลือกภาค"}</p>
+            <div className="flex flex-wrap gap-2">
+              {REGION_CHIPS.map((c) => (
+                <button key={c.key} type="button" onClick={() => setRegion(c.key)} aria-pressed={c.key === region}
+                  className={clsx("font-thai rounded-full px-3.5 py-1.5 text-sm transition-colors duration-[var(--dur-fast)]",
+                    c.key === region ? "bg-ink text-paper" : "border border-hairline text-ink-muted hover:bg-surface hover:text-ink")}>
+                  {en ? c.en : c.th}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {error && (
             <p className="font-thai arnfa-glass rounded-2xl p-6 text-ink-muted" style={{ background: "rgba(255,255,255,0.4)" }}>
               {en ? "Couldn't read the skies right now — try again in a moment." : "อ่านฟ้าทั่วไทยไม่ได้ตอนนี้ ลองใหม่อีกที (เราไม่เดาให้)"}
@@ -113,6 +147,13 @@ export default function WherePage() {
             </div>
           )}
 
+          {/* region filter yielded nothing for this day — honest, no fabricated rows */}
+          {areas && !error && top.length === 0 && (
+            <p className="font-thai rounded-2xl border border-hairline bg-surface p-6 text-ink-muted">
+              {en ? "No areas in this region right now — try another region." : "ยังไม่มีพื้นที่ในภาคนี้ตอนนี้ ลองเลือกภาคอื่นดู"}
+            </p>
+          )}
+
           {/* top picks — the answer, ranked, as an editorial list (not a card grid) */}
           {areas && top.length > 0 && (
             <>
@@ -128,6 +169,11 @@ export default function WherePage() {
                         <span className="flex items-center gap-2">
                           <span className="inline-block h-2 w-2 shrink-0 rounded-full" style={{ background: VDOT[a.verdict] }} aria-hidden />
                           <span className="font-thai-serif text-xl font-light text-ink truncate transition-colors group-hover:text-ink-muted">{en ? a.en : a.th}</span>
+                          {i === 0 && (
+                            <span className="shrink-0 rounded-full border border-sun px-2 py-0.5 font-display text-[0.58rem] uppercase tracking-[0.14em] text-sun">
+                              {en ? "clearest" : "ฟ้าโปร่งสุด"}
+                            </span>
+                          )}
                         </span>
                         <span className="font-thai text-xs text-ink-faint">{zoneLabel(a.zone, en)} — {en ? SKY_VERDICT_EN[a.verdict] : SKY_VERDICT_TH[a.verdict]}</span>
                       </span>

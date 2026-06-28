@@ -50,10 +50,10 @@ export default function PartnerPage() {
             {steps.map((s) => {
               const lines = lang === "zh" ? s.zh : en ? s.en : s.th;
               return (
-                <div key={s.n}>
-                  <span className="font-thai-serif text-2xl font-light text-ink-faint">{s.n}</span>
-                  <p className="mt-1 font-thai-serif text-lg font-light leading-snug text-ink">{lines[0]}</p>
-                  <p className="mt-0.5 font-thai text-sm text-ink-muted">{lines[1]}</p>
+                <div key={s.n} className="af-lift flex flex-col gap-2 rounded-2xl border border-hairline bg-surface/50 p-5">
+                  <span className="font-thai-serif text-[2.4rem] font-light leading-none tabular-nums text-ink-faint">{s.n}</span>
+                  <p className="font-thai-serif text-lg font-light leading-snug text-ink">{lines[0]}</p>
+                  <p className="font-thai text-sm leading-relaxed text-ink-muted">{lines[1]}</p>
                 </div>
               );
             })}
@@ -66,11 +66,18 @@ export default function PartnerPage() {
         <div className="col-content grid gap-8 border-t border-hairline pt-7 lg:grid-cols-2">
           <div>
             <h2 className="mb-3 font-thai-serif text-2xl font-light text-ink">{tx("แฟร์ และจริง", "Fair, and real", "公平、真实")}</h2>
-            <ul className="space-y-2 font-thai text-sm leading-relaxed text-ink-muted">
-              <li>• {tx("เราไม่ขึ้นดีลปลอม — โชว์เฉพาะของจริง", "No fake deals — only real ones ever show", "绝不虚构优惠 — 只显示真实优惠")}</li>
-              <li>• {tx("demand เพิ่ม ไม่ใช่แย่ง — ลูกค้าที่ฝนพัดมา", "Incremental demand, not cannibalised — the foot traffic rain sends you", "增量客流，而非抢夺 — 雨天为你带来的客人")}</li>
-              <li>• {tx("ติดป้าย ◆ พาร์ทเนอร์ ชัดเจน", "Labelled ◆ partner, transparent", "明确标注 ◆ 合作伙伴")}</li>
-              <li>• {tx("ผู้ใช้ฟรีตลอด — เราโตไปด้วยกัน", "Users free forever — we grow together", "用户永久免费 — 共同成长")}</li>
+            <ul className="space-y-3 font-thai text-sm leading-relaxed text-ink-muted">
+              {[
+                tx("เราไม่ขึ้นดีลปลอม — โชว์เฉพาะของจริง", "No fake deals — only real ones ever show", "绝不虚构优惠 — 只显示真实优惠"),
+                tx("demand เพิ่ม ไม่ใช่แย่ง — ลูกค้าที่ฝนพัดมา", "Incremental demand, not cannibalised — the foot traffic rain sends you", "增量客流，而非抢夺 — 雨天为你带来的客人"),
+                tx("ติดป้าย ◆ พาร์ทเนอร์ ชัดเจน", "Labelled ◆ partner, transparent", "明确标注 ◆ 合作伙伴"),
+                tx("ผู้ใช้ฟรีตลอด — เราโตไปด้วยกัน", "Users free forever — we grow together", "用户永久免费 — 共同成长"),
+              ].map((line, i) => (
+                <li key={i} className="flex items-start gap-2.5">
+                  <span aria-hidden className="mt-0.5 flex-none text-success">◆</span>
+                  <span>{line}</span>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="arnfa-glass rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.34)" }}>

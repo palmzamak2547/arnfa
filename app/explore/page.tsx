@@ -17,13 +17,15 @@ import { useLang } from "@/lib/i18n/useLang";
 type Area = { key: string; th: string; en: string; tempC: number; rainProb: number; verdict: string };
 
 // Iconic visitor zones → real district keys (verified). Sukhumvit beachhead first.
+// `bg` = a tasteful per-zone gradient derived from the brand palette (sun/rain/success/indoor
+// tints) — NOT a fake photo / stock image. Iron Rule 0: a neutral non-fabricated visual.
 const TOURIST_AREAS = [
-  { key: "thonglor", en: "Sukhumvit", zh: "素坤逸", tagEn: "Rooftops, cafés, malls", tagZh: "天台酒吧、咖啡馆、商场", icon: "🍸" },
-  { key: "phra-nakhon", en: "Old City", zh: "老城", tagEn: "Grand Palace, Wat Pho, temples", tagZh: "大皇宫、卧佛寺、寺庙", icon: "🛕" },
-  { key: "pathum-wan", en: "Siam", zh: "暹罗", tagEn: "Malls, Jim Thompson House", tagZh: "商场、金汤普森之家", icon: "🛍️" },
-  { key: "chatuchak", en: "Chatuchak", zh: "札都甲", tagEn: "Weekend Market, parks", tagZh: "周末市场、公园", icon: "🛒" },
-  { key: "samphanthawong", en: "Chinatown", zh: "唐人街", tagEn: "Yaowarat street food", tagZh: "耀华力美食街", icon: "🥟" },
-  { key: "bang-rak", en: "Riverside", zh: "河滨", tagEn: "Asiatique, river, hotels", tagZh: "河滨夜市、河景、酒店", icon: "🚤" },
+  { key: "thonglor", en: "Sukhumvit", zh: "素坤逸", tagEn: "Rooftops, cafés, malls", tagZh: "天台酒吧、咖啡馆、商场", icon: "🍸", bg: "linear-gradient(150deg,#3E4C63,#6E5A4E)" },
+  { key: "phra-nakhon", en: "Old City", zh: "老城", tagEn: "Grand Palace, Wat Pho, temples", tagZh: "大皇宫、卧佛寺、寺庙", icon: "🛕", bg: "linear-gradient(150deg,#C9A24B,#8A6A3A)" },
+  { key: "pathum-wan", en: "Siam", zh: "暹罗", tagEn: "Malls, Jim Thompson House", tagZh: "商场、金汤普森之家", icon: "🛍️", bg: "linear-gradient(150deg,#5B7FB8,#3E5680)" },
+  { key: "chatuchak", en: "Chatuchak", zh: "札都甲", tagEn: "Weekend Market, parks", tagZh: "周末市场、公园", icon: "🛒", bg: "linear-gradient(150deg,#7BA68A,#4F7A5E)" },
+  { key: "samphanthawong", en: "Chinatown", zh: "唐人街", tagEn: "Yaowarat street food", tagZh: "耀华力美食街", icon: "🥟", bg: "linear-gradient(150deg,#D9534A,#9A3B36)" },
+  { key: "bang-rak", en: "Riverside", zh: "河滨", tagEn: "Asiatique, river, hotels", tagZh: "河滨夜市、河景、酒店", icon: "🚤", bg: "linear-gradient(150deg,#4A6B8A,#2F4A63)" },
 ];
 const KEYS = new Set(TOURIST_AREAS.map((a) => a.key));
 
@@ -90,17 +92,30 @@ export default function ExplorePage() {
       <section className="arnfa-grid section-minor">
         <div className="col-content">
           <h2 className="mb-5 border-t border-hairline pt-7 font-display text-sm uppercase tracking-[0.2em] text-ink">{tx("ย่านห้ามพลาด", "Must-see zones", "必去区域")}</h2>
-          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-x-6 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
             {TOURIST_AREAS.map((a, i) => (
-              <Link key={a.key} href={`/plan?y=${a.key}`} className="group">
-                <div className="flex items-baseline gap-2">
-                  <span aria-hidden className="text-lg">{a.icon}</span>
-                  <h3 className="font-thai-serif text-xl font-light text-ink transition-colors group-hover:text-ink-muted">
-                    {lang === "zh" ? a.zh : a.en}{i === 0 && <span className="ml-2 align-middle font-display text-[0.55rem] uppercase tracking-wider text-success">★ {tx("เริ่มที่นี่", "start here", "首选")}</span>}
-                  </h3>
+              <Link key={a.key} href={`/plan?y=${a.key}`} className="group af-lift block">
+                <div className="relative aspect-[3/2] overflow-hidden rounded-2xl border border-hairline">
+                  {/* Brand-palette gradient — a neutral non-fabricated visual, NOT a stock photo (Iron Rule 0) */}
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                    style={{ background: a.bg }}
+                  />
+                  {/* dark bottom scrim so the name reads on any tint */}
+                  <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(26,31,43,0.62)]" />
+                  <span aria-hidden className="absolute right-3 top-3 text-2xl opacity-80 drop-shadow-[0_1px_4px_rgba(26,31,43,0.5)]">{a.icon}</span>
+                  {i === 0 && (
+                    <span className="absolute left-3 top-3 rounded-full bg-paper px-2.5 py-1 font-display text-[0.55rem] uppercase tracking-wider text-success">
+                      ★ {tx("เริ่มที่นี่", "start here", "首选")}
+                    </span>
+                  )}
+                  <div className="absolute inset-x-4 bottom-3.5">
+                    <h3 className="font-thai-serif text-xl font-light leading-tight text-paper">{lang === "zh" ? a.zh : a.en}</h3>
+                    <p className="mt-0.5 font-thai text-xs text-paper/85">{lang === "zh" ? a.tagZh : a.tagEn}</p>
+                  </div>
                 </div>
-                <p className="mt-0.5 font-thai text-sm text-ink-faint">{lang === "zh" ? a.tagZh : a.tagEn}</p>
-                <p className="mt-1 font-thai text-xs text-rain opacity-0 transition-opacity group-hover:opacity-100">{tx("วางแผนตามฟ้า →", "Plan it around the sky →", "按天气规划 →")}</p>
+                <p className="mt-2 px-0.5 font-thai text-xs text-rain opacity-0 transition-opacity duration-300 group-hover:opacity-100">{tx("วางแผนรอบฟ้า →", "Plan it around the sky →", "按天气规划 →")}</p>
               </Link>
             ))}
           </div>
