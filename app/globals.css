@@ -271,3 +271,86 @@ body::before {
     transform: none !important;
   }
 }
+
+/* ── Hero video — real Bangkok sky behind the front-page nameplate ─────────────
+ * The poster <img> is the LCP paint (109KB webp); the muted MP4 fades in over it
+ * once it can play (HeroVideo.tsx adds .is-ready). Masked to melt into the paper. */
+.hero-video-wrap {
+  height: clamp(460px, 68vh, 800px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 44%, transparent 93%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 44%, transparent 93%);
+}
+.hero-poster,
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+}
+.hero-video {
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-drift);
+}
+.hero-video.is-ready { opacity: 1; }
+.hero-video-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(244, 239, 230, 0.44) 0%,    /* top veil — folio + masthead stay legible */
+    rgba(244, 239, 230, 0.14) 12%,   /* skyline shows through near the top */
+    rgba(244, 239, 230, 0.26) 42%,   /* nameplate band — dark wordmark reads over ANY frame (bright sky or dark rain) */
+    rgba(244, 239, 230, 0.54) 76%,
+    var(--arnfa-paper) 100%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; } /* the poster <img> stays */
+}
+
+/* Nameplate sun-gold sheen — a slow gold glow over a constant paper legibility
+ * shadow (so the wordmark stays readable when it sits over the hero footage). */
+@keyframes af-nameglow {
+  0%, 100% { text-shadow: 0 1px 3px rgba(244, 239, 230, 0.9), 0 2px 26px rgba(244, 239, 230, 0.72); }
+  50%      { text-shadow: 0 1px 3px rgba(244, 239, 230, 0.9), 0 2px 26px rgba(244, 239, 230, 0.72), 0 0 30px rgba(242, 166, 90, 0.42); }
+}
+.af-nameglow { animation: af-nameglow 5.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .af-nameglow { animation: none; text-shadow: 0 1px 3px rgba(244, 239, 230, 0.9), 0 2px 26px rgba(244, 239, 230, 0.72); }
+}
+
+/* ── Scroll progress bar (top of the page) — set via rAF in ScrollProgress.tsx ── */
+.af-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--arnfa-accent-sun), var(--arnfa-accent-rain) 70%, var(--arnfa-accent-indoor-warm));
+  z-index: 60;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Tactile hover-lift for editorial cards (flat elevation: a soft lift, no heavy
+ * resting shadow). Opt-in via .af-lift; dropped under reduced-motion. */
+.af-lift { transition: transform var(--dur-base) var(--ease-drift), box-shadow var(--dur-base) var(--ease-drift); }
+.af-lift:hover { transform: translateY(-5px); box-shadow: 0 24px 56px -34px rgba(26, 31, 43, 0.4); }
+@media (prefers-reduced-motion: reduce) {
+  .af-lift:hover { transform: none; }
+}
+
+/* Editorial line-wrap polish — balanced headings, pretty body (site-wide). */
+h1, h2, h3 { text-wrap: balance; }
+p, figcaption, blockquote { text-wrap: pretty; }
+
+/* FAQ accordion (native <details>) — hide the default marker, rotate the + into a × on open. */
+details.af-faq summary { list-style: none; }
+details.af-faq summary::-webkit-details-marker { display: none; }
+.af-faq-plus { transition: transform var(--dur-fast) var(--ease-drift); }
+details.af-faq[open] .af-faq-plus { transform: rotate(45deg); }
