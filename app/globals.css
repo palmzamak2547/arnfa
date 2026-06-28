@@ -354,3 +354,15 @@ details.af-faq summary { list-style: none; }
 details.af-faq summary::-webkit-details-marker { display: none; }
 .af-faq-plus { transition: transform var(--dur-fast) var(--ease-drift); }
 details.af-faq[open] .af-faq-plus { transform: rotate(45deg); }
+
+/* Band-video poster (the "One city, every sky" intermission band). */
+.band-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Source marquee (WhyArnfah) — scrolls; static under reduced-motion (the names stay readable). */
+@keyframes af-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.af-marquee { animation: af-marquee 28s linear infinite; will-change: transform; }
+.af-marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+@media (prefers-reduced-motion: reduce) { .af-marquee { animation: none; } }

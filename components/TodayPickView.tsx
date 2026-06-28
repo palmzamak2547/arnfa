@@ -24,7 +24,7 @@ export function TodayPickView({ top }: { top: TopArea | null }) {
     <section className="relative z-10 arnfa-grid section-major">
       <Reveal className="col-content col-left-7">
         <p className="mb-6 font-display text-xs uppercase tracking-[0.25em] text-ink-faint">
-          {en ? "ภาค ๒ · Clearest today" : "วันนี้ฟ้าโปร่งสุด · Clearest today"}
+          {en ? "III. Clearest today" : "๓. วันนี้ฟ้าโปร่งสุด"}
         </p>
 
         {top ? (

@@ -46,7 +46,7 @@ export function Masthead() {
 
         <div className="flex flex-none items-center gap-3">
           <div className="hidden sm:block"><AuthButton compact /></div>
-          <Link href="/plan" className="rounded-full bg-ink px-4 py-2 font-thai text-sm leading-none text-paper transition-colors hover:bg-ink-muted">
+          <Link href="/plan" className="inline-flex min-h-[44px] items-center rounded-full bg-ink px-4 py-2 font-thai text-sm leading-none text-paper transition-colors hover:bg-ink-muted">
             {en ? "Plan a trip" : "วางแผนทริป"}
           </Link>
           <LanguageToggle />

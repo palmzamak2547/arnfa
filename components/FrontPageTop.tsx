@@ -1,14 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { useMounted } from "@/lib/useMounted";
 import { useLang } from "@/lib/i18n/useLang";
 
 /**
- * FrontPageTop — the broadsheet front-page header from the Arnfa brand book ("THE ARNFAH
- * ALMANAC"): a folio edition line (with today's REAL Thai Buddhist-calendar date), the centered
- * อ่านฟ้า nameplate with the rising sun-arc over ฟ้า, and the bilingual tagline. Replaces the
- * R3F sky hero on the home with the editorial front page. The date is computed after mount so
- * SSR and the client agree (no hydration mismatch).
+ * FrontPageTop — the broadsheet hero, faithful to the redesign mockup: the folio/edition line
+ * (with today's REAL Thai Buddhist date), a tracked eyebrow, the centered อ่านฟ้า nameplate with
+ * the rising sun-arc, the italic tagline, and the two CTAs (Plan today / How it reads the sky).
+ * Sits over the live Bangkok HeroVideo. The date is computed after mount so SSR/client agree.
  */
 
 const TH_DIGITS = "๐๑๒๓๔๕๖๗๘๙";
@@ -34,14 +34,18 @@ export function FrontPageTop() {
   return (
     <section id="top" className="relative z-10 mx-auto max-w-[1360px] px-4 pt-[clamp(8px,3vh,30px)] pb-1 sm:px-[clamp(16px,4vw,46px)]">
       {/* folio / edition line */}
-      <div className="flex items-center justify-between gap-4 whitespace-nowrap border-y border-hairline border-t-ink py-2 font-display text-[0.6rem] uppercase tracking-[0.2em] text-ink-faint [text-shadow:0_1px_10px_rgba(244,239,230,0.7)]">
-        <span>{en ? "Daily sky edition" : "ฉบับฟ้าประจำวัน"}</span>
+      <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-y border-hairline border-t-ink py-2 font-display text-[0.6rem] uppercase tracking-[0.12em] text-ink-muted [text-shadow:0_1px_10px_rgba(244,239,230,0.85)] sm:justify-between sm:tracking-[0.2em]">
+        <span className="hidden sm:inline">{en ? "Daily sky edition" : "ฉบับฟ้าประจำวัน"}</span>
         <span className="hidden tracking-[0.3em] md:inline">{en ? "The Arnfah Almanac" : "The Arnfah Almanac · หนังสือพิมพ์ฟ้า"}</span>
         <span className="tabular-nums">{dateStr || "—"} · {en ? "free" : "ฟรี"}</span>
       </div>
 
-      {/* nameplate — sits over the live Bangkok hero footage */}
-      <div className="pt-[clamp(28px,8vh,96px)] pb-[clamp(18px,3.2vw,38px)] text-center">
+      {/* nameplate block — sits over the live Bangkok hero footage */}
+      <div className="pt-[clamp(24px,7vh,88px)] pb-[clamp(18px,3.2vw,40px)] text-center">
+        <p className="mb-[clamp(6px,1.4vw,14px)] font-display text-[0.74rem] uppercase tracking-[0.32em] text-ink-muted [text-shadow:0_1px_12px_rgba(244,239,230,0.9)]">
+          {en ? "Bangkok & all of Thailand" : "กรุงเทพฯ และทั่วไทย"}
+        </p>
+
         <div className="af-nameglow inline-block font-thai-serif font-light leading-[1.04] tracking-tight text-ink" style={{ fontSize: "clamp(3.4rem, 1.6rem + 9.5vw, 9rem)" }}>
           อ่าน<span className="relative">ฟ้า
             <svg viewBox="0 0 40 22" aria-hidden className="af-arc absolute overflow-visible" style={{ top: "-0.16em", right: "0.04em", height: "0.28em", width: "0.58em" }}>
@@ -49,9 +53,21 @@ export function FrontPageTop() {
             </svg>
           </span>
         </div>
-        <p className="mt-2.5 font-display italic text-ink-muted [text-shadow:0_1px_12px_rgba(244,239,230,0.7)]" style={{ fontSize: "clamp(1rem, 0.9rem + 0.5vw, 1.3rem)" }}>
-          {en ? "Arnfah — read Thailand's real sky, and it tells you where to go today" : "Arnfah — อ่านฟ้าจริงของไทย แล้วบอกว่าวันนี้ควรไปไหน"}
+
+        <p className="mx-auto mt-[clamp(12px,2vw,22px)] max-w-[30ch] font-display italic leading-snug text-ink-muted [text-shadow:0_1px_12px_rgba(244,239,230,0.7)]" style={{ fontSize: "clamp(1.05rem, 0.9rem + 0.7vw, 1.5rem)" }}>
+          {en ? "Read Thailand's real sky — and it tells you where to go today." : "อ่านฟ้าจริงของไทย — แล้วมันบอกว่าวันนี้ควรไปไหน"}
         </p>
+
+        <div className="mt-[clamp(20px,2.6vw,30px)] flex flex-wrap justify-center gap-3">
+          <Link href="/plan"
+            className="inline-flex h-[50px] items-center rounded-full bg-ink px-7 font-thai font-medium text-paper shadow-sm transition-[transform,background] duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:-translate-y-px hover:bg-ink-muted">
+            {en ? "Plan today's trip" : "วางแผนทริปวันนี้"}
+          </Link>
+          <a href="#how"
+            className="inline-flex h-[50px] items-center rounded-full border border-hairline bg-white/50 px-6 font-thai text-ink backdrop-blur-sm transition-colors duration-[var(--dur-base)] ease-[var(--ease-drift)] hover:bg-white/90">
+            {en ? "How it reads the sky →" : "มันอ่านฟ้ายังไง →"}
+          </a>
+        </div>
       </div>
     </section>
   );

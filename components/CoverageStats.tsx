@@ -15,9 +15,11 @@ const AREA_COUNT = DISTRICTS.length;
 export function CoverageStats() {
   const { en } = useLang();
   const stats = [
-    { n: AREA_COUNT, th: "พื้นที่", en: "areas" },
-    { n: 77, th: "จังหวัด", en: "provinces" },
-    { n: ACTIVE_SOURCE_COUNT, th: "แหล่งข้อมูลเปิด", en: "open-data sources" },
+    { v: AREA_COUNT.toLocaleString("en-US"), th: "พื้นที่", en: "areas" },
+    { v: "77", th: "จังหวัด", en: "provinces" },
+    { v: ACTIVE_SOURCE_COUNT.toLocaleString("en-US"), th: "แหล่งข้อมูลเปิด", en: "open-data sources" },
+    // the real ISR cadence (page revalidate = 1800s = ~30 min) — not a fabricated figure
+    { v: "~30", suffix: "min", th: "รอบอัปเดตฟ้า", en: "forecast refresh" },
   ];
 
   return (
@@ -45,11 +47,12 @@ export function CoverageStats() {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-5 border-t border-hairline pt-6 md:border-t-0 md:pt-0">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-6 border-t border-hairline pt-6 md:border-t-0 md:pt-0">
           {stats.map((s) => (
             <div key={s.en}>
               <div className="font-thai-serif font-light leading-none tabular-nums text-ink" style={{ fontSize: "clamp(1.8rem, 1.2rem + 2vw, 2.8rem)" }}>
-                {s.n.toLocaleString("en-US")}
+                {s.v}
+                {"suffix" in s && s.suffix ? <span className="text-[0.5em] text-ink-faint"> {s.suffix}</span> : null}
               </div>
               <div className="mt-1.5 font-thai text-xs text-ink-muted">{en ? s.en : s.th}</div>
             </div>

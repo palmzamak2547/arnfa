@@ -21,7 +21,7 @@ export function TheSkySection() {
   return (
     <section id="sky" className="relative z-10 mx-auto max-w-[1360px] px-4 py-[clamp(48px,7vw,92px)] sm:px-[clamp(16px,4vw,46px)]">
       <div className="af-rise mb-[clamp(28px,4vw,52px)] flex flex-wrap items-baseline justify-between gap-4 border-t pt-3" style={{ borderColor: "var(--arnfa-ink)" }}>
-        <span className="font-display text-[0.72rem] uppercase tracking-[0.24em] text-ink-muted">ภาค ๑ · How to read the sky</span>
+        <span className="font-display text-[0.72rem] uppercase tracking-[0.24em] text-ink-muted">{en ? "II. How to read the sky" : "๒. อ่านฟ้าให้เป็น"}</span>
         <span className="font-display text-[0.86rem] italic text-ink-faint">{en ? "A field guide to the sky" : "คู่มืออ่านฟ้า"}</span>
       </div>
 
@@ -40,9 +40,9 @@ export function TheSkySection() {
 
         <div className="af-rise border-t border-hairline" style={{ animationDelay: "120ms" }}>
           {ROWS.map((r) => (
-            <div key={r.state} className="flex items-center gap-[18px] border-b border-hairline py-4">
-              <span className="w-[150px] flex-none"><SkyChip state={r.state} arrivalLabel="" size="sm" /></span>
-              <span className="text-[0.96rem] text-ink-muted">{en ? r.en : r.th}</span>
+            <div key={r.state} className="flex items-center gap-[14px] border-b border-hairline py-4 sm:gap-[18px]">
+              <span className="w-[128px] flex-none sm:w-[150px]"><SkyChip state={r.state} arrivalLabel="" size="sm" /></span>
+              <span className="min-w-0 text-[0.96rem] text-ink-muted">{en ? r.en : r.th}</span>
             </div>
           ))}
         </div>

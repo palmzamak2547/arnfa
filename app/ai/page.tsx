@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n/useLang";
 import { Masthead } from "@/components/Masthead";
@@ -38,6 +38,18 @@ export default function AiPage() {
     : ["เปลี่ยนเป็นพรุ่งนี้", "ถ้าฝนตกตอนบ่ายล่ะ", "ขอย่านอื่น", "ใช้เวลาน้อยกว่านี้"];
 
   const lastResp = [...turns].reverse().find((t) => t.resp)?.resp ?? null;
+
+  // Deep-link: /ai?q=... (e.g. from the home ChatFab) auto-runs the question once on mount.
+  const didInit = useRef(false);
+  useEffect(() => {
+    if (didInit.current) return;
+    didInit.current = true;
+    try {
+      const q = new URLSearchParams(window.location.search).get("q");
+      if (q && q.trim()) ask(q.trim());
+    } catch { /* no-op */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function ask(q?: string) {
     const message = (q ?? input).trim();
