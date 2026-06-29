@@ -49,7 +49,7 @@ export function GoThere({ districtKey, areaTh, areaEn, stayIn }: { districtKey: 
       </div>
 
       <p className="mt-3 font-thai text-[0.7rem] text-ink-faint">
-        {en ? "Partner mobility — MuvMi (EV) · Grab · LINE MAN. Free for you." : "พาร์ทเนอร์เดินทาง — MuvMi (EV) · Grab · LINE MAN ฟรีสำหรับคุณ"}
+        {en ? "Partner mobility — MuvMi (EV), Grab, LINE MAN. Free for you." : "พาร์ทเนอร์เดินทาง — MuvMi (EV), Grab, LINE MAN ฟรีสำหรับคุณ"}
       </p>
     </section>
   );

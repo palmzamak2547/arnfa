@@ -16,10 +16,11 @@ export default function TripsPage() {
   const { en } = useLang();
   const { user, ready } = useAuth();
   const [trips, setTrips] = useState<SavedTrip[] | null>(null);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     if (!ready) return;
-    if (user) listTrips().then(setTrips);
+    if (user) listTrips().then(setTrips).catch(() => setLoadError(true));
     else setTrips([]);
   }, [user, ready]);
 
@@ -46,7 +47,8 @@ export default function TripsPage() {
             </div>
           )}
 
-          {user && trips === null && <p className="font-thai flex items-center gap-2 text-ink-faint"><span className="af-blink h-2 w-2 rounded-full bg-sun" />{en ? "Loading…" : "กำลังโหลด…"}</p>}
+          {user && trips === null && !loadError && <p className="font-thai flex items-center gap-2 text-ink-faint"><span className="af-blink h-2 w-2 rounded-full bg-sun" />{en ? "Loading…" : "กำลังโหลด…"}</p>}
+          {user && loadError && <p className="font-thai rounded-2xl border border-hairline bg-surface/60 p-5 text-ink-muted">{en ? "Couldn't load your saved trips right now — try again in a moment." : "โหลดทริปที่เซฟไว้ไม่ได้ตอนนี้ ลองใหม่อีกทีนะ"}</p>}
           {user && trips?.length === 0 && (
             <div className="arnfa-glass rounded-3xl p-8 text-center" style={{ background: "rgba(255,255,255,0.4)" }}>
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-sun/15">
@@ -75,7 +77,7 @@ export default function TripsPage() {
                     <p className="font-thai font-medium text-ink truncate">{t.title || (en ? meta?.en : meta?.th) || t.district}</p>
                     <p className="font-thai text-xs text-ink-faint mt-0.5">{en ? meta?.en : meta?.th}, {t.budgetMin >= 420 ? (en ? "full day" : "เต็มวัน") : t.budgetMin >= 240 ? (en ? "half day" : "ครึ่งวัน") : (en ? "quick" : "แวบเดียว")}, {dayLabel(t.day)}</p>
                   </Link>
-                  <button type="button" onClick={() => remove(t.id)} className="font-thai shrink-0 text-xs text-ink-faint hover:text-indoor-warm">{en ? "delete" : "ลบ"}</button>
+                  <button type="button" onClick={() => remove(t.id)} aria-label={`${en ? "Delete" : "ลบ"} ${t.title || (en ? meta?.en : meta?.th) || t.district}`} className="font-thai inline-flex min-h-[44px] shrink-0 items-center px-2 text-xs text-ink-faint hover:text-indoor-warm">{en ? "delete" : "ลบ"}</button>
                 </li>
               );
             })}

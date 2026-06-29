@@ -33,7 +33,7 @@ export function TheSkySection() {
           </h2>
           <p className="mt-[22px] max-w-[44ch] text-ink-muted" style={{ fontSize: "1.04rem", lineHeight: 1.7 }}>
             {en
-              ? <>A riverside café shines in soft sun, a gallery in the rain, a night market under a clear sky — Arnfa matches the place to the sky at <span className="font-medium text-ink">the hour you'll actually arrive</span>, not the daily average.</>
+              ? <>A riverside café shines in soft sun, a gallery in the rain, a night market under a clear sky — Arnfah matches the place to the sky at <span className="font-medium text-ink">the hour you'll actually arrive</span>, not the daily average.</>
               : <>คาเฟ่ริมน้ำดีตอนแดดอ่อน หอศิลป์ดีตอนฝน ตลาดกลางคืนดีตอนฟ้าเปิด — อ่านฟ้าจับคู่ &ldquo;ที่&rdquo; กับ &ldquo;ฟ้า&rdquo; ใน <span className="font-medium text-ink">ชั่วโมงที่คุณจะไปถึงจริง</span> ไม่ใช่ค่าเฉลี่ยทั้งวัน.</>}
           </p>
         </div>

@@ -45,7 +45,7 @@ export function SwapMomentSection() {
             </p>
             <p className="mt-[18px] flex items-center gap-2.5 font-display text-[0.74rem] uppercase tracking-[0.16em] text-ink-faint">
               <span className="af-blink h-2 w-2 rounded-full bg-indoor-warm" aria-hidden />
-              {en ? "live demo · drive it yourself" : "เดโมสด · กดเล่นเองได้"}
+              {en ? "live demo — drive it yourself" : "เดโมสด กดเล่นเองได้"}
             </p>
           </div>
           <div className="relative">

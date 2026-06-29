@@ -51,7 +51,7 @@ export default function DataPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-6 border-y border-hairline py-7 mb-10">
             {stats.map((s) => (
               <div key={s.en}>
-                <div className="font-display text-3xl sm:text-4xl text-ink tabular-nums">{s.n}</div>
+                <div className="font-thai-serif text-3xl sm:text-4xl text-ink tabular-nums">{s.n}</div>
                 <p className="font-thai text-xs text-ink-faint mt-1">{en ? s.en : s.th}</p>
               </div>
             ))}

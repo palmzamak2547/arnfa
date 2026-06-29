@@ -70,7 +70,7 @@ export function FrontPageLead() {
           </p>
 
           <p className="mt-6 border-b border-hairline pb-3.5 font-display text-[0.74rem] tracking-[0.04em] text-ink-faint">
-            {en ? "Read by " : "อ่านโดย "}<span className="italic text-ink">Arnfah</span>{en ? " · updated " : " · ปรับล่าสุด "}<span className="tabular-nums">{updatedAt}</span>{en ? " · Bangkok" : " · กรุงเทพมหานคร"}
+            {en ? "Read by " : "อ่านโดย "}<span className="italic text-ink">Arnfah</span>{en ? ", updated " : ", ปรับล่าสุด "}<span className="tabular-nums">{updatedAt}</span>{en ? " — Bangkok" : " — กรุงเทพมหานคร"}
           </p>
 
           {/* editorial body — the brand voice (pain-first, verb-first); left-aligned + airy reads

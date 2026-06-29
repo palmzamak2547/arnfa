@@ -8,7 +8,7 @@ const SkyMapView = dynamic(() => import("@/components/SkyMapView").then((m) => m
   ssr: false,
   loading: () => (
     <div className="grid h-full w-full place-items-center font-thai text-sm text-ink-muted">
-      กำลังเปิดแผนที่ฟ้า…
+      <span>กำลังเปิดแผนที่ฟ้า… <span className="text-ink-faint">Opening the sky map…</span></span>
     </div>
   ),
 });

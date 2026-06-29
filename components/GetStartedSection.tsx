@@ -51,7 +51,7 @@ export function GetStartedSection() {
             </Link>
           </div>
           <p className="mt-4 font-thai text-xs text-ink-faint">
-            {en ? "Free, forever — TH / EN / 中文" : "ฟรีตลอด — ไทย / อังกฤษ / 中文"}
+            {en ? "Free, forever — no account needed" : "ฟรีตลอด ไม่ต้องสมัคร"}
           </p>
         </div>
       </div>

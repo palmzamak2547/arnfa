@@ -38,7 +38,7 @@ export function Colophon() {
       <div className="grid items-start gap-[clamp(20px,3vw,40px)] [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
         {/* THE VOICES */}
         <div className="af-rise">
-          <Head>{en ? "Four voices · The voices" : "ตัวพิมพ์สี่เสียง · The voices"}</Head>
+          <Head>{en ? "Four voices · The voices" : "ตัวพิมพ์สี่เสียง — The voices"}</Head>
           {VOICES.map((v) => (
             <div key={v.sample} className="mb-5">
               <div className={v.tabular ? "tabular-nums leading-none text-ink" : "leading-none text-ink"} style={{ fontFamily: v.font, ...v.style }}>{v.sample}</div>
@@ -49,7 +49,7 @@ export function Colophon() {
 
         {/* INK = MEANING */}
         <div className="af-rise" style={{ animationDelay: "100ms" }}>
-          <Head>{en ? "Ink = meaning" : "หมึกที่มีความหมาย · Ink = meaning"}</Head>
+          <Head>{en ? "Ink = meaning" : "หมึกที่มีความหมาย — Ink = meaning"}</Head>
           <div className="flex flex-col gap-3.5">
             {INK.map((k) => (
               <div key={k.v} className="flex items-center gap-3.5">
@@ -70,7 +70,7 @@ export function Colophon() {
 
         {/* THE DRIFT */}
         <div className="af-rise" style={{ animationDelay: "200ms" }}>
-          <Head>{en ? "One easing · The drift" : "จังหวะเดียว · The drift"}</Head>
+          <Head>{en ? "One easing · The drift" : "จังหวะเดียว — The drift"}</Head>
           <p className="mb-[22px] text-[0.98rem] leading-[1.7] text-ink-muted">
             {en ? "Everything moves on one easing — soft, gliding, never bouncy. Like a drifting cloud, not a spring." : "ทุกการเคลื่อนไหวใช้อีสซิ่งเดียว — นุ่ม ลื่น ไม่เด้ง เหมือนเมฆลอย ไม่ใช่สปริง."}
           </p>

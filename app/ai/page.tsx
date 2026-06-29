@@ -15,7 +15,7 @@ import { LogoMark } from "@/components/Logo";
  * the cards are always the engine's real output; the model never invents a place or weather.
  */
 const SKY_COLOR: Record<string, string> = {
-  clear: "var(--arnfa-accent-sun)", partly: "var(--arnfa-success)", cloudy: "#4B5263",
+  clear: "var(--arnfa-accent-sun)", partly: "var(--arnfa-success)", cloudy: "var(--arnfa-ink-muted)",
   rain: "var(--arnfa-accent-rain)", storm: "var(--arnfa-accent-indoor-warm)", night: "#4A5878",
 };
 
@@ -91,6 +91,7 @@ export default function AiPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") ask(); }}
+              aria-label={en ? "Ask Arnfah" : "ถามอ่านฟ้า"}
               placeholder={turns.length ? (en ? "ask a follow-up…" : "ถามต่อได้เลย…") : (en ? "e.g. a chill café tomorrow, dodge the rain" : "เช่น อยากไปคาเฟ่ชิลๆ พรุ่งนี้ เลี่ยงฝน")}
               className="font-thai h-12 flex-1 rounded-full border border-hairline bg-surface/70 px-5 text-base text-ink outline-none transition-colors focus:border-sun/60"
             />
@@ -129,7 +130,7 @@ export default function AiPage() {
                         {turn.resp.plan.stops.map((s, i) => (
                           <li key={i} className="flex items-center gap-3">
                             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink text-paper text-xs font-semibold">{i + 1}</span>
-                            <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: SKY_COLOR[s.sky] ?? "#4B5263" }} aria-hidden />
+                            <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: SKY_COLOR[s.sky] ?? "var(--arnfa-ink-muted)" }} aria-hidden />
                             <span className="font-thai min-w-0 flex-1 truncate text-sm text-ink">{s.name}</span>
                             <span className="font-thai shrink-0 text-xs text-ink-faint tabular-nums">~{s.arrival}, {s.tempC}°, {en ? "rain" : "ฝน"} {s.rainProb}%</span>
                           </li>

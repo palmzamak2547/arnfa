@@ -17,7 +17,7 @@ const COLOPHON = [
   { key: "open-meteo", th: "ฝน อุณหภูมิ ลม รายชั่วโมง", en: "rain, temp, wind — hourly" },
   { key: "air4thai", th: "ฝุ่น PM2.5 รายพื้นที่ (กรมควบคุมมลพิษ)", en: "PM2.5 by area (Thai PCD)" },
   { key: "osm", th: "สถานที่ 20,000+ จุดทั่วไทย", en: "20,000+ places nationwide" },
-  { key: "bma-parks", th: "สวน · ที่หลบร้อน · ฝุ่นในเมือง (กทม.)", en: "parks · refuges · city dust (BMA)" },
+  { key: "bma-parks", th: "สวน ที่หลบร้อน ฝุ่นในเมือง (กทม.)", en: "parks, refuges, city dust (BMA)" },
 ];
 
 export function TruthSection() {
@@ -46,7 +46,7 @@ export function TruthSection() {
               </h2>
               <p className="font-thai fs-lead leading-relaxed text-paper/70 max-w-[42ch]">
                 {en
-                  ? (<>Arnfa never guesses the sky. If the data isn't there it says so — <em className="text-paper/90">&ldquo;can't read the sky right now — try again&rdquo;</em> — instead of inventing a number to fill the gap.</>)
+                  ? (<>Arnfah never guesses the sky. If the data isn't there it says so — <em className="text-paper/90">&ldquo;can't read the sky right now — try again&rdquo;</em> — instead of inventing a number to fill the gap.</>)
                   : (<>อ่านฟ้าไม่เดาฟ้าให้. ถ้าดึงข้อมูลไม่ได้ มันบอกตรง ๆ ว่า <em className="text-paper/90">&ldquo;ดูฟ้าตอนนี้ไม่ได้ — เดี๋ยวลองใหม่นะ&rdquo;</em> ไม่ปั้นตัวเลขมากลบความว่าง.</>)}
               </p>
             </div>

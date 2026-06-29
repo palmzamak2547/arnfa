@@ -516,7 +516,7 @@ function PlanInner() {
                           {stop.openStatus === "unknown" && <span className="text-ink-faint">{en ? "hours unclear" : "เวลาเปิดไม่แน่ชัด"}</span>}
                           {stop.poi.crowd && stop.poi.crowd.n >= 3 ? (
                             <span className="inline-flex items-center gap-1 text-success" title={en ? "refined by real visitors" : "ปรับจากฟีดแบ็กจริงของคนที่ไปมา"}>
-                              <span aria-hidden>✦</span>{en ? `learned from ${stop.poi.crowd.n}` : `เรียนรู้จาก ${stop.poi.crowd.n} ครั้ง`} · {Math.round(stop.poi.crowd.okRate * 100)}% {en ? "ok" : "โอเค"}
+                              <span aria-hidden>✦</span>{en ? `learned from ${stop.poi.crowd.n}` : `เรียนรู้จาก ${stop.poi.crowd.n} ครั้ง`}, {Math.round(stop.poi.crowd.okRate * 100)}% {en ? "ok" : "โอเค"}
                             </span>
                           ) : stop.poi.profile.confidence < 0.5 ? (
                             <span className="text-ink-faint">{en ? "profile unsure" : "โปรไฟล์ยังไม่ชัด"}</span>

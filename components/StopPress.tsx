@@ -46,7 +46,7 @@ export function StopPress() {
           <div className="flex-1">
             <p className="mb-2 flex items-center gap-2 font-display text-[0.7rem] uppercase tracking-[0.24em] text-indoor-warm">
               <span className="af-blink h-[7px] w-[7px] rounded-full bg-indoor-warm" />
-              {en ? "Stop Press" : "ข่าวด่วน · Stop Press"}
+              {en ? "Stop Press" : "ข่าวด่วน"}
             </p>
             <h2 className="font-thai-serif text-2xl font-light leading-snug text-ink">{headline}</h2>
             <p className="mt-2 max-w-[58ch] font-thai text-sm leading-relaxed text-ink-muted">{body}</p>

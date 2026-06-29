@@ -137,7 +137,7 @@ export function LiveCompanion({ pois }: { pois: SeedPoi[] }) {
             <div className="flex items-center gap-2">
               <span className="inline-block h-2 w-2 rounded-full bg-success animate-pulse" aria-hidden />
               <p className="font-thai text-sm text-ink-muted">
-                {coords ? (en ? "Watching your sky · dry for now" : "กำลังดูฟ้าให้ · ตอนนี้ยังแห้ง") : (en ? "Getting your location…" : "กำลังหาตำแหน่ง…")}
+                {coords ? (en ? "Watching your sky — dry for now" : "กำลังดูฟ้าให้ ตอนนี้ยังแห้ง") : (en ? "Getting your location…" : "กำลังหาตำแหน่ง…")}
               </p>
             </div>
           )}

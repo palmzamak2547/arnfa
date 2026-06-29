@@ -65,7 +65,7 @@ export default function SignalsPage() {
       <Masthead />
       <section className="arnfa-grid section-minor">
         <div className="col-content">
-          <p className="mb-3 font-display text-xs uppercase tracking-[0.25em] text-ink-faint">{en ? "Bangkok · live city signals" : "กรุงเทพฯ · สัญญาณเมืองสด"}</p>
+          <p className="mb-3 font-display text-xs uppercase tracking-[0.25em] text-ink-faint">{en ? "Bangkok — live city signals" : "กรุงเทพฯ — สัญญาณเมืองสด"}</p>
           <h1 className="mb-4 text-balance font-thai-serif fs-h2 font-light text-ink">{en ? "Bangkok, right now" : "กรุงเทพฯ ตอนนี้"}</h1>
           <p className="max-w-[56ch] font-thai fs-lead leading-relaxed text-ink-muted">
             {en
