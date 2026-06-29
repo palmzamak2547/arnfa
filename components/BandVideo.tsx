@@ -22,7 +22,9 @@ export function BandVideo() {
     const onReady = () => v.classList.add("is-ready");
     v.addEventListener("loadeddata", onReady);
     const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { if (!started) { started = true; play(); } else play(); } else v.pause(); },
+      // only pause once it's actually buffered (readyState ≥ 3) — pausing an in-flight
+      // load on a fast scroll-past aborts the range request (a benign but ugly ERR_FAILED).
+      ([e]) => { if (e.isIntersecting) { if (!started) { started = true; play(); } else play(); } else if (v.readyState >= 3) v.pause(); },
       { threshold: 0.1 },
     );
     io.observe(v);

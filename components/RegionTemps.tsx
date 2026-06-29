@@ -13,7 +13,8 @@ type Area = { key: string; th: string; en: string; zone: string; tempC: number; 
 
 const REGIONS = [
   { zone: "ภาคเหนือ", th: "เหนือ", en: "North" },
-  { zone: "ภาคตะวันออกเฉียงเหนือ", th: "อีสาน", en: "Northeast" },
+  // the registry labels the Northeast zone "ภาคอีสาน" (not "ภาคตะวันออกเฉียงเหนือ")
+  { zone: "ภาคอีสาน", th: "อีสาน", en: "Northeast" },
   { zone: "ภาคกลาง", th: "กลาง", en: "Central" },
   { zone: "ภาคตะวันออก", th: "ตะวันออก", en: "East" },
   { zone: "ภาคตะวันตก", th: "ตะวันตก", en: "West" },

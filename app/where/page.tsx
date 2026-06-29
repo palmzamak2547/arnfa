@@ -35,11 +35,11 @@ function dayLabel(offset: number, en: boolean): string {
 }
 
 // zone display order: Bangkok neighbourhoods, then tourist spots, then the 6 regions
-const ZONE_ORDER = ["ย่านยอดนิยม", "จุดเที่ยวยอดนิยม", "ภาคเหนือ", "ภาคกลาง", "ภาคตะวันออกเฉียงเหนือ", "ภาคตะวันออก", "ภาคตะวันตก", "ภาคใต้"];
+const ZONE_ORDER = ["ย่านยอดนิยม", "จุดเที่ยวยอดนิยม", "ภาคเหนือ", "ภาคกลาง", "ภาคอีสาน", "ภาคตะวันออก", "ภาคตะวันตก", "ภาคใต้"];
 const ZONE_EN: Record<string, string> = {
   "ย่านยอดนิยม": "Popular areas", "จุดเที่ยวยอดนิยม": "Popular spots",
   "ภาคเหนือ": "Northern Thailand", "ภาคกลาง": "Central Thailand",
-  "ภาคตะวันออกเฉียงเหนือ": "Northeast (Isan)", "ภาคตะวันออก": "Eastern Thailand",
+  "ภาคอีสาน": "Northeast (Isan)", "ภาคตะวันออก": "Eastern Thailand",
   "ภาคตะวันตก": "Western Thailand", "ภาคใต้": "Southern Thailand", "อื่นๆ": "Other",
 };
 const zoneLabel = (zone: string, en: boolean) => (en ? ZONE_EN[zone] ?? zone : zone);
@@ -49,8 +49,8 @@ const zoneLabel = (zone: string, en: boolean) => (en ? ZONE_EN[zone] ?? zone : z
 const REGION_CHIPS: { key: string; th: string; en: string; zones: string[] | null }[] = [
   { key: "all", th: "ทั้งหมด", en: "All", zones: null },
   { key: "north", th: "เหนือ", en: "North", zones: ["ภาคเหนือ"] },
-  { key: "isan", th: "อีสาน", en: "Isan", zones: ["ภาคตะวันออกเฉียงเหนือ"] },
-  { key: "central", th: "กลาง", en: "Central", zones: ["ภาคกลาง", "ย่านยอดนิยม"] },
+  { key: "isan", th: "อีสาน", en: "Isan", zones: ["ภาคอีสาน"] },
+  { key: "central", th: "กลาง", en: "Central", zones: ["ภาคกลาง", "ย่านยอดนิยม", "กรุงเทพชั้นใน", "กรุงเทพตะวันออก", "ฝั่งธนบุรี", "รัชดา–ลาดพร้าว–เหนือ", "สุขุมวิท–ฝั่งใต้"] },
   { key: "east", th: "ตะวันออก", en: "East", zones: ["ภาคตะวันออก"] },
   { key: "west", th: "ตะวันตก", en: "West", zones: ["ภาคตะวันตก"] },
   { key: "south", th: "ใต้", en: "South", zones: ["ภาคใต้"] },
