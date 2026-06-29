@@ -3,6 +3,7 @@
 import { useLang } from "@/lib/i18n/useLang";
 import { DISTRICTS } from "@/lib/poi/registry.generated";
 import { ACTIVE_SOURCE_COUNT } from "@/lib/data/sources";
+import { RegionTemps } from "@/components/RegionTemps";
 
 /**
  * CoverageStats — the editorial "one loud honest number" (teardown move #11): the real POI
@@ -59,6 +60,9 @@ export function CoverageStats() {
           ))}
         </div>
       </div>
+
+      {/* live temperature across the 6 regions + Bangkok (real /api/where, never fabricated) */}
+      <RegionTemps />
     </section>
   );
 }

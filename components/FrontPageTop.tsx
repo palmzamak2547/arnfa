@@ -68,6 +68,17 @@ export function FrontPageTop() {
             {en ? "How it reads the sky →" : "มันอ่านฟ้ายังไง →"}
           </a>
         </div>
+
+        {/* the mockup's playful pill — repurposed as a real doorway to the live nationwide sky map */}
+        <div className="mt-3.5 flex justify-center">
+          <Link href="/skymap"
+            className="inline-flex h-9 items-center gap-2 rounded-full border border-hairline bg-white/40 px-4 font-display text-[0.68rem] uppercase tracking-[0.16em] text-ink-muted backdrop-blur-sm transition-colors hover:bg-white/80">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--arnfa-accent-sun)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="af-spin" aria-hidden>
+              <path d="M21 12 a9 9 0 1 1 -2.64 -6.36" /><path d="M21 4 v4 h-4" />
+            </svg>
+            {en ? "explore the live sky map" : "ดูแผนที่ฟ้าทั้งไทย"}
+          </Link>
+        </div>
       </div>
     </section>
   );
