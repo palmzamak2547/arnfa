@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { nimChat, nimConfigured, extractJson } from "@/lib/ai/nim";
-import { sovereignConfigured, sovereignChat } from "@/lib/ai/sovereign";
+import { sovereignConfigured, sovereignChat, isMostlyThai } from "@/lib/ai/sovereign";
 import { DISTRICTS } from "@/lib/poi/registry.generated";
 import { districtMeta, loadDistrict } from "@/lib/poi/districts";
 import { getForecast } from "@/lib/weather/chain";
@@ -124,6 +124,7 @@ export async function POST(req: NextRequest) {
     ? `\nเหตุจราจรจริงใกล้พื้นที่ตอนนี้ (ข้อมูล Longdo จริง ห้ามแต่งเพิ่ม): ${incidents.map((i) => i.title).join(" / ")}`
     : "";
   const narrateSys =
+    `⛔ ตอบเป็นภาษาไทยเท่านั้น ห้ามใช้ภาษาจีนหรือภาษาอื่นเด็ดขาด ` +
     `คุณคือ "อ่านฟ้า" ผู้ช่วยวางแผนเที่ยวตามฟ้า ตอบเป็น "ย่อหน้าเดียว" ภาษาไทยอบอุ่นเป็นกันเอง 2-4 ประโยค สรุปแผนจริงด้านล่างแบบเพื่อนแนะนำ ` +
     `⛔ ห้ามใส่ลิสต์ บูลเล็ต หัวข้อ ตัวหนา หรือเลขข้อ เด็ดขาด (ระบบโชว์การ์ดแผนให้อยู่แล้ว) ⛔ ห้ามแต่งชื่อสถานที่ สภาพอากาศ หรือเหตุจราจรเอง ใช้เฉพาะข้อมูลที่ให้ ` +
     `ถ้าแผนช่วยหลบฝน/ฝุ่นให้บอกเหตุผลสั้นๆ ถ้ามีเหตุจราจรจริงใกล้ๆ ให้เตือนสั้นๆ ไม่เกิน 1 ประโยค`;
@@ -134,8 +135,10 @@ export async function POST(req: NextRequest) {
   let llm = "nim";
   let answer: string | null = null;
   if (sovereignConfigured()) {
-    answer = await sovereignChat(narrateMsgs, { maxTokens: 220, temperature: 0.55 });
-    if (answer) llm = "thai-sovereign";
+    const s = await sovereignChat(narrateMsgs, { maxTokens: 220, temperature: 0.5, deadlineMs: Date.now() + 7000 });
+    // only accept it if it actually came back in Thai (the 8B preview occasionally replies in
+    // Chinese/English — fall back to NIM rather than show that on a Thai app)
+    if (s && isMostlyThai(s)) { answer = s; llm = "thai-sovereign"; }
   }
   if (!answer) answer = await nimChat(narrateMsgs, { maxTokens: 220, temperature: 0.55, deadlineMs: Date.now() + 11000 });
   // Keep only the prose intro — drop any list/header the model still tacks on (the UI shows the cards).

@@ -26,17 +26,21 @@ export function sovereignConfigured(): boolean {
 
 export async function sovereignChat(
   messages: ChatMsg[],
-  opts: { maxTokens?: number; temperature?: number } = {},
+  opts: { maxTokens?: number; temperature?: number; deadlineMs?: number } = {},
 ): Promise<string | null> {
   const base = process.env.THAI_LLM_BASE_URL || DEFAULT_BASE;
   const key = process.env.THAI_LLM_API_KEY, model = process.env.THAI_LLM_MODEL;
   if (!key || !model) return null;
+  // Bound the attempt so a flaky 8B preview can't blow the /api/ask time budget — when it's
+  // slow we want to fall straight back to NIM, not 504.
+  const remaining = opts.deadlineMs ? opts.deadlineMs - Date.now() : 7000;
+  if (remaining <= 800) return null;
   try {
     const r = await fetch(`${base.replace(/\/+$/, "")}/chat/completions`, {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({ model, messages, max_tokens: opts.maxTokens ?? 400, temperature: opts.temperature ?? 0.5 }),
-      signal: AbortSignal.timeout(12000),
+      signal: AbortSignal.timeout(Math.min(7000, remaining)),
     });
     if (!r.ok) return null;
     const j = await r.json();
@@ -45,4 +49,13 @@ export async function sovereignChat(
   } catch {
     return null;
   }
+}
+
+/** The 8B ThaiLLM preview sometimes answers a Thai prompt in Chinese/English. For a Thai weather
+ *  app that's worse than falling back to NIM, so the route only accepts sovereign output that is
+ *  actually mostly Thai. */
+export function isMostlyThai(text: string): boolean {
+  const thai = (text.match(/[฀-๿]/g) || []).length;
+  const cjk = (text.match(/[一-鿿]/g) || []).length;
+  return thai >= 8 && thai >= cjk * 2; // enough Thai, and not dominated by Chinese
 }
