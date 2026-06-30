@@ -29,6 +29,14 @@ const VCOLOR: Record<SkyVerdict, string> = {
   clearish: "#7BA68A", ok: "#F2A65A", closing: "#5B7FB8", poor: "#D9534A",
 };
 
+// Progressive disclosure: how far you must zoom in before each tier's pins fade in. Province
+// capitals are always on (the country read); the 50 dense Bangkok เขต appear last — so the
+// nationwide view stays calm and the city view gets rich without ever feeling like soup.
+const TIER_MINZOOM: Record<string, number> = { province: 0, spot: 6.5, neighborhood: 8, district: 8.8 };
+
+// the 4-swatch sky-verdict key — the legend the map was missing
+const LEGEND: SkyVerdict[] = ["clearish", "ok", "closing", "poor"];
+
 const TH_DOW = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
 const EN_DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 function dayLabel(offset: number, en: boolean): string {
@@ -89,7 +97,7 @@ export function SkyMapView() {
     type: "FeatureCollection" as const,
     features: (areas ?? []).map((a) => ({
       type: "Feature" as const,
-      properties: { key: a.key, color: VCOLOR[a.verdict] },
+      properties: { key: a.key, color: VCOLOR[a.verdict], tier: a.tier, minzoom: TIER_MINZOOM[a.tier] ?? 8 },
       geometry: { type: "Point" as const, coordinates: [a.lng, a.lat] },
     })),
   }), [areas]);
@@ -114,6 +122,7 @@ export function SkyMapView() {
   }, [q, areas]);
 
   const clearest = areas?.[0] ?? null;
+  const worst = areas && areas.length > 1 ? areas[areas.length - 1] : null; // areas come ranked best→worst
   const mapsDir = selected ? `https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}` : "#";
 
   // Honest fallback — never a blank box; point at the list version of the same data.
@@ -147,7 +156,7 @@ export function SkyMapView() {
         <GeolocateControl position="top-right" trackUserLocation positionOptions={{ enableHighAccuracy: false }} />
         <ScaleControl position="bottom-left" maxWidth={96} unit="metric" />
 
-        <MapDataLayers center={{ lat: 13.4, lng: 100.9 }} active={layers} routePresent={false} en={en} />
+        <MapDataLayers center={{ lat: 13.4, lng: 100.9 }} active={layers} routePresent={false} en={en} underId={areas ? "sky-pins" : undefined} />
 
         {/* the live sky pins — one per area, coloured by verdict (data-driven circle layer) */}
         {areas && (
@@ -156,11 +165,27 @@ export function SkyMapView() {
               id="sky-pins"
               type="circle"
               paint={{
-                "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 3.4, 8, 6, 12, 9],
+                // zoom is the top-level interpolate input (style-spec rule); the per-tier sizing
+                // and per-tier reveal live in the OUTPUTS so province pins read larger and the
+                // dense district pins fade in only once you zoom into the city.
+                "circle-radius": ["interpolate", ["linear"], ["zoom"],
+                  5, ["match", ["get", "tier"], "province", 4, "spot", 3.6, 3.2],
+                  12, ["match", ["get", "tier"], "province", 10.8, "spot", 9.9, 9]],
                 "circle-color": ["get", "color"],
                 "circle-stroke-width": 1.4,
                 "circle-stroke-color": "#ffffff",
-                "circle-opacity": 0.92,
+                // each pin is hidden until the zoom passes its tier's reveal point (a feature
+                // `minzoom` prop) — the literal stop-zooms are compared to it, so no zoom nesting.
+                "circle-opacity": ["interpolate", ["linear"], ["zoom"],
+                  5, ["case", [">=", 5, ["get", "minzoom"]], 0.92, 0],
+                  6.5, ["case", [">=", 6.5, ["get", "minzoom"]], 0.92, 0],
+                  8, ["case", [">=", 8, ["get", "minzoom"]], 0.92, 0],
+                  8.8, ["case", [">=", 8.8, ["get", "minzoom"]], 0.92, 0]],
+                "circle-stroke-opacity": ["interpolate", ["linear"], ["zoom"],
+                  5, ["case", [">=", 5, ["get", "minzoom"]], 1, 0],
+                  6.5, ["case", [">=", 6.5, ["get", "minzoom"]], 1, 0],
+                  8, ["case", [">=", 8, ["get", "minzoom"]], 1, 0],
+                  8.8, ["case", [">=", 8.8, ["get", "minzoom"]], 1, 0]],
               }}
             />
           </Source>
@@ -174,8 +199,15 @@ export function SkyMapView() {
         )}
       </Map>
 
-      {/* ── top bar: search + day selector ───────────────────────────────── */}
+      {/* ── top bar: country verdict banner + search + day selector ───────── */}
       <div className="pointer-events-none absolute inset-x-0 top-3 z-10 flex flex-col items-center gap-2 px-3">
+        {clearest && !selected && (
+          <div className="pointer-events-none max-w-[94%] truncate rounded-full bg-ink/85 px-3.5 py-1 font-thai text-[0.72rem] text-paper shadow-sm backdrop-blur">
+            {en ? "Clearest today · " : "วันนี้ฟ้าโปร่งสุด · "}
+            <span className="font-medium">{en ? clearest.en : clearest.th}</span>
+            {worst && <span className="opacity-70">{en ? ` · avoid ${worst.en}` : ` · เลี่ยง ${worst.th}`}</span>}
+          </div>
+        )}
         <div className="pointer-events-auto relative w-full max-w-md">
           <input
             value={q}
@@ -212,16 +244,28 @@ export function SkyMapView() {
         </div>
       </div>
 
-      {/* ── clearest-now chip (bottom-left) ──────────────────────────────── */}
-      {clearest && !selected && (
-        <button type="button" onClick={() => selectArea(clearest)}
-          className="absolute bottom-9 left-3 z-10 flex items-center gap-2 rounded-full border border-hairline bg-paper/92 px-3.5 py-2 text-left font-thai text-xs shadow-sm backdrop-blur transition-colors hover:bg-surface">
-          <span className="h-2.5 w-2.5 rounded-full ring-1 ring-white" style={{ background: VCOLOR[clearest.verdict] }} aria-hidden />
-          <span className="text-ink-muted">{en ? "Clearest now" : "ฟ้าดีสุดตอนนี้"}</span>
-          <span className="font-medium text-ink">{en ? clearest.en : clearest.th}</span>
-          <span className="text-ink-faint tabular-nums">{clearest.tempC}°</span>
-        </button>
-      )}
+      {/* ── bottom-left: sky-verdict legend (the key) + clearest-now chip ──── */}
+      <div className={clsx("absolute bottom-9 left-3 z-10 flex flex-col items-start gap-1.5", selected && "max-sm:hidden")}>
+        {clearest && !selected && (
+          <button type="button" onClick={() => selectArea(clearest)}
+            className="flex items-center gap-2 rounded-full border border-hairline bg-paper/92 px-3.5 py-2 text-left font-thai text-xs shadow-sm backdrop-blur transition-colors hover:bg-surface">
+            <span className="h-2.5 w-2.5 rounded-full ring-1 ring-white" style={{ background: VCOLOR[clearest.verdict] }} aria-hidden />
+            <span className="text-ink-muted">{en ? "Clearest now" : "ฟ้าดีสุดตอนนี้"}</span>
+            <span className="font-medium text-ink">{en ? clearest.en : clearest.th}</span>
+            <span className="text-ink-faint tabular-nums">{clearest.tempC}°</span>
+          </button>
+        )}
+        {areas && (
+          <div className="pointer-events-none flex flex-wrap items-center gap-x-2.5 gap-y-1 rounded-2xl border border-hairline bg-paper/90 px-3 py-1.5 shadow-sm backdrop-blur">
+            {LEGEND.map((v) => (
+              <span key={v} className="flex items-center gap-1 font-thai text-[0.62rem] text-ink-muted">
+                <span className="h-2 w-2 rounded-full ring-1 ring-white" style={{ background: VCOLOR[v] }} aria-hidden />
+                {en ? SKY_VERDICT_EN[v] : SKY_VERDICT_TH[v]}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* ── layers toggle (bottom-right, reuses the /plan overlays) ───────── */}
       <div className="absolute bottom-9 right-2 z-10 flex flex-col items-end gap-1.5">

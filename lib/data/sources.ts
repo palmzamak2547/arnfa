@@ -56,6 +56,7 @@ export const DATA_SOURCES: DataSource[] = [
 
   { key: "openfreemap", name: "OpenFreeMap", org: "OpenFreeMap", orgEn: "OpenFreeMap", url: "https://openfreemap.org", license: "ODbL", kind: "map", role: "แผนที่ฐาน", roleEn: "Basemap" },
   { key: "rainviewer", name: "RainViewer", org: "RainViewer", orgEn: "RainViewer", url: "https://www.rainviewer.com", license: "free API", kind: "map", role: "เรดาร์ฝน", roleEn: "Rain radar" },
+  { key: "longdo", name: "Longdo Map", org: "ลองดูแมป (เมตามีเดีย เทคโนโลยี)", orgEn: "Longdo Map (Metamedia Technology)", url: "https://map.longdo.com", license: "Longdo Map API (free tier)", kind: "map", role: "ชั้นจราจรเรียลไทม์ (เปิดเมื่อกด)", roleEn: "Live road-traffic layer (opt-in)" },
 
   { key: "nasa-gibs", name: "NASA GIBS", org: "NASA", orgEn: "NASA", url: "https://nasa-gibs.github.io/gibs-api-docs/", license: "NASA open data", kind: "satellite", role: "ภาพถ่ายดาวเทียม · ละอองลอย", roleEn: "Satellite imagery · aerosol" },
 

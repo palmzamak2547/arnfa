@@ -14,16 +14,24 @@ import { AIR_COLOR, AIR_LABEL_TH } from "@/lib/air/air4thai";
  * Rendered as a child of react-map-gl's <Map>, so Marker/Source/Layer get the map via context.
  */
 
-export type MapLayerKey = "rain" | "air" | "rail" | "parks" | "cooling" | "rest";
+export type MapLayerKey = "rain" | "traffic" | "air" | "rail" | "parks" | "cooling" | "rest";
 
-export const MAP_LAYERS: { key: MapLayerKey; th: string; en: string; emoji: string; color: string }[] = [
+/** Traffic is served by the same-origin /api/traffic-tile proxy, which holds the Longdo key
+ *  server-side (never shipped to the browser). The client only needs to know it's enabled —
+ *  a public boolean flag — so the toggle stays dormant on forks without the key. */
+export const LONGDO_ON = process.env.NEXT_PUBLIC_LONGDO === "1";
+
+const ALL_LAYERS: { key: MapLayerKey; th: string; en: string; emoji: string; color: string }[] = [
   { key: "rain", th: "เรดาร์ฝน", en: "Rain radar", emoji: "🌧️", color: "#5B7FB8" },
+  { key: "traffic", th: "จราจร", en: "Traffic", emoji: "🚦", color: "#D9534A" },
   { key: "air", th: "ฝุ่น PM2.5", en: "PM2.5", emoji: "💨", color: "#E08A3C" },
   { key: "rail", th: "รถไฟฟ้า", en: "Trains", emoji: "🚉", color: "#1964B7" },
   { key: "parks", th: "สวน", en: "Parks", emoji: "🌳", color: "#5E8C61" },
   { key: "cooling", th: "ที่หลบร้อน", en: "Cooling", emoji: "❄️", color: "#3B82C4" },
   { key: "rest", th: "จุดพักรถ", en: "Rest stops", emoji: "🛣️", color: "#7C6F5A" },
 ];
+/** Traffic (Longdo) only appears when the proxy is configured — dormant-until-key. */
+export const MAP_LAYERS = ALL_LAYERS.filter((l) => l.key !== "traffic" || LONGDO_ON);
 
 type Pt = { lat: number; lng: number; label: string; subTh: string; subEn: string; color: string; emoji: string };
 
@@ -55,7 +63,7 @@ const restFn = (d: any): Pt[] => (d.areas ?? []).map((a: any) => ({ lat: a.lat, 
 const coolFn = (d: any): Pt[] => (d.centers ?? []).map((c: any) => ({ lat: c.lat, lng: c.lng, label: c.name, subTh: c.district ?? "", subEn: c.district ?? "", color: "#3B82C4", emoji: "❄️" }));
 const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({ lat: s.lat, lng: s.lng, label: s.stationNameTh, subTh: s.pm25 != null ? `PM2.5 ${s.pm25} · ${AIR_LABEL_TH[s.level as keyof typeof AIR_LABEL_TH] ?? ""}` : "ไม่มีข้อมูล", subEn: s.pm25 != null ? `PM2.5 ${s.pm25} µg/m³` : "no data", color: AIR_COLOR[s.level as keyof typeof AIR_COLOR] ?? "#9AA0A6", emoji: "💨" }));
 
-export function MapDataLayers({ center, active, routePresent, en }: { center: { lat: number; lng: number }; active: Set<MapLayerKey>; routePresent: boolean; en: boolean }) {
+export function MapDataLayers({ center, active, routePresent, en, underId }: { center: { lat: number; lng: number }; active: Set<MapLayerKey>; routePresent: boolean; en: boolean; underId?: string }) {
   const c = `lat=${center.lat}&lng=${center.lng}`;
   const rail = usePointLayer(active.has("rail"), `/api/transit?${c}&n=8`, railFn);
   const rest = usePointLayer(active.has("rest"), `/api/rest-areas?${c}&n=6`, restFn);
@@ -99,6 +107,19 @@ export function MapDataLayers({ center, active, routePresent, en }: { center: { 
     return () => { cancelled = true; };
   }, [showRain]);
 
+  // Longdo real-time road-traffic overlay (mode=trafficoverlay): a transparent PNG with
+  // green = flowing / red = jammed lines, painted UNDER the verdict pins (underId). Longdo
+  // refreshes congestion ~every 3 min → bump a tick into the tile URL so it stays live.
+  const [trafficTick, setTrafficTick] = useState(0);
+  const showTraffic = active.has("traffic") && LONGDO_ON;
+  useEffect(() => {
+    if (!showTraffic) return;
+    const id = setInterval(() => setTrafficTick((t) => t + 1), 180_000);
+    return () => clearInterval(id);
+  }, [showTraffic]);
+  // same-origin proxy (server holds the key + adds CORS so MapLibre can texture the raster)
+  const trafficUrl = `/api/traffic-tile?z={z}&x={x}&y={y}&_=${trafficTick}`;
+
   const [selected, setSelected] = useState<Pt | null>(null);
   // Don't leave an orphan popup when its layer is toggled off or the area changes.
   useEffect(() => { setSelected(null); }, [active, center.lat, center.lng]);
@@ -123,7 +144,12 @@ export function MapDataLayers({ center, active, routePresent, en }: { center: { 
         // RainViewer radar is coarse (native ~z10). Cap maxzoom so MapLibre over-zooms the
         // z10 tiles instead of requesting z13+ tiles that return a "Zoom not supported" image.
         <Source id="arnfa-radar" type="raster" tiles={[radarTile]} tileSize={256} maxzoom={10} attribution="Radar: RainViewer">
-          <Layer id="arnfa-radar-layer" type="raster" beforeId={routePresent ? "route-line" : undefined} paint={{ "raster-opacity": 0.5 }} />
+          <Layer id="arnfa-radar-layer" type="raster" beforeId={underId ?? (routePresent ? "route-line" : undefined)} paint={{ "raster-opacity": 0.5 }} />
+        </Source>
+      ) : null}
+      {showTraffic ? (
+        <Source id="arnfa-traffic" type="raster" tiles={[trafficUrl]} tileSize={256} attribution="จราจร: Longdo Map">
+          <Layer id="arnfa-traffic-layer" type="raster" beforeId={underId ?? (routePresent ? "route-line" : undefined)} paint={{ "raster-opacity": 0.82 }} />
         </Source>
       ) : null}
       {air.map((p, i) => dot(p, i, "air"))}
