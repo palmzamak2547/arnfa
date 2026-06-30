@@ -6,7 +6,7 @@
  * data flagged, each with what it powers and a link. Iron Rule 0: if it's not real, it's
  * not here.
  */
-export type DataKind = "forecast" | "air" | "places" | "green" | "safety" | "civic" | "map" | "satellite" | "routing" | "transit";
+export type DataKind = "forecast" | "air" | "flood" | "places" | "green" | "safety" | "civic" | "map" | "satellite" | "routing" | "transit";
 
 export type DataSource = {
   key: string;
@@ -25,6 +25,7 @@ export type DataSource = {
 export const KIND_LABEL: Record<DataKind, { th: string; en: string }> = {
   forecast: { th: "พยากรณ์อากาศ", en: "Forecast" },
   air: { th: "คุณภาพอากาศ / ฝุ่น", en: "Air quality" },
+  flood: { th: "น้ำในลุ่มน้ำ (พยากรณ์)", en: "River basin (forecast)" },
   places: { th: "สถานที่", en: "Places" },
   green: { th: "พื้นที่สีเขียว (ทางการ)", en: "Green space (official)" },
   safety: { th: "ความปลอดภัย (ทางการ)", en: "Safety (official)" },
@@ -35,7 +36,7 @@ export const KIND_LABEL: Record<DataKind, { th: string; en: string }> = {
   transit: { th: "ขนส่งสาธารณะ (รถไฟฟ้า)", en: "Public transit" },
 };
 
-export const KIND_ORDER: DataKind[] = ["forecast", "air", "green", "safety", "civic", "places", "map", "satellite", "transit", "routing"];
+export const KIND_ORDER: DataKind[] = ["forecast", "air", "flood", "green", "safety", "civic", "places", "map", "satellite", "transit", "routing"];
 
 export const DATA_SOURCES: DataSource[] = [
   { key: "open-meteo", name: "Open-Meteo", org: "Open-Meteo", orgEn: "Open-Meteo", url: "https://open-meteo.com", license: "CC-BY 4.0", kind: "forecast", role: "พยากรณ์รายชั่วโมง (หลัก)", roleEn: "Hourly forecast (primary)" },
@@ -45,6 +46,9 @@ export const DATA_SOURCES: DataSource[] = [
   { key: "air4thai", name: "Air4Thai", org: "กรมควบคุมมลพิษ (คพ.)", orgEn: "Thai Pollution Control Dept", url: "http://air4thai.pcd.go.th", license: "ข้อมูลเปิดภาครัฐไทย", kind: "air", role: "PM2.5 รายสถานี (เรียลไทม์)", roleEn: "PM2.5 by station (real-time)", thaiGov: true },
   { key: "bma-district-air", name: "PM2.5 รายเขต กทม.", org: "กรุงเทพมหานคร", orgEn: "Bangkok (BMA)", url: "https://data.bangkok.go.th/dataset/hdv2026", license: "ข้อมูลเปิด กทม.", kind: "air", role: "ฝุ่นรายจุดตรวจ (รายเดือน) — บริบทตามฤดู", roleEn: "PM2.5 by monitoring point (monthly context)", thaiGov: true },
   { key: "nasa-firms", name: "NASA FIRMS", org: "NASA", orgEn: "NASA", url: "https://firms.modaps.eosdis.nasa.gov", license: "NASA open data", kind: "air", role: "จุดความร้อน/ไฟ หมอกควัน (VIIRS)", roleEn: "Active fire / haze (VIIRS)" },
+  { key: "open-meteo-air", name: "Open-Meteo Air Quality", org: "Open-Meteo (CAMS)", orgEn: "Open-Meteo (CAMS)", url: "https://open-meteo.com/en/docs/air-quality-api", license: "CC-BY 4.0", kind: "air", role: "พยากรณ์ฝุ่น PM2.5 ล่วงหน้า — เสริม Air4Thai (ค่าวัดสด)", roleEn: "PM2.5 forecast ahead — complements Air4Thai (measured now)" },
+
+  { key: "open-meteo-flood", name: "Open-Meteo Flood (GloFAS)", org: "Open-Meteo / GloFAS", orgEn: "Open-Meteo / GloFAS", url: "https://open-meteo.com/en/docs/flood-api", license: "CC-BY 4.0", kind: "flood", role: "แนวโน้มระดับน้ำในแม่น้ำสายหลัก (ลุ่มเจ้าพระยา) — บริบทลุ่มน้ำ ไม่ใช่น้ำท่วมถนน", roleEn: "River-basin discharge trend (Chao Phraya) — basin context, not street flooding" },
 
   { key: "bma-parks", name: "สวนสาธารณะ กทม.", org: "กรุงเทพมหานคร", orgEn: "Bangkok (BMA)", url: "https://data.bangkok.go.th/dataset/park", license: "ข้อมูลเปิด กทม.", kind: "green", role: "สวนทางการ 47 แห่ง (พิกัด+เวลา+ขนาด)", roleEn: "47 official parks", thaiGov: true },
 

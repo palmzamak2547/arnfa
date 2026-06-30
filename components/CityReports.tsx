@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLang } from "@/lib/i18n/useLang";
+import { parseTs, timeAgo } from "@/lib/timeAgo";
 
 /**
  * CityReports — the "citizen feedback" City Signal (the BDI keynote's third UNDERSTAND signal,
@@ -29,14 +30,22 @@ export function CityReports({ lat, lng }: { lat: number; lng: number }) {
 
   const dist = (d: number) => (d < 1 ? `${Math.round(d * 1000)} ${en ? "m" : "ม."}` : `${d.toFixed(1)} ${en ? "km" : "กม."}`);
 
+  // Honest freshness: only call it "live/สดๆ" if the newest report is genuinely recent (< 12h).
+  // Otherwise the wording softens and we show the real "อัปเดตล่าสุด <relative>".
+  const newest = reports.reduce<number | null>((mx, r) => { const t = parseTs(r.timestamp); return t && (!mx || t > mx) ? t : mx; }, null);
+  const live = newest != null && Date.now() - newest < 12 * 3600 * 1000;
+
   return (
     <section className="rounded-3xl border border-hairline bg-surface/70 p-5 sm:p-6">
       <div className="mb-1 flex items-baseline justify-between gap-3">
-        <h3 className="font-thai-serif text-lg font-light text-ink">{en ? "The street, live" : "เสียงจากเมือง แถวนี้"}</h3>
+        <h3 className="font-thai-serif text-lg font-light text-ink">{en ? (live ? "The street, live" : "The street near here") : (live ? "เสียงจากเมือง แถวนี้" : "เรื่องแจ้งแถวนี้")}</h3>
         <span className="font-display text-[0.65rem] uppercase tracking-[0.18em] text-rain">{en ? "citizen feedback" : "ประชาชนแจ้ง"}</span>
       </div>
       <p className="mb-3 font-thai text-xs text-ink-muted">
-        {en ? "Live citizen reports near here — before you go, is the street ok, not just the sky?" : "เรื่องที่คนแถวนี้แจ้งเข้ามาสดๆ — ก่อนไป เช็คทั้งฟ้าและถนน"}
+        {en
+          ? (live ? "Live citizen reports near here — before you go, is the street ok, not just the sky?" : "Citizen reports near here — before you go, is the street ok, not just the sky?")
+          : (live ? "เรื่องที่คนแถวนี้แจ้งเข้ามาสดๆ — ก่อนไป เช็คทั้งฟ้าและถนน" : "เรื่องที่คนแถวนี้แจ้งเข้ามา — ก่อนไป เช็คทั้งฟ้าและถนน")}
+        {newest != null && <span className="text-ink-faint">{" "}· {en ? "updated" : "อัปเดตล่าสุด"} {timeAgo(newest, en)}</span>}
       </p>
 
       <ul className="space-y-2">

@@ -118,7 +118,25 @@ export default function AiPage() {
                 <p className="font-thai ml-auto max-w-[85%] w-fit rounded-3xl rounded-br-lg bg-ink px-5 py-3 text-sm text-paper">{turn.q}</p>
 
                 {!turn.resp && !turn.error && loading && ti === turns.length - 1 && (
-                  <p className="font-thai flex items-center gap-2 text-ink-faint"><span className="af-blink h-2 w-2 rounded-full bg-sun" />{en ? "Arnfah is reading the sky and planning…" : "อ่านฟ้ากำลังคิดแผนให้…"}</p>
+                  <div className="arnfa-glass rounded-3xl rounded-bl-lg p-5 sm:p-6" style={{ background: "rgba(255,255,255,0.45)" }} aria-busy="true" aria-live="polite">
+                    <p className="font-thai flex items-center gap-2 text-sm text-ink-faint">
+                      <span className="af-blink h-2 w-2 rounded-full bg-sun" />{en ? "Arnfah is reading the sky and planning…" : "อ่านฟ้ากำลังคิดแผนให้…"}
+                    </p>
+                    {/* skeleton matching the answer + stop rows (no layout jump when the real card lands) */}
+                    <div className="mt-4 space-y-2">
+                      <span className="block h-3 w-[92%] rounded bg-ink/10 animate-pulse" />
+                      <span className="block h-3 w-[74%] rounded bg-ink/10 animate-pulse" />
+                    </div>
+                    <ul className="mt-5 space-y-2.5">
+                      {[0, 1, 2].map((i) => (
+                        <li key={i} className="flex items-center gap-3">
+                          <span className="h-6 w-6 shrink-0 rounded-full bg-ink/10 animate-pulse" />
+                          <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-ink/10" />
+                          <span className="h-3 flex-1 rounded bg-ink/10 animate-pulse" style={{ maxWidth: `${70 - i * 12}%` }} />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
                 {turn.error && <p className="font-thai arnfa-glass rounded-3xl px-5 py-4 text-sm text-ink-muted" style={{ background: "rgba(255,255,255,0.4)" }}>{turn.error} <Link href="/plan" className="text-rain hover:underline">{en ? "Plan →" : "วางแผนเอง →"}</Link></p>}
 

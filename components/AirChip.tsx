@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AIR_LABEL_TH, type AirLevel, type AirReading } from "@/lib/air/air4thai";
+import { AIR_LABEL_TH, airFreshness, type AirLevel, type AirReading } from "@/lib/air/air4thai";
 
 /**
  * AirChip — real PM2.5 near the chosen area, from Air4Thai (Thai PCD).
@@ -50,10 +50,11 @@ export function AirChip({ lat, lng, reading }: { lat: number; lng: number; readi
   }
 
   const color = LEVEL_COLOR[air.level];
+  const fresh = airFreshness(air.readingAt);
   return (
     <span
       className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-2.5 py-1 text-xs font-thai"
-      title={`PM2.5 จาก ${air.stationNameTh} (ห่าง ${air.distanceKm} กม.) — กรมควบคุมมลพิษ`}
+      title={`PM2.5 จาก ${air.stationNameTh} (ห่าง ${air.distanceKm} กม.) — กรมควบคุมมลพิษ${fresh ? ` · ${fresh.fresh ? "อัปเดตล่าสุด" : "ล่าสุด"} ${fresh.hhmm} น.` : ""}`}
     >
       <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: color }} />
       <span className="text-ink-muted">PM2.5</span>
@@ -65,6 +66,8 @@ export function AirChip({ lat, lng, reading }: { lat: number; lng: number; readi
       ) : (
         <span className="text-ink-faint">{AIR_LABEL_TH.unknown}</span>
       )}
+      {/* honest freshness: Air4Thai is hourly — show the reading time when it's not fresh, so we never imply "live" on a stale value */}
+      {fresh && !fresh.fresh && <span className="text-ink-faint">· ล่าสุด {fresh.hhmm}</span>}
     </span>
   );
 }

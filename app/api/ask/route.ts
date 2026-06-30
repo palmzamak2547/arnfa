@@ -10,6 +10,8 @@ import { startIndexForDay } from "@/lib/plan/days";
 import { filterByGroups } from "@/lib/plan/categories";
 import { bkkNow } from "@/lib/bkkNow";
 import { rateLimit, clientIp, tooMany } from "@/lib/ratelimit";
+import { fetchAirForecast, dayPeak, airPeakIsBad } from "@/lib/air/forecast";
+import { fetchFloodTrend } from "@/lib/flood/flood";
 
 /**
  * POST /api/ask — "Arnfa AI": an agent that turns a free-text Thai request into a
@@ -116,8 +118,15 @@ export async function POST(req: NextRequest) {
 
   const dayLabel = day === 0 ? "วันนี้" : day === 1 ? "พรุ่งนี้" : TH_DOW[(dow + day) % 7];
 
-  // Live traffic incidents near the area (real, Longdo) — only meaningful for TODAY's plan.
-  const incidents = day === 0 ? await nearbyIncidents(meta.lat, meta.lng) : [];
+  // Real environmental signals near the area (parallel, all real open data, tight timeouts):
+  //  · live traffic incidents (Longdo, today only) · air-quality FORECAST peak (Open-Meteo CAMS) ·
+  //  · river-basin discharge trend (GloFAS). The model may mention these but never invents them.
+  const [incidents, airPeak, flood] = await Promise.all([
+    day === 0 ? nearbyIncidents(meta.lat, meta.lng) : Promise.resolve([]),
+    fetchAirForecast(meta.lat, meta.lng, Math.min(day + 1, 7), AbortSignal.timeout(4000))
+      .then((h) => dayPeak(h, day)).catch(() => null),
+    fetchFloodTrend(meta.lat, meta.lng, AbortSignal.timeout(4000)).catch(() => null),
+  ]);
 
   // 3) Narrate the REAL plan (the model only summarises what the engine produced).
   const planText = stops.length
@@ -126,12 +135,20 @@ export async function POST(req: NextRequest) {
   const hazardLine = incidents.length
     ? `\nเหตุจราจรจริงใกล้พื้นที่ตอนนี้ (ข้อมูล Longdo จริง ห้ามแต่งเพิ่ม): ${incidents.map((i) => i.title).join(" / ")}`
     : "";
+  // Forward dust warning (real CAMS forecast, framed as forecast not measured-now).
+  const airLine = airPeak && airPeakIsBad(airPeak)
+    ? `\nพยากรณ์ฝุ่นล่วงหน้า (Open-Meteo CAMS จริง — เป็น "พยากรณ์" ไม่ใช่ค่าวัดสด): วันนั้นฝุ่นจะขึ้นไปแตะ PM2.5 ~${airPeak.pm25} (US-AQI ${airPeak.usAqi}) ราว ${airPeak.iso.slice(11, 16)} น. — เตือนให้เลี่ยงกิจกรรมกลางแจ้งช่วงนั้นได้`
+    : "";
+  // River-basin trend (GloFAS) — ONLY as basin context, never street flooding.
+  const floodLine = flood && flood.trend === "rising"
+    ? `\nระดับน้ำในแม่น้ำสายหลัก (ลุ่มเจ้าพระยา, GloFAS จริง) มีแนวโน้มสูงขึ้นช่วงสัปดาห์นี้ — พูดได้แค่เป็น "บริบทลุ่มน้ำ" ⛔ ห้ามบอกว่าถนน/ย่านจะน้ำท่วม (ข้อมูลนี้ไม่ได้บอกน้ำท่วมถนน)`
+    : "";
   const narrateSys =
     `⛔ ตอบเป็นภาษาไทยเท่านั้น ห้ามใช้ภาษาจีนหรือภาษาอื่นเด็ดขาด ` +
     `คุณคือ "อ่านฟ้า" ผู้ช่วยวางแผนเที่ยวตามฟ้า ตอบเป็น "ย่อหน้าเดียว" ภาษาไทยอบอุ่นเป็นกันเอง 2-4 ประโยค สรุปแผนจริงด้านล่างแบบเพื่อนแนะนำ ` +
-    `⛔ ห้ามใส่ลิสต์ บูลเล็ต หัวข้อ ตัวหนา หรือเลขข้อ เด็ดขาด (ระบบโชว์การ์ดแผนให้อยู่แล้ว) ⛔ ห้ามแต่งชื่อสถานที่ สภาพอากาศ หรือเหตุจราจรเอง ใช้เฉพาะข้อมูลที่ให้ ` +
-    `ถ้าแผนช่วยหลบฝน/ฝุ่นให้บอกเหตุผลสั้นๆ ถ้ามีเหตุจราจรจริงใกล้ๆ ให้เตือนสั้นๆ ไม่เกิน 1 ประโยค`;
-  const narrateUser = `คำขอผู้ใช้: "${message}"\nพื้นที่: ${meta.th} ${dayLabel}\nแผนจริงจาก engine:\n${planText}${hazardLine}`;
+    `⛔ ห้ามใส่ลิสต์ บูลเล็ต หัวข้อ ตัวหนา หรือเลขข้อ เด็ดขาด (ระบบโชว์การ์ดแผนให้อยู่แล้ว) ⛔ ห้ามแต่งชื่อสถานที่ สภาพอากาศ เหตุจราจร หรือตัวเลขเอง ใช้เฉพาะข้อมูลที่ให้ ` +
+    `ถ้าแผนช่วยหลบฝน/ฝุ่นให้บอกเหตุผลสั้นๆ ถ้ามีพยากรณ์ฝุ่นล่วงหน้าให้เตือนสั้นๆ ถ้ามีเหตุจราจรจริงให้เตือนไม่เกิน 1 ประโยค ⛔ ถ้ามีระดับน้ำในแม่น้ำให้พูดได้แค่ "บริบทลุ่มน้ำ" ห้ามบอกว่าน้ำท่วมถนน`;
+  const narrateUser = `คำขอผู้ใช้: "${message}"\nพื้นที่: ${meta.th} ${dayLabel}\nแผนจริงจาก engine:\n${planText}${hazardLine}${airLine}${floodLine}`;
   // Thai-sovereign LLM narrates when configured (อธิปไตย AI), else NVIDIA NIM. Either way
   // it only narrates the engine's real plan.
   const narrateMsgs = [{ role: "system" as const, content: narrateSys }, { role: "user" as const, content: narrateUser }];
@@ -158,6 +175,8 @@ export async function POST(req: NextRequest) {
     plan: { areaKey: meta.key, areaTh: meta.th, areaEn: meta.en, day, dayLabel, budget, stops },
     intent: { area: meta.key, day, budget, vibes, avoidRain }, // echo for the next turn to patch (keep avoidRain so follow-ups don't lose it)
     incidents, // real live traffic incidents near the area (today only) — the UI can surface them too
+    airForecast: airPeak && airPeakIsBad(airPeak) ? airPeak : null, // forward dust peak (CAMS), only if unhealthy
+    flood: flood ? { trend: flood.trend, todayDischarge: flood.todayDischarge } : null, // river-basin context only
     provider,
     llm,
     planUrl: `/plan?y=${meta.key}&d=${day}`,

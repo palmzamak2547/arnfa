@@ -9,7 +9,7 @@ import { dayVerdict } from "@/lib/core/verdict";
 import { scoreDays, pickBestWorst } from "@/lib/core/dayScores";
 import { availableDays } from "@/lib/plan/days";
 import { bkkNow } from "@/lib/bkkNow";
-import { AIR_LABEL_TH, AIR_COLOR, type AirLevel } from "@/lib/air/air4thai";
+import { AIR_LABEL_TH, AIR_COLOR, airFreshness, type AirLevel } from "@/lib/air/air4thai";
 import type { HourlyForecast } from "@/lib/weather/types";
 
 /**
@@ -25,7 +25,7 @@ const BKK = { lat: 13.7563, lng: 100.5018 };
 const hhmm = (iso: string) => { const d = new Date(iso); return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`; };
 
 type Forecast = HourlyForecast[];
-type Air = { pm25: number | null; level: AirLevel } | null;
+type Air = { pm25: number | null; level: AirLevel; readingAt?: string | null } | null;
 type Nowcast = { rainInMin: number | null; maxMm: number } | null;
 type TopArea = { th: string; en: string; tempC: number; rainProb: number } | null;
 
@@ -81,7 +81,7 @@ export default function SignalsPage() {
         <Signal label={en ? "Sky" : "ท้องฟ้า"} src="Open-Meteo">
           {now ? <>{Math.round(now.tempC)}° <span className="text-rain">{Math.round(now.rainProb * 100)}%</span> <span className="text-ink-faint text-sm">{en ? "rain" : "ฝน"}</span></> : "—"}
         </Signal>
-        <Signal label="PM2.5" src="Air4Thai">
+        <Signal label="PM2.5" src="Air4Thai" note={air ? (() => { const f = airFreshness(air.readingAt ?? null); return f ? (en ? `${f.fresh ? "updated" : "last reading"} ${f.hhmm}` : `${f.fresh ? "อัปเดต" : "ล่าสุด"} ${f.hhmm} น.`) : undefined; })() : undefined}>
           {air && air.pm25 != null ? <>{air.pm25} <span className="text-sm" style={{ color: AIR_COLOR[air.level] }}>{AIR_LABEL_TH[air.level]}</span></> : "—"}
         </Signal>
         <Signal label={en ? "Citizen feedback" : "เสียงประชาชน"} src="Traffy Fondue">
@@ -145,12 +145,12 @@ function Stage({ n, word, q, last, children }: { n: string; word: string; q: str
   );
 }
 
-function Signal({ label, src, children }: { label: string; src: string; children: React.ReactNode }) {
+function Signal({ label, src, note, children }: { label: string; src: string; note?: string; children: React.ReactNode }) {
   return (
     <div className="af-lift rounded-2xl border border-hairline bg-surface/55 p-4">
       <p className="mb-1 font-display text-[0.7rem] uppercase tracking-[0.16em] text-ink-faint">{label}</p>
       <p className="font-thai-serif text-2xl font-light tabular-nums text-ink">{children}</p>
-      <p className="mt-1 font-thai text-[0.7rem] italic text-ink-faint">{src}</p>
+      <p className="mt-1 font-thai text-[0.7rem] italic text-ink-faint">{src}{note ? ` · ${note}` : ""}</p>
     </div>
   );
 }

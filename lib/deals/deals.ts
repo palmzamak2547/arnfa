@@ -51,12 +51,18 @@ export function dealMatchesWeather(trigger: Deal["weatherTrigger"], sky: SkyStat
   }
 }
 
-/** Submit a shop's interest in listing weather deals (write-only intake). */
+/** Submit a shop's interest in listing weather deals (write-only intake).
+ *  Goes through /api/lead (validate + per-IP rate-limit + DEFINER fn) — direct anon
+ *  INSERT on merchant_lead is revoked, so this is the only write path. */
 export async function submitMerchantLead(placeName: string, contact: string, note?: string): Promise<boolean> {
-  const sb = getSupabase();
-  if (!sb) return false;
   try {
-    const { error } = await sb.from("merchant_lead").insert({ place_name: placeName, contact, note: note ?? null });
-    return !error;
+    const res = await fetch("/api/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ place: placeName, contact, note: note ?? null }),
+    });
+    if (!res.ok) return false;
+    const d = (await res.json()) as { ok?: boolean };
+    return d?.ok === true;
   } catch { return false; }
 }

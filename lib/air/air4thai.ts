@@ -20,6 +20,9 @@ export type AirReading = {
   level: AirLevel;
   distanceKm: number;
   fetchedAt: string;
+  /** the station's REAL measurement time "YYYY-MM-DD HH:mm" (Bangkok local), not the fetch time.
+   *  Air4Thai updates hourly; use airFreshness() to gate a "สด"/live label vs "ล่าสุด HH:mm". */
+  readingAt: string | null;
 };
 
 export type AirLevel = "good" | "moderate" | "warn" | "unhealthy" | "very-unhealthy" | "unknown";
@@ -28,8 +31,24 @@ type Station = {
   nameTH?: string;
   lat?: string | number;
   long?: string | number;
-  AQILast?: { PM25?: { value?: string; aqi?: string } };
+  AQILast?: { date?: string; time?: string; PM25?: { value?: string; aqi?: string } };
 };
+
+/** The station's real reading time as a Bangkok-local "YYYY-MM-DD HH:mm" string, or null. */
+function readingAtOf(st: Station): string | null {
+  const d = st.AQILast?.date, t = st.AQILast?.time;
+  return d && t ? `${d} ${t}` : null;
+}
+
+/** Is an Air4Thai reading recent enough to call "สด"? Air4Thai is hourly, so < 2h = live.
+ *  Parses the Bangkok-local timestamp correctly on any server (appends +07:00). */
+export function airFreshness(readingAt: string | null): { fresh: boolean; hhmm: string } | null {
+  if (!readingAt) return null;
+  const ms = Date.parse(readingAt.replace(" ", "T") + ":00+07:00");
+  if (Number.isNaN(ms)) return null;
+  const ageMin = (Date.now() - ms) / 60000;
+  return { fresh: ageMin >= -30 && ageMin < 120, hhmm: readingAt.slice(11, 16) };
+}
 
 const R = 6371;
 function distKm(aLat: number, aLng: number, bLat: number, bLng: number): number {
@@ -71,7 +90,7 @@ export const AIR_COLOR: Record<AirLevel, string> = {
   unknown: "#9AA0A6",
 };
 
-export type AirStation = { stationNameTh: string; lat: number; lng: number; pm25: number | null; level: AirLevel; distanceKm: number };
+export type AirStation = { stationNameTh: string; lat: number; lng: number; pm25: number | null; level: AirLevel; distanceKm: number; readingAt: string | null };
 
 /** The N nearest Air4Thai stations to a point, each with its PM2.5 reading + band.
  *  For the map's air layer — the spatial dust picture, all real, never fabricated. */
@@ -85,7 +104,7 @@ export async function fetchNearbyAir(lat: number, lng: number, n = 10, signal?: 
     if (!isFinite(sLat) || !isFinite(sLng)) continue;
     const rawVal = st.AQILast?.PM25?.value;
     const pm25 = rawVal != null && rawVal !== "-1" && rawVal !== "" && !Number.isNaN(Number(rawVal)) ? Number(rawVal) : null;
-    out.push({ stationNameTh: st.nameTH ?? "สถานี", lat: sLat, lng: sLng, pm25, level: pm25Level(pm25), distanceKm: Math.round(distKm(lat, lng, sLat, sLng) * 10) / 10 });
+    out.push({ stationNameTh: st.nameTH ?? "สถานี", lat: sLat, lng: sLng, pm25, level: pm25Level(pm25), distanceKm: Math.round(distKm(lat, lng, sLat, sLng) * 10) / 10, readingAt: readingAtOf(st) });
   }
   return out.sort((a, b) => a.distanceKm - b.distanceKm).slice(0, n);
 }
@@ -110,7 +129,7 @@ export async function fetchNearestAir(
   }
 
   if (!best) {
-    return { stationNameTh: "—", pm25: null, level: "unknown", distanceKm: 0, fetchedAt: new Date().toISOString() };
+    return { stationNameTh: "—", pm25: null, level: "unknown", distanceKm: 0, fetchedAt: new Date().toISOString(), readingAt: null };
   }
 
   const rawVal = best.st.AQILast?.PM25?.value;
@@ -121,5 +140,6 @@ export async function fetchNearestAir(
     level: pm25Level(pm25),
     distanceKm: Math.round(best.d * 10) / 10,
     fetchedAt: new Date().toISOString(),
+    readingAt: readingAtOf(best.st),
   };
 }

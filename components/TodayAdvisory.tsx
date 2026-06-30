@@ -3,6 +3,7 @@
 import { useLang } from "@/lib/i18n/useLang";
 import type { Advisory } from "@/lib/core/advisory";
 import { GoldenHour } from "./GoldenHour";
+import { AirOutlook } from "./AirOutlook";
 
 /**
  * TodayAdvisory — "เตรียมตัววันนี้": what to wear, what to pack, what to watch.
@@ -63,6 +64,9 @@ export function TodayAdvisory({ advisory, lat, lng, dayOffset = 0 }: { advisory:
           </ul>
         </div>
       )}
+
+      {/* Forward dust warning — Open-Meteo CAMS PM2.5 forecast peak (only shows when unhealthy) */}
+      {lat != null && lng != null && <AirOutlook lat={lat} lng={lng} dayOffset={dayOffset} />}
 
       {/* Sun line — sunrise · sunset · golden hour (computed locally, no API) */}
       {lat != null && lng != null && <GoldenHour lat={lat} lng={lng} dayOffset={dayOffset} />}
