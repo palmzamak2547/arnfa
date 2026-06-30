@@ -10,6 +10,7 @@ import { scoreDays, pickBestWorst } from "@/lib/core/dayScores";
 import { availableDays } from "@/lib/plan/days";
 import { bkkNow } from "@/lib/bkkNow";
 import { AIR_LABEL_TH, AIR_COLOR, airFreshness, type AirLevel } from "@/lib/air/air4thai";
+import { parseTs, timeAgo } from "@/lib/timeAgo";
 import type { HourlyForecast } from "@/lib/weather/types";
 
 /**
@@ -34,7 +35,7 @@ export default function SignalsPage() {
   const [hours, setHours] = useState<Forecast | null>(null);
   const [air, setAir] = useState<Air>(null);
   const [nowcast, setNowcast] = useState<Nowcast>(null);
-  const [reports, setReports] = useState<number | null>(null);
+  const [reports, setReports] = useState<{ count: number; newestMs: number | null } | null>(null);
   const [topArea, setTopArea] = useState<TopArea>(null);
 
   useEffect(() => {
@@ -43,7 +44,12 @@ export default function SignalsPage() {
     fetch(`/api/forecast?${f}&hours=180`).then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => { if (!c) setHours(d.hours ?? []); }).catch(() => {});
     fetch(`/api/air?${f}`).then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => { if (!c) setAir(d); }).catch(() => {});
     fetch(`/api/nowcast?${f}`).then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => { if (!c) setNowcast(d); }).catch(() => {});
-    fetch(`/api/city-reports?${f}&n=8`).then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => { if (!c) setReports((d.reports ?? []).length); }).catch(() => {});
+    fetch(`/api/city-reports?${f}&n=8`).then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => {
+      if (c) return;
+      const rs = (d.reports ?? []) as { timestamp?: string }[];
+      const newestMs = rs.reduce<number | null>((mx, r) => { const t = parseTs(r.timestamp); return t && (!mx || t > mx) ? t : mx; }, null);
+      setReports({ count: rs.length, newestMs });
+    }).catch(() => {});
     fetch(`/api/where?day=0`).then((r) => (r.ok ? r.json() : Promise.reject())).then((d) => { if (!c) { const a = d.areas?.[0]; setTopArea(a ? { th: a.th, en: a.en, tempC: a.tempC, rainProb: a.rainProb } : null); } }).catch(() => {});
     return () => { c = true; };
   }, []);
@@ -84,8 +90,9 @@ export default function SignalsPage() {
         <Signal label="PM2.5" src="Air4Thai" note={air ? (() => { const f = airFreshness(air.readingAt ?? null); return f ? (en ? `${f.fresh ? "updated" : "last reading"} ${f.hhmm}` : `${f.fresh ? "อัปเดต" : "ล่าสุด"} ${f.hhmm} น.`) : undefined; })() : undefined}>
           {air && air.pm25 != null ? <>{air.pm25} <span className="text-sm" style={{ color: AIR_COLOR[air.level] }}>{AIR_LABEL_TH[air.level]}</span></> : "—"}
         </Signal>
-        <Signal label={en ? "Citizen feedback" : "เสียงประชาชน"} src="Traffy Fondue">
-          {reports != null ? (reports > 0 ? <>{reports} <span className="text-ink-faint text-sm">{en ? "reports near downtown" : "เรื่องแจ้งย่านกลางเมือง"}</span></> : <span className="text-ink-faint text-base">{en ? "quiet now" : "เงียบอยู่"}</span>) : "—"}
+        <Signal label={en ? "Citizen feedback" : "เสียงประชาชน"} src="Traffy Fondue"
+          note={reports?.newestMs != null ? (en ? `latest ${timeAgo(reports.newestMs, true)}` : `ล่าสุด ${timeAgo(reports.newestMs, false)}`) : undefined}>
+          {reports != null ? (reports.count > 0 ? <>{reports.count} <span className="text-ink-faint text-sm">{en ? "reports near downtown" : "เรื่องแจ้งย่านกลางเมือง"}</span></> : <span className="text-ink-faint text-base">{en ? "quiet now" : "เงียบอยู่"}</span>) : "—"}
         </Signal>
       </Stage>
 
@@ -150,7 +157,7 @@ function Signal({ label, src, note, children }: { label: string; src: string; no
     <div className="af-lift rounded-2xl border border-hairline bg-surface/55 p-4">
       <p className="mb-1 font-display text-[0.7rem] uppercase tracking-[0.16em] text-ink-faint">{label}</p>
       <p className="font-thai-serif text-2xl font-light tabular-nums text-ink">{children}</p>
-      <p className="mt-1 font-thai text-[0.7rem] italic text-ink-faint">{src}{note ? ` · ${note}` : ""}</p>
+      <p className="mt-1 font-thai text-[0.7rem] italic text-ink-faint">{src}{note ? ` — ${note}` : ""}</p>
     </div>
   );
 }

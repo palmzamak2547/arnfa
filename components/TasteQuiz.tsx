@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { clsx } from "clsx";
+import { useLang } from "@/lib/i18n/useLang";
 import { TASTE_CARDS, vectorFromAnswers, saveTaste, type TasteAnswers } from "@/lib/plan/taste";
 import type { TasteVector } from "@/lib/plan/buildPlan";
 
@@ -20,6 +21,7 @@ export function TasteQuiz({
   onDone: (v: TasteVector) => void;
   onSkip: () => void;
 }) {
+  const { en } = useLang();
   const reduce = useReducedMotion();
   const [i, setI] = useState(0);
   const [answers, setAnswers] = useState<TasteAnswers>({});
@@ -42,10 +44,10 @@ export function TasteQuiz({
     <div className="arnfa-glass rounded-3xl p-6 sm:p-8" style={{ background: "rgba(255,255,255,0.55)" }}>
       <div className="flex items-center justify-between mb-6">
         <p className="font-display text-xs uppercase tracking-[0.22em] text-ink-faint">
-          รู้จักคุณสักนิด — {i + 1}/{TASTE_CARDS.length}
+          {en ? "Get to know you" : "รู้จักคุณสักนิด"} — {i + 1}/{TASTE_CARDS.length}
         </p>
         <button type="button" onClick={onSkip} className="font-thai text-sm text-ink-faint hover:text-ink-muted min-h-[44px] px-2">
-          ข้ามไปก่อน
+          {en ? "Skip" : "ข้ามไปก่อน"}
         </button>
       </div>
 
@@ -68,7 +70,7 @@ export function TasteQuiz({
           transition={{ duration: reduce ? 0.1 : 0.45, ease: [0.22, 1, 0.36, 1] }}
         >
           <h3 className="font-thai-serif text-2xl sm:text-3xl font-light text-ink leading-snug mb-6">
-            {card.question}
+            {en ? card.questionEn : card.question}
           </h3>
           <div className="grid sm:grid-cols-2 gap-3">
             {(["a", "b"] as const).map((side) => (
@@ -81,7 +83,7 @@ export function TasteQuiz({
                   "hover:border-ink/30 hover:bg-surface hover:-translate-y-0.5 min-h-[44px]",
                 )}
               >
-                <span className="text-base text-ink">{card[side].label}</span>
+                <span className="text-base text-ink">{en ? card[side].labelEn : card[side].label}</span>
               </button>
             ))}
           </div>

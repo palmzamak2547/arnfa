@@ -45,7 +45,7 @@ export function CityReports({ lat, lng }: { lat: number; lng: number }) {
         {en
           ? (live ? "Live citizen reports near here — before you go, is the street ok, not just the sky?" : "Citizen reports near here — before you go, is the street ok, not just the sky?")
           : (live ? "เรื่องที่คนแถวนี้แจ้งเข้ามาสดๆ — ก่อนไป เช็คทั้งฟ้าและถนน" : "เรื่องที่คนแถวนี้แจ้งเข้ามา — ก่อนไป เช็คทั้งฟ้าและถนน")}
-        {newest != null && <span className="text-ink-faint">{" "}· {en ? "updated" : "อัปเดตล่าสุด"} {timeAgo(newest, en)}</span>}
+        {newest != null && <span className="text-ink-faint">{" "}— {en ? "updated" : "อัปเดตล่าสุด"} {timeAgo(newest, en)}</span>}
       </p>
 
       <ul className="space-y-2">

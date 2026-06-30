@@ -120,7 +120,7 @@ export default function WherePage() {
             <div className="flex flex-wrap gap-2">
               {REGION_CHIPS.map((c) => (
                 <button key={c.key} type="button" onClick={() => setRegion(c.key)} aria-pressed={c.key === region}
-                  className={clsx("font-thai rounded-full px-3.5 py-1.5 text-sm transition-colors duration-[var(--dur-fast)]",
+                  className={clsx("font-thai inline-flex min-h-[44px] items-center rounded-full px-4 py-2 text-sm transition-colors duration-[var(--dur-fast)]",
                     c.key === region ? "bg-ink text-paper" : "border border-hairline text-ink-muted hover:bg-surface hover:text-ink")}>
                   {en ? c.en : c.th}
                 </button>

@@ -33,7 +33,7 @@ export function AirOutlook({ lat, lng, dayOffset = 0 }: { lat: number; lng: numb
         {en
           ? `Dust forecast to climb to PM2.5 ~${peak.pm25} (US-AQI ${peak.usAqi}) around ${hhmm} — plan indoor then`
           : `พยากรณ์ฝุ่นจะขึ้นแตะ PM2.5 ~${peak.pm25} (US-AQI ${peak.usAqi}) ราว ${hhmm} น. — ช่วงนั้นเลี่ยงกลางแจ้ง`}
-        <span className="ml-1 text-[0.7rem] text-ink-faint">{en ? "· forecast (CAMS), not measured now" : "· พยากรณ์ (CAMS) ไม่ใช่ค่าวัดสด"}</span>
+        <span className="ml-1 text-[0.7rem] text-ink-faint">{en ? "(forecast — CAMS, not measured now)" : "(พยากรณ์ CAMS ไม่ใช่ค่าวัดสด)"}</span>
       </span>
     </div>
   );

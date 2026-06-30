@@ -18,7 +18,7 @@ export function AuthButton({ compact = false }: { compact?: boolean }) {
     return (
       <div className="flex items-center gap-2">
         {!compact && <span className="font-thai text-xs text-ink-faint truncate max-w-[11rem]">{user.email}</span>}
-        <button type="button" onClick={signOut} className="font-thai text-sm text-ink-faint hover:text-ink hover:underline">{en ? "Sign out" : "ออก"}</button>
+        <button type="button" onClick={signOut} className="font-thai inline-flex min-h-[44px] items-center text-sm text-ink-faint hover:text-ink hover:underline">{en ? "Sign out" : "ออก"}</button>
       </div>
     );
   }
@@ -28,7 +28,7 @@ export function AuthButton({ compact = false }: { compact?: boolean }) {
   }
 
   if (!open) {
-    return <button type="button" onClick={() => setOpen(true)} className="font-thai text-sm text-rain hover:underline">{en ? "Sign in" : "เข้าสู่ระบบ"}</button>;
+    return <button type="button" onClick={() => setOpen(true)} className="font-thai inline-flex min-h-[44px] items-center text-sm text-rain hover:underline">{en ? "Sign in" : "เข้าสู่ระบบ"}</button>;
   }
 
   async function send() {

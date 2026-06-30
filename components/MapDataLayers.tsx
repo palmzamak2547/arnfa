@@ -96,8 +96,8 @@ const coolFn = (d: any): Pt[] => (d.centers ?? []).map((c: any) => ({ lat: c.lat
 const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => {
   // Air4Thai is hourly — show the reading time when it's not fresh, so the dot never implies "live" on a stale value.
   const f = airFreshness(s.readingAt ?? null);
-  const staleTh = f && !f.fresh ? ` · ล่าสุด ${f.hhmm}` : "";
-  const staleEn = f && !f.fresh ? ` · last ${f.hhmm}` : "";
+  const staleTh = f && !f.fresh ? ` — ล่าสุด ${f.hhmm}` : "";
+  const staleEn = f && !f.fresh ? ` — last ${f.hhmm}` : "";
   return { lat: s.lat, lng: s.lng, label: s.stationNameTh, subTh: s.pm25 != null ? `PM2.5 ${s.pm25} ${AIR_LABEL_TH[s.level as keyof typeof AIR_LABEL_TH] ?? ""}${staleTh}` : "ไม่มีข้อมูล", subEn: s.pm25 != null ? `PM2.5 ${s.pm25} µg/m³${staleEn}` : "no data", color: AIR_COLOR[s.level as keyof typeof AIR_COLOR] ?? "#9AA0A6", emoji: "💨" };
 });
 

@@ -80,6 +80,15 @@ export const AIR_LABEL_TH: Record<AirLevel, string> = {
   unknown: "ไม่มีข้อมูล",
 };
 
+export const AIR_LABEL_EN: Record<AirLevel, string> = {
+  good: "good",
+  moderate: "moderate",
+  warn: "elevated",
+  unhealthy: "unhealthy",
+  "very-unhealthy": "hazardous",
+  unknown: "no data",
+};
+
 /** AQI-band colours for plotting stations on the map (green → purple). */
 export const AIR_COLOR: Record<AirLevel, string> = {
   good: "#7BA68A",

@@ -15,12 +15,13 @@ import { NEUTRAL_TASTE } from "./buildPlan";
 
 export const TASTE_STORAGE_KEY = "arnfa.taste.v1";
 
-/** One this-or-that card: choosing a side nudges those categories up. */
+/** One this-or-that card: choosing a side nudges those categories up. (Bilingual TH/EN.) */
 export type TasteCard = {
   id: string;
   question: string;
-  a: { label: string; emoji?: string; boosts: Partial<Record<string, number>> };
-  b: { label: string; emoji?: string; boosts: Partial<Record<string, number>> };
+  questionEn: string;
+  a: { label: string; labelEn: string; emoji?: string; boosts: Partial<Record<string, number>> };
+  b: { label: string; labelEn: string; emoji?: string; boosts: Partial<Record<string, number>> };
 };
 
 /**
@@ -32,32 +33,37 @@ export const TASTE_CARDS: TasteCard[] = [
   {
     id: "morning",
     question: "เช้าวันหยุด อยากเริ่มที่ไหน?",
-    a: { label: "คาเฟ่เงียบๆ จิบกาแฟ", boosts: { cafe: 0.3, library: 0.1 } },
-    b: { label: "สวนเดินรับลม", boosts: { park: 0.3, garden: 0.2 } },
+    questionEn: "Weekend morning — where do you start?",
+    a: { label: "คาเฟ่เงียบๆ จิบกาแฟ", labelEn: "A quiet café, slow coffee", boosts: { cafe: 0.3, library: 0.1 } },
+    b: { label: "สวนเดินรับลม", labelEn: "A breezy walk in the park", boosts: { park: 0.3, garden: 0.2 } },
   },
   {
     id: "afternoon",
     question: "บ่ายๆ ชอบแบบไหนมากกว่า?",
-    a: { label: "เดินตลาด ของกินเพียบ", boosts: { market: 0.3, restaurant: 0.15 } },
-    b: { label: "ดูงานอาร์ต เดินแกลเลอรี", boosts: { gallery: 0.3, museum: 0.2 } },
+    questionEn: "Afternoon — which sounds better?",
+    a: { label: "เดินตลาด ของกินเพียบ", labelEn: "Market stroll, food everywhere", boosts: { market: 0.3, restaurant: 0.15 } },
+    b: { label: "ดูงานอาร์ต เดินแกลเลอรี", labelEn: "Gallery-hopping, art & design", boosts: { gallery: 0.3, museum: 0.2 } },
   },
   {
     id: "view",
     question: "ถ้าฟ้าสวย อยากไป…?",
-    a: { label: "จุดชมวิว เห็นเมือง", boosts: { viewpoint: 0.35 } },
-    b: { label: "ร้านมีหลังคา นั่งสบาย", boosts: { cafe: 0.2, restaurant: 0.15 } },
+    questionEn: "If the sky's clear, you'd go…?",
+    a: { label: "จุดชมวิว เห็นเมือง", labelEn: "A viewpoint over the city", boosts: { viewpoint: 0.35 } },
+    b: { label: "ร้านมีหลังคา นั่งสบาย", labelEn: "A covered spot, comfy seat", boosts: { cafe: 0.2, restaurant: 0.15 } },
   },
   {
     id: "evening",
     question: "เย็นนี้อยากปิดท้ายยังไง?",
-    a: { label: "บาร์ชิลๆ มีดนตรี", boosts: { bar: 0.3 } },
-    b: { label: "ห้างเย็นๆ เดินเล่น", boosts: { mall: 0.25 } },
+    questionEn: "How do you want to end the evening?",
+    a: { label: "บาร์ชิลๆ มีดนตรี", labelEn: "A chill bar with live music", boosts: { bar: 0.3 } },
+    b: { label: "ห้างเย็นๆ เดินเล่น", labelEn: "A cool mall, easy wandering", boosts: { mall: 0.25 } },
   },
   {
     id: "rain",
     question: "ฝนตกกะทันหัน คุณ…?",
-    a: { label: "หาคาเฟ่ดูฝานผ่านหน้าต่าง", boosts: { cafe: 0.25, library: 0.15 } },
-    b: { label: "เข้าห้าง/พิพิธภัณฑ์ไปเลย", boosts: { mall: 0.2, museum: 0.2 } },
+    questionEn: "Sudden rain — you…?",
+    a: { label: "หาคาเฟ่ดูฝานผ่านหน้าต่าง", labelEn: "Find a café, watch it through the window", boosts: { cafe: 0.25, library: 0.15 } },
+    b: { label: "เข้าห้าง/พิพิธภัณฑ์ไปเลย", labelEn: "Duck into a mall or museum", boosts: { mall: 0.2, museum: 0.2 } },
   },
 ];
 

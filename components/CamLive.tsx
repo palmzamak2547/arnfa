@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLang } from "@/lib/i18n/useLang";
 
 /**
  * CamLive — plays a live iTIC / DOH traffic-camera HLS stream. Safari/iOS play HLS natively;
@@ -9,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
  * proxy is needed. On a fatal error (camera offline) it shows an honest message, never a frozen frame.
  */
 export function CamLive({ src, title }: { src: string; title: string }) {
+  const { en } = useLang();
   const ref = useRef<HTMLVideoElement>(null);
   const [err, setErr] = useState(false);
 
@@ -49,7 +51,7 @@ export function CamLive({ src, title }: { src: string; title: string }) {
   if (err) {
     return (
       <div className="flex aspect-video w-full items-center justify-center rounded-xl border border-hairline bg-surface font-thai text-xs text-ink-faint">
-        กล้องนี้ออฟไลน์ชั่วคราว
+        {en ? "This camera is offline right now" : "กล้องนี้ออฟไลน์ชั่วคราว"}
       </div>
     );
   }
