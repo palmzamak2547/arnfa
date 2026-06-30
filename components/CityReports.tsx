@@ -49,7 +49,7 @@ export function CityReports({ lat, lng }: { lat: number; lng: number }) {
                 </span>
               )}
               <span className="font-thai text-xs tabular-nums text-ink-faint">{dist(rp.distKm)}</span>
-              {rp.state && <span className="font-thai text-[0.7rem] text-ink-faint">· {rp.state}</span>}
+              {rp.state && <span className="font-thai text-[0.7rem] text-ink-faint">{rp.state}</span>}
             </div>
             <p className="font-thai text-sm leading-snug text-ink line-clamp-2">{rp.desc || (en ? "(report near here)" : "(เรื่องแจ้งแถวนี้)")}</p>
           </li>

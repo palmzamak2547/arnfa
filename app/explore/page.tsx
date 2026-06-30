@@ -77,7 +77,7 @@ export default function ExplorePage() {
                     {tx("ตอนนี้ฟ้าโปร่งสุด", "Clearest right now", "现在天气最好")}
                   </p>
                   <h2 className="font-thai-serif text-2xl font-light text-ink">{lang === "th" ? best.th : best.en}</h2>
-                  <p className="font-thai text-sm text-ink-muted">{best.tempC}° · {tx("ฝน", "rain", "降雨")} {best.rainProb}%</p>
+                  <p className="font-thai text-sm text-ink-muted">{best.tempC}° {tx("ฝน", "rain", "降雨")} {best.rainProb}%</p>
                 </div>
                 <Link href={`/plan?y=${best.key}`} className="inline-flex h-11 shrink-0 items-center self-start rounded-full bg-ink px-6 font-thai text-sm font-medium text-paper transition-colors hover:bg-ink-muted sm:self-center">
                   {tx("วางแผนที่นี่ →", "Plan an afternoon here →", "在这里安排行程 →")}

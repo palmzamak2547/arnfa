@@ -79,7 +79,7 @@ export default function SignalsPage() {
       {/* UNDERSTAND */}
       <Stage n="๑" word={en ? "Understand" : "เข้าใจ"} q={en ? "What is happening?" : "ตอนนี้เกิดอะไรขึ้น?"}>
         <Signal label={en ? "Sky" : "ท้องฟ้า"} src="Open-Meteo">
-          {now ? <>{Math.round(now.tempC)}° · <span className="text-rain">{Math.round(now.rainProb * 100)}%</span> <span className="text-ink-faint text-sm">{en ? "rain" : "ฝน"}</span></> : "—"}
+          {now ? <>{Math.round(now.tempC)}° <span className="text-rain">{Math.round(now.rainProb * 100)}%</span> <span className="text-ink-faint text-sm">{en ? "rain" : "ฝน"}</span></> : "—"}
         </Signal>
         <Signal label="PM2.5" src="Air4Thai">
           {air && air.pm25 != null ? <>{air.pm25} <span className="text-sm" style={{ color: AIR_COLOR[air.level] }}>{AIR_LABEL_TH[air.level]}</span></> : "—"}
@@ -105,7 +105,7 @@ export default function SignalsPage() {
           {verdict ? (lang === "zh" ? verdict.headlineZh : en ? verdict.headlineEn : verdict.headline) : "—"}
         </Signal>
         <Signal label={en ? "Where to go now" : "ไปไหนดีตอนนี้"} src="nationwide ranking">
-          {topArea ? <>{en ? topArea.en : topArea.th} <span className="text-ink-faint text-sm">{topArea.tempC}° · {topArea.rainProb}%</span></> : "—"}
+          {topArea ? <>{en ? topArea.en : topArea.th} <span className="text-ink-faint text-sm">{topArea.tempC}° {topArea.rainProb}%</span></> : "—"}
         </Signal>
       </Stage>
 

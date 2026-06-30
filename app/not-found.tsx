@@ -20,7 +20,7 @@ export default function NotFound() {
         href="/"
         className="font-thai inline-flex h-11 items-center rounded-full bg-ink px-7 text-sm font-medium text-paper transition-colors hover:bg-ink-muted"
       >
-        กลับหน้าแรก · Home
+        กลับหน้าแรก Home
       </Link>
     </main>
   );

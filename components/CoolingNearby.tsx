@@ -35,7 +35,7 @@ export function CoolingNearby({ lat, lng, active }: { lat: number; lng: number; 
         <h3 className="font-thai-serif text-lg font-light text-ink">
           {en ? "Cool off nearby" : "หลบร้อน/ฝุ่น ได้ที่ใกล้ ๆ"}
         </h3>
-        <span className="font-display text-[0.65rem] uppercase tracking-[0.18em] text-indoor-warm">{en ? "official refuge · BMA" : "ห้องหลบร้อน · กทม."}</span>
+        <span className="font-display text-[0.65rem] uppercase tracking-[0.18em] text-indoor-warm">{en ? "official refuge BMA" : "ห้องหลบร้อน กทม."}</span>
       </div>
       <p className="font-thai text-xs text-ink-muted mb-3">
         {en ? "Heat/dust is high right now — these are official city cooling refuges." : "ตอนนี้ร้อน/ฝุ่นสูง นี่คือห้องหลบร้อนทางการของ กทม. ที่ใกล้ที่สุด"}
@@ -51,7 +51,7 @@ export function CoolingNearby({ lat, lng, active }: { lat: number; lng: number; 
                 className="group block h-full rounded-xl border border-hairline bg-paper/40 p-3 transition-colors hover:bg-surface">
                 <p className="font-thai text-sm font-medium text-ink leading-snug line-clamp-2 group-hover:text-indoor-warm transition-colors">{c.name}</p>
                 <p className="font-thai text-xs text-ink-faint mt-0.5">
-                  {c.district} · {c.km < 1 ? `${Math.round(c.km * 1000)} ${en ? "m" : "ม."}` : `${c.km.toFixed(1)} ${en ? "km" : "กม."}`}
+                  {c.district}, {c.km < 1 ? `${Math.round(c.km * 1000)} ${en ? "m" : "ม."}` : `${c.km.toFixed(1)} ${en ? "km" : "กม."}`}
                 </p>
                 {c.time && <p className="font-thai text-xs text-ink-muted mt-1 line-clamp-1">{c.time}</p>}
               </a>

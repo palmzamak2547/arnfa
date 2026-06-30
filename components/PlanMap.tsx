@@ -10,7 +10,7 @@ import type { SkyState } from "./SkyChip";
 import { categoryLabel } from "@/lib/plan/categoryLabel";
 import { GIBS_LAYERS, gibsTileUrl, gibsDate, type GibsLayerKey } from "@/lib/satellite/gibs";
 import { ARNFA_MAP_STYLE_URL, ARNFA_LAND, applyArnfaRecolor } from "@/lib/map/arnfaMapStyle";
-import { MapDataLayers, MAP_LAYERS, type MapLayerKey } from "@/components/MapDataLayers";
+import { MapDataLayers, MAP_LAYERS, LAYER_GROUPS, type MapLayerKey } from "@/components/MapDataLayers";
 
 /**
  * PlanMap — MapLibre on Arnfa's OWN editorial basemap (recoloured OpenFreeMap positron,
@@ -174,8 +174,8 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
             <div className="font-thai">
               <p className="font-medium text-ink text-sm leading-snug">{selected.poi.name}</p>
               <p className="text-xs text-ink-muted mt-0.5">
-                {categoryLabel(selected.poi.category, en)} · {selected.arrivalLabel}
-                {typeof selected.tempC === "number" && ` · ${Math.round(selected.tempC)}°`}
+                {categoryLabel(selected.poi.category, en)}, {selected.arrivalLabel}
+                {typeof selected.tempC === "number" && `, ${Math.round(selected.tempC)}°`}
               </p>
             </div>
           </Popup>
@@ -200,16 +200,25 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
       {/* Data-layers control — toggle the pipeline onto the map (off by default → calm) */}
       <div className="absolute bottom-9 right-2 z-10 flex flex-col items-end gap-1.5">
         {layersOpen && (
-          <div className="flex flex-col gap-1 rounded-2xl border border-hairline bg-paper/95 p-1.5 shadow-md backdrop-blur">
-            {MAP_LAYERS.map((l) => {
-              const on = layers.has(l.key);
+          <div className="flex max-h-[62vh] w-44 flex-col overflow-y-auto rounded-2xl border border-hairline bg-paper/95 p-1.5 shadow-md backdrop-blur">
+            {LAYER_GROUPS.map((g) => {
+              const items = MAP_LAYERS.filter((l) => l.group === g.id);
+              if (!items.length) return null;
               return (
-                <button key={l.key} type="button" onClick={() => toggleLayer(l.key)}
-                  className={clsx("font-thai flex items-center gap-2 rounded-xl px-2.5 py-1 text-xs transition-colors", on ? "bg-ink text-paper" : "text-ink-muted hover:bg-surface")}>
-                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: l.color }} aria-hidden />
-                  <span className="flex-1 text-left">{en ? l.en : l.th}</span>
-                  <span className={clsx("h-2.5 w-2.5 shrink-0 rounded-full border", on ? "border-paper bg-paper" : "border-current opacity-40")} aria-hidden />
-                </button>
+                <div key={g.id} className="mb-0.5">
+                  <p className="px-2 pb-0.5 pt-1.5 font-thai text-[0.6rem] uppercase tracking-wide text-ink-faint">{en ? g.en : g.th}</p>
+                  {items.map((l) => {
+                    const on = layers.has(l.key);
+                    return (
+                      <button key={l.key} type="button" onClick={() => toggleLayer(l.key)}
+                        className={clsx("font-thai flex w-full items-center gap-2 rounded-xl px-2.5 py-1 text-xs transition-colors", on ? "bg-ink text-paper" : "text-ink-muted hover:bg-surface")}>
+                        <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: l.color }} aria-hidden />
+                        <span className="flex-1 text-left">{en ? l.en : l.th}</span>
+                        <span className={clsx("h-2.5 w-2.5 shrink-0 rounded-full border", on ? "border-paper bg-paper" : "border-current opacity-40")} aria-hidden />
+                      </button>
+                    );
+                  })}
+                </div>
               );
             })}
           </div>

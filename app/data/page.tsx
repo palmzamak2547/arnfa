@@ -69,7 +69,7 @@ export default function DataPage() {
                         <a href={it.url} target="_blank" rel="noopener noreferrer" className="font-thai font-medium text-ink hover:text-rain transition-colors">{it.name}</a>
                         {it.thaiGov && <span className="ml-2 font-thai text-[0.6rem] rounded-full bg-rain/10 px-1.5 py-0.5 text-rain align-middle">{en ? "Thai gov" : "ทางการ"}</span>}
                         {it.dormant && <span className="ml-2 font-thai text-[0.6rem] rounded-full bg-ink-faint/10 px-1.5 py-0.5 text-ink-faint align-middle">{en ? "ready (needs key)" : "พร้อม (รอ key)"}</span>}
-                        <p className="font-thai text-sm text-ink-muted mt-0.5">{en ? it.roleEn : it.role} · <span className="text-ink-faint">{en ? it.orgEn : it.org}</span></p>
+                        <p className="font-thai text-sm text-ink-muted mt-0.5">{en ? it.roleEn : it.role} <span className="text-ink-faint">{en ? it.orgEn : it.org}</span></p>
                       </div>
                       <span className="font-thai text-xs text-ink-faint shrink-0">{licenseLabel(it.license, en)}</span>
                     </li>
@@ -82,13 +82,13 @@ export default function DataPage() {
           {/* official monthly PM2.5 by monitoring point — the "เข้าใจเมือง" context layer */}
           {districtAir.districts.length > 0 && (
             <div className="mt-10">
-              <h2 className="font-display text-xs uppercase tracking-[0.18em] text-ink-faint mb-1">{en ? "PM2.5 by monitoring point · BMA (latest month)" : "PM2.5 รายจุดตรวจ กทม. (เดือนล่าสุด)"}</h2>
+              <h2 className="font-display text-xs uppercase tracking-[0.18em] text-ink-faint mb-1">{en ? "PM2.5 by monitoring point — BMA (latest month)" : "PM2.5 รายจุดตรวจ กทม. (เดือนล่าสุด)"}</h2>
               <p className="font-thai text-sm text-ink-muted mb-3">{en ? "Official monthly context — which areas usually carry the most dust. Real-time PM2.5 comes from Air4Thai (above)." : "บริบทตามฤดูจากข้อมูลทางการ — จุดไหนฝุ่นเยอะเป็นปกติ (ค่าเรียลไทม์มาจาก Air4Thai ด้านบน)"}</p>
               <ul className="grid gap-x-6 gap-y-0 sm:grid-cols-2">
                 {districtAir.districts.slice(0, 8).map((d) => (
                   <li key={d.district} className="flex items-baseline justify-between gap-3 py-1.5 border-b border-hairline/60">
                     <span className="font-thai text-sm text-ink truncate">{d.district}</span>
-                    <span className="font-thai text-xs text-ink-faint shrink-0 tabular-nums">{d.avg} µg/m³ · {en ? `${d.exceedDays}d over std` : `เกินมาตรฐาน ${d.exceedDays} วัน`}</span>
+                    <span className="font-thai text-xs text-ink-faint shrink-0 tabular-nums">{d.avg} µg/m³, {en ? `${d.exceedDays}d over std` : `เกินมาตรฐาน ${d.exceedDays} วัน`}</span>
                   </li>
                 ))}
               </ul>

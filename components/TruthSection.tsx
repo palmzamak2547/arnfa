@@ -52,7 +52,7 @@ export function TruthSection() {
             </div>
 
             <div className="af-rise md:col-span-6 md:col-start-7" style={{ animationDelay: "120ms" }}>
-              <p className="font-display text-xs uppercase tracking-[0.25em] text-paper/45 mb-2">{en ? "Where every number comes from · Sources" : "ที่มาของทุกตัวเลข · Sources"}</p>
+              <p className="font-display text-xs uppercase tracking-[0.25em] text-paper/45 mb-2">{en ? "Where every number comes from — Sources" : "ที่มาของทุกตัวเลข — Sources"}</p>
               <ul>
                 {sources.map((s, i) => (
                   <li key={s.key} className="flex items-baseline gap-4 border-b border-paper/12 py-4">

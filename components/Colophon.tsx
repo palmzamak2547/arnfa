@@ -9,17 +9,17 @@ import { useLang } from "@/lib/i18n/useLang";
  */
 
 const VOICES = [
-  { sample: "อ่านฟ้า", font: "var(--font-thai-serif)", style: { fontWeight: 300, fontSize: "2.4rem" }, th: "พาดหัวไทย · Noto Serif Thai", en: "Thai display · Noto Serif Thai" },
-  { sample: "Reads the sky", font: "var(--font-display)", style: { fontStyle: "italic", fontSize: "2.1rem" }, th: "พาดหัวลาติน · Newsreader", en: "Latin display · Newsreader" },
-  { sample: "บอกฟ้า แล้วได้ทริปดี", font: "var(--font-thai)", style: { fontSize: "1.4rem" }, th: "เนื้อความไทย · Anuphan", en: "Thai body · Anuphan" },
-  { sample: "Body & numerals 0123", font: "var(--font-sans)", style: { fontSize: "1.4rem" }, th: "UI ลาติน · Inter", en: "Latin UI · Inter", tabular: true },
+  { sample: "อ่านฟ้า", font: "var(--font-thai-serif)", style: { fontWeight: 300, fontSize: "2.4rem" }, th: "พาดหัวไทย — Noto Serif Thai", en: "Thai display — Noto Serif Thai" },
+  { sample: "Reads the sky", font: "var(--font-display)", style: { fontStyle: "italic", fontSize: "2.1rem" }, th: "พาดหัวลาติน — Newsreader", en: "Latin display — Newsreader" },
+  { sample: "บอกฟ้า แล้วได้ทริปดี", font: "var(--font-thai)", style: { fontSize: "1.4rem" }, th: "เนื้อความไทย — Anuphan", en: "Thai body — Anuphan" },
+  { sample: "Body & numerals 0123", font: "var(--font-sans)", style: { fontSize: "1.4rem" }, th: "UI ลาติน — Inter", en: "Latin UI — Inter", tabular: true },
 ];
 
 const INK = [
-  { v: "--arnfa-accent-sun", th: "แดด · ฟ้าเปิด", en: "Sun · clear", note: "#F2A65A · ไป / go" },
-  { v: "--arnfa-accent-rain", th: "ฝน · รอ", en: "Rain · wait", note: "#5B7FB8 · ข้อมูล / info" },
-  { v: "--arnfa-accent-indoor-warm", th: "เข้าร่ม · สลับ", en: "Indoors · swap", note: "#D9534A · เตือน / alert" },
-  { v: "--arnfa-success", th: "เคลียร์ · ไปได้", en: "Clear · go", note: "#7BA68A · ผ่าน / pass" },
+  { v: "--arnfa-accent-sun", th: "แดด — ฟ้าเปิด", en: "Sun — clear", note: "#F2A65A — ไป / go" },
+  { v: "--arnfa-accent-rain", th: "ฝน — รอ", en: "Rain — wait", note: "#5B7FB8 — ข้อมูล / info" },
+  { v: "--arnfa-accent-indoor-warm", th: "เข้าร่ม — สลับ", en: "Indoors — swap", note: "#D9534A — เตือน / alert" },
+  { v: "--arnfa-success", th: "เคลียร์ — ไปได้", en: "Clear — go", note: "#7BA68A — ผ่าน / pass" },
 ];
 
 function Head({ children }: { children: React.ReactNode }) {
@@ -38,7 +38,7 @@ export function Colophon() {
       <div className="grid items-start gap-[clamp(20px,3vw,40px)] [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
         {/* THE VOICES */}
         <div className="af-rise">
-          <Head>{en ? "Four voices · The voices" : "ตัวพิมพ์สี่เสียง — The voices"}</Head>
+          <Head>{en ? "Four voices — The voices" : "ตัวพิมพ์สี่เสียง — The voices"}</Head>
           {VOICES.map((v) => (
             <div key={v.sample} className="mb-5">
               <div className={v.tabular ? "tabular-nums leading-none text-ink" : "leading-none text-ink"} style={{ fontFamily: v.font, ...v.style }}>{v.sample}</div>
@@ -63,14 +63,14 @@ export function Colophon() {
             <div className="mt-1 flex items-center gap-3.5 border-t border-hairline pt-3.5">
               <span className="h-[46px] w-[46px] flex-none rounded-lg border border-hairline bg-paper" />
               <span className="h-[46px] w-[46px] flex-none rounded-lg bg-ink" />
-              <span className="text-[0.82rem] text-ink-faint">{en ? "Warm paper + deep navy ink" : "กระดาษอุ่น + หมึกน้ำเงินเข้ม"}<br /><span className="tabular-nums">#F4EFE6 · #1A1F2B</span></span>
+              <span className="text-[0.82rem] text-ink-faint">{en ? "Warm paper + deep navy ink" : "กระดาษอุ่น + หมึกน้ำเงินเข้ม"}<br /><span className="tabular-nums">#F4EFE6, #1A1F2B</span></span>
             </div>
           </div>
         </div>
 
         {/* THE DRIFT */}
         <div className="af-rise" style={{ animationDelay: "200ms" }}>
-          <Head>{en ? "One easing · The drift" : "จังหวะเดียว — The drift"}</Head>
+          <Head>{en ? "One easing — The drift" : "จังหวะเดียว — The drift"}</Head>
           <p className="mb-[22px] text-[0.98rem] leading-[1.7] text-ink-muted">
             {en ? "Everything moves on one easing — soft, gliding, never bouncy. Like a drifting cloud, not a spring." : "ทุกการเคลื่อนไหวใช้อีสซิ่งเดียว — นุ่ม ลื่น ไม่เด้ง เหมือนเมฆลอย ไม่ใช่สปริง."}
           </p>

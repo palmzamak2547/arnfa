@@ -60,7 +60,7 @@ export function SkyWatch({ keys }: { keys: string[] }) {
                 <span className="font-thai text-sm text-ink truncate group-hover:text-rain transition-colors">{en ? a.en : a.th}</span>
               </span>
               <span className="font-thai shrink-0 text-xs text-ink-muted">
-                {en ? "best" : "ฟ้าดีสุด"} <b className="font-medium text-ink">{dayName(a.dayOffset, en, a.date)}</b> · {en ? SKY_VERDICT_EN[a.verdict] : SKY_VERDICT_TH[a.verdict]}
+                {en ? "best" : "ฟ้าดีสุด"} <b className="font-medium text-ink">{dayName(a.dayOffset, en, a.date)}</b> — {en ? SKY_VERDICT_EN[a.verdict] : SKY_VERDICT_TH[a.verdict]}
               </span>
             </Link>
           </li>

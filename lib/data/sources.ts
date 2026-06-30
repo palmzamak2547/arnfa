@@ -44,7 +44,7 @@ export const DATA_SOURCES: DataSource[] = [
 
   { key: "air4thai", name: "Air4Thai", org: "กรมควบคุมมลพิษ (คพ.)", orgEn: "Thai Pollution Control Dept", url: "http://air4thai.pcd.go.th", license: "ข้อมูลเปิดภาครัฐไทย", kind: "air", role: "PM2.5 รายสถานี (เรียลไทม์)", roleEn: "PM2.5 by station (real-time)", thaiGov: true },
   { key: "bma-district-air", name: "PM2.5 รายเขต กทม.", org: "กรุงเทพมหานคร", orgEn: "Bangkok (BMA)", url: "https://data.bangkok.go.th/dataset/hdv2026", license: "ข้อมูลเปิด กทม.", kind: "air", role: "ฝุ่นรายจุดตรวจ (รายเดือน) — บริบทตามฤดู", roleEn: "PM2.5 by monitoring point (monthly context)", thaiGov: true },
-  { key: "nasa-firms", name: "NASA FIRMS", org: "NASA", orgEn: "NASA", url: "https://firms.modaps.eosdis.nasa.gov", license: "NASA open data", kind: "air", role: "จุดความร้อน/ไฟ · หมอกควัน (VIIRS)", roleEn: "Active fire / haze (VIIRS)" },
+  { key: "nasa-firms", name: "NASA FIRMS", org: "NASA", orgEn: "NASA", url: "https://firms.modaps.eosdis.nasa.gov", license: "NASA open data", kind: "air", role: "จุดความร้อน/ไฟ หมอกควัน (VIIRS)", roleEn: "Active fire / haze (VIIRS)" },
 
   { key: "bma-parks", name: "สวนสาธารณะ กทม.", org: "กรุงเทพมหานคร", orgEn: "Bangkok (BMA)", url: "https://data.bangkok.go.th/dataset/park", license: "ข้อมูลเปิด กทม.", kind: "green", role: "สวนทางการ 47 แห่ง (พิกัด+เวลา+ขนาด)", roleEn: "47 official parks", thaiGov: true },
 
@@ -56,13 +56,13 @@ export const DATA_SOURCES: DataSource[] = [
 
   { key: "openfreemap", name: "OpenFreeMap", org: "OpenFreeMap", orgEn: "OpenFreeMap", url: "https://openfreemap.org", license: "ODbL", kind: "map", role: "แผนที่ฐาน", roleEn: "Basemap" },
   { key: "rainviewer", name: "RainViewer", org: "RainViewer", orgEn: "RainViewer", url: "https://www.rainviewer.com", license: "free API", kind: "map", role: "เรดาร์ฝน", roleEn: "Rain radar" },
-  { key: "longdo", name: "Longdo Map", org: "ลองดูแมป (เมตามีเดีย เทคโนโลยี)", orgEn: "Longdo Map (Metamedia Technology)", url: "https://map.longdo.com", license: "Longdo Map API (free tier)", kind: "map", role: "ชั้นจราจรเรียลไทม์ (เปิดเมื่อกด)", roleEn: "Live road-traffic layer (opt-in)" },
+  { key: "longdo", name: "Longdo Map", org: "ลองดูแมป (เมตามีเดีย เทคโนโลยี)", orgEn: "Longdo Map (Metamedia Technology)", url: "https://map.longdo.com", license: "Longdo Map API (free tier)", kind: "map", role: "จราจรสด เหตุด่วน กล้อง CCTV ค้นหาสถานที่ และเวลาเดินทางตามจราจร", roleEn: "Live traffic, incidents, CCTV, place search & traffic-aware ETA" },
 
-  { key: "nasa-gibs", name: "NASA GIBS", org: "NASA", orgEn: "NASA", url: "https://nasa-gibs.github.io/gibs-api-docs/", license: "NASA open data", kind: "satellite", role: "ภาพถ่ายดาวเทียม · ละอองลอย", roleEn: "Satellite imagery · aerosol" },
+  { key: "nasa-gibs", name: "NASA GIBS", org: "NASA", orgEn: "NASA", url: "https://nasa-gibs.github.io/gibs-api-docs/", license: "NASA open data", kind: "satellite", role: "ภาพถ่ายดาวเทียม ละอองลอย", roleEn: "Satellite imagery, aerosol" },
 
-  { key: "ors", name: "OpenRouteService", org: "HeiGIT / OSM", orgEn: "HeiGIT / OSM", url: "https://openrouteservice.org", license: "open · key-gated", kind: "routing", role: "เวลาเดินจริง (เมื่อใส่ key)", roleEn: "Real walking times (when keyed)", dormant: true },
+  { key: "ors", name: "OpenRouteService", org: "HeiGIT / OSM", orgEn: "HeiGIT / OSM", url: "https://openrouteservice.org", license: "open, key-gated", kind: "routing", role: "เวลาเดินจริง (เมื่อใส่ key)", roleEn: "Real walking times (when keyed)", dormant: true },
 
-  { key: "namtang", name: "Namtang transit", org: "สนข. · Namtang (OTP)", orgEn: "OTP / Namtang", url: "https://namtang.otp.go.th/", license: "open transit (GTFS)", kind: "transit", role: "สถานี BTS/MRT/ARL/SRT 454 สถานี — ไปย่านไหนด้วยรถไฟฟ้า", roleEn: "454 BTS/MRT/ARL/SRT stations", thaiGov: true },
+  { key: "namtang", name: "Namtang transit", org: "สนข. / Namtang (OTP)", orgEn: "OTP / Namtang", url: "https://namtang.otp.go.th/", license: "open transit (GTFS)", kind: "transit", role: "สถานี BTS/MRT/ARL/SRT 454 สถานี — ไปย่านไหนด้วยรถไฟฟ้า", roleEn: "454 BTS/MRT/ARL/SRT stations", thaiGov: true },
   { key: "doh-restarea", name: "จุดพักรถ ทางหลวง", org: "กรมทางหลวง (ทล.)", orgEn: "Dept. of Highways", url: "https://dohgis.doh.go.th/dohtotravel/", license: "ข้อมูลเปิดภาครัฐไทย", kind: "transit", role: "จุดพักรถระหว่างทาง 139 จุด — พักรถทริปต่างจังหวัด", roleEn: "139 highway rest areas", thaiGov: true },
 ];
 

@@ -193,7 +193,7 @@ function PlanInner() {
   async function doSave() {
     if (!user || !activePlan || activePlan.stops.length === 0) return;
     setSaveState("saving");
-    const title = `${districtTh}${dayOffset ? ` · ${days.find((d) => d.offset === dayOffset)?.th ?? ""}` : ""}`;
+    const title = `${districtTh}${dayOffset ? ` ${days.find((d) => d.offset === dayOffset)?.th ?? ""}` : ""}`;
     const stops = activePlan.stops.map((s) => ({ poiId: s.poi.id, slotIso: s.arrivalHourISO, score: s.score }));
     const id = await saveTrip(user.id, districtKey, budgetMin, dayOffset, title, stops);
     setSaveState(id ? "saved" : "idle");
@@ -507,7 +507,7 @@ function PlanInner() {
                             className="font-thai mt-1.5 inline-flex items-center gap-1.5 rounded-full border border-sun/40 bg-sun/[0.08] px-2.5 py-1 text-xs text-ink">
                             <span aria-hidden>🏷️</span>
                             <span className="font-medium">{deal.title}</span>
-                            <span className="text-ink-faint">· {deal.merchantName}</span>
+                            <span className="text-ink-faint">{deal.merchantName}</span>
                           </a>
                         )}
                         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">

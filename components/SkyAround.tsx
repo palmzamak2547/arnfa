@@ -100,7 +100,7 @@ export function SkyAround({ currentKey, lat, lng, onPick }: { currentKey: string
               </li>
             ))}
           </ul>
-          <p className="font-thai mt-3 text-[0.7rem] text-ink-faint">{en ? "Real forecast per district centre · Open-Meteo" : "พยากรณ์จริงรายเขต · Open-Meteo"}</p>
+          <p className="font-thai mt-3 text-[0.7rem] text-ink-faint">{en ? "Real forecast per district centre — Open-Meteo" : "พยากรณ์จริงรายเขต — Open-Meteo"}</p>
         </>
       )}
     </div>

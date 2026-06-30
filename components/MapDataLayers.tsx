@@ -14,26 +14,54 @@ import { AIR_COLOR, AIR_LABEL_TH } from "@/lib/air/air4thai";
  * Rendered as a child of react-map-gl's <Map>, so Marker/Source/Layer get the map via context.
  */
 
-export type MapLayerKey = "rain" | "traffic" | "air" | "rail" | "parks" | "cooling" | "rest";
+export type MapLayerKey = "rain" | "traffic" | "events" | "cameras" | "air" | "rail" | "parks" | "cooling" | "rest";
 
-/** Traffic is served by the same-origin /api/traffic-tile proxy, which holds the Longdo key
- *  server-side (never shipped to the browser). The client only needs to know it's enabled —
- *  a public boolean flag — so the toggle stays dormant on forks without the key. */
+/** Traffic tiles are served by the same-origin /api/traffic-tile proxy, which holds the Longdo
+ *  key server-side (never shipped to the browser). The client only needs to know it's enabled —
+ *  a public boolean flag — so the tile toggle stays dormant on forks without the key. (Incidents
+ *  + cameras are keyless public feeds, so they don't depend on this.) */
 export const LONGDO_ON = process.env.NEXT_PUBLIC_LONGDO === "1";
 
-const ALL_LAYERS: { key: MapLayerKey; th: string; en: string; emoji: string; color: string }[] = [
-  { key: "rain", th: "เรดาร์ฝน", en: "Rain radar", emoji: "🌧️", color: "#5B7FB8" },
-  { key: "traffic", th: "จราจร", en: "Traffic", emoji: "🚦", color: "#D9534A" },
-  { key: "air", th: "ฝุ่น PM2.5", en: "PM2.5", emoji: "💨", color: "#E08A3C" },
-  { key: "rail", th: "รถไฟฟ้า", en: "Trains", emoji: "🚉", color: "#1964B7" },
-  { key: "parks", th: "สวน", en: "Parks", emoji: "🌳", color: "#5E8C61" },
-  { key: "cooling", th: "ที่หลบร้อน", en: "Cooling", emoji: "❄️", color: "#3B82C4" },
-  { key: "rest", th: "จุดพักรถ", en: "Rest stops", emoji: "🛣️", color: "#7C6F5A" },
+const ALL_LAYERS: { key: MapLayerKey; th: string; en: string; emoji: string; color: string; group: string }[] = [
+  // จราจร — the live "intelligence" layers
+  { key: "traffic", th: "รถติด", en: "Congestion", emoji: "🚦", color: "#D9534A", group: "traffic" },
+  { key: "events", th: "เหตุด่วน", en: "Incidents", emoji: "⚠️", color: "#E0683C", group: "traffic" },
+  { key: "cameras", th: "กล้องจราจร", en: "CCTV", emoji: "📹", color: "#3F6CA8", group: "traffic" },
+  // ฟ้าและฝุ่น
+  { key: "rain", th: "เรดาร์ฝน", en: "Rain radar", emoji: "🌧️", color: "#5B7FB8", group: "sky" },
+  { key: "air", th: "ฝุ่น PM2.5", en: "PM2.5", emoji: "💨", color: "#E08A3C", group: "sky" },
+  // เดินทาง
+  { key: "rail", th: "รถไฟฟ้า", en: "Trains", emoji: "🚉", color: "#1964B7", group: "move" },
+  { key: "rest", th: "จุดพักรถ", en: "Rest stops", emoji: "🛣️", color: "#7C6F5A", group: "move" },
+  // ที่พึ่งพิง
+  { key: "parks", th: "สวน", en: "Parks", emoji: "🌳", color: "#5E8C61", group: "refuge" },
+  { key: "cooling", th: "ที่หลบร้อน", en: "Cooling", emoji: "❄️", color: "#3B82C4", group: "refuge" },
 ];
-/** Traffic (Longdo) only appears when the proxy is configured — dormant-until-key. */
+
+/** Layer-control sections — so a long list reads as organised groups, not a wall of toggles. */
+export const LAYER_GROUPS: { id: string; th: string; en: string }[] = [
+  { id: "traffic", th: "จราจร", en: "Traffic" },
+  { id: "sky", th: "ฟ้าและฝุ่น", en: "Sky & air" },
+  { id: "move", th: "เดินทาง", en: "Getting around" },
+  { id: "refuge", th: "ที่พึ่งพิง", en: "Refuge" },
+];
+
+/** Traffic TILES (Longdo) only appear when the proxy is configured — dormant-until-key. */
 export const MAP_LAYERS = ALL_LAYERS.filter((l) => l.key !== "traffic" || LONGDO_ON);
 
 type Pt = { lat: number; lng: number; label: string; subTh: string; subEn: string; color: string; emoji: string };
+type EventPt = { eid: string; lat: number; lng: number; title: string; titleEn: string; desc: string; descEn: string; icon: string };
+type CamPt = { id: string; lat: number; lng: number; title: string; img: string };
+
+// incident icon → emoji (Longdo `icon` field: accident / flood / roadclosed / diversion / construction …)
+function eventEmoji(icon: string): string {
+  if (/flood/i.test(icon)) return "🌊";
+  if (/accident|crash/i.test(icon)) return "💥";
+  if (/close/i.test(icon)) return "⛔";
+  if (/divers|detour/i.test(icon)) return "↩️";
+  if (/construct|work/i.test(icon)) return "🚧";
+  return "⚠️";
+}
 
 function dist2(aLat: number, aLng: number, bLat: number, bLng: number) {
   const dx = (bLng - aLng) * Math.cos((aLat * Math.PI) / 180), dy = bLat - aLat;
@@ -61,7 +89,7 @@ const stripSys = (n: string) => (n || "").replace(/^(BTS|MRT|ARL|SRT|Airport Rai
 const railFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({ lat: s.lat, lng: s.lng, label: stripSys(s.th || s.en || ""), subTh: s.system, subEn: s.system, color: SYSTEM_META[s.system]?.color ?? "#1964B7", emoji: "🚉" }));
 const restFn = (d: any): Pt[] => (d.areas ?? []).map((a: any) => ({ lat: a.lat, lng: a.lng, label: a.name, subTh: `ทล. ${a.route}`, subEn: `Hwy ${a.route}`, color: "#7C6F5A", emoji: "🛣️" }));
 const coolFn = (d: any): Pt[] => (d.centers ?? []).map((c: any) => ({ lat: c.lat, lng: c.lng, label: c.name, subTh: c.district ?? "", subEn: c.district ?? "", color: "#3B82C4", emoji: "❄️" }));
-const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({ lat: s.lat, lng: s.lng, label: s.stationNameTh, subTh: s.pm25 != null ? `PM2.5 ${s.pm25} · ${AIR_LABEL_TH[s.level as keyof typeof AIR_LABEL_TH] ?? ""}` : "ไม่มีข้อมูล", subEn: s.pm25 != null ? `PM2.5 ${s.pm25} µg/m³` : "no data", color: AIR_COLOR[s.level as keyof typeof AIR_COLOR] ?? "#9AA0A6", emoji: "💨" }));
+const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({ lat: s.lat, lng: s.lng, label: s.stationNameTh, subTh: s.pm25 != null ? `PM2.5 ${s.pm25} ${AIR_LABEL_TH[s.level as keyof typeof AIR_LABEL_TH] ?? ""}` : "ไม่มีข้อมูล", subEn: s.pm25 != null ? `PM2.5 ${s.pm25} µg/m³` : "no data", color: AIR_COLOR[s.level as keyof typeof AIR_COLOR] ?? "#9AA0A6", emoji: "💨" }));
 
 export function MapDataLayers({ center, active, routePresent, en, underId }: { center: { lat: number; lng: number }; active: Set<MapLayerKey>; routePresent: boolean; en: boolean; underId?: string }) {
   const c = `lat=${center.lat}&lng=${center.lng}`;
@@ -120,16 +148,52 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
   // same-origin proxy (server holds the key + adds CORS so MapLibre can texture the raster)
   const trafficUrl = `/api/traffic-tile?z={z}&x={x}&y={y}&_=${trafficTick}`;
 
+  // Live traffic INCIDENTS (accidents / floods / closures) — nationwide feed, auto-refresh 2 min.
+  const [events, setEvents] = useState<EventPt[]>([]);
+  const showEvents = active.has("events");
+  useEffect(() => {
+    if (!showEvents) { setEvents([]); return; }
+    let cancelled = false;
+    const load = () => fetch("/api/traffic-events")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => { if (!cancelled) setEvents(Array.isArray(d.events) ? d.events : []); })
+      .catch(() => { if (!cancelled) setEvents([]); });
+    load();
+    const id = setInterval(load, 120_000);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [showEvents]);
+
+  // CCTV cameras — 163 nationwide is too many markers, keep the ~18 nearest the area.
+  const [cameras, setCameras] = useState<CamPt[]>([]);
+  const showCameras = active.has("cameras");
+  useEffect(() => {
+    if (!showCameras) { setCameras([]); return; }
+    let cancelled = false;
+    fetch("/api/cameras")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => {
+        if (cancelled) return;
+        const near = (Array.isArray(d.cameras) ? d.cameras : [])
+          .sort((a: CamPt, b: CamPt) => dist2(center.lat, center.lng, a.lat, a.lng) - dist2(center.lat, center.lng, b.lat, b.lng))
+          .slice(0, 18);
+        setCameras(near);
+      })
+      .catch(() => { if (!cancelled) setCameras([]); });
+    return () => { cancelled = true; };
+  }, [showCameras, center.lat, center.lng]);
+
   const [selected, setSelected] = useState<Pt | null>(null);
+  const [selEvent, setSelEvent] = useState<EventPt | null>(null);
+  const [selCam, setSelCam] = useState<CamPt | null>(null);
   // Don't leave an orphan popup when its layer is toggled off or the area changes.
-  useEffect(() => { setSelected(null); }, [active, center.lat, center.lng]);
+  useEffect(() => { setSelected(null); setSelEvent(null); setSelCam(null); }, [active, center.lat, center.lng]);
 
   const dot = (p: Pt, _i: number, kind: string) => {
     const sub = en ? p.subEn : p.subTh;
     return (
       <Marker key={`${kind}-${p.lat},${p.lng}`} longitude={p.lng} latitude={p.lat} anchor="center"
-        onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(p); }}>
-        <span title={`${p.label}${sub ? " · " + sub : ""}`}
+        onClick={(e) => { e.originalEvent.stopPropagation(); setSelEvent(null); setSelCam(null); setSelected(p); }}>
+        <span title={`${p.label}${sub ? " — " + sub : ""}`}
           className="flex h-[28px] w-[28px] cursor-pointer items-center justify-center rounded-full ring-2 ring-white shadow-sm transition-transform hover:scale-110"
           style={{ background: p.color }}>
           <span className="leading-none" style={{ fontSize: "13px" }}>{p.emoji}</span>
@@ -148,7 +212,9 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
         </Source>
       ) : null}
       {showTraffic ? (
-        <Source id="arnfa-traffic" type="raster" tiles={[trafficUrl]} tileSize={256} attribution="จราจร: Longdo Map">
+        // Longdo traffic serves tiles up to z15; cap maxzoom so MapLibre over-zooms those
+        // instead of requesting z16+ (which 302) — no "zoom not supported", no wasted fetches.
+        <Source id="arnfa-traffic" type="raster" tiles={[trafficUrl]} tileSize={256} maxzoom={15} attribution="จราจร Longdo Map">
           <Layer id="arnfa-traffic-layer" type="raster" beforeId={underId ?? (routePresent ? "route-line" : undefined)} paint={{ "raster-opacity": 0.82 }} />
         </Source>
       ) : null}
@@ -157,6 +223,57 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
       {parks.map((p, i) => dot(p, i, "park"))}
       {cooling.map((p, i) => dot(p, i, "cool"))}
       {rest.map((p, i) => dot(p, i, "rest"))}
+
+      {/* live incidents */}
+      {showEvents && events.map((ev) => (
+        <Marker key={`ev-${ev.eid}`} longitude={ev.lng} latitude={ev.lat} anchor="center"
+          onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(null); setSelCam(null); setSelEvent(ev); }}>
+          <span title={en ? ev.titleEn : ev.title}
+            className="flex h-[26px] w-[26px] cursor-pointer items-center justify-center rounded-full ring-2 ring-white shadow-sm transition-transform hover:scale-110"
+            style={{ background: "#E0683C" }}>
+            <span className="leading-none" style={{ fontSize: "13px" }}>{eventEmoji(ev.icon)}</span>
+          </span>
+        </Marker>
+      ))}
+
+      {/* CCTV cameras */}
+      {showCameras && cameras.map((cm) => (
+        <Marker key={`cam-${cm.id}`} longitude={cm.lng} latitude={cm.lat} anchor="center"
+          onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(null); setSelEvent(null); setSelCam(cm); }}>
+          <span title={cm.title}
+            className="flex h-[24px] w-[24px] cursor-pointer items-center justify-center rounded-full ring-2 ring-white shadow-sm transition-transform hover:scale-110"
+            style={{ background: "#3F6CA8" }}>
+            <span className="leading-none" style={{ fontSize: "12px" }}>📹</span>
+          </span>
+        </Marker>
+      ))}
+
+      {selEvent && (
+        <Popup longitude={selEvent.lng} latitude={selEvent.lat} anchor="bottom" offset={14}
+          closeButton closeOnClick={false} onClose={() => setSelEvent(null)} maxWidth="240px">
+          <div className="font-thai">
+            <p className="flex items-start gap-1.5 text-sm font-medium leading-snug text-ink">
+              <span aria-hidden style={{ fontSize: "13px" }}>{eventEmoji(selEvent.icon)}</span>{en ? selEvent.titleEn : selEvent.title}
+            </p>
+            {(en ? selEvent.descEn : selEvent.desc) && <p className="mt-1 text-xs leading-relaxed text-ink-muted">{en ? selEvent.descEn : selEvent.desc}</p>}
+          </div>
+        </Popup>
+      )}
+
+      {selCam && (
+        <Popup longitude={selCam.lng} latitude={selCam.lat} anchor="bottom" offset={14}
+          closeButton closeOnClick={false} onClose={() => setSelCam(null)} maxWidth="260px">
+          <div className="font-thai">
+            <p className="mb-1.5 text-xs font-medium leading-snug text-ink">{selCam.title}</p>
+            {/* same-origin snapshot proxy — eslint-disable-next-line @next/next/no-img-element */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/api/cam-snapshot?u=${encodeURIComponent(selCam.img)}`} alt={selCam.title} width={240} height={135}
+              className="h-auto w-full rounded-lg border border-hairline bg-surface object-cover"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
+            <p className="mt-1 text-[0.65rem] text-ink-faint">{en ? "Live snapshot, iTIC / Highways Dept" : "ภาพสด iTIC / กรมทางหลวง"}</p>
+          </div>
+        </Popup>
+      )}
 
       {selected && (
         <Popup longitude={selected.lng} latitude={selected.lat} anchor="bottom" offset={14}

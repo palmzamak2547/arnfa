@@ -47,8 +47,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://arnfa.vercel.app"),
   title: {
-    default: "อ่านฟ้า · Arnfah — วางแผนทริปทั่วไทยตามฟ้า",
-    template: "%s · อ่านฟ้า",
+    default: "อ่านฟ้า Arnfah — วางแผนทริปทั่วไทยตามฟ้า",
+    template: "%s — อ่านฟ้า",
   },
   description:
     "อ่านฟ้า (Arnfah) — decision engine ที่อ่านฟ้าให้คุณ. วางแผนทริปทั่วไทยให้เข้ากับอากาศ ณ เวลาที่จะไปถึง ฝนมาเมื่อไหร่บอกที่ดีกว่าให้เอง.",
@@ -68,18 +68,18 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
-    title: "อ่านฟ้า · Arnfah",
+    title: "อ่านฟ้า — Arnfah",
     description: "Decision engine ที่อ่านฟ้าให้คุณ — ฝนมาแล้วบอกที่ดีกว่า",
     locale: "th_TH",
     alternateLocale: ["en_US"],
     type: "website",
-    siteName: "อ่านฟ้า · Arnfah",
+    siteName: "อ่านฟ้า — Arnfah",
     // Default sky card; /plan overrides per-area via generateMetadata.
     images: [{ url: "/api/og", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "อ่านฟ้า · Arnfah",
+    title: "อ่านฟ้า — Arnfah",
     description: "Decision engine ที่อ่านฟ้าให้คุณ",
     images: ["/api/og"],
   },

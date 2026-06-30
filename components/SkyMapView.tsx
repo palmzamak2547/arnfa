@@ -3,11 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { clsx } from "clsx";
-import Map, { Marker, NavigationControl, GeolocateControl, ScaleControl, Source, Layer, type MapRef, type MapLayerMouseEvent } from "react-map-gl/maplibre";
+import Map, { Marker, NavigationControl, ScaleControl, Source, Layer, type MapRef, type MapLayerMouseEvent } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useLang } from "@/lib/i18n/useLang";
 import { ARNFA_MAP_STYLE_URL, ARNFA_LAND, applyArnfaRecolor } from "@/lib/map/arnfaMapStyle";
-import { MapDataLayers, MAP_LAYERS, type MapLayerKey } from "@/components/MapDataLayers";
+import { MapDataLayers, MAP_LAYERS, LAYER_GROUPS, type MapLayerKey } from "@/components/MapDataLayers";
 import { SKY_VERDICT_TH, SKY_VERDICT_EN, type SkyVerdict } from "@/lib/core/skyScore";
 
 /**
@@ -51,6 +51,25 @@ function prefersReduced(): boolean {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 }
 
+/** nearest of our forecast areas to a free point (Longdo POI / the user's GPS) — so a searched
+ *  place or "where I am" snaps to the area whose live sky verdict we actually have. */
+function nearestArea(areas: Area[] | null, lat: number, lng: number): Area | null {
+  if (!areas?.length) return null;
+  let best: Area | null = null, bd = Infinity;
+  const coslat = Math.cos((lat * Math.PI) / 180);
+  for (const a of areas) {
+    const dx = (a.lng - lng) * coslat, dy = a.lat - lat;
+    const d = dx * dx + dy * dy;
+    if (d < bd) { bd = d; best = a; }
+  }
+  return best;
+}
+
+type Poi = { name: string; lat: number; lng: number; type: string; address: string };
+type GeoState =
+  | { phase: "idle" } | { phase: "consent" } | { phase: "locating" }
+  | { phase: "done"; place: string } | { phase: "denied" } | { phase: "unsupported" } | { phase: "error" };
+
 export function SkyMapView() {
   const { en } = useLang();
   const mapRef = useRef<MapRef>(null);
@@ -66,7 +85,25 @@ export function SkyMapView() {
   const [layers, setLayers] = useState<Set<MapLayerKey>>(new Set());
   const [layersOpen, setLayersOpen] = useState(false);
   const [didFit, setDidFit] = useState(false);
+  const [poi, setPoi] = useState<Poi[]>([]);          // Longdo place search results
+  const [geo, setGeo] = useState<GeoState>({ phase: "idle" });
+  const [here, setHere] = useState<{ lat: number; lng: number } | null>(null); // the user's GPS dot
+  const [routeInfo, setRouteInfo] = useState<{ seconds: number; meters: number } | null>(null);
   const toggleLayer = (k: MapLayerKey) => setLayers((p) => { const n = new Set(p); n.has(k) ? n.delete(k) : n.add(k); return n; });
+
+  // Longdo Thai place search — debounced, server-proxied (key stays server-side)
+  useEffect(() => {
+    const term = q.trim();
+    if (term.length < 2) { setPoi([]); return; }
+    let cancelled = false;
+    const t = setTimeout(() => {
+      fetch(`/api/geocode?q=${encodeURIComponent(term)}`)
+        .then((r) => (r.ok ? r.json() : Promise.reject()))
+        .then((d) => { if (!cancelled) setPoi(Array.isArray(d.results) ? d.results : []); })
+        .catch(() => { if (!cancelled) setPoi([]); });
+    }, 320);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, [q]);
 
   // real per-day ranking — same source as /where + the home pick
   useEffect(() => {
@@ -108,6 +145,42 @@ export function SkyMapView() {
   };
   const selectArea = (a: Area) => { setSelected(a); flyTo(a); };
 
+  // jump to a searched Longdo place, then snap to the nearest area whose verdict we have
+  const selectPoi = (p: Poi) => {
+    const map = mapRef.current?.getMap();
+    map?.flyTo({ center: [p.lng, p.lat], zoom: Math.max(map.getZoom(), 13), duration: reduced ? 0 : 900 });
+    const near = nearestArea(areas, p.lat, p.lng);
+    if (near) setSelected(near);
+    setQ(""); setPoi([]);
+  };
+
+  // "where I am" — consent first, then high-accuracy GPS, fly there, reverse-geocode the
+  // district (Longdo), and snap to the nearest area's sky verdict. Location is never stored.
+  const locate = () => {
+    if (typeof navigator === "undefined" || !("geolocation" in navigator)) { setGeo({ phase: "unsupported" }); return; }
+    setGeo({ phase: "locating" });
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = pos.coords.latitude, lng = pos.coords.longitude;
+        setHere({ lat, lng });
+        const map = mapRef.current?.getMap();
+        map?.flyTo({ center: [lng, lat], zoom: Math.max(map?.getZoom() ?? 0, 12), duration: reduced ? 0 : 900 });
+        const near = nearestArea(areas, lat, lng);
+        if (near) setSelected(near);
+        fetch(`/api/geocode?lat=${lat}&lng=${lng}`)
+          .then((r) => (r.ok ? r.json() : Promise.reject()))
+          .then((d) => {
+            const pl = d.place;
+            const label = pl ? [pl.district, pl.province].filter(Boolean).join(" ") : "";
+            setGeo({ phase: "done", place: label });
+          })
+          .catch(() => setGeo({ phase: "done", place: "" }));
+      },
+      (err) => setGeo({ phase: err.code === err.PERMISSION_DENIED ? "denied" : "error" }),
+      { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 },
+    );
+  };
+
   const onMapClick = (e: MapLayerMouseEvent) => {
     const f = e.features?.[0];
     const key = f?.properties?.key as string | undefined;
@@ -120,6 +193,18 @@ export function SkyMapView() {
     if (!term || !areas) return [];
     return areas.filter((a) => a.th.toLowerCase().includes(term) || a.en.toLowerCase().includes(term)).slice(0, 8);
   }, [q, areas]);
+
+  // traffic-aware drive time from the user's location to the selected area (Longdo routing)
+  useEffect(() => {
+    if (!selected || !here) { setRouteInfo(null); return; }
+    let cancelled = false;
+    setRouteInfo(null);
+    fetch(`/api/route-time?flon=${here.lng}&flat=${here.lat}&tlon=${selected.lng}&tlat=${selected.lat}`)
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => { if (!cancelled && d.ok) setRouteInfo({ seconds: d.seconds, meters: d.meters }); })
+      .catch(() => { if (!cancelled) setRouteInfo(null); });
+    return () => { cancelled = true; };
+  }, [selected, here]);
 
   const clearest = areas?.[0] ?? null;
   const worst = areas && areas.length > 1 ? areas[areas.length - 1] : null; // areas come ranked best→worst
@@ -153,7 +238,6 @@ export function SkyMapView() {
         onError={(e) => { if (/webgl|context|style/i.test(String(e?.error?.message || ""))) setMapError(true); }}
       >
         <NavigationControl position="top-right" showCompass={false} />
-        <GeolocateControl position="top-right" trackUserLocation positionOptions={{ enableHighAccuracy: false }} />
         <ScaleControl position="bottom-left" maxWidth={96} unit="metric" />
 
         <MapDataLayers center={{ lat: 13.4, lng: 100.9 }} active={layers} routePresent={false} en={en} underId={areas ? "sky-pins" : undefined} />
@@ -197,15 +281,22 @@ export function SkyMapView() {
             <div className="h-5 w-5 rounded-full ring-2 ring-white" style={{ background: VCOLOR[selected.verdict], boxShadow: `0 0 0 4px ${VCOLOR[selected.verdict]}40, 0 6px 16px rgba(26,31,43,0.3)` }} />
           </Marker>
         )}
+
+        {/* the user's live location (opt-in) */}
+        {here && (
+          <Marker longitude={here.lng} latitude={here.lat} anchor="center">
+            <span aria-label={en ? "You are here" : "ตำแหน่งของคุณ"} className="block h-3.5 w-3.5 rounded-full bg-[#2F6FB3] ring-[3px] ring-white shadow-[0_0_0_6px_rgba(47,111,179,0.18)]" />
+          </Marker>
+        )}
       </Map>
 
       {/* ── top bar: country verdict banner + search + day selector ───────── */}
       <div className="pointer-events-none absolute inset-x-0 top-3 z-10 flex flex-col items-center gap-2 px-3">
         {clearest && !selected && (
           <div className="pointer-events-none max-w-[94%] truncate rounded-full bg-ink/85 px-3.5 py-1 font-thai text-[0.72rem] text-paper shadow-sm backdrop-blur">
-            {en ? "Clearest today · " : "วันนี้ฟ้าโปร่งสุด · "}
+            {en ? "Clearest today " : "วันนี้ฟ้าโปร่งสุด "}
             <span className="font-medium">{en ? clearest.en : clearest.th}</span>
-            {worst && <span className="opacity-70">{en ? ` · avoid ${worst.en}` : ` · เลี่ยง ${worst.th}`}</span>}
+            {worst && <span className="opacity-70">{en ? ` — avoid ${worst.en}` : ` — เลี่ยง ${worst.th}`}</span>}
           </div>
         )}
         <div className="pointer-events-auto relative w-full max-w-md">
@@ -216,21 +307,44 @@ export function SkyMapView() {
             aria-label={en ? "Search area" : "ค้นหาพื้นที่"}
             className="w-full rounded-full border border-hairline bg-paper/90 px-5 py-2.5 font-thai text-sm text-ink shadow-sm backdrop-blur outline-none placeholder:text-ink-faint focus:border-sun"
           />
-          {matches.length > 0 && (
-            <ul className="absolute inset-x-0 top-12 max-h-64 overflow-y-auto rounded-2xl border border-hairline bg-paper/95 p-1 shadow-md backdrop-blur">
-              {matches.map((a) => (
-                <li key={a.key}>
-                  <button type="button" onClick={() => { selectArea(a); setQ(""); }}
-                    className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left font-thai text-sm text-ink transition-colors hover:bg-surface">
-                    <span className="flex items-center gap-2 truncate">
-                      <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: VCOLOR[a.verdict] }} aria-hidden />
-                      <span className="truncate">{en ? a.en : a.th}</span>
-                    </span>
-                    <span className="shrink-0 text-xs text-ink-faint tabular-nums">{a.tempC}° · {a.rainProb}%</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+          {(matches.length > 0 || poi.length > 0) && (
+            <div className="absolute inset-x-0 top-12 max-h-72 overflow-y-auto rounded-2xl border border-hairline bg-paper/95 p-1 shadow-md backdrop-blur">
+              {matches.length > 0 && (
+                <ul>
+                  {matches.map((a) => (
+                    <li key={a.key}>
+                      <button type="button" onClick={() => { selectArea(a); setQ(""); setPoi([]); }}
+                        className="flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left font-thai text-sm text-ink transition-colors hover:bg-surface">
+                        <span className="flex items-center gap-2 truncate">
+                          <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: VCOLOR[a.verdict] }} aria-hidden />
+                          <span className="truncate">{en ? a.en : a.th}</span>
+                        </span>
+                        <span className="shrink-0 text-xs text-ink-faint tabular-nums">{a.tempC}° {en ? `${a.rainProb}% rain` : `ฝน ${a.rainProb}%`}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {poi.length > 0 && (
+                <>
+                  <p className="px-3 pb-1 pt-2 font-thai text-[0.62rem] uppercase tracking-wide text-ink-faint">{en ? "Places in Thailand" : "สถานที่ในไทย"}</p>
+                  <ul>
+                    {poi.map((p, i) => (
+                      <li key={`poi-${i}`}>
+                        <button type="button" onClick={() => selectPoi(p)}
+                          className="flex w-full items-start gap-2 rounded-xl px-3 py-2 text-left font-thai text-sm text-ink transition-colors hover:bg-surface">
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" className="mt-0.5 shrink-0 text-ink-faint" aria-hidden><path d="M12 21s-6-5.2-6-10a6 6 0 1 1 12 0c0 4.8-6 10-6 10Z" stroke="currentColor" strokeWidth="1.6" /><circle cx="12" cy="11" r="2" stroke="currentColor" strokeWidth="1.6" /></svg>
+                          <span className="min-w-0">
+                            <span className="block truncate">{p.name}</span>
+                            {p.address && <span className="block truncate text-[0.7rem] text-ink-faint">{p.address}</span>}
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
           )}
         </div>
 
@@ -267,19 +381,64 @@ export function SkyMapView() {
         )}
       </div>
 
+      {/* ── location: consent → accurate GPS → your district + nearest verdict ─ */}
+      <div className="absolute right-2 top-[84px] z-10 flex flex-col items-end gap-1.5">
+        <button type="button"
+          onClick={() => setGeo((g) => (g.phase === "consent" ? { phase: "idle" } : g.phase === "locating" ? g : { phase: "consent" }))}
+          aria-label={en ? "My location" : "ตำแหน่งของฉัน"} title={en ? "My location" : "ตำแหน่งของฉัน"}
+          className={clsx("flex h-9 w-9 items-center justify-center rounded-full border border-hairline shadow-sm backdrop-blur transition-colors",
+            here ? "bg-ink text-paper" : "bg-paper/90 text-ink-muted hover:bg-surface")}>
+          {geo.phase === "locating"
+            ? <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
+            : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden><circle cx="12" cy="12" r="3.2" stroke="currentColor" strokeWidth="1.7" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>}
+        </button>
+        {geo.phase === "consent" && (
+          <div className="w-60 rounded-2xl border border-hairline bg-paper/95 p-3 shadow-md backdrop-blur">
+            <p className="font-thai text-xs leading-relaxed text-ink">{en ? "Use your location to read the sky right where you are? Arnfah never stores it." : "ใช้ตำแหน่งของคุณเพื่ออ่านฟ้าตรงที่คุณอยู่ไหม อ่านฟ้าไม่เก็บตำแหน่งไว้"}</p>
+            <div className="mt-2.5 flex gap-2">
+              <button type="button" onClick={locate} className="flex-1 rounded-full bg-ink px-3 py-1.5 font-thai text-xs text-paper transition-colors hover:bg-ink-muted">{en ? "Allow" : "อนุญาต"}</button>
+              <button type="button" onClick={() => setGeo({ phase: "idle" })} className="rounded-full border border-hairline px-3 py-1.5 font-thai text-xs text-ink-muted transition-colors hover:bg-surface">{en ? "Not now" : "ไว้ก่อน"}</button>
+            </div>
+          </div>
+        )}
+        {geo.phase === "done" && geo.place && (
+          <div className="max-w-[15rem] rounded-full border border-hairline bg-paper/92 px-3 py-1.5 font-thai text-[0.72rem] text-ink shadow-sm backdrop-blur">
+            {en ? "You're near " : "คุณอยู่แถว "}<span className="font-medium">{geo.place}</span>
+          </div>
+        )}
+        {(geo.phase === "denied" || geo.phase === "unsupported" || geo.phase === "error") && (
+          <div className="max-w-[15rem] rounded-2xl border border-hairline bg-paper/95 px-3 py-1.5 text-right font-thai text-[0.72rem] text-ink-muted shadow-sm backdrop-blur">
+            {geo.phase === "denied"
+              ? (en ? "Location is off — allow it in your browser to use this." : "ตำแหน่งถูกปิดอยู่ เปิดในเบราว์เซอร์เพื่อใช้งาน")
+              : geo.phase === "unsupported"
+              ? (en ? "This device can't share location." : "อุปกรณ์นี้แชร์ตำแหน่งไม่ได้")
+              : (en ? "Couldn't get your location — try again." : "หาตำแหน่งไม่ได้ ลองอีกครั้ง")}
+          </div>
+        )}
+      </div>
+
       {/* ── layers toggle (bottom-right, reuses the /plan overlays) ───────── */}
       <div className="absolute bottom-9 right-2 z-10 flex flex-col items-end gap-1.5">
         {layersOpen && (
-          <div className="flex flex-col gap-1 rounded-2xl border border-hairline bg-paper/95 p-1.5 shadow-md backdrop-blur">
-            {MAP_LAYERS.map((l) => {
-              const on = layers.has(l.key);
+          <div className="flex max-h-[62vh] w-44 flex-col overflow-y-auto rounded-2xl border border-hairline bg-paper/95 p-1.5 shadow-md backdrop-blur">
+            {LAYER_GROUPS.map((g) => {
+              const items = MAP_LAYERS.filter((l) => l.group === g.id);
+              if (!items.length) return null;
               return (
-                <button key={l.key} type="button" onClick={() => toggleLayer(l.key)}
-                  className={clsx("flex items-center gap-2 rounded-xl px-2.5 py-1 font-thai text-xs transition-colors", on ? "bg-ink text-paper" : "text-ink-muted hover:bg-surface")}>
-                  <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: l.color }} aria-hidden />
-                  <span className="flex-1 text-left">{en ? l.en : l.th}</span>
-                  <span className={clsx("h-2.5 w-2.5 shrink-0 rounded-full border", on ? "border-paper bg-paper" : "border-current opacity-40")} aria-hidden />
-                </button>
+                <div key={g.id} className="mb-0.5">
+                  <p className="px-2 pb-0.5 pt-1.5 font-thai text-[0.6rem] uppercase tracking-wide text-ink-faint">{en ? g.en : g.th}</p>
+                  {items.map((l) => {
+                    const on = layers.has(l.key);
+                    return (
+                      <button key={l.key} type="button" onClick={() => toggleLayer(l.key)}
+                        className={clsx("flex w-full items-center gap-2 rounded-xl px-2.5 py-1 font-thai text-xs transition-colors", on ? "bg-ink text-paper" : "text-ink-muted hover:bg-surface")}>
+                        <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: l.color }} aria-hidden />
+                        <span className="flex-1 text-left">{en ? l.en : l.th}</span>
+                        <span className={clsx("h-2.5 w-2.5 shrink-0 rounded-full border", on ? "border-paper bg-paper" : "border-current opacity-40")} aria-hidden />
+                      </button>
+                    );
+                  })}
+                </div>
               );
             })}
           </div>
@@ -300,7 +459,7 @@ export function SkyMapView() {
               <h2 className="font-thai-serif text-xl font-light leading-snug text-ink">{en ? selected.en : selected.th}</h2>
               <p className="mt-0.5 flex items-center gap-1.5 font-thai text-xs text-ink-muted">
                 <span className="h-2 w-2 rounded-full" style={{ background: VCOLOR[selected.verdict] }} aria-hidden />
-                {en ? SKY_VERDICT_EN[selected.verdict] : SKY_VERDICT_TH[selected.verdict]} · {selected.zone}
+                {en ? SKY_VERDICT_EN[selected.verdict] : SKY_VERDICT_TH[selected.verdict]} — {selected.zone}
               </p>
             </div>
             <button type="button" onClick={() => setSelected(null)} aria-label={en ? "Close" : "ปิด"}
@@ -316,6 +475,13 @@ export function SkyMapView() {
               <div className="font-thai text-[0.7rem] text-ink-faint">{en ? "rain chance" : "โอกาสฝน"}</div>
             </div>
           </div>
+          {routeInfo && (
+            <div className="mt-3 flex items-center gap-2 rounded-2xl border border-hairline bg-surface/50 px-3 py-2 font-thai text-xs text-ink">
+              <span aria-hidden>🚗</span>
+              <span>{en ? "From you " : "จากตำแหน่งคุณ "}<span className="font-medium tabular-nums">~{Math.round(routeInfo.seconds / 60)} {en ? "min" : "นาที"}</span> <span className="text-ink-faint">({(routeInfo.meters / 1000).toFixed(1)} {en ? "km" : "กม."})</span></span>
+              <span className="ml-auto text-[0.62rem] text-ink-faint">{en ? "live traffic" : "ตามจราจรสด"}</span>
+            </div>
+          )}
           <div className="mt-3 flex gap-2">
             <Link href={`/plan?y=${selected.key}&d=${day}`}
               className="flex-1 rounded-full bg-ink px-4 py-2.5 text-center font-thai text-sm font-medium text-paper transition-colors hover:bg-ink-muted">
@@ -344,7 +510,7 @@ export function SkyMapView() {
       {/* sky-colour legend + provenance (bottom strip) */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-0 hidden justify-center pb-1 sm:flex">
         <span className="font-thai text-[0.62rem] text-ink-faint/70">
-          {en ? `Live sky per area · Open-Meteo · ${date}` : `ฟ้าสดรายพื้นที่ · Open-Meteo · ${date}`}
+          {en ? `Live sky per area — Open-Meteo, ${date}` : `ฟ้าสดรายพื้นที่ จาก Open-Meteo ${date}`}
         </span>
       </div>
     </div>

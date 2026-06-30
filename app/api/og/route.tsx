@@ -91,7 +91,7 @@ export async function GET(req: Request) {
             <path d="M8 40 a8 8 0 0 1 1.5 -15.7 a11 11 0 0 1 21 1.5 a7 7 0 0 1 -1.5 14.2 Z" fill="#1A1F2B" />
             <line x1="6" y1="40" x2="42" y2="40" stroke="#5B7FB8" strokeWidth="2.5" strokeLinecap="round" />
           </svg>
-          <div style={{ display: "flex", fontSize: 30, color: "#4B5263" }}>อ่านฟ้า · Arnfah</div>
+          <div style={{ display: "flex", fontSize: 30, color: "#4B5263" }}>อ่านฟ้า — Arnfah</div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>

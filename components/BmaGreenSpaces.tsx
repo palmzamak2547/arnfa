@@ -45,7 +45,7 @@ export function BmaGreenSpaces({ lat, lng }: { lat: number; lng: number }) {
         <h3 className="font-thai-serif text-lg font-light text-ink">
           {en ? "Official city parks nearby" : "สวนทางการ กทม. ใกล้ ๆ"}
         </h3>
-        <span className="font-display text-[0.65rem] uppercase tracking-[0.18em] text-success">{en ? "verified · BMA" : "ทางการ · กทม."}</span>
+        <span className="font-display text-[0.65rem] uppercase tracking-[0.18em] text-success">{en ? "verified BMA" : "ทางการ กทม."}</span>
       </div>
 
       {!parks ? (
@@ -60,7 +60,7 @@ export function BmaGreenSpaces({ lat, lng }: { lat: number; lng: number }) {
                 className="group block h-full rounded-xl border border-hairline bg-paper/40 p-3 transition-colors hover:bg-surface">
                 <p className="font-thai font-medium text-ink leading-snug group-hover:text-rain transition-colors">{p.name}</p>
                 <p className="font-thai text-xs text-ink-faint mt-0.5">
-                  {p.district} · {p.d < 1 ? `${Math.round(p.d * 1000)} ${en ? "m" : "ม."}` : `${p.d.toFixed(1)} ${en ? "km" : "กม."}`}{p.areaRai ? ` · ${p.areaRai} ${en ? "rai" : "ไร่"}` : ""}
+                  {p.district}, {p.d < 1 ? `${Math.round(p.d * 1000)} ${en ? "m" : "ม."}` : `${p.d.toFixed(1)} ${en ? "km" : "กม."}`}{p.areaRai ? `, ${p.areaRai} ${en ? "rai" : "ไร่"}` : ""}
                 </p>
                 {p.hours && <p className="font-thai text-xs text-ink-muted mt-1 line-clamp-1">{p.hours}</p>}
               </a>

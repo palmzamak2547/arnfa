@@ -17,12 +17,12 @@ export function hopEstimate(aLat: number, aLng: number, bLat: number, bLng: numb
 
 export function hopLabel(h: Hop, en: boolean): string {
   const dist = h.km < 1 ? `~${Math.round(h.km * 1000)} ${en ? "m" : "ม."}` : `~${h.km.toFixed(1)} ${en ? "km" : "กม."}`;
-  if (h.mode === "walk") return en ? `walk ~${h.min} min · ${dist}` : `เดิน ~${h.min} นาที · ${dist}`;
-  return en ? `~${h.min} min by car · ${dist}` : `นั่งรถ ~${h.min} นาที · ${dist}`;
+  if (h.mode === "walk") return en ? `walk ~${h.min} min, ${dist}` : `เดิน ~${h.min} นาที, ${dist}`;
+  return en ? `~${h.min} min by car, ${dist}` : `นั่งรถ ~${h.min} นาที, ${dist}`;
 }
 
 /** Real routed label (no "~") for an exact OpenRouteService leg. */
 export function routedHopLabel(minutes: number, meters: number, en: boolean): string {
   const dist = meters < 1000 ? `${Math.round(meters)} ${en ? "m" : "ม."}` : `${(meters / 1000).toFixed(1)} ${en ? "km" : "กม."}`;
-  return en ? `walk ${Math.max(1, Math.round(minutes))} min · ${dist}` : `เดิน ${Math.max(1, Math.round(minutes))} นาที · ${dist}`;
+  return en ? `walk ${Math.max(1, Math.round(minutes))} min, ${dist}` : `เดิน ${Math.max(1, Math.round(minutes))} นาที, ${dist}`;
 }

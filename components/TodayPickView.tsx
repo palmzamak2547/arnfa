@@ -44,7 +44,7 @@ export function TodayPickView({ top, ranking = [] }: { top: TopArea | null; rank
                   : (<>บ่ายนี้ไป <span className="font-display italic text-sun">{top.en}</span> — {top.th} ฟ้าเปิดสุดในไทย</>)}
               </h2>
               <p className="mb-7 max-w-[52ch] font-thai fs-lead leading-relaxed text-ink-muted">
-                {top.tempC}° · {en ? `avg rain ${top.rainProb}% midday (08:00–18:00). ` : `ฝนเฉลี่ย ${top.rainProb}% ช่วงกลางวัน (08:00–18:00). `}
+                {top.tempC}°, {en ? `avg rain ${top.rainProb}% midday (08:00–18:00). ` : `ฝนเฉลี่ย ${top.rainProb}% ช่วงกลางวัน (08:00–18:00). `}
                 {VERDICT_PROSE[top.verdict] ? (en ? VERDICT_PROSE[top.verdict].en : VERDICT_PROSE[top.verdict].th) : ""}
               </p>
               <div className="flex flex-wrap items-center gap-x-6 gap-y-3">

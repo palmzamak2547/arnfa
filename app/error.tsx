@@ -40,13 +40,13 @@ export default function Error({
           onClick={reset}
           className="font-thai inline-flex h-11 items-center rounded-full bg-ink px-7 text-sm font-medium text-paper transition-colors hover:bg-ink-muted"
         >
-          ลองอีกครั้ง · Retry
+          ลองอีกครั้ง Retry
         </button>
         <Link
           href="/"
           className="font-thai inline-flex h-11 items-center rounded-full border border-hairline px-7 text-sm font-medium text-ink transition-colors hover:bg-surface"
         >
-          กลับหน้าแรก · Home
+          กลับหน้าแรก Home
         </Link>
       </div>
     </main>

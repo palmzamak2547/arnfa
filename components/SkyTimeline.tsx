@@ -68,7 +68,7 @@ export function SkyTimeline({ forecast, stops, startHourIndex }: {
               {/* hour cell, tinted by rain chance; the rain band is self-evident */}
               <div className="h-9 w-full rounded-sm border border-hairline/60"
                 style={{ background: rp > 0.05 ? `rgba(91,127,184,${(0.12 + rp * 0.78).toFixed(2)})` : "var(--arnfa-paper)" }}
-                title={`${hour}:00 · ${en ? "rain" : "ฝน"} ${Math.round(rp * 100)}%`} />
+                title={`${hour}:00, ${en ? "rain" : "ฝน"} ${Math.round(rp * 100)}%`} />
               <span className="font-display text-[0.6rem] tabular-nums text-ink-faint">{hour}</span>
             </div>
           );

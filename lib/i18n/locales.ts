@@ -47,7 +47,7 @@ export const resources = {
   zh: {
     translation: {
       brand: "Arnfah",
-      "hero.kicker": "อ่านฟ้า · Arnfah",
+      "hero.kicker": "อ่านฟ้า — Arnfah",
       "hero.title1": "今天天气晴朗",
       "hero.title2": "— 去哪儿好？",
       "hero.sub": "为你读懂天气的决策引擎。规划泰国各地的行程，贴合你到达时的天气 — 下雨了，Arnfah 会帮你换个更合适的地方。",

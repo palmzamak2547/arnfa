@@ -177,7 +177,7 @@ export default function WherePage() {
                         </span>
                         <span className="font-thai text-xs text-ink-faint">{zoneLabel(a.zone, en)} — {en ? SKY_VERDICT_EN[a.verdict] : SKY_VERDICT_TH[a.verdict]}</span>
                       </span>
-                      <span className="shrink-0 font-thai text-sm text-ink-muted tabular-nums">{a.tempC}° · {en ? "rain" : "ฝน"} {a.rainProb}%</span>
+                      <span className="shrink-0 font-thai text-sm text-ink-muted tabular-nums">{a.tempC}° {en ? "rain" : "ฝน"} {a.rainProb}%</span>
                     </Link>
                   </li>
                 ))}
@@ -197,7 +197,7 @@ export default function WherePage() {
                               <span className="inline-block h-2 w-2 shrink-0 rounded-full" style={{ background: VDOT[a.verdict] }} aria-hidden />
                               <span className="font-thai text-sm text-ink truncate group-hover:text-rain transition-colors">{en ? a.en : a.th}</span>
                             </span>
-                            <span className="font-thai shrink-0 text-xs text-ink-faint tabular-nums">{a.tempC}° · {a.rainProb}%</span>
+                            <span className="font-thai shrink-0 text-xs text-ink-faint tabular-nums">{a.tempC}° {a.rainProb}%</span>
                           </Link>
                         </li>
                       ))}

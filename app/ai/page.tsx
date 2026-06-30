@@ -144,8 +144,8 @@ export default function AiPage() {
                       <div className="flex flex-wrap items-center gap-1.5">
                         <span className="font-thai text-[0.7rem] text-ink-faint">{en ? "🔎 grounded on" : "🔎 อ้างอิงจริง"}</span>
                         {[
-                          `${en ? "forecast" : "ฟ้า"} · ${turn.resp.provider || "Open-Meteo"}`,
-                          `${turn.resp.plan.stops.length} ${en ? "real POIs · OSM" : "สถานที่จริง · OSM"}`,
+                          `${en ? "forecast" : "ฟ้า"} ${turn.resp.provider || "Open-Meteo"}`,
+                          `${turn.resp.plan.stops.length} ${en ? "real POIs OSM" : "สถานที่จริง OSM"}`,
                           en ? `area ${turn.resp.plan.areaEn}` : `ย่าน${turn.resp.plan.areaTh}`,
                           turn.resp.plan.dayLabel,
                         ].filter(Boolean).map((c, ci) => (

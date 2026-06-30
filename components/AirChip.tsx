@@ -53,7 +53,7 @@ export function AirChip({ lat, lng, reading }: { lat: number; lng: number; readi
   return (
     <span
       className="inline-flex items-center gap-1.5 rounded-full border border-hairline px-2.5 py-1 text-xs font-thai"
-      title={`PM2.5 จาก ${air.stationNameTh} (ห่าง ${air.distanceKm} กม.) · กรมควบคุมมลพิษ`}
+      title={`PM2.5 จาก ${air.stationNameTh} (ห่าง ${air.distanceKm} กม.) — กรมควบคุมมลพิษ`}
     >
       <span className="inline-block h-1.5 w-1.5 rounded-full" style={{ background: color }} />
       <span className="text-ink-muted">PM2.5</span>

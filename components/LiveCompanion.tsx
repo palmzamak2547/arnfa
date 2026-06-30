@@ -128,8 +128,8 @@ export function LiveCompanion({ pois }: { pois: SeedPoi[] }) {
               </p>
               {shelter && (
                 <p className="font-thai mt-1 text-sm text-ink">
-                  {en ? <>Duck into <b className="font-medium">{shelter.poi.name}</b> · ~{shelter.walkMin} min{shelter.covered ? "" : " (open-air — nearest spot)"}</>
-                      : <>หลบที่ <b className="font-medium">{shelter.poi.name}</b> · เดิน ~{shelter.walkMin} นาที{shelter.covered ? "" : " (กลางแจ้ง — ที่ใกล้สุด)"}</>}
+                  {en ? <>Duck into <b className="font-medium">{shelter.poi.name}</b>, ~{shelter.walkMin} min{shelter.covered ? "" : " (open-air — nearest spot)"}</>
+                      : <>หลบที่ <b className="font-medium">{shelter.poi.name}</b>, เดิน ~{shelter.walkMin} นาที{shelter.covered ? "" : " (กลางแจ้ง — ที่ใกล้สุด)"}</>}
                 </p>
               )}
             </div>

@@ -37,7 +37,7 @@ export function FrontPageTop() {
       <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-y border-hairline border-t-ink py-2 font-display text-[0.6rem] uppercase tracking-[0.12em] text-ink-muted [text-shadow:0_1px_10px_rgba(244,239,230,0.85)] sm:justify-between sm:tracking-[0.2em]">
         <span className="hidden sm:inline">{en ? "Daily sky edition" : "ฉบับฟ้าประจำวัน"}</span>
         <span className="hidden tracking-[0.3em] md:inline">{en ? "The Arnfah Almanac" : "The Arnfah Almanac — หนังสือพิมพ์ฟ้า"}</span>
-        <span className="tabular-nums">{dateStr || "—"} · {en ? "free" : "ฟรี"}</span>
+        <span className="tabular-nums">{dateStr || "—"} — {en ? "free" : "ฟรี"}</span>
       </div>
 
       {/* nameplate block — sits over the live Bangkok hero footage */}
