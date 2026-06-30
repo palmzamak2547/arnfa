@@ -61,6 +61,7 @@ export const DATA_SOURCES: DataSource[] = [
   { key: "openfreemap", name: "OpenFreeMap", org: "OpenFreeMap", orgEn: "OpenFreeMap", url: "https://openfreemap.org", license: "ODbL", kind: "map", role: "แผนที่ฐาน", roleEn: "Basemap" },
   { key: "rainviewer", name: "RainViewer", org: "RainViewer", orgEn: "RainViewer", url: "https://www.rainviewer.com", license: "free API", kind: "map", role: "เรดาร์ฝน", roleEn: "Rain radar" },
   { key: "longdo", name: "Longdo Map", org: "ลองดูแมป (เมตามีเดีย เทคโนโลยี)", orgEn: "Longdo Map (Metamedia Technology)", url: "https://map.longdo.com", license: "Longdo Map API (free tier)", kind: "map", role: "จราจรสด เหตุด่วน กล้อง CCTV ค้นหาสถานที่ และเวลาเดินทางตามจราจร", roleEn: "Live traffic, incidents, CCTV, place search & traffic-aware ETA" },
+  { key: "egat-cctv", name: "กล้องเขื่อน กฟผ.", org: "การไฟฟ้าฝ่ายผลิตฯ (กฟผ.)", orgEn: "EGAT", url: "https://egatwater.egat.co.th", license: "ภาพสาธารณะ กฟผ.", kind: "map", role: "กล้องสดเขื่อนใหญ่ (น้ำ+ฟ้า) — AI อ่านสภาพจากภาพได้", roleEn: "Live dam cams (water + sky) — AI reads the frame", thaiGov: true },
 
   { key: "nasa-gibs", name: "NASA GIBS", org: "NASA", orgEn: "NASA", url: "https://nasa-gibs.github.io/gibs-api-docs/", license: "NASA open data", kind: "satellite", role: "ภาพถ่ายดาวเทียม ละอองลอย", roleEn: "Satellite imagery, aerosol" },
 

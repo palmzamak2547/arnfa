@@ -6,6 +6,7 @@ import { Marker, Source, Layer, Popup } from "react-map-gl/maplibre";
 import { SYSTEM_META } from "@/lib/data/transitStations";
 import { AIR_COLOR, AIR_LABEL_TH, airFreshness } from "@/lib/air/air4thai";
 import { CamLive, type CamHandle } from "./CamLive";
+import { WATER_CAMS, egatImageUrl, type WaterCam } from "@/lib/cameras/egat";
 
 // AI camera-read result (POST /api/cam-read). The model reports only the visible frame; the flood
 // verdict is gated server-side on real rain + daytime, never on the model's (untrusted) confidence.
@@ -27,7 +28,7 @@ const TOD_L: Record<string, [string, string]> = { day: ["กลางวัน",
  * Rendered as a child of react-map-gl's <Map>, so Marker/Source/Layer get the map via context.
  */
 
-export type MapLayerKey = "rain" | "traffic" | "events" | "cameras" | "air" | "rail" | "parks" | "cooling" | "rest";
+export type MapLayerKey = "rain" | "traffic" | "events" | "cameras" | "watercam" | "air" | "rail" | "parks" | "cooling" | "rest";
 
 /** Traffic tiles are served by the same-origin /api/traffic-tile proxy, which holds the Longdo
  *  key server-side (never shipped to the browser). The client only needs to know it's enabled —
@@ -43,6 +44,7 @@ const ALL_LAYERS: { key: MapLayerKey; th: string; en: string; emoji: string; col
   // ฟ้าและฝุ่น
   { key: "rain", th: "เรดาร์ฝน", en: "Rain radar", emoji: "🌧️", color: "#5B7FB8", group: "sky" },
   { key: "air", th: "ฝุ่น PM2.5", en: "PM2.5", emoji: "💨", color: "#E08A3C", group: "sky" },
+  { key: "watercam", th: "กล้องเขื่อน", en: "Dam cams", emoji: "💧", color: "#2E7D9A", group: "sky" },
   // เดินทาง
   { key: "rail", th: "รถไฟฟ้า", en: "Trains", emoji: "🚉", color: "#1964B7", group: "move" },
   { key: "rest", th: "จุดพักรถ", en: "Rest stops", emoji: "🛣️", color: "#7C6F5A", group: "move" },
@@ -212,47 +214,78 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
   const [liveCam, setLiveCam] = useState<CamPt | null>(null);
   const [liveOk, setLiveOk] = useState(false); // consent given for this view
   const camRef = useRef<CamHandle>(null);
+  const [selWaterCam, setSelWaterCam] = useState<WaterCam | null>(null); // EGAT dam-cam snapshot modal
   const [reading, setReading] = useState(false);
   const [camRead, setCamRead] = useState<CamReadResp | null>(null);
   const [camReadErr, setCamReadErr] = useState(false);
-  // honest "flood watch" overlay: only cameras the user actually read, that returned a gated flood
-  // (likely = daytime + rain-corroborated; possible = uncorroborated). No batch reads, no fabrication.
+  // honest "flood watch" overlay: only street cameras the user actually read, that returned a gated
+  // flood (likely = daytime + rain-corroborated; possible = uncorroborated). No batch reads, no fakes.
   const [floodPins, setFloodPins] = useState<Record<string, "likely" | "possible">>({});
+  const showWater = active.has("watercam");
   const closeLive = () => { setLiveCam(null); setLiveOk(false); setCamRead(null); setCamReadErr(false); setReading(false); };
-  // reset the AI read whenever the camera changes
-  useEffect(() => { setCamRead(null); setCamReadErr(false); setReading(false); }, [liveCam]);
+  const closeWater = () => { setSelWaterCam(null); setCamRead(null); setCamReadErr(false); setReading(false); };
+  // reset the AI read whenever the open camera changes
+  useEffect(() => { setCamRead(null); setCamReadErr(false); setReading(false); }, [liveCam, selWaterCam]);
 
-  // grab the on-screen frame → POST to the VLM read route → honest gated result (never fabricated)
-  async function readFrame() {
-    if (!liveCam || reading) return;
-    const image = camRef.current?.grabFrame(640);
-    if (!image) { setCamReadErr(true); setCamRead(null); return; }
+  // shared: POST a frame (client base64 OR server-fetched imageUrl) → VLM read → honest gated result.
+  // pinId set → update the street-flood overlay; null (dam cams) → no flood pin (a reservoir isn't a flood).
+  async function doCamRead(payload: Record<string, unknown>, pinId: string | null) {
+    if (reading) return;
     setReading(true); setCamReadErr(false); setCamRead(null);
     try {
-      const r = await fetch("/api/cam-read", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image, camId: liveCam.id, lat: liveCam.lat, lng: liveCam.lng }),
-      });
+      const r = await fetch("/api/cam-read", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       const d = await r.json();
       if (r.ok && d.available && d.read) {
         setCamRead(d as CamReadResp);
-        const lvl = (d as CamReadResp).flood?.level;
-        const id = liveCam.id;
-        setFloodPins((p) => {
-          if (lvl === "likely" || lvl === "possible") return { ...p, [id]: lvl };
-          if (!(id in p)) return p;
-          const n = { ...p }; delete n[id]; return n; // a clean re-read clears an old flood pin
-        });
+        if (pinId) {
+          const lvl = (d as CamReadResp).flood?.level;
+          setFloodPins((p) => {
+            if (lvl === "likely" || lvl === "possible") return { ...p, [pinId]: lvl };
+            if (!(pinId in p)) return p;
+            const n = { ...p }; delete n[pinId]; return n; // a clean re-read clears an old flood pin
+          });
+        }
       } else setCamReadErr(true);
-    } catch {
-      setCamReadErr(true);
-    } finally {
-      setReading(false);
-    }
+    } catch { setCamReadErr(true); } finally { setReading(false); }
+  }
+  function readFrame() {
+    if (!liveCam) return;
+    const image = camRef.current?.grabFrame(640);
+    if (!image) { setCamReadErr(true); setCamRead(null); return; }
+    doCamRead({ image, camId: liveCam.id, lat: liveCam.lat, lng: liveCam.lng }, liveCam.id);
+  }
+  function readWaterCam(cam: WaterCam) {
+    doCamRead({ imageUrl: egatImageUrl(cam.code), camId: cam.code, lat: cam.lat, lng: cam.lng }, null);
+  }
+  // shared AI-read result view (error + flood verdict + chips + the honest "AI estimate" label)
+  function camReadView() {
+    if (camReadErr) return <p className="mt-2 font-thai text-xs text-ink-faint">{en ? "Couldn't read this frame — try again" : "อ่านภาพนี้ไม่ได้ ลองอีกครั้ง"}</p>;
+    if (!camRead) return null;
+    const r = camRead.read, f = camRead.flood;
+    const chips = [SKY_L[r.sky], ROAD_L[r.road], TRAFFIC_L[r.traffic], TOD_L[r.timeOfDay]].filter(Boolean) as [string, string][];
+    return (
+      <div className="mt-2.5">
+        {f.level !== "none" && (
+          <p className={`mb-2 rounded-xl border px-3 py-2 font-thai text-xs leading-snug ${f.level === "likely" ? "border-indoor-warm/30 bg-indoor-warm/[0.06] text-indoor-warm" : "border-sun/40 bg-sun/[0.07] text-ink-muted"}`}>
+            ⚠ {en ? f.en : f.th}
+          </p>
+        )}
+        {f.level === "none" && f.nightCapped && f.th && <p className="mb-2 font-thai text-xs text-ink-faint">{en ? f.en : f.th}</p>}
+        {chips.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {chips.map((c, i) => <span key={i} className="rounded-full border border-hairline bg-paper px-2.5 py-1 font-thai text-xs text-ink">{en ? c[1] : c[0]}</span>)}
+          </div>
+        )}
+        <p className="mt-2 font-thai text-[0.65rem] leading-relaxed text-ink-faint">
+          {en
+            ? `AI estimate from this live frame, not a measurement — confidence ${Math.round(r.confidence * 100)}%, image not stored`
+            : `AI อ่านจากภาพกล้องจริง ไม่ใช่ค่าที่วัด — ความมั่นใจ ${Math.round(r.confidence * 100)}%, ไม่เก็บภาพ`}
+        </p>
+      </div>
+    );
   }
   // Don't leave an orphan popup when its layer is toggled off or the area changes.
-  useEffect(() => { setSelected(null); setSelEvent(null); setSelCam(null); }, [active, center.lat, center.lng]);
+  useEffect(() => { setSelected(null); setSelEvent(null); setSelCam(null); setSelWaterCam(null); }, [active, center.lat, center.lng]);
 
   const dot = (p: Pt, _i: number, kind: string) => {
     const sub = en ? p.subEn : p.subTh;
@@ -320,6 +353,18 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
           </Marker>
         );
       })}
+
+      {/* EGAT dam water cameras (snapshot — server-fetched + VLM-readable) */}
+      {showWater && WATER_CAMS.map((wc) => (
+        <Marker key={`water-${wc.code}`} longitude={wc.lng} latitude={wc.lat} anchor="center"
+          onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(null); setSelEvent(null); setSelCam(null); setSelWaterCam(wc); }}>
+          <span title={en ? wc.en : wc.th}
+            className="flex h-[24px] w-[24px] cursor-pointer items-center justify-center rounded-full ring-2 ring-white shadow-sm transition-transform hover:scale-110"
+            style={{ background: "#2E7D9A" }}>
+            <span className="leading-none" style={{ fontSize: "12px" }}>💧</span>
+          </span>
+        </Marker>
+      ))}
 
       {selEvent && (
         <Popup longitude={selEvent.lng} latitude={selEvent.lat} anchor="bottom" offset={14}
@@ -394,36 +439,38 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
                     className="w-full rounded-full bg-rain/10 px-3 py-2 text-center font-thai text-sm font-medium text-rain transition-colors hover:bg-rain/20 disabled:opacity-50">
                     {reading ? (en ? "AI is reading the frame…" : "AI กำลังอ่านภาพ…") : (en ? "🔎 Let AI read this frame" : "🔎 ให้ AI อ่านสภาพจากภาพนี้")}
                   </button>
-                  {camReadErr && <p className="mt-2 font-thai text-xs text-ink-faint">{en ? "Couldn't read this frame — try again" : "อ่านภาพนี้ไม่ได้ ลองอีกครั้ง"}</p>}
-                  {camRead && (() => {
-                    const r = camRead.read, f = camRead.flood;
-                    const chips = [SKY_L[r.sky], ROAD_L[r.road], TRAFFIC_L[r.traffic], TOD_L[r.timeOfDay]].filter(Boolean) as [string, string][];
-                    return (
-                      <div className="mt-2.5">
-                        {f.level !== "none" && (
-                          <p className={`mb-2 rounded-xl border px-3 py-2 font-thai text-xs leading-snug ${f.level === "likely" ? "border-indoor-warm/30 bg-indoor-warm/[0.06] text-indoor-warm" : "border-sun/40 bg-sun/[0.07] text-ink-muted"}`}>
-                            ⚠ {en ? f.en : f.th}
-                          </p>
-                        )}
-                        {f.level === "none" && f.nightCapped && f.th && (
-                          <p className="mb-2 font-thai text-xs text-ink-faint">{en ? f.en : f.th}</p>
-                        )}
-                        {chips.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5">
-                            {chips.map((c, i) => <span key={i} className="rounded-full border border-hairline bg-paper px-2.5 py-1 font-thai text-xs text-ink">{en ? c[1] : c[0]}</span>)}
-                          </div>
-                        )}
-                        <p className="mt-2 font-thai text-[0.65rem] leading-relaxed text-ink-faint">
-                          {en
-                            ? `AI estimate from this live frame, not a measurement — confidence ${Math.round(r.confidence * 100)}%, image not stored`
-                            : `AI อ่านจากภาพกล้องจริง ไม่ใช่ค่าที่วัด — ความมั่นใจ ${Math.round(r.confidence * 100)}%, ไม่เก็บภาพ`}
-                        </p>
-                      </div>
-                    );
-                  })()}
+                  {camReadView()}
                 </div>
               </>
             )}
+          </div>
+        </div>,
+        document.body,
+      )}
+
+      {/* EGAT dam-cam modal — a live snapshot (server-fetched) the AI can read for water + sky */}
+      {selWaterCam && typeof document !== "undefined" && createPortal(
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-ink/70 p-4 backdrop-blur-sm" onClick={closeWater} role="dialog" aria-modal>
+          <div className="w-full max-w-lg rounded-3xl border border-hairline bg-paper p-4 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-2 flex items-start justify-between gap-3">
+              <p className="font-thai text-sm font-medium leading-snug text-ink">{en ? selWaterCam.en : selWaterCam.th}</p>
+              <button type="button" onClick={closeWater} aria-label={en ? "Close" : "ปิด"}
+                className="-mr-1 -mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-ink-faint transition-colors hover:bg-surface">✕</button>
+            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${egatImageUrl(selWaterCam.code)}?t=${Math.floor(Date.now() / 60000)}`} alt={en ? selWaterCam.en : selWaterCam.th}
+              className="aspect-video w-full rounded-xl border border-hairline bg-ink object-contain" />
+            <p className="mt-2 flex items-center gap-1.5 font-thai text-[0.7rem] text-ink-faint">
+              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#2E7D9A]" aria-hidden />
+              {en ? "Live snapshot — EGAT dam" : "ภาพสด เขื่อน กฟผ. (EGAT)"}
+            </p>
+            <div className="mt-3 border-t border-hairline pt-3">
+              <button type="button" onClick={() => readWaterCam(selWaterCam)} disabled={reading}
+                className="w-full rounded-full bg-rain/10 px-3 py-2 text-center font-thai text-sm font-medium text-rain transition-colors hover:bg-rain/20 disabled:opacity-50">
+                {reading ? (en ? "AI is reading…" : "AI กำลังอ่านภาพ…") : (en ? "🔎 Let AI read the water & sky" : "🔎 ให้ AI อ่านสภาพน้ำและฟ้า")}
+              </button>
+              {camReadView()}
+            </div>
           </div>
         </div>,
         document.body,

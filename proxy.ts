@@ -34,7 +34,7 @@ function csp(): string {
     "font-src 'self' https://fonts.gstatic.com data:",
     "worker-src 'self' blob:",
     "child-src 'self' blob:",
-    "img-src 'self' data: blob: https://tiles.openfreemap.org https://*.openfreemap.org https://upload.wikimedia.org https://commons.wikimedia.org https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org https://gibs.earthdata.nasa.gov",
+    "img-src 'self' data: blob: https://tiles.openfreemap.org https://*.openfreemap.org https://upload.wikimedia.org https://commons.wikimedia.org https://*.basemaps.cartocdn.com https://*.tile.openstreetmap.org https://gibs.earthdata.nasa.gov https://*.egat.co.th",
     `connect-src 'self' https://api.open-meteo.com https://api.met.no https://overpass-api.de https://tiles.openfreemap.org https://*.openfreemap.org https://api.rainviewer.com https://tilecache.rainviewer.com https://www.wikidata.org https://query.wikidata.org https://commons.wikimedia.org https://gibs.earthdata.nasa.gov https://*.iticfoundation.org ${sbConnect}`,
     // live traffic-camera HLS: blob: for the hls.js MediaSource + the iTIC host for native Safari playback
     "media-src 'self' blob: https://*.iticfoundation.org",
