@@ -19,7 +19,7 @@ export type ChatMsg = { role: "system" | "user" | "assistant"; content: string }
 /** All configured NVIDIA keys (NVIDIA_API_KEY + optional NVIDIA_API_KEY_2, each may be
  *  comma-separated). Multiple keys = more rate-limit headroom — a 429 on one key falls
  *  to the next before dropping to the slower model. */
-function nimKeys(): string[] {
+export function nimKeys(): string[] {
   return [process.env.NVIDIA_API_KEY, process.env.NVIDIA_API_KEY_2]
     .filter((k): k is string => !!k)
     .flatMap((k) => k.split(",").map((s) => s.trim()).filter(Boolean));

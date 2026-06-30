@@ -1,18 +1,44 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { useLang } from "@/lib/i18n/useLang";
+
+export type CamHandle = {
+  /** Grab the current frame as a data:image/jpeg URL (downscaled to maxW), or null if the video
+   *  isn't ready or the canvas is cross-origin-tainted (→ caller shows an honest "can't read"). */
+  grabFrame: (maxW?: number) => string | null;
+};
 
 /**
  * CamLive — plays a live iTIC / DOH traffic-camera HLS stream. Safari/iOS play HLS natively;
- * everywhere else we lazy-load hls.js (so ~100KB never touches the map bundle, only when a user
- * actually opens a live view). The iTIC HLS server sends `Access-Control-Allow-Origin: *`, so no
- * proxy is needed. On a fatal error (camera offline) it shows an honest message, never a frozen frame.
+ * everywhere else we lazy-load hls.js. `crossOrigin="anonymous"` lets a canvas read the frame
+ * without tainting (the iTIC host sends Access-Control-Allow-Origin: *). On a fatal error it shows
+ * an honest message, never a frozen frame. Exposes grabFrame() so the parent can send the exact
+ * on-screen frame to the VLM (lib/ai/vlm.ts) for an AI read.
  */
-export function CamLive({ src, title }: { src: string; title: string }) {
+export const CamLive = forwardRef<CamHandle, { src: string; title: string }>(function CamLive({ src, title }, handle) {
   const { en } = useLang();
   const ref = useRef<HTMLVideoElement>(null);
   const [err, setErr] = useState(false);
+
+  useImperativeHandle(handle, () => ({
+    grabFrame(maxW = 640) {
+      const v = ref.current;
+      if (!v || v.readyState < 2 || !v.videoWidth) return null; // not enough data yet
+      try {
+        const scale = Math.min(1, maxW / v.videoWidth);
+        const w = Math.round(v.videoWidth * scale), h = Math.round(v.videoHeight * scale);
+        const c = document.createElement("canvas");
+        c.width = w; c.height = h;
+        const ctx = c.getContext("2d");
+        if (!ctx) return null;
+        ctx.drawImage(v, 0, 0, w, h);
+        return c.toDataURL("image/jpeg", 0.7); // throws SecurityError if the canvas is tainted
+      } catch {
+        return null; // cross-origin taint → honest null, never a fake read
+      }
+    },
+  }), []);
 
   useEffect(() => {
     const v = ref.current;
@@ -22,7 +48,6 @@ export function CamLive({ src, title }: { src: string; title: string }) {
     let hls: { destroy: () => void } | null = null;
 
     if (v.canPlayType("application/vnd.apple.mpegurl")) {
-      // Safari / iOS — native HLS
       v.src = src;
       v.play().catch(() => {});
       v.addEventListener("error", () => setErr(true));
@@ -62,8 +87,9 @@ export function CamLive({ src, title }: { src: string; title: string }) {
       autoPlay
       playsInline
       controls
+      crossOrigin="anonymous"
       className="aspect-video w-full rounded-xl border border-hairline bg-ink object-contain"
       aria-label={title}
     />
   );
-}
+});

@@ -1,11 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Marker, Source, Layer, Popup } from "react-map-gl/maplibre";
 import { SYSTEM_META } from "@/lib/data/transitStations";
 import { AIR_COLOR, AIR_LABEL_TH, airFreshness } from "@/lib/air/air4thai";
-import { CamLive } from "./CamLive";
+import { CamLive, type CamHandle } from "./CamLive";
+
+// AI camera-read result (POST /api/cam-read). The model reports only the visible frame; the flood
+// verdict is gated server-side on real rain + daytime, never on the model's (untrusted) confidence.
+type CamReadResp = {
+  read: { sky: string; road: string; flooding: string; traffic: string; timeOfDay: string; confidence: number };
+  flood: { level: "none" | "possible" | "likely"; th: string; en: string; nightCapped: boolean; rainCorroborated: boolean | null };
+};
+const SKY_L: Record<string, [string, string]> = { clear: ["ฟ้าใส", "clear sky"], cloudy: ["มีเมฆ", "cloudy"], overcast: ["ฟ้าปิด", "overcast"], raining: ["ฝนตก", "raining"] };
+const ROAD_L: Record<string, [string, string]> = { dry: ["ถนนแห้ง", "dry road"], wet: ["ถนนเปียก", "wet road"], standing_water: ["มีน้ำขัง", "standing water"], flooded: ["ถนนท่วม", "flooded road"] };
+const TRAFFIC_L: Record<string, [string, string]> = { light: ["รถน้อย", "light traffic"], moderate: ["รถปานกลาง", "moderate traffic"], heavy: ["รถเยอะ", "heavy traffic"], jam: ["รถติด", "jam"] };
+const TOD_L: Record<string, [string, string]> = { day: ["กลางวัน", "day"], dusk_dawn: ["เช้า/เย็น", "dusk"], night: ["กลางคืน", "night"] };
 
 /**
  * MapDataLayers — paints Arnfa's data pipeline onto the /plan map as toggleable layers:
@@ -200,7 +211,35 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
   // Public iTIC/DOH traffic cameras, no personal data; the dead jpeg.cgi snapshot is gone.
   const [liveCam, setLiveCam] = useState<CamPt | null>(null);
   const [liveOk, setLiveOk] = useState(false); // consent given for this view
-  const closeLive = () => { setLiveCam(null); setLiveOk(false); };
+  const camRef = useRef<CamHandle>(null);
+  const [reading, setReading] = useState(false);
+  const [camRead, setCamRead] = useState<CamReadResp | null>(null);
+  const [camReadErr, setCamReadErr] = useState(false);
+  const closeLive = () => { setLiveCam(null); setLiveOk(false); setCamRead(null); setCamReadErr(false); setReading(false); };
+  // reset the AI read whenever the camera changes
+  useEffect(() => { setCamRead(null); setCamReadErr(false); setReading(false); }, [liveCam]);
+
+  // grab the on-screen frame → POST to the VLM read route → honest gated result (never fabricated)
+  async function readFrame() {
+    if (!liveCam || reading) return;
+    const image = camRef.current?.grabFrame(640);
+    if (!image) { setCamReadErr(true); setCamRead(null); return; }
+    setReading(true); setCamReadErr(false); setCamRead(null);
+    try {
+      const r = await fetch("/api/cam-read", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ image, camId: liveCam.id, lat: liveCam.lat, lng: liveCam.lng }),
+      });
+      const d = await r.json();
+      if (r.ok && d.available && d.read) setCamRead(d as CamReadResp);
+      else setCamReadErr(true);
+    } catch {
+      setCamReadErr(true);
+    } finally {
+      setReading(false);
+    }
+  }
   // Don't leave an orphan popup when its layer is toggled off or the area changes.
   useEffect(() => { setSelected(null); setSelEvent(null); setSelCam(null); }, [active, center.lat, center.lng]);
 
@@ -326,11 +365,46 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
               </div>
             ) : (
               <>
-                <CamLive src={liveCam.hls} title={liveCam.title} />
+                <CamLive ref={camRef} src={liveCam.hls} title={liveCam.title} />
                 <p className="mt-2 flex items-center gap-1.5 font-thai text-[0.7rem] text-ink-faint">
                   <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#D9534A]" aria-hidden />
                   {en ? "Live video, iTIC / Highways Dept" : "วิดีโอสด iTIC / กรมทางหลวง"}
                 </p>
+
+                {/* AI reads the actual on-screen frame — the 3rd ground-truth layer + street-flood flag */}
+                <div className="mt-3 border-t border-hairline pt-3">
+                  <button type="button" onClick={readFrame} disabled={reading}
+                    className="w-full rounded-full bg-rain/10 px-3 py-2 text-center font-thai text-sm font-medium text-rain transition-colors hover:bg-rain/20 disabled:opacity-50">
+                    {reading ? (en ? "AI is reading the frame…" : "AI กำลังอ่านภาพ…") : (en ? "🔎 Let AI read this frame" : "🔎 ให้ AI อ่านสภาพจากภาพนี้")}
+                  </button>
+                  {camReadErr && <p className="mt-2 font-thai text-xs text-ink-faint">{en ? "Couldn't read this frame — try again" : "อ่านภาพนี้ไม่ได้ ลองอีกครั้ง"}</p>}
+                  {camRead && (() => {
+                    const r = camRead.read, f = camRead.flood;
+                    const chips = [SKY_L[r.sky], ROAD_L[r.road], TRAFFIC_L[r.traffic], TOD_L[r.timeOfDay]].filter(Boolean) as [string, string][];
+                    return (
+                      <div className="mt-2.5">
+                        {f.level !== "none" && (
+                          <p className={`mb-2 rounded-xl border px-3 py-2 font-thai text-xs leading-snug ${f.level === "likely" ? "border-indoor-warm/30 bg-indoor-warm/[0.06] text-indoor-warm" : "border-sun/40 bg-sun/[0.07] text-ink-muted"}`}>
+                            ⚠ {en ? f.en : f.th}
+                          </p>
+                        )}
+                        {f.level === "none" && f.nightCapped && f.th && (
+                          <p className="mb-2 font-thai text-xs text-ink-faint">{en ? f.en : f.th}</p>
+                        )}
+                        {chips.length > 0 && (
+                          <div className="flex flex-wrap gap-1.5">
+                            {chips.map((c, i) => <span key={i} className="rounded-full border border-hairline bg-paper px-2.5 py-1 font-thai text-xs text-ink">{en ? c[1] : c[0]}</span>)}
+                          </div>
+                        )}
+                        <p className="mt-2 font-thai text-[0.65rem] leading-relaxed text-ink-faint">
+                          {en
+                            ? `AI estimate from this live frame, not a measurement — confidence ${Math.round(r.confidence * 100)}%, image not stored`
+                            : `AI อ่านจากภาพกล้องจริง ไม่ใช่ค่าที่วัด — ความมั่นใจ ${Math.round(r.confidence * 100)}%, ไม่เก็บภาพ`}
+                        </p>
+                      </div>
+                    );
+                  })()}
+                </div>
               </>
             )}
           </div>
