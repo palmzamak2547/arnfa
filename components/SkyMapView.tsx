@@ -245,6 +245,7 @@ export function SkyMapView() {
   const clearest = areas?.[0] ?? null;
   const worst = areas && areas.length > 1 ? areas[areas.length - 1] : null; // areas come ranked best→worst
   const topGood = !!clearest && (clearest.verdict === "clearish" || clearest.verdict === "ok"); // honest "clearest" vs "best of a wet day"
+  const dl = day === 0 ? (en ? "today" : "วันนี้") : day === 1 ? (en ? "tomorrow" : "พรุ่งนี้") : dayLabel(day, en); // day-aware label (no "today/live" on a future day)
   const mapsDir = selected ? `https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}` : "#";
 
   // Honest fallback — never a blank box; point at the list version of the same data.
@@ -349,7 +350,7 @@ export function SkyMapView() {
       <div className="pointer-events-none absolute inset-x-0 top-3 z-10 flex flex-col items-center gap-2 px-3">
         {clearest && !selected && (
           <div className="pointer-events-none max-w-[94%] truncate rounded-full bg-ink/85 px-3.5 py-1 font-thai text-[0.72rem] text-paper shadow-sm backdrop-blur">
-            {topGood ? (en ? "Clearest today " : "วันนี้ฟ้าโปร่งสุด ") : (en ? "Best of today " : "วันนี้ฟ้าดีสุด ")}
+            {topGood ? (en ? `Clearest ${dl} ` : `ฟ้าโปร่งสุด${dl} `) : (en ? `Best ${dl} ` : `ฟ้าดีสุด${dl} `)}
             <span className="font-medium">{en ? clearest.en : clearest.th}</span>
             {worst && <span className="opacity-70">{en ? ` — avoid ${worst.en}` : ` — เลี่ยง ${worst.th}`}</span>}
           </div>
@@ -419,7 +420,7 @@ export function SkyMapView() {
           <button type="button" onClick={() => selectArea(clearest)}
             className="flex items-center gap-2 rounded-full border border-hairline bg-paper/92 px-3.5 py-2 text-left font-thai text-xs shadow-sm backdrop-blur transition-colors hover:bg-surface">
             <span className="h-2.5 w-2.5 rounded-full ring-1 ring-white" style={{ background: VCOLOR[clearest.verdict] }} aria-hidden />
-            <span className="text-ink-muted">{en ? "Clearest now" : "ฟ้าดีสุดตอนนี้"}</span>
+            <span className="text-ink-muted">{day === 0 ? (en ? "Clearest now" : "ฟ้าดีสุดตอนนี้") : (en ? `Best ${dl}` : `ฟ้าดีสุด${dl}`)}</span>
             <span className="font-medium text-ink">{en ? clearest.en : clearest.th}</span>
             <span className="text-ink-faint tabular-nums">{clearest.tempC}°</span>
           </button>
@@ -567,7 +568,9 @@ export function SkyMapView() {
       {/* sky-colour legend + provenance (bottom strip) */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-0 hidden justify-center pb-1 sm:flex">
         <span className="font-thai text-[0.62rem] text-ink-faint/70">
-          {en ? `Live sky per area — Open-Meteo, ${date}` : `ฟ้าสดรายพื้นที่ จาก Open-Meteo ${date}`}
+          {day === 0
+            ? (en ? `Live sky per area — Open-Meteo, ${date}` : `ฟ้าสดรายพื้นที่ จาก Open-Meteo ${date}`)
+            : (en ? `Forecast for ${date} — Open-Meteo` : `พยากรณ์ ${date} จาก Open-Meteo`)}
         </span>
       </div>
     </div>

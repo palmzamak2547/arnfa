@@ -59,10 +59,10 @@ export function RegionTemps() {
       ))}
       {bkk && (
         <div className="flex min-w-[124px] flex-[2_0_auto] flex-col gap-1.5 border-l border-hairline pl-[clamp(16px,2.4vw,30px)]">
-          <span className="font-display text-[0.64rem] uppercase tracking-[0.16em] text-indoor-warm">{en ? "Bangkok live" : "กรุงเทพฯ สด"}</span>
+          <span className="font-display text-[0.64rem] uppercase tracking-[0.16em] text-indoor-warm">{en ? "Bangkok today" : "กรุงเทพฯ วันนี้"}</span>
           <span className="flex items-baseline gap-2">
             <span className="font-thai-serif text-[1.32rem] font-light tabular-nums text-ink">{bkk.tempC}°</span>
-            <span className="font-thai text-[0.8rem] text-ink-muted">{en ? "block by block" : "รายย่าน"}</span>
+            <span className="font-thai text-[0.8rem] text-ink-muted">{en ? "day's high, by area" : "สูงสุด รายย่าน"}</span>
           </span>
         </div>
       )}
