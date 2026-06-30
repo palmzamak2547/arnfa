@@ -9,11 +9,10 @@
 
 const NIM_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
 // Primary = best Thai (deepseek-v4-flash ~1.4s). Fallback MUST also be fast: when the
-// primary is rate-limited (429), llama-3.1-8b answers in ~1.6s — NOT the 9s llama-3.3-70b
-// (which made the chain 24s under load). Both fast → bounded latency for the demo + Vercel.
-// Last tier = NVIDIA's OWN Nemotron (only reached if both fast models fail on every key, so
-// latency stays bounded) — makes "Arnfah's AI runs on NVIDIA Nemotron" genuinely true.
-const MODELS = ["deepseek-ai/deepseek-v4-flash", "meta/llama-3.1-8b-instruct", "nvidia/llama-3.1-nemotron-70b-instruct"];
+// primary is rate-limited (429), llama-3.1-8b answers in ~1.6s. BOTH fast → bounded latency.
+// (Dropped the slow nemotron-70b tier: under a primary stall it cannot finish inside the route's
+// time budget and was the cause of the /api/ask 504s — a hung demo beats a "runs on Nemotron" line.)
+const MODELS = ["deepseek-ai/deepseek-v4-flash", "meta/llama-3.1-8b-instruct"];
 
 export type ChatMsg = { role: "system" | "user" | "assistant"; content: string };
 
@@ -30,16 +29,22 @@ export function nimConfigured(): boolean {
   return nimKeys().length > 0;
 }
 
-/** One chat completion. Tries each model, and within each model each key (a 429 on one
- *  key falls to the next key; any other error moves to the next model). Text or null. */
+/** One chat completion. Tries each model, and within each model each key (a 429 on one key
+ *  falls to the next key; any other error moves to the next model). A shared `deadlineMs`
+ *  budget bounds the whole call so /api/ask can never blow past Vercel's function timeout
+ *  (the cause of the live 504s); each attempt is capped at min(6s, remaining budget). Null
+ *  on exhaustion → the route degrades gracefully (never fabricates). */
 export async function nimChat(
   messages: ChatMsg[],
-  opts: { maxTokens?: number; temperature?: number } = {},
+  opts: { maxTokens?: number; temperature?: number; deadlineMs?: number } = {},
 ): Promise<string | null> {
   const keys = nimKeys();
   if (!keys.length) return null;
+  const deadline = opts.deadlineMs ?? Date.now() + 14000;
   for (const model of MODELS) {
     for (const key of keys) {
+      const remaining = deadline - Date.now();
+      if (remaining <= 800) return null; // out of budget → degrade now, never risk the 504
       try {
         const r = await fetch(NIM_URL, {
           method: "POST",
@@ -50,7 +55,7 @@ export async function nimChat(
             max_tokens: opts.maxTokens ?? 400,
             temperature: opts.temperature ?? 0.5,
           }),
-          signal: AbortSignal.timeout(12000),
+          signal: AbortSignal.timeout(Math.min(6000, remaining)),
         });
         if (r.status === 429) continue; // rate-limited → try the next key
         if (!r.ok) break;               // other model error → next model

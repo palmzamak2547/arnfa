@@ -158,7 +158,7 @@ export default function WherePage() {
           {areas && top.length > 0 && (
             <>
               <h2 className="font-thai-serif text-2xl font-light text-ink mb-5 text-balance">
-                {en ? "Clearest skies" : "ฟ้าโปร่งสุด"} — {dayLabel(day, en)}
+                {(top[0].verdict === "clearish" || top[0].verdict === "ok") ? (en ? "Clearest skies" : "ฟ้าโปร่งสุด") : (en ? "Best of the day" : "ฟ้าดีสุดเท่าที่มี")} — {dayLabel(day, en)}
               </h2>
               <ol className="mb-14 border-y border-hairline divide-y divide-hairline">
                 {top.map((a, i) => (
@@ -171,7 +171,7 @@ export default function WherePage() {
                           <span className="font-thai-serif text-xl font-light text-ink truncate transition-colors group-hover:text-ink-muted">{en ? a.en : a.th}</span>
                           {i === 0 && (
                             <span className="shrink-0 rounded-full border border-sun px-2 py-0.5 font-display text-[0.58rem] uppercase tracking-[0.14em] text-sun">
-                              {en ? "clearest" : "ฟ้าโปร่งสุด"}
+                              {(a.verdict === "clearish" || a.verdict === "ok") ? (en ? "clearest" : "ฟ้าโปร่งสุด") : (en ? "best today" : "ดีสุดวันนี้")}
                             </span>
                           )}
                         </span>

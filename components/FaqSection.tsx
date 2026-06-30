@@ -29,8 +29,8 @@ const FAQ = [
   {
     qTh: "รองรับภาษาอะไรบ้าง?",
     qEn: "Which languages?",
-    aTh: "ไทยและอังกฤษเต็มทุกหน้า สลับได้ทุกเมื่อด้วยปุ่มบนแถบด้านบน มี 中文 ในหน้าหลัก ๆ และกำลังขยายให้ครบ ภาษาไทยคือหัวใจของถ้อยคำ",
-    aEn: "Thai and English throughout — switch any time with the toggle in the top bar. 中文 is on the main pages and expanding. Thai is the heart of the writing.",
+    aTh: "ไทยและอังกฤษเต็มทุกหน้า สลับได้ทุกเมื่อด้วยปุ่มบนแถบด้านบน ภาษาไทยคือหัวใจของถ้อยคำ",
+    aEn: "Thai and English throughout — switch any time with the toggle in the top bar. Thai is the heart of the writing.",
   },
 ];
 

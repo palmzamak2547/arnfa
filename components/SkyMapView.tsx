@@ -244,6 +244,7 @@ export function SkyMapView() {
 
   const clearest = areas?.[0] ?? null;
   const worst = areas && areas.length > 1 ? areas[areas.length - 1] : null; // areas come ranked best→worst
+  const topGood = !!clearest && (clearest.verdict === "clearish" || clearest.verdict === "ok"); // honest "clearest" vs "best of a wet day"
   const mapsDir = selected ? `https://www.google.com/maps/dir/?api=1&destination=${selected.lat},${selected.lng}` : "#";
 
   // Honest fallback — never a blank box; point at the list version of the same data.
@@ -348,7 +349,7 @@ export function SkyMapView() {
       <div className="pointer-events-none absolute inset-x-0 top-3 z-10 flex flex-col items-center gap-2 px-3">
         {clearest && !selected && (
           <div className="pointer-events-none max-w-[94%] truncate rounded-full bg-ink/85 px-3.5 py-1 font-thai text-[0.72rem] text-paper shadow-sm backdrop-blur">
-            {en ? "Clearest today " : "วันนี้ฟ้าโปร่งสุด "}
+            {topGood ? (en ? "Clearest today " : "วันนี้ฟ้าโปร่งสุด ") : (en ? "Best of today " : "วันนี้ฟ้าดีสุด ")}
             <span className="font-medium">{en ? clearest.en : clearest.th}</span>
             {worst && <span className="opacity-70">{en ? ` — avoid ${worst.en}` : ` — เลี่ยง ${worst.th}`}</span>}
           </div>

@@ -26,11 +26,14 @@ const VDOT: Record<string, string> = {
 
 export function TodayPickView({ top, ranking = [] }: { top: TopArea | null; ranking?: TopArea[] }) {
   const { en } = useLang();
+  // Honest framing: only call it "clearest" when the sky actually clears the bar. In the rainy
+  // season every area reads "closing"/"poor", so the #1 pick is the LEAST-bad, not "the clearest".
+  const good = !!top && (top.verdict === "clearish" || top.verdict === "ok");
   return (
     <section id="today" className="relative z-10 mx-auto max-w-[1360px] border-t border-hairline px-4 py-[clamp(40px,5vw,72px)] sm:px-[clamp(16px,4vw,46px)]">
       <Reveal>
         <p className="mb-6 font-display text-xs uppercase tracking-[0.25em] text-ink-faint">
-          {en ? "III. Clearest today" : "๓. วันนี้ฟ้าโปร่งสุด"}
+          {good ? (en ? "III. Clearest today" : "๓. วันนี้ฟ้าโปร่งสุด") : (en ? "III. Best of today's sky" : "๓. วันนี้ฟ้าดีสุดเท่าที่มี")}
         </p>
       </Reveal>
 
@@ -40,8 +43,8 @@ export function TodayPickView({ top, ranking = [] }: { top: TopArea | null; rank
             <>
               <h2 className="mb-6 text-balance font-thai-serif fs-h2 font-light leading-[1.08] text-ink">
                 {en
-                  ? (<>This afternoon, head to <span className="font-display italic text-sun">{top.en}</span> — the clearest sky in Thailand.</>)
-                  : (<>บ่ายนี้ไป <span className="font-display italic text-sun">{top.en}</span> — {top.th} ฟ้าเปิดสุดในไทย</>)}
+                  ? (<>This afternoon, head to <span className="font-display italic text-sun">{top.en}</span> — {good ? "the clearest sky in Thailand." : "the best of a wet day across Thailand."}</>)
+                  : (<>บ่ายนี้ไป <span className="font-display italic text-sun">{top.en}</span> — {top.th} {good ? "ฟ้าเปิดสุดในไทย" : "ฟ้าดีสุดเท่าที่มีในไทยวันนี้"}</>)}
               </h2>
               <p className="mb-7 max-w-[52ch] font-thai fs-lead leading-relaxed text-ink-muted">
                 {top.tempC}°, {en ? `avg rain ${top.rainProb}% midday (08:00–18:00). ` : `ฝนเฉลี่ย ${top.rainProb}% ช่วงกลางวัน (08:00–18:00). `}
@@ -81,7 +84,7 @@ export function TodayPickView({ top, ranking = [] }: { top: TopArea | null; rank
           <Reveal delay={0.1}>
             <div className="overflow-hidden rounded-2xl border border-hairline bg-surface shadow-[0_1px_3px_rgba(26,31,43,0.06)]">
               <div className="flex items-baseline justify-between border-b border-hairline px-[18px] py-3.5">
-                <span className="font-display text-[0.62rem] uppercase tracking-[0.18em] text-ink-faint">{en ? "Clearest skies now" : "ฟ้าโปร่งสุด ตอนนี้"}</span>
+                <span className="font-display text-[0.62rem] uppercase tracking-[0.18em] text-ink-faint">{good ? (en ? "Clearest skies now" : "ฟ้าโปร่งสุด ตอนนี้") : (en ? "Best of today" : "ฟ้าดีสุดวันนี้")}</span>
                 <span className="font-thai text-[0.66rem] text-ink-faint">°/{en ? "rain" : "ฝน"}</span>
               </div>
               <div className="px-[18px] pb-3 pt-1 tabular-nums">

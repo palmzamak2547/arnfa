@@ -19,7 +19,7 @@ import { bkkNow } from "@/lib/bkkNow";
  */
 
 export const runtime = "nodejs";
-export const maxDuration = 30;
+export const maxDuration = 45; // Pro headroom; the nimChat deadline budgets keep real latency well under this
 
 const TH_DOW = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
 const VIBES = ["cafe", "eat", "nature", "culture", "shopping", "relax"];
@@ -31,7 +31,7 @@ type Intent = { area?: string; day?: number; budget?: number; vibes?: string[]; 
  *  model summarises these, it never invents one. Returns [] on any failure. */
 async function nearbyIncidents(lat: number, lng: number, km = 15): Promise<{ title: string; titleEn: string }[]> {
   try {
-    const r = await fetch("https://event.longdo.com/feed/json", { signal: AbortSignal.timeout(5000) });
+    const r = await fetch("https://event.longdo.com/feed/json", { signal: AbortSignal.timeout(4000) });
     if (!r.ok) return [];
     const raw = (await r.json()) as { title?: string; title_en?: string; latitude?: string; longitude?: string }[];
     const coslat = Math.cos((lat * Math.PI) / 180);
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
     : "";
   const extractRaw = await nimChat(
     [{ role: "system", content: extractSys }, { role: "user", content: priorCtx + message }],
-    { maxTokens: 220, temperature: 0.15 },
+    { maxTokens: 220, temperature: 0.15, deadlineMs: Date.now() + 9000 },
   );
   const intent = extractRaw ? extractJson<Intent>(extractRaw) : null;
 
@@ -137,7 +137,7 @@ export async function POST(req: NextRequest) {
     answer = await sovereignChat(narrateMsgs, { maxTokens: 220, temperature: 0.55 });
     if (answer) llm = "thai-sovereign";
   }
-  if (!answer) answer = await nimChat(narrateMsgs, { maxTokens: 220, temperature: 0.55 });
+  if (!answer) answer = await nimChat(narrateMsgs, { maxTokens: 220, temperature: 0.55, deadlineMs: Date.now() + 11000 });
   // Keep only the prose intro — drop any list/header the model still tacks on (the UI shows the cards).
   if (answer) answer = answer.replace(/\n\s*(?:\*\*|[-•*]|\d+[.)])[\s\S]*$/, "").replace(/\*\*/g, "").trim();
   if (!answer) {
