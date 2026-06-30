@@ -26,6 +26,24 @@ const VIBES = ["cafe", "eat", "nature", "culture", "shopping", "relax"];
 
 type Intent = { area?: string; day?: number; budget?: number; vibes?: string[]; avoidRain?: boolean };
 
+/** Real live traffic incidents (Longdo public feed) within ~km of a point — so the agent can warn
+ *  about an actual accident/flood/closure near the area. Iron Rule 0: only real rows, capped; the
+ *  model summarises these, it never invents one. Returns [] on any failure. */
+async function nearbyIncidents(lat: number, lng: number, km = 15): Promise<{ title: string; titleEn: string }[]> {
+  try {
+    const r = await fetch("https://event.longdo.com/feed/json", { signal: AbortSignal.timeout(5000) });
+    if (!r.ok) return [];
+    const raw = (await r.json()) as { title?: string; title_en?: string; latitude?: string; longitude?: string }[];
+    const coslat = Math.cos((lat * Math.PI) / 180);
+    return (Array.isArray(raw) ? raw : [])
+      .map((e) => ({ title: String(e.title ?? ""), titleEn: String(e.title_en ?? e.title ?? ""), lat: Number(e.latitude), lng: Number(e.longitude) }))
+      .filter((e) => e.title && Number.isFinite(e.lat) && Number.isFinite(e.lng))
+      .filter((e) => { const dx = (e.lng - lng) * coslat, dy = e.lat - lat; return Math.sqrt(dx * dx + dy * dy) * 111 <= km; })
+      .slice(0, 4)
+      .map(({ title, titleEn }) => ({ title, titleEn }));
+  } catch { return []; }
+}
+
 export async function POST(req: NextRequest) {
   if (!nimConfigured()) return NextResponse.json({ available: false, reason: "no_key" });
 
@@ -95,15 +113,21 @@ export async function POST(req: NextRequest) {
 
   const dayLabel = day === 0 ? "วันนี้" : day === 1 ? "พรุ่งนี้" : TH_DOW[(dow + day) % 7];
 
+  // Live traffic incidents near the area (real, Longdo) — only meaningful for TODAY's plan.
+  const incidents = day === 0 ? await nearbyIncidents(meta.lat, meta.lng) : [];
+
   // 3) Narrate the REAL plan (the model only summarises what the engine produced).
   const planText = stops.length
     ? stops.map((s, i) => `${i + 1}. ${s.name} (${s.category}) ฟ้า:${s.sky} ${s.tempC}° ฝน${s.rainProb}% ~${s.arrival} — ${s.reason}`).join("\n")
     : "ไม่มีสถานที่ที่เข้ากับเงื่อนไขในช่วงเวลานี้";
+  const hazardLine = incidents.length
+    ? `\nเหตุจราจรจริงใกล้พื้นที่ตอนนี้ (ข้อมูล Longdo จริง ห้ามแต่งเพิ่ม): ${incidents.map((i) => i.title).join(" / ")}`
+    : "";
   const narrateSys =
     `คุณคือ "อ่านฟ้า" ผู้ช่วยวางแผนเที่ยวตามฟ้า ตอบเป็น "ย่อหน้าเดียว" ภาษาไทยอบอุ่นเป็นกันเอง 2-4 ประโยค สรุปแผนจริงด้านล่างแบบเพื่อนแนะนำ ` +
-    `⛔ ห้ามใส่ลิสต์ บูลเล็ต หัวข้อ ตัวหนา หรือเลขข้อ เด็ดขาด (ระบบโชว์การ์ดแผนให้อยู่แล้ว) ⛔ ห้ามแต่งชื่อสถานที่หรือสภาพอากาศเอง ใช้เฉพาะข้อมูลที่ให้ ` +
-    `ถ้าแผนช่วยหลบฝน/ฝุ่นให้บอกเหตุผลสั้นๆ`;
-  const narrateUser = `คำขอผู้ใช้: "${message}"\nพื้นที่: ${meta.th} · ${dayLabel}\nแผนจริงจาก engine:\n${planText}`;
+    `⛔ ห้ามใส่ลิสต์ บูลเล็ต หัวข้อ ตัวหนา หรือเลขข้อ เด็ดขาด (ระบบโชว์การ์ดแผนให้อยู่แล้ว) ⛔ ห้ามแต่งชื่อสถานที่ สภาพอากาศ หรือเหตุจราจรเอง ใช้เฉพาะข้อมูลที่ให้ ` +
+    `ถ้าแผนช่วยหลบฝน/ฝุ่นให้บอกเหตุผลสั้นๆ ถ้ามีเหตุจราจรจริงใกล้ๆ ให้เตือนสั้นๆ ไม่เกิน 1 ประโยค`;
+  const narrateUser = `คำขอผู้ใช้: "${message}"\nพื้นที่: ${meta.th} ${dayLabel}\nแผนจริงจาก engine:\n${planText}${hazardLine}`;
   // Thai-sovereign LLM narrates when configured (อธิปไตย AI), else NVIDIA NIM. Either way
   // it only narrates the engine's real plan.
   const narrateMsgs = [{ role: "system" as const, content: narrateSys }, { role: "user" as const, content: narrateUser }];
@@ -127,6 +151,7 @@ export async function POST(req: NextRequest) {
     answer,
     plan: { areaKey: meta.key, areaTh: meta.th, areaEn: meta.en, day, dayLabel, budget, stops },
     intent: { area: meta.key, day, budget, vibes, avoidRain }, // echo for the next turn to patch (keep avoidRain so follow-ups don't lose it)
+    incidents, // real live traffic incidents near the area (today only) — the UI can surface them too
     provider,
     llm,
     planUrl: `/plan?y=${meta.key}&d=${day}`,

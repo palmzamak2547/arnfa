@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Marker, Source, Layer, Popup } from "react-map-gl/maplibre";
 import { SYSTEM_META } from "@/lib/data/transitStations";
 import { AIR_COLOR, AIR_LABEL_TH } from "@/lib/air/air4thai";
@@ -189,6 +190,18 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
   const [selCam, setSelCam] = useState<CamPt | null>(null);
   const [camImgError, setCamImgError] = useState(false);
   useEffect(() => { setCamImgError(false); }, [selCam]); // reset the snapshot-failed flag per camera
+
+  // "ดูสด" — open a camera in a full live-view modal (consent first, then the snapshot
+  // auto-refreshes every few seconds). Public iTIC/DOH traffic cameras, no personal data.
+  const [liveCam, setLiveCam] = useState<CamPt | null>(null);
+  const [liveOk, setLiveOk] = useState(false); // consent given for this view
+  const [liveTick, setLiveTick] = useState(0);
+  useEffect(() => {
+    if (!liveCam || !liveOk) return;
+    const id = setInterval(() => setLiveTick((t) => t + 1), 4000);
+    return () => clearInterval(id);
+  }, [liveCam, liveOk]);
+  const closeLive = () => { setLiveCam(null); setLiveOk(false); setLiveTick(0); };
   // Don't leave an orphan popup when its layer is toggled off or the area changes.
   useEffect(() => { setSelected(null); setSelEvent(null); setSelCam(null); }, [active, center.lat, center.lng]);
 
@@ -214,9 +227,10 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
   return (
     <>
       {showRain && radarTile ? (
-        // RainViewer radar is coarse (native ~z10). Cap maxzoom so MapLibre over-zooms the
-        // z10 tiles instead of requesting z13+ tiles that return a "Zoom not supported" image.
-        <Source id="arnfa-radar" type="raster" tiles={[radarTile]} tileSize={256} maxzoom={10} attribution="Radar: RainViewer">
+        // RainViewer radar only serves real tiles up to z7 — z8+ returns a literal "Zoom Level
+        // Not Supported" PNG (verified). Cap maxzoom=7 so MapLibre over-zooms the z7 tiles for
+        // any closer view instead of ever requesting (and painting) that placeholder.
+        <Source id="arnfa-radar" type="raster" tiles={[radarTile]} tileSize={256} maxzoom={7} attribution="Radar: RainViewer">
           <Layer id="arnfa-radar-layer" type="raster" beforeId={underId ?? (routePresent ? "route-line" : undefined)} paint={{ "raster-opacity": 0.5 }} />
         </Source>
       ) : null}
@@ -287,6 +301,12 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
                 ? (en ? "Live snapshot, iTIC / Highways Dept" : "ภาพสด iTIC / กรมทางหลวง")
                 : (en ? "Latest image, iTIC / Highways Dept" : "ภาพล่าสุด iTIC / กรมทางหลวง")}
             </p>
+            {!camImgError && (
+              <button type="button" onClick={() => { setLiveCam(selCam); setLiveOk(false); }}
+                className="mt-2 w-full rounded-full bg-ink px-3 py-1.5 text-center text-xs font-medium text-paper transition-colors hover:bg-ink-muted">
+                {en ? "Live view" : "ดูสด"}
+              </button>
+            )}
           </div>
         </Popup>
       )}
@@ -301,6 +321,40 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
             {(en ? selected.subEn : selected.subTh) && <p className="mt-0.5 text-xs text-ink-muted">{en ? selected.subEn : selected.subTh}</p>}
           </div>
         </Popup>
+      )}
+
+      {/* CCTV live-view modal — consent, then the public snapshot auto-refreshes (portal so it
+          sits above the map, not inside its transformed container) */}
+      {liveCam && typeof document !== "undefined" && createPortal(
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-ink/70 p-4 backdrop-blur-sm" onClick={closeLive} role="dialog" aria-modal>
+          <div className="w-full max-w-lg rounded-3xl border border-hairline bg-paper p-4 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="mb-2 flex items-start justify-between gap-3">
+              <p className="font-thai text-sm font-medium leading-snug text-ink">{liveCam.title}</p>
+              <button type="button" onClick={closeLive} aria-label={en ? "Close" : "ปิด"}
+                className="-mr-1 -mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-ink-faint transition-colors hover:bg-surface">✕</button>
+            </div>
+            {!liveOk ? (
+              <div className="py-1">
+                <p className="font-thai text-xs leading-relaxed text-ink-muted">{en ? "View this public traffic camera live? The image refreshes every few seconds (uses a little data)." : "ดูกล้องจราจรสาธารณะตัวนี้แบบสด? ภาพจะโหลดใหม่ทุกไม่กี่วินาที (ใช้เน็ตเล็กน้อย)"}</p>
+                <div className="mt-3 flex gap-2">
+                  <button type="button" onClick={() => setLiveOk(true)} className="flex-1 rounded-full bg-ink px-4 py-2 font-thai text-sm font-medium text-paper transition-colors hover:bg-ink-muted">{en ? "View live" : "ดูเลย"}</button>
+                  <button type="button" onClick={closeLive} className="rounded-full border border-hairline px-4 py-2 font-thai text-sm text-ink-muted transition-colors hover:bg-surface">{en ? "Cancel" : "ยกเลิก"}</button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img key={liveTick} src={`/api/cam-snapshot?u=${encodeURIComponent(liveCam.img)}&t=${liveTick}`} alt={liveCam.title}
+                  className="max-h-[60vh] w-full rounded-xl border border-hairline bg-surface object-contain" />
+                <p className="mt-2 flex items-center gap-1.5 font-thai text-[0.7rem] text-ink-faint">
+                  <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#D9534A]" aria-hidden />
+                  {en ? "Live, refreshes ~4s, iTIC / Highways Dept" : "ภาพสด รีเฟรชทุก 4 วินาที iTIC / กรมทางหลวง"}
+                </p>
+              </>
+            )}
+          </div>
+        </div>,
+        document.body,
       )}
     </>
   );
