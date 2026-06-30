@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { districtMeta } from "@/lib/poi/districts";
 import { scoreDay } from "@/lib/where/rank";
+import { rateLimit, clientIp, tooMany } from "@/lib/ratelimit";
 import { skyVerdict, type SkyVerdict } from "@/lib/core/skyScore";
 
 /**
@@ -45,6 +46,8 @@ function bestDay(resp: { hourly?: Record<string, number[] | string[]> } | undefi
 }
 
 export async function GET(req: NextRequest) {
+  const rl = rateLimit(`bestdays:${clientIp(req)}`, 40, 60_000);
+  if (!rl.ok) return tooMany(rl.retryAfter);
   const { searchParams } = new URL(req.url);
   const keys = (searchParams.get("keys") ?? "").split(",").map((k) => k.trim()).filter(Boolean).slice(0, 12);
   const metas = keys.map((k) => districtMeta(k)).filter((m): m is NonNullable<typeof m> => !!m);

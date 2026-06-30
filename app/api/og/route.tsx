@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { rateLimit, clientIp, tooMany } from "@/lib/ratelimit";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { districtMeta } from "@/lib/poi/districts";
@@ -66,6 +67,8 @@ async function dayVerdict(lat: number, lng: number, day: number): Promise<{ verd
 }
 
 export async function GET(req: Request) {
+  const rl = rateLimit(`og:${clientIp(req)}`, 40, 60_000); // CPU-heavy image render
+  if (!rl.ok) return tooMany(rl.retryAfter);
   const { searchParams } = new URL(req.url);
   const area = searchParams.get("area") ?? "";
   const day = Math.min(6, Math.max(0, parseInt(searchParams.get("day") ?? "0", 10)));

@@ -16,8 +16,11 @@ import { DISTRICTS } from "@/lib/poi/districts";
 type Status = "checking" | "ok" | "slow" | "down";
 type Check = { status: Status; ms: number };
 
-const SERVICES = [
+type Svc = { key: string; th: string; en: string; url: string; method?: "GET" | "POST"; body?: string; slowMs?: number };
+const SERVICES: Svc[] = [
   { key: "forecast", th: "พยากรณ์อากาศ", en: "Forecast", url: "/api/forecast?lat=13.7563&lng=100.5018&hours=3" },
+  { key: "where", th: "อันดับฟ้า (จัดอันดับทั่วไทย)", en: "Sky ranking", url: "/api/where?day=0", slowMs: 4000 },
+  { key: "ask", th: "ถาม AI (ThaiLLM / NIM)", en: "Ask AI (ThaiLLM / NIM)", url: "/api/ask", method: "POST", body: JSON.stringify({ message: "ทดสอบระบบ" }), slowMs: 22000 },
   { key: "air", th: "ฝุ่น PM2.5 (Air4Thai)", en: "Air quality (Air4Thai)", url: "/api/air?lat=13.7563&lng=100.5018" },
   { key: "nowcast", th: "ฝนใน 2 ชม.", en: "Rain nowcast", url: "/api/nowcast?lat=13.7563&lng=100.5018" },
   { key: "radar", th: "เรดาร์ฝน", en: "Rain radar", url: "/api/radar" },
@@ -45,9 +48,13 @@ export default function StatusPage() {
         const t0 = performance.now();
         let status: Status = "down";
         try {
-          const r = await fetch(s.url, { cache: "no-store" });
+          const r = await fetch(s.url, {
+            cache: "no-store",
+            method: s.method ?? "GET",
+            ...(s.method === "POST" ? { body: s.body, headers: { "Content-Type": "application/json" } } : {}),
+          });
           const ms = Math.round(performance.now() - t0);
-          status = r.ok ? (ms > 2500 ? "slow" : "ok") : "down";
+          status = r.ok ? (ms > (s.slowMs ?? 2500) ? "slow" : "ok") : "down";
           setChecks((c) => ({ ...c, [s.key]: { status, ms } }));
           return;
         } catch {

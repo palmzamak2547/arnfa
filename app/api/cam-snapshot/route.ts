@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { rateLimit, clientIp, tooMany } from "@/lib/ratelimit";
 
 /**
  * Same-origin proxy for a CCTV camera JPEG snapshot (so it loads under our CSP and avoids
@@ -10,12 +11,14 @@ export const runtime = "nodejs";
 const ALLOW = /(^|\.)iticfoundation\.org$/i;
 
 export async function GET(req: NextRequest) {
+  const rl = rateLimit(`cam:${clientIp(req)}`, 60, 60_000);
+  if (!rl.ok) return tooMany(rl.retryAfter);
   const u = req.nextUrl.searchParams.get("u");
   if (!u) return new Response(null, { status: 400 });
   let host = "";
   try {
     const url = new URL(u);
-    if (url.protocol !== "https:" && url.protocol !== "http:") return new Response(null, { status: 403 });
+    if (url.protocol !== "https:") return new Response(null, { status: 403 }); // https only — the iTIC CDN is https
     host = url.hostname;
   } catch { return new Response(null, { status: 400 }); }
   if (!ALLOW.test(host)) return new Response(null, { status: 403 });
@@ -24,7 +27,9 @@ export async function GET(req: NextRequest) {
     if (!r.ok) return new Response(null, { status: 502 });
     const ct = r.headers.get("content-type") || "image/jpeg";
     if (!ct.startsWith("image")) return new Response(null, { status: 502 });
-    return new Response(await r.arrayBuffer(), {
+    const buf = await r.arrayBuffer();
+    if (buf.byteLength > 4_000_000) return new Response(null, { status: 502 }); // cap memory (~4MB)
+    return new Response(buf, {
       headers: { "Content-Type": ct, "Cache-Control": "public, max-age=30" },
     });
   } catch {

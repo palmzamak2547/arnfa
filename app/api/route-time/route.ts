@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { rateLimit, clientIp, tooMany } from "@/lib/ratelimit";
 
 /**
  * Traffic-aware travel time + distance between two points, via Longdo RouteService (mode=t
@@ -19,6 +20,8 @@ function json(body: unknown, cache = "no-store"): Response {
 const num = (v: string | null) => (v != null && Number.isFinite(Number(v)) ? Number(v) : null);
 
 export async function GET(req: NextRequest) {
+  const rl = rateLimit(`route:${clientIp(req)}`, 45, 60_000); // Longdo routing quota guard
+  if (!rl.ok) return tooMany(rl.retryAfter);
   const sp = req.nextUrl.searchParams;
   const flon = num(sp.get("flon")), flat = num(sp.get("flat")), tlon = num(sp.get("tlon")), tlat = num(sp.get("tlat"));
   if (!KEY || flon == null || flat == null || tlon == null || tlat == null) return json({ ok: false });

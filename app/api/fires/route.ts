@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { parseFirmsCsv, summarizeFires } from "@/lib/satellite/fires";
+import { rateLimit, clientIp, tooMany } from "@/lib/ratelimit";
 
 /**
  * GET /api/fires?lat=&lng=&radiusKm=&days= — active fires near a point from NASA
@@ -13,6 +14,8 @@ import { parseFirmsCsv, summarizeFires } from "@/lib/satellite/fires";
 const SOURCE = "VIIRS_SNPP_NRT"; // free near-real-time VIIRS 375m
 
 export async function GET(req: NextRequest) {
+  const rl = rateLimit(`fires:${clientIp(req)}`, 40, 60_000); // NASA FIRMS quota guard
+  if (!rl.ok) return tooMany(rl.retryAfter);
   const key = process.env.FIRMS_MAP_KEY;
   if (!key) return NextResponse.json({ available: false, reason: "no_key" });
 

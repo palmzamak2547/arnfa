@@ -11,8 +11,6 @@
     "seed": "node scripts/seed-district.mjs"
   },
   "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.6.1",
     "@supabase/supabase-js": "^2.106.2",
     "clsx": "^2.1.1",
     "framer-motion": "^12.40.0",
@@ -25,7 +23,6 @@
     "react-i18next": "^17.0.8",
     "react-map-gl": "^8.1.1",
     "tailwind-merge": "^3.6.0",
-    "three": "^0.184.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -33,7 +30,6 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/three": "^0.184.1",
     "@vitejs/plugin-react": "^6.0.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",

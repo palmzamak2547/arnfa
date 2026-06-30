@@ -9,6 +9,7 @@ import { overlayCrowd } from "@/lib/poi/crowd";
 import { startIndexForDay } from "@/lib/plan/days";
 import { filterByGroups } from "@/lib/plan/categories";
 import { bkkNow } from "@/lib/bkkNow";
+import { rateLimit, clientIp, tooMany } from "@/lib/ratelimit";
 
 /**
  * POST /api/ask — "Arnfa AI": an agent that turns a free-text Thai request into a
@@ -45,6 +46,8 @@ async function nearbyIncidents(lat: number, lng: number, km = 15): Promise<{ tit
 }
 
 export async function POST(req: NextRequest) {
+  const rl = rateLimit(`ask:${clientIp(req)}`, 12, 60_000); // protect the free NIM/ThaiLLM quota from a flood
+  if (!rl.ok) return tooMany(rl.retryAfter);
   if (!nimConfigured()) return NextResponse.json({ available: false, reason: "no_key" });
 
   let message = "";

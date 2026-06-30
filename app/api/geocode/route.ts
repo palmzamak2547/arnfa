@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { rateLimit, clientIp, tooMany } from "@/lib/ratelimit";
 
 /**
  * Longdo place search + reverse-geocode, proxied same-origin.
@@ -25,6 +26,8 @@ function json(body: unknown, status = 200, cache = "no-store"): Response {
 type LongdoHit = { name?: string; lat?: number; lon?: number; type?: string; address?: string };
 
 export async function GET(req: NextRequest) {
+  const rl = rateLimit(`geocode:${clientIp(req)}`, 45, 60_000); // Longdo web-services quota guard
+  if (!rl.ok) return tooMany(rl.retryAfter);
   const sp = req.nextUrl.searchParams;
   const q = (sp.get("q") || "").trim();
   const lat = sp.get("lat"), lng = sp.get("lng");
