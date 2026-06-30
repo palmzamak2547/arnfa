@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
     // ── reverse geocode (where am I) ──────────────────────────────────
     if (lat && lng) {
       const la = Number(lat), ln = Number(lng);
-      if (!Number.isFinite(la) || !Number.isFinite(ln)) return json({ place: null });
+      if (!Number.isFinite(la) || !Number.isFinite(ln) || la < -90 || la > 90 || ln < -180 || ln > 180) return json({ place: null });
       const url = `https://api.longdo.com/map/services/address?lon=${ln}&lat=${la}&key=${KEY}&locale=th`;
       const r = await fetch(url, { headers: { Referer: REF }, signal: AbortSignal.timeout(6000) });
       if (!r.ok) return json({ place: null });

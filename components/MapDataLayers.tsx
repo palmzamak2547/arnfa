@@ -51,7 +51,7 @@ export const MAP_LAYERS = ALL_LAYERS.filter((l) => l.key !== "traffic" || LONGDO
 
 type Pt = { lat: number; lng: number; label: string; subTh: string; subEn: string; color: string; emoji: string };
 type EventPt = { eid: string; lat: number; lng: number; title: string; titleEn: string; desc: string; descEn: string; icon: string };
-type CamPt = { id: string; lat: number; lng: number; title: string; img: string };
+type CamPt = { id: string; lat: number; lng: number; title: string; img: string; updated: string };
 
 // incident icon → emoji (Longdo `icon` field: accident / flood / roadclosed / diversion / construction …)
 function eventEmoji(icon: string): string {
@@ -78,7 +78,9 @@ function usePointLayer(show: boolean, url: string, mapFn: (d: unknown) => Pt[]):
     fetch(url)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d) => { if (!cancelled) { setPts(mapFn(d)); setForUrl(url); } })
-      .catch(() => { if (!cancelled) { setPts([]); setForUrl(url); } });
+      // On failure DON'T mark this url done — so toggling the layer again retries instead of
+      // staying permanently empty (mirrors the radar/traffic pattern).
+      .catch(() => { if (!cancelled) setPts([]); });
     return () => { cancelled = true; };
     // mapFn is a stable module-level fn; url carries the area coords
   }, [show, url, forUrl, mapFn]);
@@ -185,8 +187,15 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
   const [selected, setSelected] = useState<Pt | null>(null);
   const [selEvent, setSelEvent] = useState<EventPt | null>(null);
   const [selCam, setSelCam] = useState<CamPt | null>(null);
+  const [camImgError, setCamImgError] = useState(false);
+  useEffect(() => { setCamImgError(false); }, [selCam]); // reset the snapshot-failed flag per camera
   // Don't leave an orphan popup when its layer is toggled off or the area changes.
   useEffect(() => { setSelected(null); setSelEvent(null); setSelCam(null); }, [active, center.lat, center.lng]);
+
+  // a camera's snapshot is only honestly "live" if its lastupdate is recent (the feed has stale /
+  // even future-dated rows); otherwise we label it "latest image", not "live".
+  const camAgeMin = selCam ? (() => { const t = Date.parse(selCam.updated.replace(" ", "T")); return Number.isFinite(t) ? (Date.now() - t) / 60000 : NaN; })() : NaN;
+  const camFresh = Number.isFinite(camAgeMin) && camAgeMin >= 0 && camAgeMin < 20;
 
   const dot = (p: Pt, _i: number, kind: string) => {
     const sub = en ? p.subEn : p.subTh;
@@ -265,12 +274,19 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
           closeButton closeOnClick={false} onClose={() => setSelCam(null)} maxWidth="260px">
           <div className="font-thai">
             <p className="mb-1.5 text-xs font-medium leading-snug text-ink">{selCam.title}</p>
-            {/* same-origin snapshot proxy — eslint-disable-next-line @next/next/no-img-element */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/api/cam-snapshot?u=${encodeURIComponent(selCam.img)}`} alt={selCam.title} width={240} height={135}
-              className="h-auto w-full rounded-lg border border-hairline bg-surface object-cover"
-              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
-            <p className="mt-1 text-[0.65rem] text-ink-faint">{en ? "Live snapshot, iTIC / Highways Dept" : "ภาพสด iTIC / กรมทางหลวง"}</p>
+            {!camImgError && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={`/api/cam-snapshot?u=${encodeURIComponent(selCam.img)}`} alt={selCam.title} width={240} height={135}
+                className="h-auto w-full rounded-lg border border-hairline bg-surface object-cover"
+                onError={() => setCamImgError(true)} />
+            )}
+            <p className="mt-1 text-[0.65rem] text-ink-faint">
+              {camImgError
+                ? (en ? "Snapshot unavailable right now" : "ภาพไม่พร้อมใช้งานตอนนี้")
+                : camFresh
+                ? (en ? "Live snapshot, iTIC / Highways Dept" : "ภาพสด iTIC / กรมทางหลวง")
+                : (en ? "Latest image, iTIC / Highways Dept" : "ภาพล่าสุด iTIC / กรมทางหลวง")}
+            </p>
           </div>
         </Popup>
       )}

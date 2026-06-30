@@ -52,8 +52,10 @@ function prefersReduced(): boolean {
 }
 
 /** nearest of our forecast areas to a free point (Longdo POI / the user's GPS) — so a searched
- *  place or "where I am" snaps to the area whose live sky verdict we actually have. */
-function nearestArea(areas: Area[] | null, lat: number, lng: number): Area | null {
+ *  place or "where I am" snaps to the area whose live sky verdict we actually have. Returns null
+ *  if the point is beyond `maxKm` of every area (e.g. across a border) — we don't claim a verdict
+ *  for somewhere outside our coverage (Iron Rule 0). */
+function nearestArea(areas: Area[] | null, lat: number, lng: number, maxKm = 70): Area | null {
   if (!areas?.length) return null;
   let best: Area | null = null, bd = Infinity;
   const coslat = Math.cos((lat * Math.PI) / 180);
@@ -62,7 +64,8 @@ function nearestArea(areas: Area[] | null, lat: number, lng: number): Area | nul
     const d = dx * dx + dy * dy;
     if (d < bd) { bd = d; best = a; }
   }
-  return best;
+  // bd is in squared degrees (equirectangular); ~111 km per degree
+  return best && Math.sqrt(bd) * 111 <= maxKm ? best : null;
 }
 
 type Poi = { name: string; lat: number; lng: number; type: string; address: string };
@@ -74,6 +77,11 @@ export function SkyMapView() {
   const { en } = useLang();
   const mapRef = useRef<MapRef>(null);
   const reduced = useMemo(prefersReduced, []);
+  const dayCache = useRef<Record<number, { areas: Area[]; date: string }>>({}); // prefetched days → instant switch (Map name is the react-map-gl import)
+  const didPrefetch = useRef(false);
+  const aliveRef = useRef(true); // guards the geolocation flow (GPS can resolve ~12s after unmount)
+  useEffect(() => () => { aliveRef.current = false; }, []);
+  const [mapCenter, setMapCenter] = useState({ lat: 13.4, lng: 100.9 }); // live viewport centre for the data layers
 
   const [day, setDay] = useState(0);
   const [areas, setAreas] = useState<Area[] | null>(null);
@@ -105,16 +113,40 @@ export function SkyMapView() {
     return () => { cancelled = true; clearTimeout(t); };
   }, [q]);
 
-  // real per-day ranking — same source as /where + the home pick
+  // real per-day ranking — same source as /where + the home pick. A prefetched day shows
+  // instantly (no spinner); otherwise fetch once and cache it.
   useEffect(() => {
+    const hit = dayCache.current[day];
+    setError(false); setSelected(null);
+    if (hit) { setAreas(hit.areas); setDate(hit.date); return; }
     let cancelled = false;
-    setAreas(null); setError(false); setSelected(null);
+    setAreas(null);
     fetch(`/api/where?day=${day}`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => { if (!cancelled) { setAreas(d.areas); setDate(d.date); } })
+      .then((d) => { if (!cancelled) { dayCache.current[day] = { areas: d.areas, date: d.date }; setAreas(d.areas); setDate(d.date); } })
       .catch(() => { if (!cancelled) setError(true); });
     return () => { cancelled = true; };
   }, [day]);
+
+  // once the first day is in, quietly prefetch the rest of the week so the 7-day scrubber
+  // sweeps instantly (one pass; cache.has() guards against refetch).
+  useEffect(() => {
+    if (!areas || didPrefetch.current) return;
+    didPrefetch.current = true;
+    let cancelled = false;
+    (async () => {
+      for (let d = 0; d < 7; d++) {
+        if (cancelled || dayCache.current[d]) continue;
+        try {
+          const r = await fetch(`/api/where?day=${d}`);
+          if (!r.ok) continue;
+          const j = await r.json();
+          if (!cancelled) dayCache.current[d] = { areas: j.areas, date: j.date };
+        } catch { /* a missed prefetch just falls back to an on-click fetch */ }
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [areas]);
 
   // fit the whole country once the first day's areas land
   useEffect(() => {
@@ -134,7 +166,9 @@ export function SkyMapView() {
     type: "FeatureCollection" as const,
     features: (areas ?? []).map((a) => ({
       type: "Feature" as const,
-      properties: { key: a.key, color: VCOLOR[a.verdict], tier: a.tier, minzoom: TIER_MINZOOM[a.tier] ?? 8 },
+      // `mark` = a colour-blind-safe shape cue: caution verdicts carry a dark centre dot
+      // (closing=1, poor=2) so red/green pins are still distinguishable without relying on hue.
+      properties: { key: a.key, color: VCOLOR[a.verdict], tier: a.tier, minzoom: TIER_MINZOOM[a.tier] ?? 8, mark: a.verdict === "poor" ? 2 : a.verdict === "closing" ? 1 : 0 },
       geometry: { type: "Point" as const, coordinates: [a.lng, a.lat] },
     })),
   }), [areas]);
@@ -161,6 +195,7 @@ export function SkyMapView() {
     setGeo({ phase: "locating" });
     navigator.geolocation.getCurrentPosition(
       (pos) => {
+        if (!aliveRef.current) return;
         const lat = pos.coords.latitude, lng = pos.coords.longitude;
         setHere({ lat, lng });
         const map = mapRef.current?.getMap();
@@ -170,13 +205,14 @@ export function SkyMapView() {
         fetch(`/api/geocode?lat=${lat}&lng=${lng}`)
           .then((r) => (r.ok ? r.json() : Promise.reject()))
           .then((d) => {
+            if (!aliveRef.current) return;
             const pl = d.place;
             const label = pl ? [pl.district, pl.province].filter(Boolean).join(" ") : "";
             setGeo({ phase: "done", place: label });
           })
-          .catch(() => setGeo({ phase: "done", place: "" }));
+          .catch(() => { if (aliveRef.current) setGeo({ phase: "done", place: "" }); });
       },
-      (err) => setGeo({ phase: err.code === err.PERMISSION_DENIED ? "denied" : "error" }),
+      (err) => { if (aliveRef.current) setGeo({ phase: err.code === err.PERMISSION_DENIED ? "denied" : "error" }); },
       { enableHighAccuracy: true, timeout: 12000, maximumAge: 30000 },
     );
   };
@@ -230,6 +266,7 @@ export function SkyMapView() {
         style={{ width: "100%", height: "100%" }}
         interactiveLayerIds={["sky-pins"]}
         onClick={onMapClick}
+        onMoveEnd={(e) => { const c = e.target.getCenter(); setMapCenter({ lat: Math.round(c.lat * 100) / 100, lng: Math.round(c.lng * 100) / 100 }); }}
         onLoad={(e) => applyArnfaRecolor(e.target as unknown as Parameters<typeof applyArnfaRecolor>[0])}
         onStyleData={(e) => {
           const m = e.target as unknown as Parameters<typeof applyArnfaRecolor>[0] & { getPaintProperty?: (l: string, p: string) => unknown };
@@ -240,7 +277,7 @@ export function SkyMapView() {
         <NavigationControl position="top-right" showCompass={false} />
         <ScaleControl position="bottom-left" maxWidth={96} unit="metric" />
 
-        <MapDataLayers center={{ lat: 13.4, lng: 100.9 }} active={layers} routePresent={false} en={en} underId={areas ? "sky-pins" : undefined} />
+        <MapDataLayers center={mapCenter} active={layers} routePresent={false} en={en} underId={areas ? "sky-pins" : undefined} />
 
         {/* the live sky pins — one per area, coloured by verdict (data-driven circle layer) */}
         {areas && (
@@ -270,6 +307,23 @@ export function SkyMapView() {
                   6.5, ["case", [">=", 6.5, ["get", "minzoom"]], 1, 0],
                   8, ["case", [">=", 8, ["get", "minzoom"]], 1, 0],
                   8.8, ["case", [">=", 8.8, ["get", "minzoom"]], 1, 0]],
+              }}
+            />
+            {/* colour-blind aid: a dark centre dot on caution pins (closing/poor) so the verdict
+                reads by SHAPE, not hue alone — fades in with the pins via the same minzoom gate */}
+            <Layer
+              id="sky-pins-mark"
+              type="circle"
+              paint={{
+                "circle-radius": ["interpolate", ["linear"], ["zoom"],
+                  5, ["match", ["get", "mark"], 2, 1.5, 1, 1, 0],
+                  12, ["match", ["get", "mark"], 2, 3.2, 1, 2.1, 0]],
+                "circle-color": "#23272F",
+                "circle-opacity": ["interpolate", ["linear"], ["zoom"],
+                  5, ["case", [">=", 5, ["get", "minzoom"]], 0.9, 0],
+                  6.5, ["case", [">=", 6.5, ["get", "minzoom"]], 0.9, 0],
+                  8, ["case", [">=", 8, ["get", "minzoom"]], 0.9, 0],
+                  8.8, ["case", [">=", 8.8, ["get", "minzoom"]], 0.9, 0]],
               }}
             />
           </Source>
@@ -373,7 +427,9 @@ export function SkyMapView() {
           <div className="pointer-events-none flex flex-wrap items-center gap-x-2.5 gap-y-1 rounded-2xl border border-hairline bg-paper/90 px-3 py-1.5 shadow-sm backdrop-blur">
             {LEGEND.map((v) => (
               <span key={v} className="flex items-center gap-1 font-thai text-[0.62rem] text-ink-muted">
-                <span className="h-2 w-2 rounded-full ring-1 ring-white" style={{ background: VCOLOR[v] }} aria-hidden />
+                <span className="relative flex h-2.5 w-2.5 items-center justify-center rounded-full ring-1 ring-white" style={{ background: VCOLOR[v] }} aria-hidden>
+                  {(v === "closing" || v === "poor") && <span className="h-1 w-1 rounded-full bg-[#23272F]" />}
+                </span>
                 {en ? SKY_VERDICT_EN[v] : SKY_VERDICT_TH[v]}
               </span>
             ))}
@@ -418,7 +474,7 @@ export function SkyMapView() {
       </div>
 
       {/* ── layers toggle (bottom-right, reuses the /plan overlays) ───────── */}
-      <div className="absolute bottom-9 right-2 z-10 flex flex-col items-end gap-1.5">
+      <div className={clsx("absolute bottom-9 right-2 z-10 flex flex-col items-end gap-1.5", selected && "max-sm:hidden")}>
         {layersOpen && (
           <div className="flex max-h-[62vh] w-44 flex-col overflow-y-auto rounded-2xl border border-hairline bg-paper/95 p-1.5 shadow-md backdrop-blur">
             {LAYER_GROUPS.map((g) => {
@@ -468,7 +524,7 @@ export function SkyMapView() {
           <div className="mt-3 grid grid-cols-2 gap-2">
             <div className="rounded-2xl border border-hairline bg-surface/60 px-3 py-2">
               <div className="font-thai-serif text-2xl font-light tabular-nums text-ink">{selected.tempC}°</div>
-              <div className="font-thai text-[0.7rem] text-ink-faint">{en ? "feels-like high" : "ร้อนสุด รู้สึกเหมือน"}</div>
+              <div className="font-thai text-[0.7rem] text-ink-faint">{en ? "high" : "อุณหภูมิสูงสุด"}</div>
             </div>
             <div className="rounded-2xl border border-hairline bg-surface/60 px-3 py-2">
               <div className="font-thai-serif text-2xl font-light tabular-nums text-ink">{selected.rainProb}%</div>

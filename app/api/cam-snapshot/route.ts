@@ -13,7 +13,11 @@ export async function GET(req: NextRequest) {
   const u = req.nextUrl.searchParams.get("u");
   if (!u) return new Response(null, { status: 400 });
   let host = "";
-  try { host = new URL(u).hostname; } catch { return new Response(null, { status: 400 }); }
+  try {
+    const url = new URL(u);
+    if (url.protocol !== "https:" && url.protocol !== "http:") return new Response(null, { status: 403 });
+    host = url.hostname;
+  } catch { return new Response(null, { status: 400 }); }
   if (!ALLOW.test(host)) return new Response(null, { status: 403 });
   try {
     const r = await fetch(u, { headers: { Referer: "https://arnfa.vercel.app/" }, signal: AbortSignal.timeout(8000) });

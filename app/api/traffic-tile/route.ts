@@ -14,7 +14,7 @@ import type { NextRequest } from "next/server";
  */
 export const runtime = "nodejs";
 
-const KEY = process.env.LONGDO_KEY ?? process.env.NEXT_PUBLIC_LONGDO_KEY ?? "";
+const KEY = process.env.LONGDO_KEY ?? ""; // server-only — never a NEXT_PUBLIC_* fallback (would inline into the client bundle)
 
 // 1×1 transparent PNG — the honest "no traffic here" tile.
 const BLANK = Buffer.from(
@@ -34,7 +34,10 @@ const blankTile = () => png(BLANK, "public, max-age=60");
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams;
   const z = Number(sp.get("z")), x = Number(sp.get("x")), y = Number(sp.get("y"));
-  if (!KEY || ![z, x, y].every(Number.isInteger) || z < 0 || z > 20 || x < 0 || y < 0) return blankTile();
+  // reject anything outside the real tile pyramid LOCALLY (no upstream call) so the metered
+  // Longdo tile quota can only ever be spent on coordinates that actually exist.
+  const max = 2 ** z;
+  if (!KEY || ![z, x, y].every(Number.isInteger) || z < 0 || z > 20 || x < 0 || y < 0 || x >= max || y >= max) return blankTile();
 
   const url = `https://mstraffic1.longdo.com/mmmap/tile.php?proj=epsg3857&mode=trafficoverlay&zoom=${z}&x=${x}&y=${y}&key=${KEY}`;
   try {
