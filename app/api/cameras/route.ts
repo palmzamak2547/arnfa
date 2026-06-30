@@ -27,10 +27,12 @@ export async function GET() {
         title: String(c.title ?? ""),
         lat: Number(c.latitude),
         lng: Number(c.longitude),
-        img: String(c.imgurl ?? ""),
+        // the jpeg.cgi snapshot is dead (0 bytes) — the real live feed is the HLS video stream.
+        hls: String(c.hls_url ?? ""),
         updated: String(c.lastupdate ?? ""),
       }))
-      .filter((c) => Number.isFinite(c.lat) && Number.isFinite(c.lng) && c.img.startsWith("http"));
+      // keep only cameras with an https HLS stream (mixed-content-safe + actually viewable)
+      .filter((c) => Number.isFinite(c.lat) && Number.isFinite(c.lng) && c.hls.startsWith("https://"));
     return json({ cameras }, "public, max-age=300, s-maxage=300, stale-while-revalidate=300");
   } catch {
     return json({ cameras: [] });

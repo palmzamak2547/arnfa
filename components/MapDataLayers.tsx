@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { Marker, Source, Layer, Popup } from "react-map-gl/maplibre";
 import { SYSTEM_META } from "@/lib/data/transitStations";
 import { AIR_COLOR, AIR_LABEL_TH } from "@/lib/air/air4thai";
+import { CamLive } from "./CamLive";
 
 /**
  * MapDataLayers — paints Arnfa's data pipeline onto the /plan map as toggleable layers:
@@ -52,7 +53,7 @@ export const MAP_LAYERS = ALL_LAYERS.filter((l) => l.key !== "traffic" || LONGDO
 
 type Pt = { lat: number; lng: number; label: string; subTh: string; subEn: string; color: string; emoji: string };
 type EventPt = { eid: string; lat: number; lng: number; title: string; titleEn: string; desc: string; descEn: string; icon: string };
-type CamPt = { id: string; lat: number; lng: number; title: string; img: string; updated: string };
+type CamPt = { id: string; lat: number; lng: number; title: string; hls: string; updated: string };
 
 // incident icon → emoji (Longdo `icon` field: accident / flood / roadclosed / diversion / construction …)
 function eventEmoji(icon: string): string {
@@ -166,7 +167,7 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
     return () => { cancelled = true; clearInterval(id); };
   }, [showEvents]);
 
-  // CCTV cameras — 163 nationwide is too many markers, keep the ~18 nearest the area.
+  // CCTV cameras — ~134 nationwide have a live HLS stream; too many markers, keep the ~18 nearest.
   const [cameras, setCameras] = useState<CamPt[]>([]);
   const showCameras = active.has("cameras");
   useEffect(() => {
@@ -188,27 +189,14 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
   const [selected, setSelected] = useState<Pt | null>(null);
   const [selEvent, setSelEvent] = useState<EventPt | null>(null);
   const [selCam, setSelCam] = useState<CamPt | null>(null);
-  const [camImgError, setCamImgError] = useState(false);
-  useEffect(() => { setCamImgError(false); }, [selCam]); // reset the snapshot-failed flag per camera
 
-  // "ดูสด" — open a camera in a full live-view modal (consent first, then the snapshot
-  // auto-refreshes every few seconds). Public iTIC/DOH traffic cameras, no personal data.
+  // "ดูสด" — open a camera in a full live-view modal (consent first, then a real live HLS video).
+  // Public iTIC/DOH traffic cameras, no personal data; the dead jpeg.cgi snapshot is gone.
   const [liveCam, setLiveCam] = useState<CamPt | null>(null);
   const [liveOk, setLiveOk] = useState(false); // consent given for this view
-  const [liveTick, setLiveTick] = useState(0);
-  useEffect(() => {
-    if (!liveCam || !liveOk) return;
-    const id = setInterval(() => setLiveTick((t) => t + 1), 4000);
-    return () => clearInterval(id);
-  }, [liveCam, liveOk]);
-  const closeLive = () => { setLiveCam(null); setLiveOk(false); setLiveTick(0); };
+  const closeLive = () => { setLiveCam(null); setLiveOk(false); };
   // Don't leave an orphan popup when its layer is toggled off or the area changes.
   useEffect(() => { setSelected(null); setSelEvent(null); setSelCam(null); }, [active, center.lat, center.lng]);
-
-  // a camera's snapshot is only honestly "live" if its lastupdate is recent (the feed has stale /
-  // even future-dated rows); otherwise we label it "latest image", not "live".
-  const camAgeMin = selCam ? (() => { const t = Date.parse(selCam.updated.replace(" ", "T")); return Number.isFinite(t) ? (Date.now() - t) / 60000 : NaN; })() : NaN;
-  const camFresh = Number.isFinite(camAgeMin) && camAgeMin >= 0 && camAgeMin < 20;
 
   const dot = (p: Pt, _i: number, kind: string) => {
     const sub = en ? p.subEn : p.subTh;
@@ -287,26 +275,15 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
         <Popup longitude={selCam.lng} latitude={selCam.lat} anchor="bottom" offset={14}
           closeButton closeOnClick={false} onClose={() => setSelCam(null)} maxWidth="260px">
           <div className="font-thai">
-            <p className="mb-1.5 text-xs font-medium leading-snug text-ink">{selCam.title}</p>
-            {!camImgError && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={`/api/cam-snapshot?u=${encodeURIComponent(selCam.img)}`} alt={selCam.title} width={240} height={135}
-                className="h-auto w-full rounded-lg border border-hairline bg-surface object-cover"
-                onError={() => setCamImgError(true)} />
-            )}
-            <p className="mt-1 text-[0.65rem] text-ink-faint">
-              {camImgError
-                ? (en ? "Snapshot unavailable right now" : "ภาพไม่พร้อมใช้งานตอนนี้")
-                : camFresh
-                ? (en ? "Live snapshot, iTIC / Highways Dept" : "ภาพสด iTIC / กรมทางหลวง")
-                : (en ? "Latest image, iTIC / Highways Dept" : "ภาพล่าสุด iTIC / กรมทางหลวง")}
+            <p className="mb-1 text-xs font-medium leading-snug text-ink">{selCam.title}</p>
+            <p className="mb-2 flex items-center gap-1.5 text-[0.65rem] text-ink-faint">
+              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#D9534A]" aria-hidden />
+              {en ? "Live traffic camera, iTIC / Highways Dept" : "กล้องจราจรสด iTIC / กรมทางหลวง"}
             </p>
-            {!camImgError && (
-              <button type="button" onClick={() => { setLiveCam(selCam); setLiveOk(false); }}
-                className="mt-2 w-full rounded-full bg-ink px-3 py-1.5 text-center text-xs font-medium text-paper transition-colors hover:bg-ink-muted">
-                {en ? "Live view" : "ดูสด"}
-              </button>
-            )}
+            <button type="button" onClick={() => { setLiveCam(selCam); setLiveOk(false); }}
+              className="w-full rounded-full bg-ink px-3 py-1.5 text-center text-xs font-medium text-paper transition-colors hover:bg-ink-muted">
+              {en ? "Watch live" : "ดูสด"}
+            </button>
           </div>
         </Popup>
       )}
@@ -335,7 +312,7 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
             </div>
             {!liveOk ? (
               <div className="py-1">
-                <p className="font-thai text-xs leading-relaxed text-ink-muted">{en ? "View this public traffic camera live? The image refreshes every few seconds (uses a little data)." : "ดูกล้องจราจรสาธารณะตัวนี้แบบสด? ภาพจะโหลดใหม่ทุกไม่กี่วินาที (ใช้เน็ตเล็กน้อย)"}</p>
+                <p className="font-thai text-xs leading-relaxed text-ink-muted">{en ? "Watch this public traffic camera as a live video stream? (uses some data)" : "ดูกล้องจราจรสาธารณะตัวนี้เป็นวิดีโอสด? (ใช้เน็ตพอสมควร)"}</p>
                 <div className="mt-3 flex gap-2">
                   <button type="button" onClick={() => setLiveOk(true)} className="flex-1 rounded-full bg-ink px-4 py-2 font-thai text-sm font-medium text-paper transition-colors hover:bg-ink-muted">{en ? "View live" : "ดูเลย"}</button>
                   <button type="button" onClick={closeLive} className="rounded-full border border-hairline px-4 py-2 font-thai text-sm text-ink-muted transition-colors hover:bg-surface">{en ? "Cancel" : "ยกเลิก"}</button>
@@ -343,12 +320,10 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
               </div>
             ) : (
               <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img key={liveTick} src={`/api/cam-snapshot?u=${encodeURIComponent(liveCam.img)}&t=${liveTick}`} alt={liveCam.title}
-                  className="max-h-[60vh] w-full rounded-xl border border-hairline bg-surface object-contain" />
+                <CamLive src={liveCam.hls} title={liveCam.title} />
                 <p className="mt-2 flex items-center gap-1.5 font-thai text-[0.7rem] text-ink-faint">
                   <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-[#D9534A]" aria-hidden />
-                  {en ? "Live, refreshes ~4s, iTIC / Highways Dept" : "ภาพสด รีเฟรชทุก 4 วินาที iTIC / กรมทางหลวง"}
+                  {en ? "Live video, iTIC / Highways Dept" : "วิดีโอสด iTIC / กรมทางหลวง"}
                 </p>
               </>
             )}
