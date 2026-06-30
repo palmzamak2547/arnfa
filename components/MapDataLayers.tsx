@@ -215,6 +215,9 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
   const [reading, setReading] = useState(false);
   const [camRead, setCamRead] = useState<CamReadResp | null>(null);
   const [camReadErr, setCamReadErr] = useState(false);
+  // honest "flood watch" overlay: only cameras the user actually read, that returned a gated flood
+  // (likely = daytime + rain-corroborated; possible = uncorroborated). No batch reads, no fabrication.
+  const [floodPins, setFloodPins] = useState<Record<string, "likely" | "possible">>({});
   const closeLive = () => { setLiveCam(null); setLiveOk(false); setCamRead(null); setCamReadErr(false); setReading(false); };
   // reset the AI read whenever the camera changes
   useEffect(() => { setCamRead(null); setCamReadErr(false); setReading(false); }, [liveCam]);
@@ -232,8 +235,16 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
         body: JSON.stringify({ image, camId: liveCam.id, lat: liveCam.lat, lng: liveCam.lng }),
       });
       const d = await r.json();
-      if (r.ok && d.available && d.read) setCamRead(d as CamReadResp);
-      else setCamReadErr(true);
+      if (r.ok && d.available && d.read) {
+        setCamRead(d as CamReadResp);
+        const lvl = (d as CamReadResp).flood?.level;
+        const id = liveCam.id;
+        setFloodPins((p) => {
+          if (lvl === "likely" || lvl === "possible") return { ...p, [id]: lvl };
+          if (!(id in p)) return p;
+          const n = { ...p }; delete n[id]; return n; // a clean re-read clears an old flood pin
+        });
+      } else setCamReadErr(true);
     } catch {
       setCamReadErr(true);
     } finally {
@@ -292,17 +303,23 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
         </Marker>
       ))}
 
-      {/* CCTV cameras */}
-      {showCameras && cameras.map((cm) => (
-        <Marker key={`cam-${cm.id}`} longitude={cm.lng} latitude={cm.lat} anchor="center"
-          onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(null); setSelEvent(null); setSelCam(cm); }}>
-          <span title={cm.title}
-            className="flex h-[24px] w-[24px] cursor-pointer items-center justify-center rounded-full ring-2 ring-white shadow-sm transition-transform hover:scale-110"
-            style={{ background: "#3F6CA8" }}>
-            <span className="leading-none" style={{ fontSize: "12px" }}>📹</span>
-          </span>
-        </Marker>
-      ))}
+      {/* CCTV cameras — a camera the user read that came back with a gated flood gets a 💧 ring */}
+      {showCameras && cameras.map((cm) => {
+        const flood = floodPins[cm.id];
+        return (
+          <Marker key={`cam-${cm.id}`} longitude={cm.lng} latitude={cm.lat} anchor="center"
+            onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(null); setSelEvent(null); setSelCam(cm); }}>
+            <span
+              title={flood === "likely" ? (en ? "AI read: looks like street flooding here — verify on the live camera" : "AI อ่าน: ภาพดูเหมือนน้ำท่วมถนน — เช็คจากกล้องสด") : flood === "possible" ? (en ? "AI read: maybe water on the road — verify" : "AI อ่าน: อาจมีน้ำบนถนน — เช็ค") : cm.title}
+              className="flex h-[24px] w-[24px] cursor-pointer items-center justify-center rounded-full ring-2 ring-white shadow-sm transition-transform hover:scale-110"
+              style={flood
+                ? { background: flood === "likely" ? "#D9534A" : "#E08A3C", boxShadow: `0 0 0 3px ${flood === "likely" ? "rgba(217,83,74,0.35)" : "rgba(224,138,60,0.3)"}` }
+                : { background: "#3F6CA8" }}>
+              <span className="leading-none" style={{ fontSize: "12px" }}>{flood ? "💧" : "📹"}</span>
+            </span>
+          </Marker>
+        );
+      })}
 
       {selEvent && (
         <Popup longitude={selEvent.lng} latitude={selEvent.lat} anchor="bottom" offset={14}
