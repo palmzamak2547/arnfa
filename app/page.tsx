@@ -23,6 +23,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { CookieConsent } from "@/components/CookieConsent";
 import { ChatFab } from "@/components/ChatFab";
 import { Reveal } from "@/components/motion/Reveal";
+import { TatEventsStrip } from "@/components/TatEventsStrip";
 
 // ISR — the home renders a REAL "today's pick" from live forecast; regenerate every 30 min
 // so the Open-Meteo call is cached, not run per request.
@@ -67,6 +68,9 @@ export default function Home() {
 
       {/* §III CLEAREST TODAY — today's REAL live pick + nationwide ranking (self-reveals) */}
       <TodayPick />
+
+      {/* §III½ EVENTS — real festivals & events from TAT (การท่องเที่ยวแห่งประเทศไทย) */}
+      <Reveal><TatEventsStrip /></Reveal>
 
       {/* §IV COVERAGE — the one loud honest number (real POIs) + nationwide reach */}
       <Reveal><CoverageStats /></Reveal>

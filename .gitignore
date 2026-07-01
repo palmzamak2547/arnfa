@@ -47,3 +47,8 @@ vt-out.txt
 shots/
 
 .vercel
+
+# local binaries and large generated data
+/bin/
+/data/poi_embeddings.json
+/scratch/

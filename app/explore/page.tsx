@@ -88,6 +88,7 @@ export default function ExplorePage() {
         </section>
       )}
 
+
       {/* The iconic zones */}
       <section className="arnfa-grid section-minor">
         <div className="col-content">
@@ -96,13 +97,11 @@ export default function ExplorePage() {
             {TOURIST_AREAS.map((a, i) => (
               <Link key={a.key} href={`/plan?y=${a.key}`} className="group af-lift block">
                 <div className="relative aspect-[3/2] overflow-hidden rounded-2xl border border-hairline">
-                  {/* Brand-palette gradient — a neutral non-fabricated visual, NOT a stock photo (Iron Rule 0) */}
                   <div
                     aria-hidden
                     className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                     style={{ background: a.bg }}
                   />
-                  {/* dark bottom scrim so the name reads on any tint */}
                   <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(26,31,43,0.62)]" />
                   <span aria-hidden className="absolute right-3 top-3 text-2xl opacity-80 drop-shadow-[0_1px_4px_rgba(26,31,43,0.5)]">{a.icon}</span>
                   {i === 0 && (
@@ -121,6 +120,12 @@ export default function ExplorePage() {
           </div>
         </div>
       </section>
+
+      {/* ── TAT Events — real festivals & events from การท่องเที่ยวแห่งประเทศไทย ── */}
+      <TatEventsSection lang={lang} tx={tx} />
+
+      {/* ── TAT Routes — recommended travel routes from ททท. ── */}
+      <TatRoutesSection lang={lang} tx={tx} />
 
       {/* Tourist tips — rain backup + partner mobility */}
       <section className="arnfa-grid section-minor">
@@ -145,5 +150,93 @@ export default function ExplorePage() {
       </section>
       <SiteFooter />
     </main>
+  );
+}
+
+// ── TAT Events sub-component ────────────────────────────────────────────────
+type TatEvent = { eventId: number; name: string; introduction: string; startDate: string; endDate: string; thumbnailUrl: string; location: { province: { name: string } } };
+type Tx = (th: string, en: string, zh: string) => string;
+
+function TatEventsSection({ lang, tx }: { lang: string; tx: Tx }) {
+  const [events, setEvents] = useState<TatEvent[]>([]);
+  useEffect(() => {
+    fetch("/api/tat?events=1&limit=6")
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then((d: { events: TatEvent[] }) => setEvents(d.events ?? []))
+      .catch(() => {});
+  }, []);
+  if (events.length === 0) return null;
+  return (
+    <section className="arnfa-grid section-minor">
+      <div className="col-content">
+        <h2 className="mb-5 border-t border-hairline pt-7 font-display text-sm uppercase tracking-[0.2em] text-ink flex items-center gap-2">
+          <span>🎪</span> {tx("งาน/เทศกาลน่าไป", "Events & Festivals", "活动和节日")}
+          <span className="ml-auto font-thai text-[0.65rem] font-normal normal-case tracking-normal text-ink-faint">{tx("ข้อมูลจาก ททท.", "from TAT", "来自TAT")}</span>
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {events.map(ev => {
+            const start = new Date(ev.startDate);
+            const end = new Date(ev.endDate);
+            const fmt = (d: Date) => d.toLocaleDateString(lang === "th" ? "th-TH" : "en-US", { day: "numeric", month: "short" });
+            return (
+              <div key={ev.eventId} className="group overflow-hidden rounded-2xl border border-hairline bg-white/60 shadow-sm hover:shadow transition-shadow">
+                {ev.thumbnailUrl && (
+                  <div className="relative aspect-[16/9] overflow-hidden">
+                    <img src={ev.thumbnailUrl} alt={ev.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    <span className="absolute bottom-2 left-3 rounded-full bg-white/90 px-2.5 py-1 font-thai text-[0.6rem] font-medium text-ink">{ev.location?.province?.name}</span>
+                  </div>
+                )}
+                <div className="p-4">
+                  <h3 className="font-thai text-sm font-semibold text-ink leading-snug line-clamp-2">{ev.name}</h3>
+                  <p className="mt-1 font-thai text-xs text-ink-faint">{fmt(start)} — {fmt(end)}</p>
+                  {ev.introduction && <p className="mt-2 font-thai text-xs text-ink-muted line-clamp-2">{ev.introduction}</p>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── TAT Routes sub-component ────────────────────────────────────────────────
+type TatRoute = { routeId: number; name: string; introduction: string; numberOfDays: number; thumbnailUrl: string; placeImageUrls: string[] };
+
+function TatRoutesSection({ lang, tx }: { lang: string; tx: Tx }) {
+  const [routes, setRoutes] = useState<TatRoute[]>([]);
+  useEffect(() => {
+    fetch("/api/tat?routes=1&limit=4")
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then((d: { routes: TatRoute[] }) => setRoutes(d.routes ?? []))
+      .catch(() => {});
+  }, []);
+  if (routes.length === 0) return null;
+  return (
+    <section className="arnfa-grid section-minor">
+      <div className="col-content">
+        <h2 className="mb-5 border-t border-hairline pt-7 font-display text-sm uppercase tracking-[0.2em] text-ink flex items-center gap-2">
+          <span>🗺️</span> {tx("เส้นทางแนะนำจาก ททท.", "Recommended Routes", "推荐路线")}
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {routes.map(rt => (
+            <div key={rt.routeId} className="group overflow-hidden rounded-2xl border border-hairline bg-white/60 shadow-sm hover:shadow transition-shadow">
+              {rt.thumbnailUrl && (
+                <div className="relative aspect-[21/9] overflow-hidden">
+                  <img src={rt.thumbnailUrl} alt={rt.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  <span className="absolute bottom-2 right-3 rounded-full bg-white/90 px-2.5 py-1 font-thai text-[0.6rem] font-medium text-ink">{rt.numberOfDays} {tx("วัน", "days", "天")}</span>
+                </div>
+              )}
+              <div className="p-4">
+                <h3 className="font-thai text-sm font-semibold text-ink leading-snug line-clamp-2">{rt.name}</h3>
+                {rt.introduction && <p className="mt-1 font-thai text-xs text-ink-muted line-clamp-2">{rt.introduction}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

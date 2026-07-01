@@ -26,10 +26,18 @@ export function sovereignConfigured(): boolean {
 
 export async function sovereignChat(
   messages: ChatMsg[],
-  opts: { maxTokens?: number; temperature?: number; deadlineMs?: number } = {},
+  opts: {
+    maxTokens?: number;
+    temperature?: number;
+    deadlineMs?: number;
+    apiKey?: string;
+    model?: string;
+    baseUrl?: string;
+  } = {},
 ): Promise<string | null> {
-  const base = process.env.THAI_LLM_BASE_URL || DEFAULT_BASE;
-  const key = process.env.THAI_LLM_API_KEY, model = process.env.THAI_LLM_MODEL;
+  const base = opts.baseUrl || process.env.THAI_LLM_BASE_URL || DEFAULT_BASE;
+  const key = opts.apiKey || process.env.THAI_LLM_API_KEY;
+  const model = opts.model || process.env.THAI_LLM_MODEL;
   if (!key || !model) return null;
   // Bound the attempt so a flaky 8B preview can't blow the /api/ask time budget — when it's
   // slow we want to fall straight back to NIM, not 504.

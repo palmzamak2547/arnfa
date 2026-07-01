@@ -59,6 +59,8 @@ import { hopEstimate, hopLabel, routedHopLabel } from "@/lib/plan/transit";
 import { useAuth } from "@/lib/auth/useAuth";
 import { saveTrip, loadCloudTaste, saveCloudTaste } from "@/lib/plan/trips";
 import { DistrictPicker } from "@/components/DistrictPicker";
+import { MlRecommendations } from "@/components/MlRecommendations";
+import { FigmaAddPlaces } from "@/components/FigmaAddPlaces";
 
 const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanMap), {
   ssr: false,
@@ -99,6 +101,20 @@ function PlanInner() {
   const [quizOpen, setQuizOpen] = useState(false);
   const { user } = useAuth();
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved">("idle");
+  const [boostedPoiIds, setBoostedPoiIds] = useState<Set<string>>(new Set());
+
+  // Reset boosted POIs when switching districts to prevent layout errors
+  useEffect(() => {
+    setBoostedPoiIds(new Set());
+  }, [districtKey]);
+
+  function handleToggleBoost(id: string) {
+    setBoostedPoiIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  }
 
   // District POIs load lazily (one chunk per district) so the bundle stays small
   // across all of Bangkok. Centre comes from the registry metadata (mean of the
@@ -247,13 +263,13 @@ function PlanInner() {
 
   const basePlan: BuiltPlan | null = useMemo(() => {
     if (!forecast || !planDistrict) return null;
-    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty });
-  }, [planDistrict, forecast, startHourIndex, budgetMin, center, taste, outdoorPenalty]);
+    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, boostedPoiIds: Array.from(boostedPoiIds) });
+  }, [planDistrict, forecast, startHourIndex, budgetMin, center, taste, outdoorPenalty, boostedPoiIds]);
 
   const rainedPlan: BuiltPlan | null = useMemo(() => {
     if (!forecast || !planDistrict || rainSlot === null) return null;
-    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, forecastOverride: injectRainAt(forecast, rainSlot, 2) });
-  }, [planDistrict, forecast, rainSlot, startHourIndex, budgetMin, center, taste, outdoorPenalty]);
+    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, forecastOverride: injectRainAt(forecast, rainSlot, 2), boostedPoiIds: Array.from(boostedPoiIds) });
+  }, [planDistrict, forecast, rainSlot, startHourIndex, budgetMin, center, taste, outdoorPenalty, boostedPoiIds]);
 
   const activePlan = rainedPlan ?? basePlan;
 
@@ -427,6 +443,26 @@ function PlanInner() {
         </section>
       )}
 
+      {/* ML Recommendations tailored to current weather & category preferences */}
+      <MlRecommendations
+        districtKey={districtKey}
+        sky={forecast?.[startHourIndex]?.sky ?? "clear"}
+        vibes={Array.from(catGroups)}
+        en={en}
+      />
+
+      {/* TAT nearby attractions — real photos from การท่องเที่ยวแห่งประเทศไทย */}
+      <TatNearbyStrip lat={center.lat} lng={center.lng} en={en} />
+
+      {/* Figma-style Interactive Discover & Add Places Section */}
+      <FigmaAddPlaces
+        pois={districtData?.pois ?? []}
+        boostedPoiIds={boostedPoiIds}
+        onToggleBoost={handleToggleBoost}
+        en={en}
+        sky={forecast?.[startHourIndex]?.sky ?? "clear"}
+      />
+
       {/* Results */}
       <section className="arnfa-grid section-minor">
         <div className="col-content">
@@ -589,5 +625,53 @@ export function PlanClient() {
     <Suspense fallback={<div className="min-h-screen" />}>
       <PlanInner />
     </Suspense>
+  );
+}
+
+// ── TAT Nearby Attractions Strip ────────────────────────────────────────────
+type TatPlaceBrief = { placeId: string; name: string; thumbnailUrl: string[]; location: { province: { name: string }; district: { name: string } }; distance?: number };
+
+function TatNearbyStrip({ lat, lng, en }: { lat: number; lng: number; en: boolean }) {
+  const [places, setPlaces] = useState<TatPlaceBrief[]>([]);
+  useEffect(() => {
+    if (!lat || !lng) return;
+    fetch(`/api/tat?lat=${lat}&lng=${lng}&limit=8`)
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then((d: { places: TatPlaceBrief[] }) => {
+        setPlaces((d.places ?? []).filter(p => p.thumbnailUrl?.length > 0));
+      })
+      .catch(() => {});
+  }, [lat, lng]);
+
+  if (places.length === 0) return null;
+
+  return (
+    <section className="arnfa-grid mt-3 mb-1">
+      <div className="col-content">
+        <h3 className="flex items-center gap-2 mb-3 font-display text-[0.7rem] uppercase tracking-[0.2em] text-ink-faint">
+          <span className="text-base">📍</span>
+          {en ? "Nearby attractions (TAT)" : "สถานที่ใกล้เคียงจาก ททท."}
+        </h3>
+        <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: "none" }}>
+          {places.map(p => (
+            <div key={p.placeId} className="snap-start shrink-0 w-[200px] group">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-hairline shadow-sm">
+                <img src={p.thumbnailUrl[0]} alt={p.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                {p.distance != null && (
+                  <span className="absolute top-2 right-2 rounded-full bg-white/90 px-2 py-0.5 font-thai text-[0.55rem] font-medium text-ink">
+                    {p.distance < 1000 ? `${p.distance}m` : `${(p.distance / 1000).toFixed(1)}km`}
+                  </span>
+                )}
+                <div className="absolute inset-x-2 bottom-2">
+                  <p className="font-thai text-xs font-medium text-white leading-tight line-clamp-2 drop-shadow">{p.name}</p>
+                  <p className="font-thai text-[0.55rem] text-white/80 mt-0.5">{p.location?.district?.name}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

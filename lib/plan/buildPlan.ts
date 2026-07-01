@@ -61,13 +61,8 @@ export type PlanOptions = {
   start: { lat: number; lng: number };
   taste?: TasteVector;
   forecastOverride?: HourlyForecast[];
-  /**
-   * 0–1 penalty applied to OUTDOOR places — the safety lever. When PM2.5 or the
-   * heat index is dangerous the page raises this, and a POI's score is scaled by
-   * (1 − outdoorPenalty × outdoorness), so the plan shifts toward indoor venues
-   * (museums, malls, cafés) instead of parks/viewpoints. Indoor POIs are untouched.
-   */
   outdoorPenalty?: number;
+  boostedPoiIds?: string[];
 };
 
 export type EnrichedStop = {
@@ -100,16 +95,20 @@ export function buildPlan(district: SeedDistrict, forecast: HourlyForecast[], op
   // for a fully-indoor POI). This is how "block nature routes → indoor" happens —
   // gradually, by score, not a hard cut.
   const envPenalty = Math.min(1, Math.max(0, opts.outdoorPenalty ?? 0));
+  const boostedSet = new Set(opts.boostedPoiIds ?? []);
 
   const candidates: Candidate[] = district.pois.map((poi) => {
     const envFactor = 1 - envPenalty * poi.profile.outdoorness;
+    const isBoosted = boostedSet.has(poi.id);
+    const boostFactor = isBoosted ? 15.0 : 1.0;
+    
     const scoreAtSlot: Record<number, number> = {};
     for (let i = 0; i < fc.length; i++) {
       const fit = weatherFit(poi.profile, toSlot(fc[i])).fit;
       scoreAtSlot[i] = finalScore({
         interest: taste[poi.category] ?? 0.4,
         fit, isOpenAt: 1, reachable: 1, proximityBoost: 1, confidence: poi.profile.confidence,
-      }) * envFactor;
+      }) * envFactor * boostFactor;
     }
     const travelMin: Record<string, number> = {};
     for (const other of district.pois) {

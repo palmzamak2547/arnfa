@@ -1,27 +1,59 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/lib/i18n/useLang";
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { LogoMark } from "@/components/Logo";
-
+import { StopFeedback } from "@/components/StopFeedback";
+import { RouteTimeline, TransitRoute } from "@/components/RouteTimeline";
 /**
- * /ai — "ถามอ่านฟ้า": the agentic surface. Free-text wish → NVIDIA NIM reads the intent →
+ * /ai — "ถามอ่านฟ้า": the agentic surface. Free-text wish → LLM reads the intent →
  * the REAL engine builds the weather-fit plan → the AI narrates it. Now MULTI-TURN: a
  * follow-up ("เปลี่ยนเป็นพรุ่งนี้", "แล้วถ้าฝนตกล่ะ") PATCHES the prior intent and re-runs the
  * SAME grounded engine — conversation memory, not a free-roaming tool-loop. Iron Rule 0:
  * the cards are always the engine's real output; the model never invents a place or weather.
  */
 const SKY_COLOR: Record<string, string> = {
-  clear: "var(--arnfa-accent-sun)", partly: "var(--arnfa-success)", cloudy: "var(--arnfa-ink-muted)",
-  rain: "var(--arnfa-accent-rain)", storm: "var(--arnfa-accent-indoor-warm)", night: "#4A5878",
+  clear: "var(--arnfa-accent-sun)",
+  partly: "var(--arnfa-success)",
+  cloudy: "var(--arnfa-ink-muted)",
+  rain: "var(--arnfa-accent-rain)",
+  storm: "var(--arnfa-accent-indoor-warm)",
+  night: "#4A5878",
 };
 
-type Stop = { name: string; category: string; sky: string; arrival: string; tempC: number; rainProb: number; reason: string };
+const SKY_EMOJI: Record<string, string> = {
+  clear: "☀️",
+  partly: "⛅",
+  cloudy: "☁️",
+  rain: "🌧️",
+  storm: "⛈️",
+  night: "🌙",
+};
+
+const SKY_LABEL_TH: Record<string, string> = {
+  clear: "ฟ้าเปิด",
+  partly: "โปร่ง",
+  cloudy: "ครึ้ม",
+  rain: "ฝนตกเบา",
+  storm: "ฝนตกหนัก",
+  night: "กลางคืน",
+};
+
+const SKY_LABEL_EN: Record<string, string> = {
+  clear: "Clear",
+  partly: "Fair",
+  cloudy: "Cloudy",
+  rain: "Light Rain",
+  storm: "Heavy Rain",
+  night: "Night",
+};
+
+type Stop = { id: string; name: string; category: string; sky: string; arrival: string; tempC: number; rainProb: number; reason: string; routeFromPrev?: TransitRoute };
 type Intent = { area?: string; day?: number; budget?: number; vibes?: string[] };
-type Resp = { available: boolean; answer: string; plan: { areaTh: string; areaEn: string; dayLabel: string; stops: Stop[] }; intent?: Intent; planUrl: string; provider: string; llm?: string };
+type Resp = { available: boolean; answer: string; plan: { areaKey: string; areaTh: string; areaEn: string; dayLabel: string; stops: Stop[] }; intent?: Intent; planUrl: string; provider: string; llm?: string };
 type Turn = { q: string; resp: Resp | null; error: string };
 
 export default function AiPage() {
@@ -60,8 +92,13 @@ export default function AiPage() {
     setTurns((t) => [...t, { q: message, resp: null, error: "" }]);
     setLoading(true);
     const fail = en ? "Arnfah AI is resting right now — you can still plan directly." : "ตอนนี้ AI ยังไม่พร้อม ลองวางแผนเองที่หน้าวางแผนได้นะ";
+
     try {
-      const r = await fetch("/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message, prior }) });
+      const r = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message, prior }),
+      });
       const d = await r.json();
       setTurns((t) => t.map((turn, i) => (i === idx ? { ...turn, resp: d?.available ? d : null, error: d?.available ? "" : fail } : turn)));
     } catch {
@@ -72,102 +109,196 @@ export default function AiPage() {
   }
 
   return (
-    <main className="relative z-10 min-h-screen">
+    <main className="relative z-10 min-h-screen pb-20">
       <Masthead />
 
-      <section className="arnfa-grid">
-        <div className="col-content max-w-2xl">
-          <div className="flex items-center gap-2.5 mb-2">
-            <LogoMark size={24} />
-            <h1 className="font-thai-serif fs-h2 font-light text-ink">{en ? "Ask Arnfah" : "ถามอ่านฟ้า"}</h1>
+      <section className="arnfa-grid mt-6">
+        <div className="col-content max-w-2xl mx-auto px-4">
+          
+          {/* Header section */}
+          <div className="flex flex-col gap-2 mb-6">
+            <div className="flex items-center gap-2.5">
+              <LogoMark size={28} />
+              <h1 className="font-thai-serif fs-h2 font-light text-ink">{en ? "Ask Arnfah" : "ถามอ่านฟ้า"}</h1>
+            </div>
+            <p className="font-thai text-sm text-ink-muted leading-relaxed max-w-xl">
+              {en 
+                ? "Describe what you want to do (e.g., chill cafe, low PM2.5, skip the rain) — the AI reads current forecast and sets a plan." 
+                : "พิมพ์สไตล์ทริปที่ต้องการ (เช่น คาเฟ่ชิลๆ ฝุ่นน้อย หลบฝน) — AI จะวิเคราะห์ฟ้าจริงแล้วเลือกจุดท่องเที่ยวและสลับในร่ม/กลางแจ้งให้ทันที"}
+            </p>
           </div>
-          <p className="font-thai text-ink-muted mb-7 max-w-xl">
-            {en ? "Say what you feel like doing — the AI reads the real sky and lays out a plan. Then keep chatting: change the day, dodge rain, try another area." : "พิมพ์สิ่งที่อยากทำ แล้ว AI จะอ่านฟ้าจริงแล้วจัดแผนให้ คุยต่อได้เลย เช่น เปลี่ยนวัน เลี่ยงฝน หรือลองย่านอื่น"}
-          </p>
+
+
 
           {/* input */}
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col gap-3 sm:flex-row mb-6">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") ask(); }}
               aria-label={en ? "Ask Arnfah" : "ถามอ่านฟ้า"}
-              placeholder={turns.length ? (en ? "ask a follow-up…" : "ถามต่อได้เลย…") : (en ? "e.g. a chill café tomorrow, dodge the rain" : "เช่น อยากไปคาเฟ่ชิลๆ พรุ่งนี้ เลี่ยงฝน")}
-              className="font-thai h-12 flex-1 rounded-full border border-hairline bg-surface/70 px-5 text-base text-ink outline-none transition-colors focus:border-sun/60"
+              placeholder={turns.length ? (en ? "Ask a follow-up…" : "ถามต่อยอดเพื่อปรับทริปได้เลย…") : (en ? "e.g. a chill café tomorrow, dodge the rain" : "เช่น อยากไปคาเฟ่ชิลๆ พรุ่งนี้บ่าย เลี่ยงฝน")}
+              className="font-thai h-12 flex-1 rounded-full border border-hairline bg-white/80 px-5 text-base text-ink outline-none shadow-sm transition-all focus:border-sun/80 focus:bg-white"
             />
             <button type="button" onClick={() => ask()} disabled={loading || !input.trim()}
-              className="font-thai inline-flex h-12 items-center justify-center rounded-full bg-ink px-7 text-base font-medium text-paper transition-colors hover:bg-ink-muted disabled:opacity-50">
+              className="font-thai inline-flex h-12 items-center justify-center rounded-full bg-ink px-8 text-base font-medium text-paper shadow transition-all hover:bg-ink-muted active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none">
               {loading ? (en ? "Reading…" : "อ่านฟ้า…") : (en ? "Ask" : "ถาม")}
             </button>
           </div>
 
           {/* example chips (only before the first turn) */}
           {turns.length === 0 && !loading && (
-            <div className="mt-5 flex flex-wrap gap-2">
-              {examples.map((ex) => (
-                <button key={ex} type="button" onClick={() => ask(ex)}
-                  className="font-thai rounded-full border border-hairline px-4 py-2 text-sm text-ink-muted transition-colors hover:bg-surface min-h-[44px]">{ex}</button>
-              ))}
+            <div className="mb-8">
+              <span className="font-thai text-xs text-ink-faint block mb-2">{en ? "Recommended queries:" : "คำถามแนะนำเพื่อเริ่มต้น:"}</span>
+              <div className="flex flex-wrap gap-2">
+                <button type="button" onClick={() => ask("แนะนำที่เที่ยวยอดฮิตวันนี้ที่เหมาะกับสภาพอากาศปัจจุบัน")}
+                  className="font-thai text-left rounded-full border border-sun bg-sun/10 px-4 py-2 text-sm text-ink-muted transition-colors hover:bg-sun/20 min-h-[44px] shadow-sm flex items-center gap-2">
+                  <span>✨</span> {en ? "Recommend popular places for today's weather" : "แนะนำที่เที่ยวยอดฮิตตามสภาพอากาศวันนี้"}
+                </button>
+                {examples.map((ex) => (
+                  <button key={ex} type="button" onClick={() => ask(ex)}
+                    className="font-thai text-left rounded-full border border-hairline bg-white/40 px-4 py-2 text-sm text-ink-muted transition-colors hover:bg-white hover:text-ink min-h-[44px] shadow-sm">{ex}</button>
+                ))}
+              </div>
             </div>
           )}
 
           {/* conversation */}
-          <div className="mt-9 space-y-6">
+          <div className="space-y-8">
             {turns.map((turn, ti) => (
               <div key={ti} className="space-y-4">
-                <p className="font-thai ml-auto max-w-[85%] w-fit rounded-3xl rounded-br-lg bg-ink px-5 py-3 text-sm text-paper">{turn.q}</p>
+                
+                {/* User message (Right-aligned pill) */}
+                <div className="flex justify-end">
+                  <p className="font-thai max-w-[85%] rounded-3xl rounded-br-md bg-ink/90 shadow px-5 py-3 text-sm text-paper font-light leading-relaxed">
+                    {turn.q}
+                  </p>
+                </div>
 
+                {/* Loader / Pending state */}
                 {!turn.resp && !turn.error && loading && ti === turns.length - 1 && (
-                  <div className="arnfa-glass rounded-3xl rounded-bl-lg p-5 sm:p-6" style={{ background: "rgba(255,255,255,0.45)" }} aria-busy="true" aria-live="polite">
+                  <div className="arnfa-glass rounded-3xl rounded-bl-md p-5 sm:p-6 border border-hairline shadow-sm" style={{ background: "rgba(255,255,255,0.65)" }} aria-busy="true" aria-live="polite">
                     <p className="font-thai flex items-center gap-2 text-sm text-ink-faint">
-                      <span className="af-blink h-2 w-2 rounded-full bg-sun" />{en ? "Arnfah is reading the sky and planning…" : "อ่านฟ้ากำลังคิดแผนให้…"}
+                      <span className="af-blink h-2 w-2 rounded-full bg-sun shrink-0 animate-ping" />
+                      {en ? "Arnfah is reading the sky and planning…" : "อ่านฟ้ากำลังส่องสภาพอากาศและวิเคราะห์สถานที่…"}
                     </p>
-                    {/* skeleton matching the answer + stop rows (no layout jump when the real card lands) */}
                     <div className="mt-4 space-y-2">
                       <span className="block h-3 w-[92%] rounded bg-ink/10 animate-pulse" />
                       <span className="block h-3 w-[74%] rounded bg-ink/10 animate-pulse" />
                     </div>
-                    <ul className="mt-5 space-y-2.5">
+                    <div className="mt-6 pl-4 border-l border-ink/10 space-y-4">
                       {[0, 1, 2].map((i) => (
-                        <li key={i} className="flex items-center gap-3">
-                          <span className="h-6 w-6 shrink-0 rounded-full bg-ink/10 animate-pulse" />
-                          <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-ink/10" />
-                          <span className="h-3 flex-1 rounded bg-ink/10 animate-pulse" style={{ maxWidth: `${70 - i * 12}%` }} />
-                        </li>
+                        <div key={i} className="flex items-center gap-3">
+                          <span className="h-5 w-5 shrink-0 rounded-full bg-ink/10 animate-pulse" />
+                          <span className="h-3 flex-1 rounded bg-ink/10 animate-pulse" style={{ maxWidth: `${65 - i * 15}%` }} />
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 )}
-                {turn.error && <p className="font-thai arnfa-glass rounded-3xl px-5 py-4 text-sm text-ink-muted" style={{ background: "rgba(255,255,255,0.4)" }}>{turn.error} <Link href="/plan" className="text-rain hover:underline">{en ? "Plan →" : "วางแผนเอง →"}</Link></p>}
 
+                {/* Error message */}
+                {turn.error && (
+                  <p className="font-thai border border-indoor-warm/20 bg-indoor-warm/5 rounded-3xl px-5 py-4 text-sm text-ink-muted leading-relaxed" style={{ background: "rgba(255,255,255,0.4)" }}>
+                    ⚠️ {turn.error} <Link href="/plan" className="text-rain font-semibold hover:underline">{en ? "Plan →" : "เปิดตัวช่วยวางแผนโดยตรง →"}</Link>
+                  </p>
+                )}
+
+                {/* AI response content */}
                 {turn.resp && (
-                  <div className="arnfa-glass rounded-3xl rounded-bl-lg p-5 sm:p-6" style={{ background: "rgba(255,255,255,0.45)" }}>
-                    <p className="font-thai text-ink leading-relaxed">{turn.resp.answer}</p>
+                  <div className="arnfa-glass rounded-3xl rounded-bl-md border border-hairline p-5 sm:p-6 shadow-sm overflow-hidden" style={{ background: "rgba(255,255,255,0.68)" }}>
+                    
+                    {/* Chat Text Answer */}
+                    <p className="font-thai text-ink text-sm sm:text-base leading-relaxed tracking-wide mb-6">
+                      {turn.resp.answer}
+                    </p>
+
+                    {/* Timeline Plan */}
                     {turn.resp.plan.stops.length > 0 && (
-                      <ol className="mt-5 space-y-2.5">
-                        {turn.resp.plan.stops.map((s, i) => (
-                          <li key={i} className="flex items-center gap-3">
-                            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-ink text-paper text-xs font-semibold">{i + 1}</span>
-                            <span className="inline-block h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: SKY_COLOR[s.sky] ?? "var(--arnfa-ink-muted)" }} aria-hidden />
-                            <span className="font-thai min-w-0 flex-1 truncate text-sm text-ink">{s.name}</span>
-                            <span className="font-thai shrink-0 text-xs text-ink-faint tabular-nums">~{s.arrival}, {s.tempC}°, {en ? "rain" : "ฝน"} {s.rainProb}%</span>
-                          </li>
-                        ))}
-                      </ol>
+                      <div className="relative pl-6 sm:pl-8 border-l border-ink/10 space-y-6 my-6">
+                        
+                        {/* Vertical line indicator */}
+                        <div className="absolute left-0 top-3 bottom-3 w-[1px] bg-gradient-to-b from-sun via-rain to-success opacity-40" />
+
+                        {turn.resp.plan.stops.map((s, i) => {
+                          const weatherColor = SKY_COLOR[s.sky] ?? "var(--arnfa-ink-muted)";
+                          const weatherEmoji = SKY_EMOJI[s.sky] ?? "❓";
+                          const weatherLabel = en ? SKY_LABEL_EN[s.sky] ?? s.sky : SKY_LABEL_TH[s.sky] ?? s.sky;
+                          
+                          return (
+                            <React.Fragment key={i}>
+                              {s.routeFromPrev && (
+                                <div className="mb-6 -mt-2">
+                                  <RouteTimeline route={s.routeFromPrev} />
+                                </div>
+                              )}
+                              <div className="relative group mb-6">
+                                {/* Step dot marker */}
+                                <div 
+                                  className="absolute -left-[30px] sm:-left-[38px] top-1 flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-full bg-white border shadow-sm transition-transform group-hover:scale-110 z-10"
+                                  style={{ borderColor: weatherColor }}
+                                >
+                                  <span className="text-[0.65rem] font-bold text-ink-muted">{i + 1}</span>
+                                </div>
+  
+                                <div className="bg-white/80 rounded-2xl border border-hairline p-4 shadow-sm hover:shadow transition-shadow z-10 relative">
+                                  <div className="flex flex-wrap items-start justify-between gap-2 mb-1.5">
+                                    <div>
+                                      <h3 className="font-thai font-semibold text-sm sm:text-base text-ink pr-2">{s.name}</h3>
+                                      <span className="inline-block rounded-full bg-ink/5 px-2 py-0.5 font-thai text-[0.65rem] text-ink-muted mt-0.5">
+                                        {s.category}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5 shrink-0 bg-surface border border-hairline rounded-full px-2 py-0.5">
+                                      <span className="text-xs" title={weatherLabel}>{weatherEmoji}</span>
+                                      <span className="font-thai text-[0.7rem] font-medium text-ink-muted">{s.arrival} · {s.tempC}°</span>
+                                      {s.rainProb > 15 ? (
+                                        <span className="font-thai text-[0.7rem] font-medium text-rain pl-1 border-l border-hairline">
+                                          ☔ {s.rainProb}%
+                                        </span>
+                                      ) : null}
+                                    </div>
+                                  </div>
+  
+                                  {s.reason && (
+                                    <p className="font-thai text-xs text-ink-muted bg-surface/50 border-l-2 border-hairline px-2.5 py-1.5 my-2.5 rounded-r-md leading-relaxed">
+                                      💡 {s.reason}
+                                    </p>
+                                  )}
+  
+                                  {/* Flywheel Feedback Loop integrated directly on each Stop Card */}
+                                  <div className="border-t border-hairline/40 pt-2.5 mt-2.5">
+                                    <StopFeedback
+                                      poiId={s.id}
+                                      skyState={s.sky as any}
+                                      rainProb={s.rainProb / 100}
+                                      district={turn.resp.plan.areaKey}
+                                      en={en}
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </React.Fragment>
+                          );
+                        })}
+                      </div>
                     )}
-                    <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
-                      <Link href={turn.resp.planUrl} className="font-thai inline-flex h-10 items-center rounded-full bg-ink px-5 text-sm text-paper transition-colors hover:bg-ink-muted">
-                        {en ? `Open the full plan for ${turn.resp.plan.areaEn} →` : `เปิดแผนเต็มของ${turn.resp.plan.areaTh} →`}
+
+                    {/* Quick links & Data provenance metadata */}
+                    <div className="mt-6 pt-5 border-t border-hairline/80 flex flex-wrap items-center gap-x-4 gap-y-3">
+                      <Link href={turn.resp.planUrl} className="font-thai inline-flex h-10 items-center justify-center rounded-full bg-ink px-6 text-sm font-medium text-paper transition-all hover:bg-ink-muted active:scale-[0.98] shadow-sm">
+                        {en ? `Open the full plan for ${turn.resp.plan.areaEn} →` : `เปิดแผนแบบแผนที่เต็มของ${turn.resp.plan.areaTh} →`}
                       </Link>
+                      
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="font-thai text-[0.7rem] text-ink-faint">{en ? "🔎 grounded on" : "🔎 อ้างอิงจริง"}</span>
+                        <span className="font-thai text-[0.68rem] text-ink-faint">{en ? "🔎 grounded on:" : "🔎 อ้างอิงแหล่งข้อมูลจริง:"}</span>
                         {[
-                          `${en ? "forecast" : "ฟ้า"} ${turn.resp.provider || "Open-Meteo"}`,
-                          `${turn.resp.plan.stops.length} ${en ? "real POIs OSM" : "สถานที่จริง OSM"}`,
+                          `${en ? "forecast" : "สภาพอากาศ"} ${turn.resp.provider || "Open-Meteo"}`,
+                          `${turn.resp.plan.stops.length} ${en ? "OSM POIs" : "จุดท่องเที่ยวจริง OSM"}`,
                           en ? `area ${turn.resp.plan.areaEn}` : `ย่าน${turn.resp.plan.areaTh}`,
                           turn.resp.plan.dayLabel,
                         ].filter(Boolean).map((c, ci) => (
-                          <span key={ci} className="rounded-full border border-hairline px-2 py-0.5 font-thai text-[0.65rem] text-ink-muted">{c}</span>
+                          <span key={ci} className="rounded-full border border-hairline bg-surface/50 px-2 py-0.5 font-thai text-[0.62rem] text-ink-muted">{c}</span>
                         ))}
                       </div>
                     </div>
@@ -178,22 +309,35 @@ export default function AiPage() {
 
             {/* follow-up suggestions after the latest plan */}
             {lastResp && !loading && (
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="font-thai text-xs text-ink-faint">{en ? "keep going:" : "คุยต่อ:"}</span>
-                {followUps.map((f) => (
-                  <button key={f} type="button" onClick={() => ask(f)}
-                    className="font-thai rounded-full border border-hairline px-3.5 py-1.5 text-sm text-ink-muted transition-colors hover:bg-surface min-h-[44px]">{f}</button>
-                ))}
-                <button type="button" onClick={() => setTurns([])} className="font-thai text-sm text-rain hover:underline ml-1">{en ? "start over" : "เริ่มใหม่"}</button>
+              <div className="flex flex-col gap-2 pt-2 animate-fadeIn">
+                <span className="font-thai text-xs text-ink-faint">{en ? "Keep chatting or refine plan:" : "คุยรายละเอียดต่อยอดทริปนี้:"}</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  {followUps.map((f) => (
+                    <button key={f} type="button" onClick={() => ask(f)}
+                      className="font-thai rounded-full border border-hairline bg-white/40 px-4 py-1.5 text-sm text-ink-muted transition-all hover:bg-white hover:text-ink min-h-[44px] shadow-sm">{f}</button>
+                  ))}
+                  <button type="button" onClick={() => setTurns([])} className="font-thai text-sm font-semibold text-rain hover:underline ml-2 min-h-[44px] px-3">
+                    {en ? "start over" : "เริ่มแผนใหม่"}
+                  </button>
+                </div>
               </div>
             )}
           </div>
 
-          <p className="font-thai text-[0.7rem] text-ink-faint mt-10">
-            {lastResp?.llm === "thai-sovereign"
-              ? (en ? "Powered by a Thai-sovereign LLM — narrates Arnfah's real engine output only; never invents a place or the weather." : "ขับเคลื่อนด้วย Thai-LLM (อธิปไตย AI) — เล่าเฉพาะแผนจริงจาก engine ของอ่านฟ้า ไม่แต่งสถานที่หรือสภาพอากาศเอง")
-              : (en ? "Powered by NVIDIA NIM + Nemotron (Thai-LLM ready) — narrates Arnfah's real engine output only; never invents a place or the weather." : "ขับเคลื่อนด้วย NVIDIA NIM + Nemotron (พร้อมรองรับ Thai-LLM) — เล่าเฉพาะแผนจริงจาก engine ของอ่านฟ้า ไม่แต่งสถานที่หรือสภาพอากาศเอง")}
-          </p>
+          {/* Model info watermark */}
+          <div className="border-t border-hairline mt-12 pt-4 flex items-center justify-between gap-4">
+            <p className="font-thai text-[0.65rem] text-ink-faint leading-relaxed max-w-[80%]">
+              {lastResp?.llm === "thai-sovereign"
+                ? (en ? "Powered by Thai-LLM (Sovereign mode) — narrates Arnfah's real weather-fit plan outputs only; never invents places." : "รันด้วย Thai-LLM (อธิปไตย AI) — บรรยายข้อมูลจริงจากระบบคำนวณของอ่านฟ้า ไม่สร้างแผนปลอมเอง")
+                : (en ? "Powered by NVIDIA NIM (Nemotron/DeepSeek) — narrates Arnfah's real weather-fit plan outputs only; never invents places." : "รันด้วย NVIDIA NIM + Nemotron — บรรยายข้อมูลจริงจากระบบคำนวณของอ่านฟ้า ไม่สร้างแผนปลอมเอง")}
+            </p>
+            {lastResp?.llm === "thai-sovereign" ? (
+              <span className="shrink-0 bg-success/10 border border-success/30 text-success text-[0.62rem] font-bold tracking-wider uppercase px-2 py-0.5 rounded">
+                SOVEREIGN AI
+              </span>
+            ) : null}
+          </div>
+
         </div>
       </section>
       <SiteFooter />

@@ -1,25 +1,38 @@
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
-import { Noto_Serif_Thai, Newsreader, Anuphan, Inter } from "next/font/google";
+import { Newsreader, Anuphan, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ClientShell } from "@/components/ClientShell";
 
 /*
  * Type system — "Tricolor Editorial" (research-locked 2026-05-31).
- * Thai serif headline = the editorial unlock (Bangkok broadsheet, not weather widget).
- * All four are Google Fonts + SIL-OFL → zero license risk for the hackathon.
- *   - Noto Serif Thai : Thai serif headlines — readable, correctly-positioned tone
- *     marks (วรรณยุกต์). Replaces Trirong, whose high-contrast hairline marks at
- *     light weights read as spindly/odd. Min weight 400 (no thin 300 headlines).
+ * Thai serif headline = local Sao Chingcha font (from BMA).
+ *   - Sao Chingcha: Local Thai serif display font.
  *   - Newsreader: Latin serif, optical-size, display + editorial body
  *   - Anuphan   : Thai sans, UI + body
  *   - Inter     : Latin sans, UI
  */
 
-const notoSerifThai = Noto_Serif_Thai({
+const saoChingcha = localFont({
+  src: [
+    {
+      path: "../public/fonts/SaoChingcha-Light.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/SaoChingcha-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/SaoChingcha-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-display-th",
-  subsets: ["thai", "latin"],
-  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -120,7 +133,7 @@ export default async function RootLayout({
   return (
     <html
       lang={initialLocale}
-      className={`${notoSerifThai.variable} ${newsreader.variable} ${anuphan.variable} ${inter.variable} h-full antialiased`}
+      className={`${saoChingcha.variable} ${newsreader.variable} ${anuphan.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col relative">
         <script
