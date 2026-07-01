@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
     if (scores.length === 0) {
       const recommender = new TfIdfRecommender();
       for (const p of district.pois) {
-        const text = `${p.name} ${p.category} ${p.th || p.en || ""}`;
+        const text = `${p.name} ${p.category} ${p.nameTh || ""}`;
         recommender.addDocument(p.id, text);
       }
       recommender.build();

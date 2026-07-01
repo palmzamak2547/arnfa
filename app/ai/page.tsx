@@ -272,7 +272,7 @@ export default function AiPage() {
                                       poiId={s.id}
                                       skyState={s.sky as any}
                                       rainProb={s.rainProb / 100}
-                                      district={turn.resp.plan.areaKey}
+                                      district={turn.resp?.plan.areaKey ?? ""}
                                       en={en}
                                     />
                                   </div>

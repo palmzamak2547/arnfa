@@ -16,6 +16,7 @@ import {
 } from "@/lib/plan/buildPlan";
 import { DISTRICT_KEYS, districtMeta, loadDistrict } from "@/lib/poi/districts";
 import type { HourlyForecast } from "@/lib/weather/types";
+import { skyStateFrom, type SkyState } from "@/lib/core/skyState";
 import { injectRainAt } from "@/lib/plan/rainInject";
 import { decodePlanState, encodePlanState, DEFAULT_PLAN_STATE } from "@/lib/plan/shareState";
 import { availableDays, startIndexForDay } from "@/lib/plan/days";
@@ -273,6 +274,14 @@ function PlanInner() {
 
   const activePlan = rainedPlan ?? basePlan;
 
+  // current sky at the trip's start hour — HourlyForecast has no `.sky`, it's a derived state
+  const nowSky: SkyState = useMemo(() => {
+    const f = forecast?.[startHourIndex];
+    if (!f) return "clear";
+    const h = new Date(f.hourISO).getHours();
+    return skyStateFrom({ rainProb: f.rainProb, rainIntensity: f.rainIntensity, cloudCover: f.cloudCover, isNight: h < 6 || h >= 19 });
+  }, [forecast, startHourIndex]);
+
   // Upgrade the displayed hops to EXACT OpenRouteService walking times when an ORS key is
   // configured (dormant otherwise — the road-realistic estimate stays). Keyed by the index
   // of the stop the hop leads INTO.
@@ -446,7 +455,7 @@ function PlanInner() {
       {/* ML Recommendations tailored to current weather & category preferences */}
       <MlRecommendations
         districtKey={districtKey}
-        sky={forecast?.[startHourIndex]?.sky ?? "clear"}
+        sky={nowSky}
         vibes={Array.from(catGroups)}
         en={en}
       />
@@ -460,7 +469,7 @@ function PlanInner() {
         boostedPoiIds={boostedPoiIds}
         onToggleBoost={handleToggleBoost}
         en={en}
-        sky={forecast?.[startHourIndex]?.sky ?? "clear"}
+        sky={nowSky}
       />
 
       {/* Results */}
