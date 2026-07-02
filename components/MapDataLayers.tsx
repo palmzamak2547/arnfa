@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Marker, Source, Layer, Popup } from "react-map-gl/maplibre";
 import { SYSTEM_META } from "@/lib/data/transitStations";
+import type { TransitGraphNode, TransitGraphEdge } from "@/lib/data/transitGraph";
 import { AIR_COLOR, AIR_LABEL_TH, airFreshness } from "@/lib/air/air4thai";
 import { CamLive, type CamHandle } from "./CamLive";
 import { WATER_CAMS, egatImageUrl, type WaterCam } from "@/lib/cameras/egat";
@@ -28,7 +29,7 @@ const TOD_L: Record<string, [string, string]> = { day: ["กลางวัน",
  * Rendered as a child of react-map-gl's <Map>, so Marker/Source/Layer get the map via context.
  */
 
-export type MapLayerKey = "rain" | "traffic" | "events" | "cameras" | "watercam" | "air" | "rail" | "parks" | "cooling" | "rest";
+export type MapLayerKey = "rain" | "traffic" | "events" | "cameras" | "watercam" | "air" | "transit" | "parks" | "cooling" | "rest";
 
 /** Traffic tiles are served by the same-origin /api/traffic-tile proxy, which holds the Longdo
  *  key server-side (never shipped to the browser). The client only needs to know it's enabled —
@@ -46,7 +47,7 @@ const ALL_LAYERS: { key: MapLayerKey; th: string; en: string; emoji: string; col
   { key: "air", th: "ฝุ่น PM2.5", en: "PM2.5", emoji: "💨", color: "#E08A3C", group: "sky" },
   { key: "watercam", th: "กล้องเขื่อน", en: "Dam cams", emoji: "💧", color: "#2E7D9A", group: "sky" },
   // เดินทาง
-  { key: "rail", th: "รถไฟฟ้า", en: "Trains", emoji: "🚉", color: "#1964B7", group: "move" },
+  { key: "transit", th: "โครงข่ายขนส่ง", en: "Transit Net", emoji: "🚇", color: "#3aa537", group: "move" },
   { key: "rest", th: "จุดพักรถ", en: "Rest stops", emoji: "🛣️", color: "#7C6F5A", group: "move" },
   // ที่พึ่งพิง
   { key: "parks", th: "สวน", en: "Parks", emoji: "🌳", color: "#5E8C61", group: "refuge" },
@@ -102,8 +103,7 @@ function usePointLayer(show: boolean, url: string, mapFn: (d: unknown) => Pt[]):
   return show && forUrl === url ? pts : [];
 }
 
-const stripSys = (n: string) => (n || "").replace(/^(BTS|MRT|ARL|SRT|Airport Rail)\s+/i, "");
-const railFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({ lat: s.lat, lng: s.lng, label: stripSys(s.th || s.en || ""), subTh: s.system, subEn: s.system, color: SYSTEM_META[s.system]?.color ?? "#1964B7", emoji: "🚉" }));
+
 const restFn = (d: any): Pt[] => (d.areas ?? []).map((a: any) => ({ lat: a.lat, lng: a.lng, label: a.name, subTh: `ทล. ${a.route}`, subEn: `Hwy ${a.route}`, color: "#7C6F5A", emoji: "🛣️" }));
 const coolFn = (d: any): Pt[] => (d.centers ?? []).map((c: any) => ({ lat: c.lat, lng: c.lng, label: c.name, subTh: c.district ?? "", subEn: c.district ?? "", color: "#3B82C4", emoji: "❄️" }));
 const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => {
@@ -116,10 +116,65 @@ const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => {
 
 export function MapDataLayers({ center, active, routePresent, en, underId }: { center: { lat: number; lng: number }; active: Set<MapLayerKey>; routePresent: boolean; en: boolean; underId?: string }) {
   const c = `lat=${center.lat}&lng=${center.lng}`;
-  const rail = usePointLayer(active.has("rail"), `/api/transit?${c}&n=8`, railFn);
   const rest = usePointLayer(active.has("rest"), `/api/rest-areas?${c}&n=6`, restFn);
   const cooling = usePointLayer(active.has("cooling"), `/api/cooling?${c}&n=8`, coolFn);
   const air = usePointLayer(active.has("air"), `/api/air/nearby?${c}&n=10`, airFn);
+
+  // Transit Graph (Full network: rail + bus)
+  const [transitData, setTransitData] = useState<{ nodes: TransitGraphNode[]; edges: TransitGraphEdge[] } | null>(null);
+  const showTransit = active.has("transit");
+  useEffect(() => {
+    if (!showTransit) {
+      setTransitData(null);
+      return;
+    }
+    let cancelled = false;
+    // Note: transit-graph returns the entire city network, so we don't need to pass lat/lng/n
+    fetch("/api/transit-graph")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => {
+        if (!cancelled && d.nodes && d.edges) setTransitData({ nodes: d.nodes, edges: d.edges });
+      })
+      .catch(() => { if (!cancelled) setTransitData(null); });
+    return () => { cancelled = true; };
+  }, [showTransit]);
+
+  const transitEdgesGeoJSON = useMemo(() => {
+    if (!transitData) return null;
+    const nodeIndex = new Map(transitData.nodes.map((n) => [n.id, n]));
+    const features = transitData.edges
+      .map((e) => {
+        const s = nodeIndex.get(e.source);
+        const t = nodeIndex.get(e.target);
+        if (!s || !t) return null;
+        return {
+          type: "Feature" as const,
+          geometry: { type: "LineString" as const, coordinates: [[s.lng, s.lat], [t.lng, t.lat]] },
+          properties: { system: e.system },
+        };
+      })
+      .filter(Boolean);
+    return { type: "FeatureCollection" as const, features };
+  }, [transitData]);
+
+  const transitNodesGeoJSON = useMemo(() => {
+    if (!transitData) return null;
+    return {
+      type: "FeatureCollection" as const,
+      features: transitData.nodes.map((n) => ({
+        type: "Feature" as const,
+        geometry: { type: "Point" as const, coordinates: [n.lng, n.lat] },
+        properties: {
+          id: n.id,
+          nameEn: n.nameEn,
+          nameTh: n.nameTh,
+          system: n.system,
+          color: SYSTEM_META[n.system]?.color ?? (n.system === "BMTA" ? "#FACC15" : "#6B7280"),
+          emoji: n.system === "BMTA" ? "🚌" : "🚉",
+        },
+      })),
+    };
+  }, [transitData]);
 
   // Parks: the endpoint returns all official parks → keep the 12 nearest to the area.
   const [parks, setParks] = useState<Pt[]>([]);
@@ -365,6 +420,51 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
           </span>
         </Marker>
       ))}
+
+      {/* Transit Graph Sources & Layers */}
+      {transitEdgesGeoJSON && (
+        <Source id="transit-edges" type="geojson" data={transitEdgesGeoJSON}>
+          <Layer
+            id="transit-edges-layer"
+            type="line"
+            beforeId={underId}
+            paint={{
+              "line-color": [
+                "match", ["get", "system"],
+                "BTS", "#3aa537",
+                "MRT", "#1964B7",
+                "ARL", "#C8102E",
+                "SRT", "#A6192E",
+                "BRT", "#F97316",
+                "BMTA", "#CA8A04",
+                "#9CA3AF",
+              ],
+              "line-width": 1.2,
+              "line-opacity": 0.5,
+            }}
+          />
+        </Source>
+      )}
+      {transitNodesGeoJSON && (
+        <Source id="transit-nodes" type="geojson" data={transitNodesGeoJSON}>
+          <Layer
+            id="transit-nodes-layer"
+            type="circle"
+            beforeId={underId}
+            paint={{
+              "circle-color": ["get", "color"],
+              "circle-radius": [
+                "interpolate", ["linear"], ["zoom"],
+                10, 2.5,
+                14, 5,
+              ],
+              "circle-stroke-width": 1,
+              "circle-stroke-color": "#ffffff",
+              "circle-opacity": 0.9,
+            }}
+          />
+        </Source>
+      )}
 
       {selEvent && (
         <Popup longitude={selEvent.lng} latitude={selEvent.lat} anchor="bottom" offset={14}

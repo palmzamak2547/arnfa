@@ -70,11 +70,6 @@ const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanM
   loading: () => <div className="h-full w-full rounded-3xl border border-hairline bg-surface/60 animate-pulse" />,
 });
 
-const TransitGraphMap = dynamic(() => import("@/components/TransitGraphMap").then((m) => m.TransitGraphMap), {
-  ssr: false,
-  loading: () => <div className="h-72 sm:h-96 w-full rounded-3xl border border-hairline bg-surface/60 animate-pulse mt-4" />,
-});
-
 const BUDGETS = [
   { th: "แวบเดียว", en: "Quick", min: 150 },
   { th: "ครึ่งวัน", en: "Half day", min: 240 },
@@ -822,7 +817,6 @@ function PlanInner() {
                 )}
                 <div className="mt-6 space-y-4">
                   <TransitNearby lat={center.lat} lng={center.lng} />
-                  <TransitGraphMap lat={center.lat} lng={center.lng} />
                   <GoThere districtKey={districtKey} areaTh={districtTh} areaEn={districtEn} stayIn={outdoorPenalty > 0.25} />
                   {/* Rest stops are a road-trip thing → only for drive-to destinations, not walkable city areas */}
                   {(meta?.tier === "province" || meta?.tier === "spot") && <RestAreasNearby lat={center.lat} lng={center.lng} />}
