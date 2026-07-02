@@ -148,7 +148,7 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
           </Source>
         )}
 
-        <MapDataLayers center={center} active={layers} routePresent={routeLayerPresent} en={en} />
+        <MapDataLayers center={center} active={layers} routePresent={routeLayerPresent} en={en} stops={stops} />
 
         {stops.slice(0, shownMarkers).map((stop, i) => {
           const active = selected?.poi.id === stop.poi.id;

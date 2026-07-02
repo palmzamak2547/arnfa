@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import { Marker, Source, Layer, Popup } from "react-map-gl/maplibre";
 import { SYSTEM_META } from "@/lib/data/transitStations";
 import type { TransitGraphNode, TransitGraphEdge } from "@/lib/data/transitGraph";
+import type { EnrichedStop } from "@/lib/plan/buildPlan";
 import { AIR_COLOR, AIR_LABEL_TH, airFreshness } from "@/lib/air/air4thai";
 import { CamLive, type CamHandle } from "./CamLive";
 import { WATER_CAMS, egatImageUrl, type WaterCam } from "@/lib/cameras/egat";
@@ -114,7 +115,7 @@ const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => {
   return { lat: s.lat, lng: s.lng, label: s.stationNameTh, subTh: s.pm25 != null ? `PM2.5 ${s.pm25} ${AIR_LABEL_TH[s.level as keyof typeof AIR_LABEL_TH] ?? ""}${staleTh}` : "ไม่มีข้อมูล", subEn: s.pm25 != null ? `PM2.5 ${s.pm25} µg/m³${staleEn}` : "no data", color: AIR_COLOR[s.level as keyof typeof AIR_COLOR] ?? "#9AA0A6", emoji: "💨" };
 });
 
-export function MapDataLayers({ center, active, routePresent, en, underId }: { center: { lat: number; lng: number }; active: Set<MapLayerKey>; routePresent: boolean; en: boolean; underId?: string }) {
+export function MapDataLayers({ center, active, routePresent, en, underId, stops }: { center: { lat: number; lng: number }; active: Set<MapLayerKey>; routePresent: boolean; en: boolean; underId?: string; stops?: EnrichedStop[] }) {
   const c = `lat=${center.lat}&lng=${center.lng}`;
   const rest = usePointLayer(active.has("rest"), `/api/rest-areas?${c}&n=6`, restFn);
   const cooling = usePointLayer(active.has("cooling"), `/api/cooling?${c}&n=8`, coolFn);
@@ -139,9 +140,22 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
     return () => { cancelled = true; };
   }, [showTransit]);
 
+  // Filter nodes to only those within 2.5 km of ANY stop in the plan (or center if empty)
+  const filteredNodes = useMemo(() => {
+    if (!transitData) return [];
+    // 2.5 km is ~0.0225 degrees. Squared is ~0.0005
+    const isNearRoute = (lat: number, lng: number) => {
+      if (stops && stops.length > 0) {
+        return stops.some(s => dist2(lat, lng, s.poi.lat, s.poi.lng) < 0.0005);
+      }
+      return dist2(lat, lng, center.lat, center.lng) < 0.0005;
+    };
+    return transitData.nodes.filter(n => isNearRoute(n.lat, n.lng));
+  }, [transitData, stops, center]);
+
   const transitEdgesGeoJSON = useMemo(() => {
-    if (!transitData) return null;
-    const nodeIndex = new Map(transitData.nodes.map((n) => [n.id, n]));
+    if (filteredNodes.length === 0 || !transitData) return null;
+    const nodeIndex = new Map(filteredNodes.map((n) => [n.id, n]));
     const features = transitData.edges
       .map((e) => {
         const s = nodeIndex.get(e.source);
@@ -155,13 +169,13 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
       })
       .filter(Boolean);
     return { type: "FeatureCollection" as const, features };
-  }, [transitData]);
+  }, [transitData, filteredNodes]);
 
   const transitNodesGeoJSON = useMemo(() => {
-    if (!transitData) return null;
+    if (filteredNodes.length === 0) return null;
     return {
       type: "FeatureCollection" as const,
-      features: transitData.nodes.map((n) => ({
+      features: filteredNodes.map((n) => ({
         type: "Feature" as const,
         geometry: { type: "Point" as const, coordinates: [n.lng, n.lat] },
         properties: {
@@ -174,7 +188,7 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
         },
       })),
     };
-  }, [transitData]);
+  }, [filteredNodes]);
 
   // Parks: the endpoint returns all official parks → keep the 12 nearest to the area.
   const [parks, setParks] = useState<Pt[]>([]);
