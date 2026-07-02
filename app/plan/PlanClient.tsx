@@ -13,7 +13,9 @@ import {
   type SeedDistrict,
   type BuiltPlan,
   type TasteVector,
+  type TrafficIncidentData,
 } from "@/lib/plan/buildPlan";
+import { selectTravelMode, type TravelerProfile } from "@/lib/ml/travelModeChoice";
 import { DISTRICT_KEYS, districtMeta, loadDistrict } from "@/lib/poi/districts";
 import type { HourlyForecast } from "@/lib/weather/types";
 import { skyStateFrom, type SkyState } from "@/lib/core/skyState";
@@ -39,6 +41,7 @@ import { BmaGreenSpaces } from "@/components/BmaGreenSpaces";
 import { CoolingNearby } from "@/components/CoolingNearby";
 import { SkyTimeline } from "@/components/SkyTimeline";
 import { TransitNearby } from "@/components/TransitNearby";
+import { TransitGraphMap } from "@/components/TransitGraphMap";
 import { RestAreasNearby } from "@/components/RestAreasNearby";
 import { CityReports } from "@/components/CityReports";
 import { GoThere } from "@/components/GoThere";
@@ -103,6 +106,25 @@ function PlanInner() {
   const { user } = useAuth();
   const [saveState, setSaveState] = useState<"idle" | "saving" | "saved">("idle");
   const [boostedPoiIds, setBoostedPoiIds] = useState<Set<string>>(new Set());
+  const [trafficIncidents, setTrafficIncidents] = useState<TrafficIncidentData[]>([]);
+  const [travelerForm, setTravelerForm] = useState({ age: 30, female: 0, license: 1, car: 0 });
+  const [mlModes, setMlModes] = useState<Record<number, string>>({});
+  const [mlModesLoading, setMlModesLoading] = useState(false);
+  const [isMlModelEnabled, setIsMlModelEnabled] = useState(false);
+
+  // Fetch live traffic incidents
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/traffic-ml")
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => {
+        if (!cancelled && Array.isArray(d.incidents)) {
+          setTrafficIncidents(d.incidents);
+        }
+      })
+      .catch(() => {});
+    return () => { cancelled = true; };
+  }, []);
 
   // Reset boosted POIs when switching districts to prevent layout errors
   useEffect(() => {
@@ -264,13 +286,13 @@ function PlanInner() {
 
   const basePlan: BuiltPlan | null = useMemo(() => {
     if (!forecast || !planDistrict) return null;
-    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, boostedPoiIds: Array.from(boostedPoiIds) });
-  }, [planDistrict, forecast, startHourIndex, budgetMin, center, taste, outdoorPenalty, boostedPoiIds]);
+    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, boostedPoiIds: Array.from(boostedPoiIds), trafficIncidents, isMlModelEnabled });
+  }, [planDistrict, forecast, startHourIndex, budgetMin, center, taste, outdoorPenalty, boostedPoiIds, trafficIncidents, isMlModelEnabled]);
 
   const rainedPlan: BuiltPlan | null = useMemo(() => {
     if (!forecast || !planDistrict || rainSlot === null) return null;
-    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, forecastOverride: injectRainAt(forecast, rainSlot, 2), boostedPoiIds: Array.from(boostedPoiIds) });
-  }, [planDistrict, forecast, rainSlot, startHourIndex, budgetMin, center, taste, outdoorPenalty, boostedPoiIds]);
+    return buildPlan(planDistrict, forecast, { startHourIndex, budgetMin, start: center, taste: taste ?? undefined, outdoorPenalty, forecastOverride: injectRainAt(forecast, rainSlot, 2), boostedPoiIds: Array.from(boostedPoiIds), trafficIncidents, isMlModelEnabled });
+  }, [planDistrict, forecast, rainSlot, startHourIndex, budgetMin, center, taste, outdoorPenalty, boostedPoiIds, trafficIncidents, isMlModelEnabled]);
 
   const activePlan = rainedPlan ?? basePlan;
 
@@ -303,6 +325,60 @@ function PlanInner() {
       .catch(() => {});
     return () => { cancelled = true; };
   }, [activePlan]);
+  // Async ML Travel Mode Choice Integration
+  useEffect(() => {
+    const stops = activePlan?.stops ?? [];
+    if (stops.length < 2) return;
+    let cancelled = false;
+    setMlModesLoading(true);
+
+    const fetches = stops.slice(1).map((stop, i) => {
+      const prev = stops[i];
+      const meters = routedHops[i + 1] ? routedHops[i + 1].meters : (hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng).km * 1000);
+      const isWeekend = [0, 6].includes(new Date(stop.arrivalHourISO).getDay());
+      const payload = {
+        distance: meters,
+        female: travelerForm.female,
+        age: travelerForm.age,
+        driving_license: travelerForm.license,
+        car_ownership: travelerForm.car,
+        cost_transit: meters * 0.005,
+        cost_driving_fuel: meters * 0.002,
+        time_departure: 12.0,
+        day_of_week: isWeekend ? 6 : 2,
+        purpose: "HBO"
+      };
+
+      return fetch("/api/travel-mode-choice", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (!data.predictions) return null;
+        const modelOutput = data.predictions.xgb || data.predictions.rf || data.predictions.dnn;
+        if (!modelOutput) return null;
+        let bestMode = "walk";
+        let maxP = -1;
+        for (const [m, p] of Object.entries(modelOutput)) {
+          if ((p as number) > maxP) { maxP = (p as number); bestMode = m; }
+        }
+        return { index: i + 1, bestMode };
+      }).catch(() => null);
+    });
+
+    Promise.all(fetches).then(results => {
+      if (cancelled) return;
+      const modes: Record<number, string> = {};
+      results.forEach(r => { if (r) modes[r.index] = r.bestMode; });
+      setMlModes(modes);
+      setMlModesLoading(false);
+    });
+
+    return () => { cancelled = true; };
+  }, [activePlan, routedHops, travelerForm]);
+
 
   const swap = useMemo(() => {
     if (!basePlan || !rainedPlan) return null;
@@ -429,6 +505,50 @@ function PlanInner() {
                 </div>
               </div>
             )}
+            <div>
+              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{en ? "Traveler Demographics (ML)" : "ข้อมูลผู้เดินทาง (ML)"}</p>
+              <div className="flex flex-col gap-3 font-thai text-sm text-ink bg-surface border border-hairline p-4 rounded-2xl shadow-sm">
+                <div className="flex items-center justify-between">
+                  <label>{en ? "Age:" : "อายุ:"} <span className="text-ink-muted">{travelerForm.age}</span></label>
+                  <input type="range" min="15" max="80" value={travelerForm.age} onChange={e => setTravelerForm(prev => ({...prev, age: Number(e.target.value)}))} className="w-1/2 accent-ink cursor-pointer" />
+                </div>
+                <div className="flex items-center justify-between">
+                  <label>{en ? "Gender:" : "เพศ:"}</label>
+                  <select value={travelerForm.female} onChange={e => setTravelerForm(prev => ({...prev, female: Number(e.target.value)}))} className="bg-paper border border-hairline rounded-md px-2 py-1 outline-none text-xs cursor-pointer">
+                    <option value={0}>{en ? "Male" : "ชาย"}</option>
+                    <option value={1}>{en ? "Female" : "หญิง"}</option>
+                  </select>
+                </div>
+                <div className="flex items-center justify-between">
+                  <label>{en ? "Driving License:" : "ใบอนุญาตขับขี่:"}</label>
+                  <input type="checkbox" checked={travelerForm.license === 1} onChange={e => setTravelerForm(prev => ({...prev, license: e.target.checked ? 1 : 0}))} className="accent-ink w-4 h-4 cursor-pointer" />
+                </div>
+                <div className="flex items-center justify-between">
+                  <label>{en ? "Car Ownership:" : "มีรถส่วนตัว:"}</label>
+                  <input type="checkbox" checked={travelerForm.car === 1} onChange={e => setTravelerForm(prev => ({...prev, car: e.target.checked ? 1 : 0}))} className="accent-ink w-4 h-4 cursor-pointer" />
+                </div>
+              </div>
+            </div>
+            <div>
+              <p className="font-thai text-xs uppercase tracking-wider text-ink-faint mb-2">{en ? "Recommendation Model" : "ระบบจัดอันดับแนะนำ"}</p>
+              <button
+                type="button"
+                onClick={() => setIsMlModelEnabled((prev) => !prev)}
+                className={clsx(
+                  "font-thai rounded-full px-4 py-2 text-sm transition-all duration-[var(--dur-fast)] min-h-[44px] flex items-center gap-1.5 border",
+                  isMlModelEnabled
+                    ? "bg-success/10 border-success/40 text-ink hover:bg-success/15"
+                    : "border-hairline bg-surface text-ink hover:bg-surface-hover"
+                )}
+              >
+                <span>{isMlModelEnabled ? "🧠" : "⚖️"}</span>
+                <span>
+                  {isMlModelEnabled
+                    ? (en ? "ML Recommender" : "ML Recommender (หลัก)")
+                    : (en ? "Weighted Scorer" : "Weighted Scorer (สำรอง)")}
+                </span>
+              </button>
+            </div>
           </div>
 
           <div className="mt-5">
@@ -527,12 +647,37 @@ function PlanInner() {
                     const prev = i > 0 ? activePlan.stops[i - 1] : null;
                     return (
                     <Fragment key={stop.poi.id}>
-                    {prev && (
-                      <li className="-my-1 flex items-center gap-3 pl-[10px] font-thai text-xs text-ink-faint" aria-hidden>
-                        <span className="flex w-6 justify-center"><span className="h-7 w-px bg-hairline" /></span>
-                        <span>{routedHops[i] ? `🧭 ${routedHopLabel(routedHops[i].minutes, routedHops[i].meters, en)}` : hopLabel(hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng), en)}</span>
-                      </li>
-                    )}
+                    {prev && (() => {
+                      const meters = routedHops[i] ? routedHops[i].meters : (hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng).km * 1000);
+                      const rainProb = stop.rainProb;
+                      const trafficRisk = stop.trafficAlert ? stop.trafficAlert.riskScore : 0;
+                      const choice = selectTravelMode({
+                        distanceMeters: meters,
+                        rainProb,
+                        trafficRiskScore: trafficRisk,
+                        travelerProfile: "standard"
+                      });
+
+                      const mlMode = mlModes[i];
+                      const recommendedMode = mlMode ?? choice.recommendedMode;
+
+                      const modeEmoji = mlModesLoading ? "🔄" : recommendedMode === "walk" ? "🚶" : recommendedMode === "transit" ? "🚇" : recommendedMode === "bike" ? "🚲" : "🚖";
+                      const modeLabel = mlModesLoading ? "..." : recommendedMode === "walk" ? (en ? "Walk" : "เดินเท้า") : recommendedMode === "transit" ? (en ? "Transit" : "รถไฟฟ้า/สาธารณะ") : recommendedMode === "bike" ? (en ? "Bike" : "จักรยาน") : (en ? "Taxi/Car" : "แท็กซี่/รถยนต์");
+
+                      return (
+                        <li className="-my-1 flex items-center gap-3 pl-[10px] font-thai text-xs text-ink-faint" aria-hidden>
+                          <span className="flex w-6 justify-center"><span className="h-7 w-px bg-hairline" /></span>
+                          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 py-1">
+                            <span>{routedHops[i] ? `🧭 ${routedHopLabel(routedHops[i].minutes, routedHops[i].meters, en)}` : hopLabel(hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng), en)}</span>
+                            <span className="inline-flex items-center gap-1 bg-surface px-2 py-0.5 rounded-full border border-hairline shadow-sm hover:scale-[1.02] transition-transform cursor-help"
+                              title={en ? choice.reason.en : choice.reason.th}>
+                              <span aria-hidden>{modeEmoji}</span>
+                              <span className="font-semibold text-ink-muted text-[9px] uppercase tracking-wider">{en ? "ML Choice: " : "แนะนำ: "}{modeLabel} ({choice.estimatedMinutes[choice.recommendedMode]} {en ? "min" : "นาที"})</span>
+                            </span>
+                          </div>
+                        </li>
+                      );
+                    })()}
                     <li className="flex items-start gap-4 rounded-2xl border border-hairline border-l-[3px] bg-surface/70 p-4"
                       style={{ borderLeftColor: ({ clear: "var(--arnfa-accent-sun)", partly: "var(--arnfa-success)", cloudy: "var(--arnfa-hairline)", rain: "var(--arnfa-accent-rain)", storm: "var(--arnfa-accent-indoor-warm)", night: "#4A5878" } as Record<string, string>)[stop.skyState] ?? "var(--arnfa-hairline)" }}>
                       <div className="relative shrink-0">
@@ -554,6 +699,78 @@ function PlanInner() {
                             <span className="font-medium">{deal.title}</span>
                             <span className="text-ink-faint">{deal.merchantName}</span>
                           </a>
+                        )}
+                        {stop.trafficAlert && stop.trafficAlert.riskScore > 35 && (
+                          <div className="mt-2 rounded-xl border border-indoor-warm/20 bg-indoor-warm/[0.03] p-3 text-xs flex flex-col gap-1.5">
+                            <div className="flex items-center justify-between font-medium">
+                              <span className="text-indoor-warm flex items-center gap-1">
+                                <span>⚠️</span>
+                                <span>{en ? "ML Traffic & Weather Hazard Alert" : "แจ้งเตือนความเสี่ยงจราจรและอากาศ (ML)"}</span>
+                              </span>
+                              <span className="font-display font-semibold text-indoor-warm bg-indoor-warm/10 px-1.5 py-0.5 rounded-md">
+                                {stop.trafficAlert.riskScore}/100
+                              </span>
+                            </div>
+                            <p className="font-thai text-[0.7rem] text-ink-muted leading-relaxed">
+                              {en ? stop.trafficAlert.recommendation.en : stop.trafficAlert.recommendation.th}
+                            </p>
+                            {stop.trafficAlert.diagnostics && (en ? stop.trafficAlert.diagnostics.en : stop.trafficAlert.diagnostics.th)?.length > 0 && (
+                              <div className="flex flex-wrap gap-1 mt-0.5">
+                                {(en ? stop.trafficAlert.diagnostics.en : stop.trafficAlert.diagnostics.th)?.map((diag, index) => (
+                                  <span key={index} className="text-[0.62rem] bg-paper/60 px-1.5 py-0.5 rounded border border-hairline text-ink-faint">
+                                    {diag}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        {stop.recommendationDetails && (
+                          <div className="mt-2.5 rounded-xl border border-hairline bg-paper/30 p-3 text-xs flex flex-col gap-2">
+                            <div className="flex items-center justify-between">
+                              <span className="font-semibold text-ink-muted">
+                                {stop.recommendationDetails.usedMlModel
+                                  ? (en ? "🧠 ML Recommendation" : "🧠 ระบบแนะนำด้วย ML")
+                                  : (en ? "⚖️ Hybrid Recommendation" : "⚖️ ระบบแนะนำด้วย Hybrid Scorer")}
+                              </span>
+                              <span className="font-display font-semibold text-rain bg-rain/10 px-2 py-0.5 rounded-full text-[10px]">
+                                {en ? `Score: ${stop.recommendationDetails.totalScore}%` : `คะแนนแนะนำ: ${stop.recommendationDetails.totalScore}%`}
+                              </span>
+                            </div>
+
+                            {/* Factor Weight Bars (XAI graph) */}
+                            <div className="space-y-1 my-1">
+                              <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-hairline">
+                                <div className="bg-sun" style={{ width: `${stop.recommendationDetails.explanation.scorePercentInterest}%` }} title={`Interest: ${stop.recommendationDetails.explanation.scorePercentInterest}%`} />
+                                <div className="bg-success" style={{ width: `${stop.recommendationDetails.explanation.scorePercentConvenience}%` }} title={`Convenience: ${stop.recommendationDetails.explanation.scorePercentConvenience}%`} />
+                                <div className="bg-rain" style={{ width: `${stop.recommendationDetails.explanation.scorePercentWeather}%` }} title={`Weather: ${stop.recommendationDetails.explanation.scorePercentWeather}%`} />
+                              </div>
+                              <div className="flex justify-between text-[0.55rem] text-ink-faint">
+                                <span>🎯 {stop.recommendationDetails.explanation.scorePercentInterest}%</span>
+                                <span>🚗 {stop.recommendationDetails.explanation.scorePercentConvenience}%</span>
+                                <span>☀️ {stop.recommendationDetails.explanation.scorePercentWeather}%</span>
+                              </div>
+                            </div>
+
+                            {/* Dynamic Qualitative explanations in Thai and English */}
+                            <div className="flex flex-wrap gap-1 mt-0.5">
+                              {stop.recommendationDetails.explanation.matchesInterest && (
+                                <span className="text-[0.62rem] font-thai bg-sun/10 text-ink-muted border border-sun/20 px-2 py-0.5 rounded-full">
+                                  🎯 {en ? "Matches Interest" : "แนะนำเพราะตรงกับความสนใจ"}
+                                </span>
+                              )}
+                              {stop.recommendationDetails.explanation.convenientTravel && (
+                                <span className="text-[0.62rem] font-thai bg-success/10 text-ink-muted border border-success/20 px-2 py-0.5 rounded-full">
+                                  🚗 {en ? "Convenient Travel" : "เดินทางสะดวก"}
+                                </span>
+                              )}
+                              {stop.recommendationDetails.explanation.weatherSuitable && (
+                                <span className="text-[0.62rem] font-thai bg-rain/10 text-ink-muted border border-rain/20 px-2 py-0.5 rounded-full">
+                                  ☀️ {en ? "Weather Suitable" : "เหมาะกับอากาศ"}
+                                </span>
+                              )}
+                            </div>
+                          </div>
                         )}
                         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
                           {stop.openStatus === "open" && <span className="text-success">{en ? "open now" : "เปิดอยู่"}</span>}
@@ -601,6 +818,7 @@ function PlanInner() {
                 )}
                 <div className="mt-6 space-y-4">
                   <TransitNearby lat={center.lat} lng={center.lng} />
+                  <TransitGraphMap lat={center.lat} lng={center.lng} />
                   <GoThere districtKey={districtKey} areaTh={districtTh} areaEn={districtEn} stayIn={outdoorPenalty > 0.25} />
                   {/* Rest stops are a road-trip thing → only for drive-to destinations, not walkable city areas */}
                   {(meta?.tier === "province" || meta?.tier === "spot") && <RestAreasNearby lat={center.lat} lng={center.lng} />}

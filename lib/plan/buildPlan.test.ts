@@ -53,3 +53,64 @@ describe("buildPlan outdoorPenalty (safety lever)", () => {
     expect(galleryA && galleryB).toBeTruthy();
   });
 });
+
+describe("buildPlan traffic incidents (hazard penalty)", () => {
+  it("traffic incident near park -> switches to gallery", () => {
+    const testDistrict: SeedDistrict = {
+      ...district,
+      pois: [
+        poi("park", "park", { outdoorness: 0.95, indoorness: 0.05, rainEnjoyment: 0.05, covered: 0.05 }, 13.7402, 100.5700),
+        poi("gallery", "gallery", { outdoorness: 0.1, indoorness: 0.9, rainEnjoyment: 0.65, covered: 0.95 }, 13.7550, 100.5850),
+      ],
+    };
+    const plan = buildPlan(testDistrict, forecast, {
+      ...opts,
+      budgetMin: 120,
+      trafficIncidents: [
+        {
+          lat: 13.7402,
+          lng: 100.5701, // extremely close to the park
+          title: "Accident",
+          desc: "Severe car crash",
+          titleEn: "Accident",
+          descEn: "Severe car crash",
+          ml: {
+            riskScore: 90,
+            recommendation: { th: "เลี่ยงเส้นทาง", en: "Avoid this route" },
+            diagnostics: { th: ["อุบัติเหตุรุนแรง"], en: ["Severe accident"] },
+          },
+        },
+      ],
+    });
+    expect(plan.stops.length).toBeGreaterThan(0);
+    // Park should be penalized and gallery should be selected instead
+    expect(plan.stops[0].poi.category).toBe("gallery");
+  });
+
+  it("populates trafficAlert in the stop object", () => {
+    const plan = buildPlan(district, forecast, {
+      ...opts,
+      budgetMin: 200, // budget for both stops
+      trafficIncidents: [
+        {
+          lat: 13.7402,
+          lng: 100.5701, // extremely close to the park
+          title: "Accident",
+          desc: "Severe car crash",
+          titleEn: "Accident",
+          descEn: "Severe car crash",
+          ml: {
+            riskScore: 90,
+            recommendation: { th: "เลี่ยงเส้นทาง", en: "Avoid this route" },
+            diagnostics: { th: ["อุบัติเหตุรุนแรง"], en: ["Severe accident"] },
+          },
+        },
+      ],
+    });
+    const parkStop = plan.stops.find((s) => s.poi.id === "park");
+    expect(parkStop).toBeTruthy();
+    expect(parkStop!.trafficAlert).toBeDefined();
+    expect(parkStop!.trafficAlert!.riskScore).toBe(90);
+    expect(parkStop!.trafficAlert!.recommendation.en).toBe("Avoid this route");
+  });
+});

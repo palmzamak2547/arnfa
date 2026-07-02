@@ -8,7 +8,8 @@ import { planTrip, type Candidate, type PlannerOutput } from "@/lib/core/planner
 import { isOpenAtISO, type OpenStatus } from "@/lib/core/openingHours";
 import type { HourlyForecast } from "@/lib/weather/types";
 import { skyStateFrom, type SkyState } from "@/lib/core/skyState";
-import { walkMinutes } from "@/lib/transport/route";
+import { walkMinutes, haversineKm } from "@/lib/transport/route";
+import { scorePoiForRecommender } from "@/lib/ml/attractionRecommender";
 
 export type SeedPoi = {
   id: string;
@@ -55,6 +56,20 @@ const toSlot = (f: HourlyForecast): SlotForecast => ({
   hourISO: f.hourISO, rainProb: f.rainProb, rainIntensity: f.rainIntensity, heatIndex: f.heatIndex,
 });
 
+export type TrafficIncidentData = {
+  lat: number;
+  lng: number;
+  title: string;
+  desc: string;
+  titleEn: string;
+  descEn: string;
+  ml: {
+    riskScore: number;
+    recommendation: { th: string; en: string };
+    diagnostics: { th: string[]; en: string[] };
+  };
+};
+
 export type PlanOptions = {
   startHourIndex: number;
   budgetMin: number;
@@ -63,6 +78,8 @@ export type PlanOptions = {
   forecastOverride?: HourlyForecast[];
   outdoorPenalty?: number;
   boostedPoiIds?: string[];
+  trafficIncidents?: TrafficIncidentData[];
+  isMlModelEnabled?: boolean;
 };
 
 export type EnrichedStop = {
@@ -77,6 +94,23 @@ export type EnrichedStop = {
   score: number;
   /** Honest open/closed status at arrival (from OSM opening_hours). */
   openStatus: OpenStatus;
+  trafficAlert?: {
+    riskScore: number;
+    recommendation: { th: string; en: string };
+    diagnostics: { th: string[]; en: string[] };
+  };
+  recommendationDetails?: {
+    totalScore: number;
+    usedMlModel: boolean;
+    explanation: {
+      matchesInterest: boolean;
+      convenientTravel: boolean;
+      weatherSuitable: boolean;
+      scorePercentInterest: number;
+      scorePercentConvenience: number;
+      scorePercentWeather: number;
+    };
+  };
 };
 
 export type BuiltPlan = { stops: EnrichedStop[]; totalScore: number; totalMin: number; providerUsed?: string };
@@ -101,6 +135,17 @@ export function buildPlan(district: SeedDistrict, forecast: HourlyForecast[], op
     const envFactor = 1 - envPenalty * poi.profile.outdoorness;
     const isBoosted = boostedSet.has(poi.id);
     const boostFactor = isBoosted ? 15.0 : 1.0;
+
+    // Traffic & Weather ML Proximity Penalty
+    let trafficPenalty = 1.0;
+    const nearbyIncidents = (opts.trafficIncidents ?? []).filter(
+      (inc) => haversineKm(poi.lat, poi.lng, inc.lat, inc.lng) < 0.6
+    );
+    if (nearbyIncidents.length > 0) {
+      const worstIncident = nearbyIncidents.reduce((max, cur) => cur.ml.riskScore > max.ml.riskScore ? cur : max);
+      const riskFactor = worstIncident.ml.riskScore / 100;
+      trafficPenalty = 1.0 - (riskFactor * 0.85); // reduce score by up to 85%
+    }
     
     const scoreAtSlot: Record<number, number> = {};
     for (let i = 0; i < fc.length; i++) {
@@ -108,7 +153,7 @@ export function buildPlan(district: SeedDistrict, forecast: HourlyForecast[], op
       scoreAtSlot[i] = finalScore({
         interest: taste[poi.category] ?? 0.4,
         fit, isOpenAt: 1, reachable: 1, proximityBoost: 1, confidence: poi.profile.confidence,
-      }) * envFactor * boostFactor;
+      }) * envFactor * boostFactor * trafficPenalty;
     }
     const travelMin: Record<string, number> = {};
     for (const other of district.pois) {
@@ -168,10 +213,34 @@ export function buildPlan(district: SeedDistrict, forecast: HourlyForecast[], op
   const planOut: PlannerOutput = planTrip({ candidates: diversified, budgetMin: opts.budgetMin, startTravelMin, slotSizeMin });
 
   const poiById = new Map(district.pois.map((p) => [p.id, p]));
-  const stops: EnrichedStop[] = planOut.stops.map((s) => {
+  const stops: EnrichedStop[] = planOut.stops.map((s, i) => {
     const poi = poiById.get(s.id)!;
     const f = fc[Math.min(opts.startHourIndex + s.slotIndex, fc.length - 1)];
     const fitR = weatherFit(poi.profile, toSlot(f));
+
+    // Proximity traffic alert logic
+    const nearby = (opts.trafficIncidents ?? []).filter(
+      (inc) => haversineKm(poi.lat, poi.lng, inc.lat, inc.lng) < 0.6
+    );
+    const worst = nearby.length > 0 ? nearby.reduce((max, cur) => cur.ml.riskScore > max.ml.riskScore ? cur : max) : null;
+    const trafficAlert = worst ? {
+      riskScore: worst.ml.riskScore,
+      recommendation: worst.ml.recommendation,
+      diagnostics: worst.ml.diagnostics,
+    } : undefined;
+
+    // ML/Hybrid attraction recommendation scoring and explainable AI
+    const prevLoc = i === 0 ? opts.start : (poiById.get(planOut.stops[i - 1].id) ?? opts.start);
+    const distM = haversineKm(prevLoc.lat, prevLoc.lng, poi.lat, poi.lng) * 1000;
+    const recDetails = scorePoiForRecommender({
+      poi,
+      taste,
+      distanceMeters: distM,
+      travelMinutes: distM / 80,
+      weatherFitScore: fitR.fit,
+      isMlModelEnabled: opts.isMlModelEnabled ?? false,
+    });
+
     return {
       poi,
       arrivalHourISO: f.hourISO,
@@ -183,6 +252,8 @@ export function buildPlan(district: SeedDistrict, forecast: HourlyForecast[], op
       reason: fitR.reason,
       score: s.scoreRealized,
       openStatus: isOpenAtISO(poi.openingHoursRaw, f.hourISO),
+      trafficAlert,
+      recommendationDetails: recDetails,
     };
   });
 

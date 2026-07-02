@@ -6,10 +6,19 @@
  * and memoised here so re-selecting a district is instant. This is what lets
  * Arnfa cover all of Bangkok without bloating the initial bundle.
  */
-import { DISTRICTS, DISTRICT_KEYS, DISTRICT_LOADERS, ZONE_ORDER, type DistrictMeta } from "@/lib/poi/registry.generated";
+import { DISTRICTS as GEN_DISTRICTS, DISTRICT_KEYS as GEN_KEYS, DISTRICT_LOADERS, ZONE_ORDER as GEN_ZONE_ORDER, type DistrictMeta } from "@/lib/poi/registry.generated";
 import type { SeedDistrict } from "@/lib/plan/buildPlan";
+import { getMockProvinceDistrict } from "@/lib/ml/attractionDb";
 
-export { DISTRICTS, DISTRICT_KEYS, ZONE_ORDER };
+export const DISTRICTS: DistrictMeta[] = [
+  ...GEN_DISTRICTS,
+  { key: "chiang-mai", th: "เชียงใหม่ (เมือง)", en: "Chiang Mai", lat: 18.7883, lng: 98.9853, zone: "Other Provinces", tier: 1, count: 15 },
+  { key: "phuket", th: "ภูเก็ต (ป่าตอง/เมือง)", en: "Phuket", lat: 7.8804, lng: 98.3922, zone: "Other Provinces", tier: 1, count: 15 },
+  { key: "chonburi", th: "ชลบุรี (พัทยา/บางแสน)", en: "Chonburi (Pattaya)", lat: 12.9236, lng: 100.8824, zone: "Other Provinces", tier: 1, count: 15 },
+];
+export const DISTRICT_KEYS = [...GEN_KEYS, "chiang-mai", "phuket", "chonburi"];
+export const ZONE_ORDER = [...GEN_ZONE_ORDER, "Other Provinces"];
+
 export type { DistrictMeta };
 
 const cache = new Map<string, SeedDistrict>();
@@ -19,10 +28,15 @@ export function districtMeta(key: string): DistrictMeta | undefined {
   return META_BY_KEY.get(key);
 }
 
-/** Load a district's full POI list (cached). Throws on unknown key. */
+/** Load a district's full POI list (cached). Supports mock provinces. */
 export async function loadDistrict(key: string): Promise<SeedDistrict> {
   const hit = cache.get(key);
   if (hit) return hit;
+  if (key === "chiang-mai" || key === "phuket" || key === "chonburi") {
+    const d = getMockProvinceDistrict(key);
+    cache.set(key, d);
+    return d;
+  }
   const loader = DISTRICT_LOADERS[key];
   if (!loader) throw new Error(`unknown district: ${key}`);
   const d = await loader();

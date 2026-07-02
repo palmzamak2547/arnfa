@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "next build",
+    "build": "next build --webpack",
+
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "seed": "node scripts/seed-district.mjs"
+    "seed": "node scripts/seed-district.mjs",
+    "build:graph": "python3 scripts/build_transit_graph.py"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",
