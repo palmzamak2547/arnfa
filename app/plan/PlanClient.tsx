@@ -837,7 +837,7 @@ function PlanInner() {
                 </div>
               </div>
 
-              <div className="h-[320px] sm:h-[400px] lg:h-auto lg:min-h-[520px] lg:sticky lg:top-6">
+              <div className="h-[500px] sm:h-[600px] lg:h-auto lg:min-h-[700px] lg:sticky lg:top-6">
                 <PlanMap stops={activePlan.stops} center={center} mlModes={mlModes} />
               </div>
             </div>
