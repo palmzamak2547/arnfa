@@ -17,8 +17,11 @@ import { skyVerdict, type SkyVerdict } from "@/lib/core/skyScore";
  */
 
 export const runtime = "nodejs";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+const size = { width: 1200, height: 630 };
+const contentType = "image/png";
+
+
+
 
 const pad = (n: number) => String(n).padStart(2, "0");
 

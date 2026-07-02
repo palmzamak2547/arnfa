@@ -1,0 +1,73 @@
+{
+  "feature_cols": [
+    "day_of_week",
+    "start_time_linear",
+    "age",
+    "female",
+    "driving_license",
+    "car_ownership",
+    "distance",
+    "dur_walking",
+    "dur_cycling",
+    "dur_pt_access",
+    "dur_pt_rail",
+    "dur_pt_bus",
+    "dur_pt_int_waiting",
+    "dur_pt_int_walking",
+    "pt_n_interchanges",
+    "dur_driving",
+    "cost_transit",
+    "cost_driving_total",
+    "purpose_B",
+    "purpose_HBE",
+    "purpose_HBO",
+    "purpose_HBW",
+    "purpose_NHBO",
+    "fueltype_Average",
+    "fueltype_Diesel",
+    "fueltype_Hybrid",
+    "fueltype_Petrol"
+  ],
+  "scaled_features": [
+    "day_of_week",
+    "start_time_linear",
+    "age",
+    "car_ownership",
+    "distance",
+    "dur_walking",
+    "dur_cycling",
+    "dur_pt_access",
+    "dur_pt_rail",
+    "dur_pt_bus",
+    "dur_pt_int_waiting",
+    "dur_pt_int_walking",
+    "pt_n_interchanges",
+    "dur_driving",
+    "cost_transit",
+    "cost_driving_total"
+  ],
+  "metrics": {
+    "mnl": {
+      "accuracy": 0.7255699088145897,
+      "f1_macro": 0.5400403191816302
+    },
+    "rf": {
+      "accuracy": 0.7357142857142858,
+      "f1_macro": 0.5448280028395938
+    },
+    "xgb": {
+      "accuracy": 0.7409954407294833,
+      "f1_macro": 0.5503672033673686
+    },
+    "dnn": {
+      "accuracy": 0.726063829787234,
+      "f1_macro": 0.5506870011189727
+    }
+  },
+  "class_mapping": {
+    "0": "Walk",
+    "1": "Bike",
+    "2": "Transit",
+    "3": "Drive"
+  }
+}

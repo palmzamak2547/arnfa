@@ -21,11 +21,41 @@
   --sky-from: #F4D9B8;
   --sky-to:   #C9D6E4;
 
+  --glass-border: rgba(255, 255, 255, 0.55);
+  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --glass-gradient-start: rgba(255, 255, 255, 0.6);
+  --glass-gradient-end: rgba(255, 255, 255, 0);
+  --glass-fallback: rgba(255, 255, 255, 0.92);
+
   --ease-drift: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-fast:   320ms;
   --dur-base:   700ms;
   --dur-slow:   1200ms;
   --dur-very-slow: 1400ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --arnfa-paper: #15171C;
+    --arnfa-surface: #1E2129;
+    --arnfa-ink: #E8E4DD;
+    --arnfa-ink-muted: #9BA3B5;
+    --arnfa-ink-faint: #6B7280;
+    --arnfa-accent-sun: #F7B779;
+    --arnfa-accent-rain: #7A9BCA;
+    --arnfa-accent-indoor-warm: #E26A61;
+    --arnfa-success: #8CB89D;
+    --arnfa-hairline: rgba(232, 228, 221, 0.12);
+
+    --sky-from: #1C2331;
+    --sky-to:   #2C3E50;
+
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-highlight: rgba(255, 255, 255, 0.25);
+    --glass-gradient-start: rgba(255, 255, 255, 0.15);
+    --glass-gradient-end: rgba(255, 255, 255, 0);
+    --glass-fallback: rgba(30, 33, 41, 0.92);
+  }
 }
 
 @theme inline {
@@ -161,22 +191,22 @@ body {
   isolation: isolate;
   -webkit-backdrop-filter: blur(20px) saturate(175%) brightness(1.05);
   backdrop-filter: blur(20px) saturate(175%) brightness(1.05);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--glass-border);
   box-shadow:
     0 28px 64px -30px rgba(26, 31, 43, 0.45),    /* lift */
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.9),     /* top specular edge */
+    inset 0 1px 0 0 var(--glass-highlight),     /* top specular edge */
     inset 0 -12px 26px -20px rgba(26, 31, 43, 0.10); /* base grounding */
 }
 .arnfa-glass::before {
   content: ""; position: absolute; inset: 0; z-index: 0; border-radius: inherit;
   pointer-events: none;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 46%);
+  background: linear-gradient(135deg, var(--glass-gradient-start), var(--glass-gradient-end) 46%);
   opacity: 0.6;
 }
 .arnfa-glass > * { position: relative; z-index: 1; }
 /* No backdrop-filter support → fall back to a solid frosted surface (still readable). */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .arnfa-glass { background-color: rgba(255, 255, 255, 0.92) !important; }
+  .arnfa-glass { background-color: var(--glass-fallback) !important; }
 }
 
 /* Liquid glass — Chromium-only backdrop REFRACTION (feDisplacementMap), a progressive

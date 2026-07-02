@@ -80,6 +80,19 @@ export function nearestGraphStations(
     .slice(0, n);
 }
 
+/** Nearest BMTA bus stops (system: "BMTA") to a point within a radius (km). */
+export function nearestBusStops(
+  lat: number,
+  lng: number,
+  radiusKm: number = 2.5
+): (TransitGraphNode & { km: number })[] {
+  return TRANSIT_GRAPH_NODES
+    .filter((n) => n.system === "BMTA")
+    .map((n) => ({ ...n, km: km(lat, lng, n.lat, n.lng) }))
+    .filter((n) => n.km <= radiusKm)
+    .sort((a, b) => a.km - b.km);
+}
+
 /** Convert a TransitGraphNode to the legacy RailStation shape for compatibility. */
 export function toRailStation(node: TransitGraphNode): RailStation & { km?: number } {
   return {

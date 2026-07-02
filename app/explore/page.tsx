@@ -141,6 +141,30 @@ export default function ExplorePage() {
         </div>
       </section>
 
+      {/* Travel Choice ML Showcase */}
+      <section className="arnfa-grid section-minor">
+        <div className="col-content border-t border-hairline pt-7">
+          <div className="overflow-hidden rounded-2xl border border-hairline bg-gradient-to-r from-sky-50/60 to-indigo-50/20 p-6 shadow-sm hover:shadow transition-shadow">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+              <div>
+                <p className="mb-1 font-display text-[0.7rem] uppercase tracking-[0.18em] text-sky-600 font-semibold">{tx("การเรียนรู้ของเครื่อง", "Machine Learning Showcase", "机器学习")}</p>
+                <h3 className="font-thai-serif text-xl font-light text-ink">{tx("จำลองโหมดการเดินทาง (ML Choice)", "Interactive Travel Mode Choice Sandbox", "出行选择交互式沙盒")}</h3>
+                <p className="mt-1.5 max-w-[60ch] font-thai text-xs leading-relaxed text-ink-muted">
+                  {tx(
+                    "ศึกษาและเปรียบเทียบพฤติกรรมการตัดสินใจเลือกพาหนะ ระหว่างการเดินเท้า จักรยาน รถสาธารณะ และรถยนต์ส่วนตัว ผ่านตัวแบบทางพฤติกรรมดั้งเดิมกับโมเดลโครงข่ายยุคใหม่ (Random Forest, Gradient Boosting, Deep Neural Networks) บนฐานข้อมูลจริง",
+                    "Simulate and compare travel choices (Walk, Bike, Public Transit, or Driving) using classical behavioral models versus state-of-the-art machine learning models trained on actual travel survey data.",
+                    "通过实际出行调查数据训练的经典行为模型与最先进的机器学习模型，模拟并对比步行、自行车、公共交通和自驾的选择。"
+                  )}
+                </p>
+              </div>
+              <Link href="/explore/travel-mode-choice" className="inline-flex h-11 shrink-0 items-center rounded-full bg-ink px-6 font-thai text-sm font-medium text-paper transition-colors hover:bg-ink-muted">
+                {tx("ทดลองเล่นโมเดล →", "Explore Sandbox →", "探索沙盒 →")}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="arnfa-grid section-major">
         <div className="col-content">
           <Link href="/plan" className="inline-flex h-12 items-center rounded-full bg-ink px-7 font-thai text-base font-medium text-paper transition-colors hover:bg-ink-muted">

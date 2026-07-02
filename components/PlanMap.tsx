@@ -11,6 +11,8 @@ import { categoryLabel } from "@/lib/plan/categoryLabel";
 import { GIBS_LAYERS, gibsTileUrl, gibsDate, type GibsLayerKey } from "@/lib/satellite/gibs";
 import { ARNFA_MAP_STYLE_URL, ARNFA_LAND, applyArnfaRecolor } from "@/lib/map/arnfaMapStyle";
 import { MapDataLayers, MAP_LAYERS, LAYER_GROUPS, type MapLayerKey } from "@/components/MapDataLayers";
+import { selectTravelMode } from "@/lib/ml/travelModeChoice";
+import { hopEstimate } from "@/lib/plan/transit";
 
 /**
  * PlanMap — MapLibre on Arnfa's OWN editorial basemap (recoloured OpenFreeMap positron,
@@ -42,17 +44,36 @@ function prefersReduced(): boolean {
   return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 }
 
-export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { lat: number; lng: number } }) {
+export function PlanMap({
+  stops,
+  center,
+  mlModes = {},
+}: {
+  stops: EnrichedStop[];
+  center: { lat: number; lng: number };
+  mlModes?: Record<number, string>;
+}) {
   const { en } = useLang();
   const mapRef = useRef<MapRef>(null);
   const reduced = useMemo(prefersReduced, []);
   const initialView = useMemo(() => ({ longitude: center.lng, latitude: center.lat, zoom: 13.5 }), [center]);
   const [selected, setSelected] = useState<EnrichedStop | null>(null);
+  const [transitPopup, setTransitPopup] = useState<{
+    lng: number;
+    lat: number;
+    nameTh: string;
+    nameEn: string;
+    system: string;
+    color: string;
+    emoji: string;
+    isEdge?: boolean;
+  } | null>(null);
+  const [cursor, setCursor] = useState<string>("auto");
   const [mapError, setMapError] = useState(false);
   // NASA GIBS satellite overlay (free, no key). "none" by default so the route is clear.
   const [sat, setSat] = useState<GibsLayerKey | "none">("none");
-  // Data-pipeline overlays (rail · parks · cooling · rest · rain). Off by default → calm map.
-  const [layers, setLayers] = useState<Set<MapLayerKey>>(new Set());
+  // Data-pipeline overlays. On by default for rail & busstops → user-friendly.
+  const [layers, setLayers] = useState<Set<MapLayerKey>>(new Set(["rail", "busstops"]));
   const [layersOpen, setLayersOpen] = useState(false);
   const toggleLayer = (k: MapLayerKey) => setLayers((prev) => { const n = new Set(prev); n.has(k) ? n.delete(k) : n.add(k); return n; });
 
@@ -61,7 +82,7 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
   const [revealed, setRevealed] = useState(reduced ? fullPath.length : 0);
   const [shownMarkers, setShownMarkers] = useState(reduced ? stops.length : 0);
 
-  useEffect(() => { setSelected(null); }, [stops]);
+  useEffect(() => { setSelected(null); setTransitPopup(null); }, [stops]);
 
   useEffect(() => {
     if (reduced) { setRevealed(fullPath.length); setShownMarkers(stops.length); return; }
@@ -89,6 +110,41 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
     type: "Feature" as const, properties: {},
     geometry: { type: "LineString" as const, coordinates: fullPath.slice(0, Math.max(2, revealed)) },
   }), [fullPath, revealed]);
+
+  const legsGeoJSON = useMemo(() => {
+    if (stops.length < 2) return null;
+    const features = [];
+    for (let i = 1; i < stops.length; i++) {
+      const prev = stops[i - 1];
+      const stop = stops[i];
+      const meters = (hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng).km * 1000);
+      const rainProb = stop.rainProb;
+      const trafficRisk = stop.trafficAlert ? stop.trafficAlert.riskScore : 0;
+      
+      const choice = selectTravelMode({
+        distanceMeters: meters,
+        rainProb,
+        trafficRiskScore: trafficRisk,
+        travelerProfile: "standard"
+      });
+      
+      const mlMode = mlModes ? mlModes[i] : null;
+      const recommendedMode = mlMode ?? choice.recommendedMode;
+      
+      features.push({
+        type: "Feature" as const,
+        geometry: {
+          type: "LineString" as const,
+          coordinates: [[prev.poi.lng, prev.poi.lat], [stop.poi.lng, stop.poi.lat]]
+        },
+        properties: {
+          legIndex: i,
+          mode: recommendedMode,
+        }
+      });
+    }
+    return { type: "FeatureCollection" as const, features: features.slice(0, revealed) };
+  }, [stops, mlModes, revealed]);
 
   // Honest fallback — the plan never depends on the map rendering.
   if (mapError) {
@@ -128,6 +184,59 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
           try { if (m.getPaintProperty?.("background", "background-color") !== ARNFA_LAND) applyArnfaRecolor(m); } catch { /* style not ready */ }
         }}
         onError={(e) => { if (/webgl|context|style/i.test(String(e?.error?.message || ""))) setMapError(true); }}
+        cursor={cursor}
+        interactiveLayerIds={["transit-nodes-layer", "transit-edges-layer", "rail-nodes-layer", "rail-edges-layer"]}
+        onMouseEnter={() => setCursor("pointer")}
+        onMouseLeave={() => setCursor("auto")}
+        onClick={(e) => {
+          const map = mapRef.current?.getMap();
+          if (!map) return;
+          const features = map.queryRenderedFeatures(e.point, {
+            layers: ["transit-nodes-layer", "transit-edges-layer", "rail-nodes-layer", "rail-edges-layer"]
+          });
+          
+          if (features.length > 0) {
+            const f = features[0];
+            const props = f.properties ?? {};
+            if (f.layer.id === "transit-nodes-layer" || f.layer.id === "rail-nodes-layer") {
+              const coords = (f.geometry as any).coordinates;
+              setTransitPopup({
+                lng: coords[0],
+                lat: coords[1],
+                nameTh: props.nameTh || "",
+                nameEn: props.nameEn || "",
+                system: props.system || "",
+                color: props.color || "#6B7280",
+                emoji: props.emoji || "🚉",
+              });
+              setSelected(null);
+            } else if (f.layer.id === "transit-edges-layer" || f.layer.id === "rail-edges-layer") {
+              const system = props.system || "";
+              const systemColor: Record<string, string> = {
+                BTS: "#3aa537",
+                MRT: "#1964B7",
+                ARL: "#C8102E",
+                SRT: "#A6192E",
+                BRT: "#F97316",
+                BMTA: "#CA8A04",
+              };
+              setTransitPopup({
+                lng: e.lngLat.lng,
+                lat: e.lngLat.lat,
+                nameTh: `เส้นทาง ${system}`,
+                nameEn: `${system} Line`,
+                system: system,
+                color: systemColor[system] || "#9CA3AF",
+                emoji: system === "BMTA" ? "🚌" : "🚇",
+                isEdge: true
+              });
+              setSelected(null);
+            }
+          } else {
+            setTransitPopup(null);
+            setSelected(null);
+          }
+        }}
       >
         <NavigationControl position="top-right" showCompass={false} />
         <GeolocateControl position="top-right" trackUserLocation positionOptions={{ enableHighAccuracy: false }} />
@@ -144,7 +253,63 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
         {fullPath.length >= 2 && revealed >= 2 && (
           <Source id="route" type="geojson" data={lineGeoJSON}>
             <Layer id="route-line" type="line" layout={{ "line-cap": "round", "line-join": "round" }}
-              paint={{ "line-color": "#1A1F2B", "line-width": 2.5, "line-dasharray": [1.5, 1.2], "line-opacity": 0.7 }} />
+              paint={{ "line-color": "#1A1F2B", "line-width": 2.5, "line-dasharray": [1.5, 1.2], "line-opacity": 0.18 }} />
+          </Source>
+        )}
+
+        {legsGeoJSON && legsGeoJSON.features.length > 0 && (
+          <Source id="route-legs" type="geojson" data={legsGeoJSON}>
+            {/* Walk Leg Layer */}
+            <Layer
+              id="route-leg-walk"
+              type="line"
+              filter={["==", ["get", "mode"], "walk"]}
+              layout={{ "line-cap": "round", "line-join": "round" }}
+              paint={{
+                "line-color": "#3aa537",
+                "line-width": 3.8,
+                "line-dasharray": [1.5, 1.5],
+                "line-opacity": 0.88,
+              }}
+            />
+            {/* Transit Leg Layer */}
+            <Layer
+              id="route-leg-transit"
+              type="line"
+              filter={["==", ["get", "mode"], "transit"]}
+              layout={{ "line-cap": "round", "line-join": "round" }}
+              paint={{
+                "line-color": "#1964B7",
+                "line-width": 3.8,
+                "line-dasharray": [3.5, 1.5],
+                "line-opacity": 0.88,
+              }}
+            />
+            {/* Taxi/Drive Leg Layer */}
+            <Layer
+              id="route-leg-taxi"
+              type="line"
+              filter={["any", ["==", ["get", "mode"], "taxi"], ["==", ["get", "mode"], "drive"]]}
+              layout={{ "line-cap": "round", "line-join": "round" }}
+              paint={{
+                "line-color": "#E0683C",
+                "line-width": 3.8,
+                "line-opacity": 0.88,
+              }}
+            />
+            {/* Bike Leg Layer */}
+            <Layer
+              id="route-leg-bike"
+              type="line"
+              filter={["==", ["get", "mode"], "bike"]}
+              layout={{ "line-cap": "round", "line-join": "round" }}
+              paint={{
+                "line-color": "#8B5CF6",
+                "line-width": 3.8,
+                "line-dasharray": [1, 3],
+                "line-opacity": 0.88,
+              }}
+            />
           </Source>
         )}
 
@@ -176,6 +341,29 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
               <p className="text-xs text-ink-muted mt-0.5">
                 {categoryLabel(selected.poi.category, en)}, {selected.arrivalLabel}
                 {typeof selected.tempC === "number" && `, ${Math.round(selected.tempC)}°`}
+              </p>
+            </div>
+          </Popup>
+        )}
+
+        {transitPopup && (
+          <Popup longitude={transitPopup.lng} latitude={transitPopup.lat} anchor="bottom" offset={10} closeButton closeOnClick={false}
+            onClose={() => setTransitPopup(null)} maxWidth="260px">
+            <div className="font-thai">
+              <p className="flex items-center gap-1.5 text-sm font-medium leading-snug text-ink">
+                <span aria-hidden style={{ fontSize: "14px" }}>{transitPopup.emoji}</span>
+                {en ? transitPopup.nameEn : transitPopup.nameTh}
+              </p>
+              <p className="mt-1 flex items-center gap-1.5 text-xs text-ink-muted">
+                <span className="shrink-0 rounded px-1.5 py-0.5 text-[0.6rem] font-semibold text-white"
+                  style={{ background: transitPopup.color }}>
+                  {transitPopup.system}
+                </span>
+                <span>
+                  {transitPopup.isEdge
+                    ? (en ? "Transit Route" : "เส้นทางขนส่งสาธารณะ")
+                    : (transitPopup.system === "BMTA" ? (en ? "Bus Stop" : "ป้ายรถเมล์") : (en ? "Transit Station" : "สถานีรถไฟฟ้า"))}
+                </span>
               </p>
             </div>
           </Popup>
@@ -231,17 +419,41 @@ export function PlanMap({ stops, center }: { stops: EnrichedStop[]; center: { la
         </button>
       </div>
 
-      {/* Sky-colour legend — decodes the marker colours at a glance ("ดูง่าย").
-          Hidden on small screens to keep the map's bottom edge uncluttered (the sky state
-          also shows on each stop card + popup). */}
-      <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2.5 rounded-full border border-hairline bg-paper/90 px-3 py-1.5 shadow-sm backdrop-blur sm:flex">
-        {SKY_LEGEND.map((s) => (
-          <span key={s.state} className="flex items-center gap-1 font-thai text-[0.65rem] text-ink-muted">
-            <span className="h-2.5 w-2.5 rounded-full ring-1 ring-white" style={{ background: SKY_COLOR[s.state] }} />
-            {en ? s.en : s.th}
+      {/* Legend toolbar — decodes sky colors and recommended ML route modes at a glance */}
+      <div className="pointer-events-none absolute bottom-3 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1.5 sm:flex">
+        {/* Sky-colour legend */}
+        <div className="flex items-center gap-2.5 rounded-full border border-hairline bg-paper/90 px-3.5 py-1.5 shadow-sm backdrop-blur">
+          <span className="font-thai text-[0.6rem] uppercase tracking-wider text-ink-faint mr-1">{en ? "Sky" : "สภาพฟ้า"}</span>
+          {SKY_LEGEND.map((s) => (
+            <span key={s.state} className="flex items-center gap-1 font-thai text-[0.65rem] text-ink-muted">
+              <span className="h-2.5 w-2.5 rounded-full ring-1 ring-white" style={{ background: SKY_COLOR[s.state] }} />
+              {en ? s.en : s.th}
+            </span>
+          ))}
+        </div>
+        
+        {/* ML Recommended Mode legend */}
+        <div className="flex items-center gap-2.5 rounded-full border border-hairline bg-paper/90 px-3.5 py-1 shadow-sm backdrop-blur">
+          <span className="font-thai text-[0.6rem] uppercase tracking-wider text-ink-faint mr-1">{en ? "ML Route" : "ML แนะนำ"}</span>
+          <span className="flex items-center gap-1 font-thai text-[0.65rem] text-ink-muted">
+            <span className="inline-block h-0.5 w-3 border-t-2 border-dashed" style={{ borderColor: "#3aa537" }} />
+            {en ? "Walk" : "เดิน"}
           </span>
-        ))}
+          <span className="flex items-center gap-1 font-thai text-[0.65rem] text-ink-muted">
+            <span className="inline-block h-0.5 w-3 border-t-2 border-dashed" style={{ borderColor: "#1964B7" }} />
+            {en ? "Transit" : "รถไฟฟ้า"}
+          </span>
+          <span className="flex items-center gap-1 font-thai text-[0.65rem] text-ink-muted">
+            <span className="inline-block h-0.5 w-3 border-t-2" style={{ borderColor: "#E0683C" }} />
+            {en ? "Taxi/Car" : "รถยนต์"}
+          </span>
+          <span className="flex items-center gap-1 font-thai text-[0.65rem] text-ink-muted">
+            <span className="inline-block h-0.5 w-3 border-t-2 border-dotted" style={{ borderColor: "#8B5CF6" }} />
+            {en ? "Bike" : "จักรยาน"}
+          </span>
+        </div>
       </div>
     </div>
   );
 }
+

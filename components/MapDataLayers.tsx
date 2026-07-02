@@ -30,7 +30,7 @@ const TOD_L: Record<string, [string, string]> = { day: ["กลางวัน",
  * Rendered as a child of react-map-gl's <Map>, so Marker/Source/Layer get the map via context.
  */
 
-export type MapLayerKey = "rain" | "traffic" | "events" | "cameras" | "watercam" | "air" | "transit" | "parks" | "cooling" | "rest";
+export type MapLayerKey = "rain" | "traffic" | "events" | "cameras" | "watercam" | "air" | "transit" | "busstops" | "parks" | "cooling" | "rest" | "rail";
 
 /** Traffic tiles are served by the same-origin /api/traffic-tile proxy, which holds the Longdo
  *  key server-side (never shipped to the browser). The client only needs to know it's enabled —
@@ -48,8 +48,11 @@ const ALL_LAYERS: { key: MapLayerKey; th: string; en: string; emoji: string; col
   { key: "air", th: "ฝุ่น PM2.5", en: "PM2.5", emoji: "💨", color: "#E08A3C", group: "sky" },
   { key: "watercam", th: "กล้องเขื่อน", en: "Dam cams", emoji: "💧", color: "#2E7D9A", group: "sky" },
   // เดินทาง
-  { key: "transit", th: "โครงข่ายขนส่ง", en: "Transit Net", emoji: "🚇", color: "#3aa537", group: "move" },
+  { key: "rail", th: "รถไฟฟ้า", en: "Skytrain & Metro", emoji: "🚇", color: "#1964B7", group: "move" },
+  { key: "busstops", th: "ป้ายรถเมล์", en: "Bus stops", emoji: "🚌", color: "#FACC15", group: "move" },
   { key: "rest", th: "จุดพักรถ", en: "Rest stops", emoji: "🛣️", color: "#7C6F5A", group: "move" },
+  // โครงสร้างพื้นฐาน
+  { key: "transit", th: "โครงข่ายขนส่ง", en: "Transit Net", emoji: "🕸️", color: "#3aa537", group: "infrastructure" },
   // ที่พึ่งพิง
   { key: "parks", th: "สวน", en: "Parks", emoji: "🌳", color: "#5E8C61", group: "refuge" },
   { key: "cooling", th: "ที่หลบร้อน", en: "Cooling", emoji: "❄️", color: "#3B82C4", group: "refuge" },
@@ -60,6 +63,7 @@ export const LAYER_GROUPS: { id: string; th: string; en: string }[] = [
   { id: "traffic", th: "จราจร", en: "Traffic" },
   { id: "sky", th: "ฟ้าและฝุ่น", en: "Sky & air" },
   { id: "move", th: "เดินทาง", en: "Getting around" },
+  { id: "infrastructure", th: "โครงสร้างพื้นฐาน", en: "Infrastructure" },
   { id: "refuge", th: "ที่พึ่งพิง", en: "Refuge" },
 ];
 
@@ -114,16 +118,26 @@ const airFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => {
   const staleEn = f && !f.fresh ? ` — last ${f.hhmm}` : "";
   return { lat: s.lat, lng: s.lng, label: s.stationNameTh, subTh: s.pm25 != null ? `PM2.5 ${s.pm25} ${AIR_LABEL_TH[s.level as keyof typeof AIR_LABEL_TH] ?? ""}${staleTh}` : "ไม่มีข้อมูล", subEn: s.pm25 != null ? `PM2.5 ${s.pm25} µg/m³${staleEn}` : "no data", color: AIR_COLOR[s.level as keyof typeof AIR_COLOR] ?? "#9AA0A6", emoji: "💨" };
 });
+const busFn = (d: any): Pt[] => (d.stations ?? []).map((s: any) => ({
+  lat: s.lat,
+  lng: s.lng,
+  label: s.nameTh,
+  subTh: s.nameEn,
+  subEn: s.nameEn,
+  color: "#FACC15",
+  emoji: "🚌"
+}));
 
 export function MapDataLayers({ center, active, routePresent, en, underId, stops }: { center: { lat: number; lng: number }; active: Set<MapLayerKey>; routePresent: boolean; en: boolean; underId?: string; stops?: EnrichedStop[] }) {
   const c = `lat=${center.lat}&lng=${center.lng}`;
   const rest = usePointLayer(active.has("rest"), `/api/rest-areas?${c}&n=6`, restFn);
   const cooling = usePointLayer(active.has("cooling"), `/api/cooling?${c}&n=8`, coolFn);
   const air = usePointLayer(active.has("air"), `/api/air/nearby?${c}&n=10`, airFn);
+  const busstops = usePointLayer(active.has("busstops"), `/api/transit/bus-stops?${c}`, busFn);
 
   // Transit Graph (Full network: rail + bus)
   const [transitData, setTransitData] = useState<{ nodes: TransitGraphNode[]; edges: TransitGraphEdge[] } | null>(null);
-  const showTransit = active.has("transit");
+  const showTransit = active.has("transit") || active.has("rail");
   useEffect(() => {
     if (!showTransit) {
       setTransitData(null);
@@ -189,6 +203,46 @@ export function MapDataLayers({ center, active, routePresent, en, underId, stops
       })),
     };
   }, [filteredNodes]);
+
+  const railNodesGeoJSON = useMemo(() => {
+    const railNodes = filteredNodes.filter((n) => n.system !== "BMTA");
+    if (railNodes.length === 0) return null;
+    return {
+      type: "FeatureCollection" as const,
+      features: railNodes.map((n) => ({
+        type: "Feature" as const,
+        geometry: { type: "Point" as const, coordinates: [n.lng, n.lat] },
+        properties: {
+          id: n.id,
+          nameEn: n.nameEn,
+          nameTh: n.nameTh,
+          system: n.system,
+          color: SYSTEM_META[n.system]?.color ?? "#6B7280",
+          emoji: "🚉",
+        },
+      })),
+    };
+  }, [filteredNodes]);
+
+  const railEdgesGeoJSON = useMemo(() => {
+    const railNodes = filteredNodes.filter((n) => n.system !== "BMTA");
+    if (railNodes.length === 0 || !transitData) return null;
+    const nodeIndex = new Map(railNodes.map((n) => [n.id, n]));
+    const features = transitData.edges
+      .filter((e) => e.system !== "BMTA")
+      .map((e) => {
+        const s = nodeIndex.get(e.source);
+        const t = nodeIndex.get(e.target);
+        if (!s || !t) return null;
+        return {
+          type: "Feature" as const,
+          geometry: { type: "LineString" as const, coordinates: [[s.lng, s.lat], [t.lng, t.lat]] },
+          properties: { system: e.system },
+        };
+      })
+      .filter(Boolean);
+    return { type: "FeatureCollection" as const, features };
+  }, [transitData, filteredNodes]);
 
   // Parks: the endpoint returns all official parks → keep the 12 nearest to the area.
   const [parks, setParks] = useState<Pt[]>([]);
@@ -391,6 +445,7 @@ export function MapDataLayers({ center, active, routePresent, en, underId, stops
       {parks.map((p, i) => dot(p, i, "park"))}
       {cooling.map((p, i) => dot(p, i, "cool"))}
       {rest.map((p, i) => dot(p, i, "rest"))}
+      {busstops.map((p, i) => dot(p, i, "busstop"))}
 
       {/* live incidents */}
       {showEvents && events.map((ev) => (
@@ -435,7 +490,7 @@ export function MapDataLayers({ center, active, routePresent, en, underId, stops
       ))}
 
       {/* Transit Graph Sources & Layers */}
-      {transitEdgesGeoJSON && (
+      {active.has("transit") && transitEdgesGeoJSON && (
         <Source id="transit-edges" type="geojson" data={transitEdgesGeoJSON}>
           <Layer
             id="transit-edges-layer"
@@ -452,13 +507,18 @@ export function MapDataLayers({ center, active, routePresent, en, underId, stops
                 "BMTA", "#CA8A04",
                 "#9CA3AF",
               ],
-              "line-width": 1.2,
-              "line-opacity": 0.5,
+              "line-width": [
+                "interpolate", ["linear"], ["zoom"],
+                10, 1.5,
+                14, 3.2,
+                18, 5.5,
+              ],
+              "line-opacity": 0.85,
             }}
           />
         </Source>
       )}
-      {transitNodesGeoJSON && (
+      {active.has("transit") && transitNodesGeoJSON && (
         <Source id="transit-nodes" type="geojson" data={transitNodesGeoJSON}>
           <Layer
             id="transit-nodes-layer"
@@ -468,12 +528,111 @@ export function MapDataLayers({ center, active, routePresent, en, underId, stops
               "circle-color": ["get", "color"],
               "circle-radius": [
                 "interpolate", ["linear"], ["zoom"],
-                10, 2.5,
-                14, 5,
+                10, 3.5,
+                14, 6.5,
+                18, 10.5,
               ],
-              "circle-stroke-width": 1,
+              "circle-stroke-width": 1.5,
               "circle-stroke-color": "#ffffff",
-              "circle-opacity": 0.9,
+              "circle-opacity": 0.95,
+            }}
+          />
+          <Layer
+            id="transit-nodes-label-layer"
+            type="symbol"
+            beforeId={underId}
+            layout={{
+              "text-field": en ? ["get", "nameEn"] : ["get", "nameTh"],
+              "text-size": [
+                "interpolate", ["linear"], ["zoom"],
+                11, 8.5,
+                14, 11,
+                18, 13.5,
+              ],
+              "text-offset": [0, 1.35],
+              "text-anchor": "top",
+              "text-max-width": 8,
+              "text-optional": true,
+            }}
+            paint={{
+              "text-color": "#1A1F2B",
+              "text-halo-color": "#ffffff",
+              "text-halo-width": 1.5,
+              "text-halo-blur": 0.5,
+            }}
+          />
+        </Source>
+      )}
+
+      {/* Rail Network Sources & Layers */}
+      {active.has("rail") && railEdgesGeoJSON && (
+        <Source id="rail-edges" type="geojson" data={railEdgesGeoJSON}>
+          <Layer
+            id="rail-edges-layer"
+            type="line"
+            beforeId={underId}
+            paint={{
+              "line-color": [
+                "match", ["get", "system"],
+                "BTS", "#3aa537",
+                "MRT", "#1964B7",
+                "ARL", "#C8102E",
+                "SRT", "#A6192E",
+                "BRT", "#F97316",
+                "#9CA3AF",
+              ],
+              "line-width": [
+                "interpolate", ["linear"], ["zoom"],
+                10, 1.5,
+                14, 3.2,
+                18, 5.5,
+              ],
+              "line-opacity": 0.85,
+            }}
+          />
+        </Source>
+      )}
+      {active.has("rail") && railNodesGeoJSON && (
+        <Source id="rail-nodes" type="geojson" data={railNodesGeoJSON}>
+          <Layer
+            id="rail-nodes-layer"
+            type="circle"
+            beforeId={underId}
+            paint={{
+              "circle-color": ["get", "color"],
+              "circle-radius": [
+                "interpolate", ["linear"], ["zoom"],
+                10, 3.5,
+                14, 6.5,
+                18, 10.5,
+              ],
+              "circle-stroke-width": 1.5,
+              "circle-stroke-color": "#ffffff",
+              "circle-opacity": 0.95,
+            }}
+          />
+          <Layer
+            id="rail-nodes-label-layer"
+            type="symbol"
+            beforeId={underId}
+            layout={{
+              "text-field": en ? ["get", "nameEn"] : ["get", "nameTh"],
+              "text-size": [
+                "interpolate", ["linear"], ["zoom"],
+                11, 8.5,
+                14, 11,
+                18, 13.5,
+              ],
+              "text-offset": [0, 1.35],
+              "text-anchor": "top",
+              "text-max-width": 8,
+              "text-optional": true,
+            }}
+            paint={{
+              "text-color": "#1A1F2B",
+              "text-halo-color": "#ffffff",
+              "text-halo-width": 1.5,
+              "text-halo-blur": 0.5,
             }}
           />
         </Source>

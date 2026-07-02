@@ -1,9 +1,24 @@
 # TAT API + ML Recommendation Engine Integration
 
-- `[x]` **1. TAT API Client** (`lib/tat/client.ts`)
-- `[x]` **2. TAT API Route** (`app/api/tat/route.ts`)
-- `[x]` **3. Explore Page** — TAT images + events + routes
-- `[x]` **4. Plan Page** — ML recommendation cards
-- `[x]` **5. Home Page** — TAT events strip
-- `[x]` **6. QA Test** — Browser verification
-- `[x]` **7. Figma Interactive Add Places Section** — Added search, circular category buttons, and inline adding capability to itinerary.
+- [x] Modify `components/MapDataLayers.tsx` to enrich the transit network layer:
+  - [x] Increase transit line thickness with zoom interpolation
+  - [x] Make transit nodes (stations) larger with zoom interpolation
+  - [x] Add a symbol text layer for transit station name labels (Thai/English)
+  - [x] Add a new toggleable "Bus stops" layer ("ป้ายรถเมล์" / Bus stops) under "move" group
+  - [x] Separate BTS/MRT rail net into its own "รถไฟฟ้า" (Skytrain & Metro) layer under "move" group
+  - [x] Move the full "Transit Net" (โครงข่ายขนส่ง) layer to a new "Infrastructure" (โครงสร้างพื้นฐาน) group
+- [x] Create API route `/api/transit/bus-stops` that:
+  - [x] Queries Longdo Search API for bus stops near the coords if `LONGDO_KEY` is present
+  - [x] Falls back to local BMTA nodes from the transit graph dataset if keyless/failed
+- [x] Modify `components/PlanMap.tsx` to handle interactivity, popups, and route styles:
+  - [x] Add `mlModes` prop and update types
+  - [x] Set `rail` and `busstops` layers active by default in the layers set, keeping `transit` off by default
+  - [x] Construct `legsGeoJSON` based on individual legs and their ML recommended travel modes
+  - [x] Render styled line layers for different recommended modes (dashed/solid/colors)
+  - [x] Listen to `<Map onClick>` and `<Map onMouseEnter/onMouseLeave>` to handle hover cursors and show popups for clicked stations, bus stops, and lines (including rail-specific layers)
+  - [x] Add a beautiful legend showing both sky conditions and ML route modes
+- [x] Modify `app/plan/PlanClient.tsx` to integrate with the map:
+  - [x] Pass `mlModes` map to the `PlanMap` component
+  - [x] Fix the minutes lookup mapping for Python ML modes in the timeline
+- [x] Verify changes:
+  - [x] Build the Next.js app to ensure there are no compilation errors

@@ -12,9 +12,10 @@ import { getMockProvinceDistrict } from "@/lib/ml/attractionDb";
 
 export const DISTRICTS: DistrictMeta[] = [
   ...GEN_DISTRICTS,
-  { key: "chiang-mai", th: "เชียงใหม่ (เมือง)", en: "Chiang Mai", lat: 18.7883, lng: 98.9853, zone: "Other Provinces", tier: 1, count: 15 },
-  { key: "phuket", th: "ภูเก็ต (ป่าตอง/เมือง)", en: "Phuket", lat: 7.8804, lng: 98.3922, zone: "Other Provinces", tier: 1, count: 15 },
-  { key: "chonburi", th: "ชลบุรี (พัทยา/บางแสน)", en: "Chonburi (Pattaya)", lat: 12.9236, lng: 100.8824, zone: "Other Provinces", tier: 1, count: 15 },
+  { key: "chiang-mai", th: "เชียงใหม่ (เมือง)", en: "Chiang Mai", lat: 18.7883, lng: 98.9853, zone: "Other Provinces", tier: "province", count: 15 },
+  { key: "phuket", th: "ภูเก็ต (ป่าตอง/เมือง)", en: "Phuket", lat: 7.8804, lng: 98.3922, zone: "Other Provinces", tier: "province", count: 15 },
+  { key: "chonburi", th: "ชลบุรี (พัทยา/บางแสน)", en: "Chonburi (Pattaya)", lat: 12.9236, lng: 100.8824, zone: "Other Provinces", tier: "province", count: 15 },
+
 ];
 export const DISTRICT_KEYS = [...GEN_KEYS, "chiang-mai", "phuket", "chonburi"];
 export const ZONE_ORDER = [...GEN_ZONE_ORDER, "Other Provinces"];

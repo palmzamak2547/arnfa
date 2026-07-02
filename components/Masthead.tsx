@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLang } from "@/lib/i18n/useLang";
 import { LanguageToggle } from "./LanguageToggle";
 import { AuthButton } from "./AuthButton";
@@ -28,7 +29,7 @@ export function Masthead() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/40 bg-paper/60 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.7)] pad-safe-t">
+    <header className="sticky top-0 z-40 border-b border-white/40 bg-paper/60 backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.7)] pad-safe-t dark:border-white/10 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)]">
       <div className="mx-auto flex max-w-[1360px] items-center justify-between gap-4 px-4 py-2.5 sm:px-[clamp(16px,4vw,46px)]">
         {/* brand lockup */}
         <Link href="/" className="flex flex-none items-center gap-2.5 text-ink transition-colors hover:text-ink-muted" aria-label="อ่านฟ้า Arnfah">
@@ -49,7 +50,7 @@ export function Masthead() {
 
         <div className="flex flex-none items-center gap-2 sm:gap-3">
           <div className="hidden sm:block"><AuthButton compact /></div>
-          <Link href="/plan" className="inline-flex min-h-[44px] items-center rounded-full bg-ink px-3.5 py-2 font-thai text-sm leading-none text-paper transition-colors hover:bg-ink-muted sm:px-4">
+          <Link href="/plan" className="inline-flex min-h-[44px] items-center rounded-full bg-ink px-3.5 py-2 font-thai text-sm leading-none text-paper transition-transform hover:bg-ink-muted hover:scale-[1.02] active:scale-[0.98] sm:px-4">
             {en ? "Plan a trip" : "วางแผนทริป"}
           </Link>
           <div className="hidden md:block"><LanguageToggle /></div>
@@ -64,23 +65,31 @@ export function Masthead() {
       </div>
 
       {/* mobile drawer — keeps all surfaces reachable on phones */}
-      {open && (
-        <nav className="border-t border-hairline bg-paper/95 backdrop-blur-xl md:hidden">
-          <div className="mx-auto flex max-w-[1360px] flex-col px-4 pb-2 sm:px-[clamp(16px,4vw,46px)]">
-            {NAV.map((n) => (
-              <Link key={n.href} href={n.href} onClick={() => setOpen(false)}
-                className="flex min-h-[48px] items-center border-b border-hairline font-thai text-[0.95rem] text-ink transition-colors hover:text-ink-muted">
-                {en ? n.en : n.th}
-              </Link>
-            ))}
-            <div className="flex items-center gap-3 border-b border-hairline py-3">
-              <span className="font-thai text-sm text-ink-faint">{en ? "Language" : "ภาษา"}</span>
-              <LanguageToggle />
+      <AnimatePresence>
+        {open && (
+          <motion.nav 
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="border-t border-hairline bg-paper/95 backdrop-blur-xl md:hidden overflow-hidden"
+          >
+            <div className="mx-auto flex max-w-[1360px] flex-col px-4 pb-2 sm:px-[clamp(16px,4vw,46px)]">
+              {NAV.map((n) => (
+                <Link key={n.href} href={n.href} onClick={() => setOpen(false)}
+                  className="flex min-h-[48px] items-center border-b border-hairline font-thai text-[0.95rem] text-ink transition-colors hover:text-ink-muted">
+                  {en ? n.en : n.th}
+                </Link>
+              ))}
+              <div className="flex items-center gap-3 border-b border-hairline py-3">
+                <span className="font-thai text-sm text-ink-faint">{en ? "Language" : "ภาษา"}</span>
+                <LanguageToggle />
+              </div>
+              <div className="py-3 sm:hidden"><AuthButton /></div>
             </div>
-            <div className="py-3 sm:hidden"><AuthButton /></div>
-          </div>
-        </nav>
-      )}
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

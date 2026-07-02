@@ -667,6 +667,10 @@ function PlanInner() {
                       const modeEmoji = mlModesLoading ? "🔄" : recommendedMode === "walk" ? "🚶" : recommendedMode === "transit" ? "🚇" : recommendedMode === "bike" ? "🚲" : "🚖";
                       const modeLabel = mlModesLoading ? "..." : recommendedMode === "walk" ? (en ? "Walk" : "เดินเท้า") : recommendedMode === "transit" ? (en ? "Transit" : "รถไฟฟ้า/สาธารณะ") : recommendedMode === "bike" ? (en ? "Bike" : "จักรยาน") : (en ? "Taxi/Car" : "แท็กซี่/รถยนต์");
 
+                      // Map predicted mode to local travelMode Choice time estimation key
+                      const lookupMode = recommendedMode === "drive" ? "taxi" : (recommendedMode === "bike" ? "walk" : recommendedMode);
+                      const minutes = choice.estimatedMinutes[lookupMode as "walk" | "transit" | "taxi"] || choice.estimatedMinutes[choice.recommendedMode];
+
                       return (
                         <li className="-my-1 flex items-center gap-3 pl-[10px] font-thai text-xs text-ink-faint" aria-hidden>
                           <span className="flex w-6 justify-center"><span className="h-7 w-px bg-hairline" /></span>
@@ -675,7 +679,7 @@ function PlanInner() {
                             <span className="inline-flex items-center gap-1 bg-surface px-2 py-0.5 rounded-full border border-hairline shadow-sm hover:scale-[1.02] transition-transform cursor-help"
                               title={en ? choice.reason.en : choice.reason.th}>
                               <span aria-hidden>{modeEmoji}</span>
-                              <span className="font-semibold text-ink-muted text-[9px] uppercase tracking-wider">{en ? "ML Choice: " : "แนะนำ: "}{modeLabel} ({choice.estimatedMinutes[choice.recommendedMode]} {en ? "min" : "นาที"})</span>
+                              <span className="font-semibold text-ink-muted text-[9px] uppercase tracking-wider">{en ? "ML Choice: " : "แนะนำ: "}{modeLabel} ({minutes} {en ? "min" : "นาที"})</span>
                             </span>
                           </div>
                         </li>
@@ -834,7 +838,7 @@ function PlanInner() {
               </div>
 
               <div className="h-[320px] sm:h-[400px] lg:h-auto lg:min-h-[520px] lg:sticky lg:top-6">
-                <PlanMap stops={activePlan.stops} center={center} />
+                <PlanMap stops={activePlan.stops} center={center} mlModes={mlModes} />
               </div>
             </div>
           )}
