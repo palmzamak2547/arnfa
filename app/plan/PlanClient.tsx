@@ -610,7 +610,7 @@ function PlanInner() {
                 <p className="font-thai text-sm text-ink-faint mb-4">{en ? `Reading the sky — ${districtEn}` : `กำลังอ่านฟ้า ${districtTh}`}</p>
                 <PlanSkeleton />
               </div>
-              <div className="hidden lg:block h-[520px] rounded-3xl border border-hairline bg-surface/50 animate-pulse" />
+              <div className="hidden lg:block lg:h-[520px] rounded-3xl border border-hairline bg-surface/50 animate-pulse" />
             </div>
           )}
 
@@ -833,7 +833,7 @@ function PlanInner() {
                 </div>
               </div>
 
-              <div className="h-[420px] lg:h-auto lg:min-h-[520px] lg:sticky lg:top-6">
+              <div className="h-[320px] sm:h-[400px] lg:h-auto lg:min-h-[520px] lg:sticky lg:top-6">
                 <PlanMap stops={activePlan.stops} center={center} />
               </div>
             </div>
