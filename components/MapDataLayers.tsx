@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { Marker, Source, Layer, Popup } from "react-map-gl/maplibre";
 import { SYSTEM_META } from "@/lib/data/transitStations";
