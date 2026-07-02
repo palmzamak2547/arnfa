@@ -334,17 +334,21 @@ function PlanInner() {
     const fetches = stops.slice(1).map((stop, i) => {
       const prev = stops[i];
       const meters = routedHops[i + 1] ? routedHops[i + 1].meters : (hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng).km * 1000);
-      const isWeekend = [0, 6].includes(new Date(stop.arrivalHourISO).getDay());
+      const date = new Date(stop.arrivalHourISO);
+      const jsDay = date.getDay();
+      const modelDay = jsDay === 0 ? 7 : jsDay; // 1 (Mon) - 7 (Sun)
+      const departureHour = date.getHours() + (date.getMinutes() / 60);
+
       const payload = {
         distance: meters,
         female: travelerForm.female,
         age: travelerForm.age,
         driving_license: travelerForm.license,
         car_ownership: travelerForm.car,
-        cost_transit: meters * 0.005,
-        cost_driving_fuel: meters * 0.002,
-        time_departure: 12.0,
-        day_of_week: isWeekend ? 6 : 2,
+        transit_cost: meters * 0.005,
+        driving_cost: meters * 0.002,
+        start_time: departureHour,
+        day_of_week: modelDay,
         purpose: "HBO"
       };
 
