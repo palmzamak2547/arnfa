@@ -11,7 +11,46 @@
  * Spec: projects/arnfa/03-data-sources.md § Air4Thai
  */
 
-const ENDPOINT = "http://air4thai.pcd.go.th/services/getNewAQI_JSON.php";
+import https from "https";
+
+const ENDPOINT = "https://air4thai.pcd.go.th/services/getNewAQI_JSON.php";
+
+function fetchHTTPS(url: string, signal?: AbortSignal): Promise<any> {
+  return new Promise((resolve, reject) => {
+    const agent = new https.Agent({ rejectUnauthorized: false });
+    const req = https.get(
+      url,
+      {
+        agent,
+        signal,
+        headers: { "User-Agent": "Arnfa/0.1" },
+      },
+      (res) => {
+        if (res.statusCode && (res.statusCode < 200 || res.statusCode >= 300)) {
+          reject(new Error(`Air4Thai ${res.statusCode}`));
+          return;
+        }
+
+        let data = "";
+        res.on("data", (chunk) => {
+          data += chunk;
+        });
+
+        res.on("end", () => {
+          try {
+            resolve(JSON.parse(data));
+          } catch (e) {
+            reject(new Error("Failed to parse JSON response"));
+          }
+        });
+      }
+    );
+
+    req.on("error", (err) => {
+      reject(err);
+    });
+  });
+}
 
 export type AirReading = {
   stationNameTh: string;
@@ -104,9 +143,7 @@ export type AirStation = { stationNameTh: string; lat: number; lng: number; pm25
 /** The N nearest Air4Thai stations to a point, each with its PM2.5 reading + band.
  *  For the map's air layer — the spatial dust picture, all real, never fabricated. */
 export async function fetchNearbyAir(lat: number, lng: number, n = 10, signal?: AbortSignal): Promise<AirStation[]> {
-  const res = await fetch(ENDPOINT, { signal, headers: { "User-Agent": "Arnfa/0.1" } });
-  if (!res.ok) throw new Error(`Air4Thai ${res.status}`);
-  const data = (await res.json()) as { stations?: Station[] };
+  const data = (await fetchHTTPS(ENDPOINT, signal)) as { stations?: Station[] };
   const out: AirStation[] = [];
   for (const st of data.stations ?? []) {
     const sLat = Number(st.lat), sLng = Number(st.long);
@@ -123,9 +160,7 @@ export async function fetchNearestAir(
   lng: number,
   signal?: AbortSignal,
 ): Promise<AirReading> {
-  const res = await fetch(ENDPOINT, { signal, headers: { "User-Agent": "Arnfa/0.1" } });
-  if (!res.ok) throw new Error(`Air4Thai ${res.status}`);
-  const data = (await res.json()) as { stations?: Station[] };
+  const data = (await fetchHTTPS(ENDPOINT, signal)) as { stations?: Station[] };
   const stations = data.stations ?? [];
 
   let best: { st: Station; d: number } | null = null;

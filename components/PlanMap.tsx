@@ -82,7 +82,9 @@ export function PlanMap({
   const [revealed, setRevealed] = useState(reduced ? fullPath.length : 0);
   const [shownMarkers, setShownMarkers] = useState(reduced ? stops.length : 0);
 
-  useEffect(() => { setSelected(null); setTransitPopup(null); }, [stops]);
+  const stopsKey = useMemo(() => stops.map(s => s.poi.id).join(','), [stops]);
+
+  useEffect(() => { setSelected(null); setTransitPopup(null); }, [stopsKey]);
 
   useEffect(() => {
     if (reduced) { setRevealed(fullPath.length); setShownMarkers(stops.length); return; }
@@ -93,7 +95,7 @@ export function PlanMap({
     let p = 0;
     const drawTimer = window.setTimeout(function grow() { p++; setRevealed(p); if (p < fullPath.length) raf = window.setTimeout(grow, 220) as unknown as number; }, 200 + stops.length * 140);
     return () => { window.clearTimeout(markerTimer); window.clearTimeout(drawTimer); window.clearTimeout(raf); };
-  }, [fullPath, stops.length, reduced]);
+  }, [stopsKey, reduced]);
 
   useEffect(() => {
     const map = mapRef.current?.getMap();
@@ -104,7 +106,7 @@ export function PlanMap({
       minLat = Math.min(minLat, lat); maxLat = Math.max(maxLat, lat);
     }
     map.fitBounds([[minLng, minLat], [maxLng, maxLat]], { padding: 56, maxZoom: 15.5, duration: reduced ? 0 : 1100 });
-  }, [fullPath, reduced]);
+  }, [stopsKey, reduced]);
 
   const lineGeoJSON = useMemo(() => ({
     type: "Feature" as const, properties: {},
@@ -168,6 +170,13 @@ export function PlanMap({
   const satLayer = sat === "none" ? null : GIBS_LAYERS.find((l) => l.key === sat) ?? null;
   const satDate = satLayer ? gibsDate(new Date(), satLayer.lagDays) : "";
 
+  const activeInteractiveLayers = useMemo(() => {
+    const arr: string[] = [];
+    if (layers.has("transit")) arr.push("transit-nodes-layer", "transit-edges-layer");
+    if (layers.has("rail")) arr.push("rail-nodes-layer", "rail-edges-layer");
+    return arr;
+  }, [layers]);
+
   return (
     <div className="relative h-full w-full overflow-hidden rounded-3xl border border-hairline">
       <Map
@@ -185,24 +194,35 @@ export function PlanMap({
         }}
         onError={(e) => { if (/webgl|context|style/i.test(String(e?.error?.message || ""))) setMapError(true); }}
         cursor={cursor}
-        interactiveLayerIds={["transit-nodes-layer", "transit-edges-layer", "rail-nodes-layer", "rail-edges-layer"]}
+        interactiveLayerIds={activeInteractiveLayers}
         onMouseEnter={() => setCursor("pointer")}
         onMouseLeave={() => setCursor("auto")}
         onClick={(e) => {
           const map = mapRef.current?.getMap();
           if (!map) return;
-          const features = map.queryRenderedFeatures(e.point, {
-            layers: ["transit-nodes-layer", "transit-edges-layer", "rail-nodes-layer", "rail-edges-layer"]
-          });
+          
+          let features: any[] = [];
+          if (activeInteractiveLayers.length > 0) {
+            try {
+              features = map.queryRenderedFeatures(e.point, {
+                layers: activeInteractiveLayers
+              });
+            } catch (err) {
+              console.warn("Query layers failed:", err);
+            }
+          }
           
           if (features.length > 0) {
             const f = features[0];
             const props = f.properties ?? {};
             if (f.layer.id === "transit-nodes-layer" || f.layer.id === "rail-nodes-layer") {
-              const coords = (f.geometry as any).coordinates;
+              const geom = f.geometry;
+              const coords = geom && geom.type === "Point" && Array.isArray(geom.coordinates) ? geom.coordinates : null;
+              const lng = coords && typeof coords[0] === "number" && !isNaN(coords[0]) ? coords[0] : e.lngLat.lng;
+              const lat = coords && typeof coords[1] === "number" && !isNaN(coords[1]) ? coords[1] : e.lngLat.lat;
               setTransitPopup({
-                lng: coords[0],
-                lat: coords[1],
+                lng,
+                lat,
                 nameTh: props.nameTh || "",
                 nameEn: props.nameEn || "",
                 system: props.system || "",
@@ -334,7 +354,7 @@ export function PlanMap({
         })}
 
         {selected && (
-          <Popup longitude={selected.poi.lng} latitude={selected.poi.lat} anchor="bottom" offset={28} closeButton closeOnClick={false}
+          <Popup longitude={selected.poi.lng} latitude={selected.poi.lat} anchor="bottom" offset={28} closeButton closeOnClick={false} focusAfterOpen={false}
             onClose={() => setSelected(null)} maxWidth="240px">
             <div className="font-thai">
               <p className="font-medium text-ink text-sm leading-snug">{selected.poi.name}</p>
@@ -347,7 +367,7 @@ export function PlanMap({
         )}
 
         {transitPopup && (
-          <Popup longitude={transitPopup.lng} latitude={transitPopup.lat} anchor="bottom" offset={10} closeButton closeOnClick={false}
+          <Popup longitude={transitPopup.lng} latitude={transitPopup.lat} anchor="bottom" offset={10} closeButton closeOnClick={false} focusAfterOpen={false}
             onClose={() => setTransitPopup(null)} maxWidth="260px">
             <div className="font-thai">
               <p className="flex items-center gap-1.5 text-sm font-medium leading-snug text-ink">

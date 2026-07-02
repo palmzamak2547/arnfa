@@ -181,7 +181,7 @@ export function MapDataLayers({ center, active, routePresent, en, underId, stops
           properties: { system: e.system },
         };
       })
-      .filter(Boolean);
+      .filter((f): f is NonNullable<typeof f> => f !== null);
     return { type: "FeatureCollection" as const, features };
   }, [transitData, filteredNodes]);
 
@@ -240,7 +240,7 @@ export function MapDataLayers({ center, active, routePresent, en, underId, stops
           properties: { system: e.system },
         };
       })
-      .filter(Boolean);
+      .filter((f): f is NonNullable<typeof f> => f !== null);
     return { type: "FeatureCollection" as const, features };
   }, [transitData, filteredNodes]);
 
