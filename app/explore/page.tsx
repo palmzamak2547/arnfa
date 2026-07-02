@@ -163,6 +163,28 @@ export default function ExplorePage() {
             </div>
           </div>
         </div>
+      {/* PM2.5 Prediction DL Showcase */}
+      <section className="arnfa-grid section-minor">
+        <div className="col-content border-t border-hairline pt-7">
+          <div className="overflow-hidden rounded-2xl border border-hairline bg-gradient-to-r from-emerald-50/60 to-teal-50/20 p-6 shadow-sm hover:shadow transition-shadow">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+              <div>
+                <p className="mb-1 font-display text-[0.7rem] uppercase tracking-[0.18em] text-emerald-600 font-semibold">{tx("แบบจำลองโครงข่ายประสาทเทียม (Deep Learning)", "Deep Learning Showcase", "深度学习")}</p>
+                <h3 className="font-thai-serif text-xl font-light text-ink">{tx("พยากรณ์ค่าฝุ่นละออง PM2.5 (DL PM2.5 Prediction)", "Interactive DL PM2.5 Prediction Sandbox", "PM2.5 预测交互式沙盒")}</h3>
+                <p className="mt-1.5 max-w-[60ch] font-thai text-xs leading-relaxed text-ink-muted">
+                  {tx(
+                    "ศึกษาและทดลองโมเดล Deep Learning (โครงข่ายประสาทเทียม 3 ชั้น) เพื่อทำนายค่าฝุ่นละออง PM2.5 ในกรุงเทพมหานคร จากสภาพภูมิอากาศ ปริมาณน้ำฝน ความชื้น ความเร็วลม อุณหภูมิ ทัศนวิสัย และระดับค่าฝุ่นย้อนหลัง",
+                    "Simulate and predict Bangkok PM2.5 concentrations using a 3-layer Feed-Forward Neural Network (MLP) trained on historical meteorological and particulate data.",
+                    "使用在历史气象和颗粒物数据上训练的 3 层前馈神经网络 (MLP)，模拟并预测曼谷 PM2.5 浓度。"
+                  )}
+                </p>
+              </div>
+              <Link href="/explore/pm25-prediction" className="inline-flex h-11 shrink-0 items-center rounded-full bg-ink px-6 font-thai text-sm font-medium text-paper transition-colors hover:bg-ink-muted">
+                {tx("ทดลองเล่นโมเดล →", "Explore Sandbox →", "探索沙盒 →")}
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="arnfa-grid section-major">

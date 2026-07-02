@@ -1,0 +1,18 @@
+{
+  "feature_cols": [
+    "rainfall",
+    "rainfall_lag1",
+    "rainfall_lag2",
+    "RH",
+    "wind_speed",
+    "temp",
+    "pm2.5_lag1",
+    "pm2.5_lag2",
+    "visibility"
+  ],
+  "metrics": {
+    "r2": 0.735966181943063,
+    "mae": 4.253364469822952,
+    "rmse": 5.41771842352681
+  }
+}
