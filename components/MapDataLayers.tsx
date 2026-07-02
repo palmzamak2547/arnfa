@@ -374,7 +374,6 @@ export function MapDataLayers({ center, active, routePresent, en, underId }: { c
         </Source>
       ) : null}
       {air.map((p, i) => dot(p, i, "air"))}
-      {rail.map((p, i) => dot(p, i, "rail"))}
       {parks.map((p, i) => dot(p, i, "park"))}
       {cooling.map((p, i) => dot(p, i, "cool"))}
       {rest.map((p, i) => dot(p, i, "rest"))}
