@@ -163,6 +163,8 @@ export default function ExplorePage() {
             </div>
           </div>
         </div>
+      </section>
+
       {/* PM2.5 Prediction DL Showcase */}
       <section className="arnfa-grid section-minor">
         <div className="col-content border-t border-hairline pt-7">
