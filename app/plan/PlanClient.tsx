@@ -41,7 +41,6 @@ import { BmaGreenSpaces } from "@/components/BmaGreenSpaces";
 import { CoolingNearby } from "@/components/CoolingNearby";
 import { SkyTimeline } from "@/components/SkyTimeline";
 import { TransitNearby } from "@/components/TransitNearby";
-import { TransitGraphMap } from "@/components/TransitGraphMap";
 import { RestAreasNearby } from "@/components/RestAreasNearby";
 import { CityReports } from "@/components/CityReports";
 import { GoThere } from "@/components/GoThere";
@@ -69,6 +68,11 @@ import { FigmaAddPlaces } from "@/components/FigmaAddPlaces";
 const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanMap), {
   ssr: false,
   loading: () => <div className="h-full w-full rounded-3xl border border-hairline bg-surface/60 animate-pulse" />,
+});
+
+const TransitGraphMap = dynamic(() => import("@/components/TransitGraphMap").then((m) => m.TransitGraphMap), {
+  ssr: false,
+  loading: () => <div className="h-72 sm:h-96 w-full rounded-3xl border border-hairline bg-surface/60 animate-pulse mt-4" />,
 });
 
 const BUDGETS = [

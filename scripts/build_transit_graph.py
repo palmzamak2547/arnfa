@@ -8,15 +8,17 @@ then exports two static snapshots that arnfa's front-end reads:
   lib/data/transitGraph.nodes.json  — stations with lat/lng/system/name
   lib/data/transitGraph.edges.json  — connections between stations
 
+Data sources:
+  - OSM via osmnx (rail stations: BTS/MRT/ARL/SRT/BRT)
+  - Namtang GTFS feed (bus stops: BMTA) — namtang.otp.go.th/opendata
+  - Supplementary SRT dataset from Downloads (if coords available)
+
 Run once (locally) whenever you need to refresh the transit data:
 
     python3 scripts/build_transit_graph.py
 
-The script also merges the supplementary SRT dataset (from Downloads) if it
-contains any records with coordinates.
-
 Requirements (already installed):
-    pip install city2graph osmnx geopandas networkx
+    pip install city2graph osmnx geopandas networkx requests
 """
 
 from __future__ import annotations
@@ -42,6 +44,7 @@ SYSTEM_COLORS: dict[str, str] = {
     "ARL": "#C8102E",
     "SRT": "#A6192E",
     "BRT": "#F97316",
+    "BMTA": "#FACC15",
 }
 
 def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -63,6 +66,7 @@ def fetch_osm_transit() -> list[dict]:
             "public_transport": ["stop_position", "station", "halt"],
             "railway": ["station", "halt", "tram_stop"],
             "station": ["subway", "light_rail"],
+            "highway": ["bus_stop"],
         }
         # New osmnx API: bbox = (left, bottom, right, top)
         gdf = ox.features_from_bbox(
@@ -86,7 +90,8 @@ def fetch_osm_transit() -> list[dict]:
 
             # Guess the transit system from tags
             network = str(row.get("network") or row.get("operator") or "")
-            system = _guess_system(network, name_en)
+            highway = str(row.get("highway") or "")
+            system = _guess_system(network, name_en, highway)
 
             stations.append({
                 "id": str(idx),
@@ -107,7 +112,7 @@ def fetch_osm_transit() -> list[dict]:
         return []
 
 
-def _guess_system(network: str, name: str) -> str:
+def _guess_system(network: str, name: str, highway: str = "") -> str:
     text = (network + " " + name).upper()
     if "BTS" in text or "SKYTRAIN" in text:
         return "BTS"
@@ -119,6 +124,8 @@ def _guess_system(network: str, name: str) -> str:
         return "BRT"
     if "SRT" in text or "RED LINE" in text or "RAILWAYS" in text:
         return "SRT"
+    if highway == "bus_stop" or "BMTA" in text or "BUS" in text:
+        return "BMTA"
     return "OTHER"
 
 
@@ -251,16 +258,20 @@ def main() -> None:
     print("arnfa · build_transit_graph.py")
     print("=" * 60)
 
-    # 1. Fetch from OSM
+    # 1. Fetch from OSM (rail + bus)
     osm_nodes = fetch_osm_transit()
 
     # 2. Merge supplementary SRT dataset (if it has coordinates)
     srt_nodes = load_supplementary_srt()
+
     all_nodes = osm_nodes + srt_nodes
 
     if not all_nodes:
         print("❌ No nodes fetched. Check your internet connection.", file=sys.stderr)
         sys.exit(1)
+
+    print(f"\n📊 Fetched {len(all_nodes)} total stations before dedup")
+
 
     # 3. Deduplicate
     all_nodes = deduplicate(all_nodes)
