@@ -116,6 +116,9 @@ export function selectTravelMode(input: ModeChoiceInput): ModeChoiceResult {
   // Double check constraints (e.g. if distance is too long, walk is impossible)
   if (distanceMeters > 2000 && recommendedMode === "walk") {
     recommendedMode = probabilities.transit > probabilities.taxi ? "transit" : "taxi";
+  } else if (distanceMeters <= 400) {
+    // Sanity check: Walk for very short distances
+    recommendedMode = "walk";
   }
 
   // 6. Generate explanatory reason

@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import type { SeedPoi } from "@/lib/plan/buildPlan";
 import { PoiPhoto } from "@/components/PoiPhoto";
+import { groupOf } from "@/lib/plan/categories";
 
 const CATEGORIES = [
   { key: "all", th: "ทั้งหมด", en: "All", icon: "🌐" },
@@ -14,30 +15,57 @@ const CATEGORIES = [
   { key: "relax", th: "พักผ่อน", en: "Relax", icon: "🛋️" },
 ];
 
+import { getDistance } from "@/lib/geo";
+
 type FigmaAddPlacesProps = {
   pois: SeedPoi[];
   boostedPoiIds: Set<string>;
   onToggleBoost: (id: string) => void;
   en: boolean;
   sky: string;
+  centerLat?: number;
+  centerLng?: number;
 };
 
-export function FigmaAddPlaces({ pois, boostedPoiIds, onToggleBoost, en, sky }: FigmaAddPlacesProps) {
+export function FigmaAddPlaces({ pois, boostedPoiIds, onToggleBoost, en, sky, centerLat, centerLng }: FigmaAddPlacesProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
 
   const filteredPois = useMemo(() => {
-    return pois.filter(p => {
+    const filtered = pois.filter(p => {
       const matchesSearch =
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (p.nameTh && p.nameTh.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      const matchesCategory =
-        activeCategory === "all" || p.category === activeCategory;
+      let matchesCategory = activeCategory === "all";
+      if (!matchesCategory) {
+        // activeCategory in FigmaAddPlaces matches the 'key' of CATEGORY_GROUPS in most cases, 
+        // except "eat", "shopping", "relax" which we need to map safely.
+        // Wait, groupOf returns "eat", "cafe", "nature", "culture", "shop", "relax"
+        const pGroup = groupOf(p.category) || p.category;
+        
+        // Map Figma categories to group keys
+        let figmaGroup = activeCategory;
+        if (activeCategory === "shopping") figmaGroup = "shop"; // mismatch between FigmaAddPlaces and categories.ts
+        if (activeCategory === "eat") figmaGroup = "eat"; // "restaurant" -> "eat"
+        
+        matchesCategory = pGroup === figmaGroup;
+      }
 
       return matchesSearch && matchesCategory;
     });
-  }, [pois, searchQuery, activeCategory]);
+    
+    // Sort by distance if center is provided
+    if (centerLat != null && centerLng != null) {
+      filtered.sort((a, b) => {
+        const distA = getDistance(centerLat, centerLng, a.lat, a.lng);
+        const distB = getDistance(centerLat, centerLng, b.lat, b.lng);
+        return distA - distB;
+      });
+    }
+    
+    return filtered;
+  }, [pois, searchQuery, activeCategory, centerLat, centerLng]);
 
   return (
     <section className="arnfa-grid mt-6 mb-8">

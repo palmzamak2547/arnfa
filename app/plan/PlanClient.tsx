@@ -64,6 +64,7 @@ import { saveTrip, loadCloudTaste, saveCloudTaste } from "@/lib/plan/trips";
 import { DistrictPicker } from "@/components/DistrictPicker";
 import { MlRecommendations } from "@/components/MlRecommendations";
 import { FigmaAddPlaces } from "@/components/FigmaAddPlaces";
+import { WeatherGeoFence } from "@/components/WeatherGeoFence";
 
 const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanMap), {
   ssr: false,
@@ -560,6 +561,8 @@ function PlanInner() {
         </div>
       </section>
 
+
+
       {/* Today's prep + microclimate compare + live companion — all from real data */}
       {advisory && (
         <section className="arnfa-grid mt-1">
@@ -593,6 +596,8 @@ function PlanInner() {
         onToggleBoost={handleToggleBoost}
         en={en}
         sky={nowSky}
+        centerLat={center.lat}
+        centerLng={center.lng}
       />
 
       {/* Results */}
@@ -664,7 +669,13 @@ function PlanInner() {
                         });
 
                         const mlMode = mlModes[i];
-                        const recommendedMode = mlMode ?? choice.recommendedMode;
+                        let recommendedMode = mlMode ?? choice.recommendedMode;
+                        
+                        // Sanity Check: If distance is very short (< 400m), always walk regardless of ML noise
+                        console.log(`[SanityCheck] stop=${stop.poi.name}, meters=${meters}, ML said=${mlMode}`);
+                        if (meters <= 400) {
+                          recommendedMode = "walk";
+                        }
 
                         const modeEmoji = mlModesLoading ? "🔄" : recommendedMode === "walk" ? "🚶" : recommendedMode === "transit" ? "🚇" : recommendedMode === "bike" ? "🚲" : "🚖";
                         const modeLabel = mlModesLoading ? "..." : recommendedMode === "walk" ? (en ? "Walk" : "เดินเท้า") : recommendedMode === "transit" ? (en ? "Transit" : "รถไฟฟ้า/สาธารณะ") : recommendedMode === "bike" ? (en ? "Bike" : "จักรยาน") : (en ? "Taxi/Car" : "แท็กซี่/รถยนต์");
@@ -882,6 +893,9 @@ function PlanInner() {
 
       {/* Real photos of notable, photo-linked places in this area (Wikimedia Commons) */}
       {districtData && <AreaHighlights pois={districtData.pois} />}
+
+      {/* Real-time Geo-fence mapped to the active trip plan */}
+      <WeatherGeoFence targetPois={activePlan ? activePlan.stops.map((s) => s.poi) : []} triggerRadiusInMeters={500} />
 
       <SiteFooter />
     </main>

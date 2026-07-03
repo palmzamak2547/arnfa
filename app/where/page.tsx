@@ -7,6 +7,7 @@ import { useLang } from "@/lib/i18n/useLang";
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SKY_VERDICT_TH, SKY_VERDICT_EN, type SkyVerdict } from "@/lib/core/skyScore";
+import { TatAreaImage } from "@/components/TatAreaImage";
 
 /**
  * /where — "ไปไหนดี". Flips the engine from "I picked an area, plan it" to "tell me
@@ -174,11 +175,10 @@ export default function WherePage() {
                     const bg = bgGradients[a.verdict] || "var(--arnfa-surface)";
                     
                     return (
-                      <Link key={a.key} href={`/plan?y=${a.key}&d=${day}`} className="arnfa-image-card shrink-0 w-[220px] h-[300px] af-lift shadow-sm block">
-                        {/* Placeholder Background instead of image */}
-                        <div className="absolute inset-0 transition-transform var(--dur-slow) var(--ease-drift) group-hover:scale-105" style={{ background: bg }} />
+                      <Link key={a.key} href={`/plan?y=${a.key}&d=${day}`} className="arnfa-image-card group relative shrink-0 w-[220px] h-[300px] af-lift shadow-sm block overflow-hidden rounded-2xl">
+                        <TatAreaImage lat={a.lat} lng={a.lng} thName={a.th} fallbackBg={bg} />
                         
-                        <div className="arnfa-image-card-content flex flex-col justify-end h-full">
+                        <div className="arnfa-image-card-content flex flex-col justify-end h-full relative z-10">
                           {i === 0 && (
                             <span className="mb-2 self-start rounded-full bg-paper/20 backdrop-blur-md px-2.5 py-1 font-display text-[0.6rem] uppercase tracking-[0.14em] text-paper">
                               {(a.verdict === "clearish" || a.verdict === "ok") ? (en ? "clearest" : "ฟ้าโปร่งสุด") : (en ? "best today" : "ดีสุดวันนี้")}
