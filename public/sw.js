@@ -31,3 +31,29 @@ self.addEventListener("fetch", (event) => {
     ),
   );
 });
+
+self.addEventListener('push', (event) => {
+  if (event.data) {
+    let data = {};
+    try {
+      data = event.data.json();
+    } catch {
+      data = { title: "Arnfa Notification", body: event.data.text() };
+    }
+    const options = {
+      body: data.body,
+      icon: '/icon-192.png',
+      badge: '/icon.svg',
+      tag: data.tag || 'arnfa-notification',
+      data: data.url || '/'
+    };
+    event.waitUntil(self.registration.showNotification(data.title || "Arnfah", options));
+  }
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  if (event.notification.data) {
+    event.waitUntil(self.clients.openWindow(event.notification.data));
+  }
+});

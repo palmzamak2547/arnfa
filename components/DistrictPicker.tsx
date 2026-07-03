@@ -48,7 +48,7 @@ export function DistrictPicker({ value, onChange }: { value: string; onChange: (
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="font-thai inline-flex min-h-[44px] items-center gap-2 rounded-full bg-ink px-5 py-2 text-paper text-sm font-medium transition-colors duration-[var(--dur-fast)] hover:bg-ink-muted"
+        className="font-thai inline-flex min-h-[44px] items-center gap-2 rounded-full bg-surface border border-hairline px-5 py-2 text-ink text-sm font-medium transition-all duration-[var(--dur-fast)] hover:shadow-sm hover:border-ink/20"
       >
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" className="opacity-80" aria-hidden>
           <path d="M12 21s7-5.7 7-11a7 7 0 1 0-14 0c0 5.3 7 11 7 11Z" stroke="currentColor" strokeWidth="1.7" />

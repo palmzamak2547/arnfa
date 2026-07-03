@@ -38,7 +38,13 @@ export function LiveCompanion({ pois }: { pois: SeedPoi[] }) {
   function notify(title: string, body: string) {
     try {
       if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-        new Notification(title, { body, icon: "/icon-192.png", tag: "arnfa-rain" });
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+          navigator.serviceWorker.ready.then(reg => {
+            reg.showNotification(title, { body, icon: "/icon-192.png", tag: "arnfa-rain" });
+          });
+        } else {
+          new Notification(title, { body, icon: "/icon-192.png", tag: "arnfa-rain" });
+        }
       }
     } catch { /* notifications are a bonus; never block */ }
   }

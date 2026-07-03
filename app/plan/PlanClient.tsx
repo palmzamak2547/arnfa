@@ -643,187 +643,222 @@ function PlanInner() {
 
                 <SkyTimeline forecast={forecast ?? []} stops={activePlan.stops} startHourIndex={startHourIndex} />
 
-                <ol className="space-y-3">
-                  {activePlan.stops.map((stop, i) => {
-                    const deal = deals.get(stop.poi.id);
-                    const showDeal = !!deal && dealMatchesWeather(deal.weatherTrigger, stop.skyState);
-                    const prev = i > 0 ? activePlan.stops[i - 1] : null;
-                    return (
-                    <Fragment key={stop.poi.id}>
-                    {prev && (() => {
-                      const meters = routedHops[i] ? routedHops[i].meters : (hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng).km * 1000);
-                      const rainProb = stop.rainProb;
-                      const trafficRisk = stop.trafficAlert ? stop.trafficAlert.riskScore : 0;
-                      const choice = selectTravelMode({
-                        distanceMeters: meters,
-                        rainProb,
-                        trafficRiskScore: trafficRisk,
-                        travelerProfile: "standard"
-                      });
-
-                      const mlMode = mlModes[i];
-                      const recommendedMode = mlMode ?? choice.recommendedMode;
-
-                      const modeEmoji = mlModesLoading ? "🔄" : recommendedMode === "walk" ? "🚶" : recommendedMode === "transit" ? "🚇" : recommendedMode === "bike" ? "🚲" : "🚖";
-                      const modeLabel = mlModesLoading ? "..." : recommendedMode === "walk" ? (en ? "Walk" : "เดินเท้า") : recommendedMode === "transit" ? (en ? "Transit" : "รถไฟฟ้า/สาธารณะ") : recommendedMode === "bike" ? (en ? "Bike" : "จักรยาน") : (en ? "Taxi/Car" : "แท็กซี่/รถยนต์");
-
-                      // Map predicted mode to local travelMode Choice time estimation key
-                      const lookupMode = recommendedMode === "drive" ? "taxi" : (recommendedMode === "bike" ? "walk" : recommendedMode);
-                      const minutes = choice.estimatedMinutes[lookupMode as "walk" | "transit" | "taxi"] || choice.estimatedMinutes[choice.recommendedMode];
-
+                <div className="relative">
+                  <div className="absolute top-4 bottom-0 left-[3.35rem] w-px bg-hairline z-0" />
+                  <ol className="space-y-3">
+                    {activePlan.stops.map((stop, i) => {
+                      const deal = deals.get(stop.poi.id);
+                      const showDeal = !!deal && dealMatchesWeather(deal.weatherTrigger, stop.skyState);
+                      const prev = i > 0 ? activePlan.stops[i - 1] : null;
                       return (
-                        <li className="-my-1 flex items-center gap-3 pl-[10px] font-thai text-xs text-ink-faint" aria-hidden>
-                          <span className="flex w-6 justify-center"><span className="h-7 w-px bg-hairline" /></span>
-                          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 py-1">
-                            <span>{routedHops[i] ? `🧭 ${routedHopLabel(routedHops[i].minutes, routedHops[i].meters, en)}` : hopLabel(hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng), en)}</span>
-                            <span className="inline-flex items-center gap-1 bg-surface px-2 py-0.5 rounded-full border border-hairline shadow-sm hover:scale-[1.02] transition-transform cursor-help"
-                              title={en ? choice.reason.en : choice.reason.th}>
-                              <span aria-hidden>{modeEmoji}</span>
-                              <span className="font-semibold text-ink-muted text-[9px] uppercase tracking-wider">{en ? "ML Choice: " : "แนะนำ: "}{modeLabel} ({minutes} {en ? "min" : "นาที"})</span>
-                            </span>
-                          </div>
-                        </li>
-                      );
-                    })()}
-                    <li className="flex items-start gap-4 rounded-2xl border border-hairline border-l-[3px] bg-surface/70 p-4"
-                      style={{ borderLeftColor: ({ clear: "var(--arnfa-accent-sun)", partly: "var(--arnfa-success)", cloudy: "var(--arnfa-hairline)", rain: "var(--arnfa-accent-rain)", storm: "var(--arnfa-accent-indoor-warm)", night: "#4A5878" } as Record<string, string>)[stop.skyState] ?? "var(--arnfa-hairline)" }}>
-                      <div className="relative shrink-0">
-                        <PoiPhoto poi={stop.poi} skyState={stop.skyState} className="h-14 w-14" />
-                        <span className="absolute -top-1.5 -left-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-ink text-paper text-xs font-semibold ring-2 ring-surface">{i + 1}</span>
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                          <h3 className="font-thai font-medium text-ink truncate">{stop.poi.name}</h3>
-                          <SkyChip state={stop.skyState} arrivalLabel={stop.arrivalLabel} tempC={stop.tempC} rainProb={stop.rainProb} size="sm" />
-                        </div>
-                        <p className="font-thai text-sm text-ink-muted mt-1">
-                          {categoryLabel(stop.poi.category, en)} — {stop.reason}
-                        </p>
-                        {showDeal && deal && (
-                          <a {...(deal.url ? { href: deal.url, target: "_blank", rel: "noopener noreferrer" } : {})}
-                            className="font-thai mt-1.5 inline-flex items-center gap-1.5 rounded-full border border-sun/40 bg-sun/[0.08] px-2.5 py-1 text-xs text-ink">
-                            <span aria-hidden>🏷️</span>
-                            <span className="font-medium">{deal.title}</span>
-                            <span className="text-ink-faint">{deal.merchantName}</span>
-                          </a>
-                        )}
-                        {stop.trafficAlert && stop.trafficAlert.riskScore > 35 && (
-                          <div className="mt-2 rounded-xl border border-indoor-warm/20 bg-indoor-warm/[0.03] p-3 text-xs flex flex-col gap-1.5">
-                            <div className="flex items-center justify-between font-medium">
-                              <span className="text-indoor-warm flex items-center gap-1">
-                                <span>⚠️</span>
-                                <span>{en ? "ML Traffic & Weather Hazard Alert" : "แจ้งเตือนความเสี่ยงจราจรและอากาศ (ML)"}</span>
-                              </span>
-                              <span className="font-display font-semibold text-indoor-warm bg-indoor-warm/10 px-1.5 py-0.5 rounded-md">
-                                {stop.trafficAlert.riskScore}/100
+                      <Fragment key={stop.poi.id}>
+                      {prev && (() => {
+                        const meters = routedHops[i] ? routedHops[i].meters : (hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng).km * 1000);
+                        const rainProb = stop.rainProb;
+                        const trafficRisk = stop.trafficAlert ? stop.trafficAlert.riskScore : 0;
+                        const choice = selectTravelMode({
+                          distanceMeters: meters,
+                          rainProb,
+                          trafficRiskScore: trafficRisk,
+                          travelerProfile: "standard"
+                        });
+
+                        const mlMode = mlModes[i];
+                        const recommendedMode = mlMode ?? choice.recommendedMode;
+
+                        const modeEmoji = mlModesLoading ? "🔄" : recommendedMode === "walk" ? "🚶" : recommendedMode === "transit" ? "🚇" : recommendedMode === "bike" ? "🚲" : "🚖";
+                        const modeLabel = mlModesLoading ? "..." : recommendedMode === "walk" ? (en ? "Walk" : "เดินเท้า") : recommendedMode === "transit" ? (en ? "Transit" : "รถไฟฟ้า/สาธารณะ") : recommendedMode === "bike" ? (en ? "Bike" : "จักรยาน") : (en ? "Taxi/Car" : "แท็กซี่/รถยนต์");
+
+                        const lookupMode = recommendedMode === "drive" ? "taxi" : (recommendedMode === "bike" ? "walk" : recommendedMode);
+                        const minutes = choice.estimatedMinutes[lookupMode as "walk" | "transit" | "taxi"] || choice.estimatedMinutes[choice.recommendedMode];
+
+                        return (
+                          <li className="-my-1 flex items-center relative z-10 font-thai text-xs text-ink-faint" aria-hidden>
+                            <div className="w-[3.35rem] shrink-0" />
+                            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 py-1 pl-4">
+                              <span>{routedHops[i] ? `🧭 ${routedHopLabel(routedHops[i].minutes, routedHops[i].meters, en)}` : hopLabel(hopEstimate(prev.poi.lat, prev.poi.lng, stop.poi.lat, stop.poi.lng), en)}</span>
+                              <span className="inline-flex items-center gap-1 bg-surface px-2 py-0.5 rounded-full border border-hairline shadow-sm hover:scale-[1.02] transition-transform cursor-help"
+                                title={en ? choice.reason.en : choice.reason.th}>
+                                <span aria-hidden>{modeEmoji}</span>
+                                <span className="font-semibold text-ink-muted text-[9px] uppercase tracking-wider">{en ? "ML Choice: " : "แนะนำ: "}{modeLabel} ({minutes} {en ? "min" : "นาที"})</span>
                               </span>
                             </div>
-                            <p className="font-thai text-[0.7rem] text-ink-muted leading-relaxed">
-                              {en ? stop.trafficAlert.recommendation.en : stop.trafficAlert.recommendation.th}
+                          </li>
+                        );
+                      })()}
+                      <li className="flex items-start relative z-10">
+                        {/* Time Column */}
+                        <div className="w-[3.35rem] pt-3 shrink-0 text-right pr-3">
+                          <span className="font-display font-medium text-ink-muted text-sm tabular-nums tracking-tight">
+                            {new Date(stop.arrivalHourISO).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                        {/* Dot Column */}
+                        <div className="flex flex-col items-center pt-[1.125rem] -ml-px shrink-0 w-1">
+                          <div className="h-2 w-2 rounded-full border border-ink/40 bg-surface shadow-[0_0_0_4px_var(--arnfa-paper)] z-10" />
+                        </div>
+                        {/* Card Column */}
+                        <div className="flex-1 ml-4 rounded-3xl border border-hairline bg-surface/90 p-4 shadow-sm transition-shadow hover:shadow-md af-lift"
+                          style={{ borderTopColor: ({ clear: "var(--arnfa-accent-sun)", partly: "var(--arnfa-success)", cloudy: "var(--arnfa-hairline)", rain: "var(--arnfa-accent-rain)", storm: "var(--arnfa-accent-indoor-warm)", night: "#4A5878" } as Record<string, string>)[stop.skyState] ?? "var(--arnfa-hairline)", borderTopWidth: "3px" }}>
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
+                            <h3 className="font-thai font-medium text-ink truncate flex-1">{stop.poi.name}</h3>
+                            <SkyChip state={stop.skyState} arrivalLabel={stop.arrivalLabel} tempC={stop.tempC} rainProb={stop.rainProb} size="sm" />
+                          </div>
+                          
+                          <div className="flex items-start gap-3">
+                            <PoiPhoto poi={stop.poi} skyState={stop.skyState} className="h-12 w-12 rounded-xl shrink-0 object-cover" />
+                            <p className="font-thai text-sm text-ink-muted leading-snug">
+                              {categoryLabel(stop.poi.category, en)} — {stop.reason}
                             </p>
-                            {stop.trafficAlert.diagnostics && (en ? stop.trafficAlert.diagnostics.en : stop.trafficAlert.diagnostics.th)?.length > 0 && (
+                          </div>
+
+                          {showDeal && deal && (
+                            <a {...(deal.url ? { href: deal.url, target: "_blank", rel: "noopener noreferrer" } : {})}
+                              className="font-thai mt-3 inline-flex items-center gap-1.5 rounded-full border border-sun/40 bg-sun/[0.08] px-2.5 py-1 text-xs text-ink">
+                              <span aria-hidden>🏷️</span>
+                              <span className="font-medium">{deal.title}</span>
+                              <span className="text-ink-faint">{deal.merchantName}</span>
+                            </a>
+                          )}
+                          
+                          {stop.trafficAlert && stop.trafficAlert.riskScore > 35 && (
+                            <div className="mt-3 rounded-2xl border border-indoor-warm/20 bg-indoor-warm/[0.03] p-3 text-xs flex flex-col gap-1.5">
+                              <div className="flex items-center justify-between font-medium">
+                                <span className="text-indoor-warm flex items-center gap-1">
+                                  <span>⚠️</span>
+                                  <span>{en ? "ML Traffic & Weather Hazard Alert" : "แจ้งเตือนความเสี่ยงจราจรและอากาศ (ML)"}</span>
+                                </span>
+                                <span className="font-display font-semibold text-indoor-warm bg-indoor-warm/10 px-1.5 py-0.5 rounded-md">
+                                  {stop.trafficAlert.riskScore}/100
+                                </span>
+                              </div>
+                              <p className="font-thai text-[0.7rem] text-ink-muted leading-relaxed">
+                                {en ? stop.trafficAlert.recommendation.en : stop.trafficAlert.recommendation.th}
+                              </p>
+                              {stop.trafficAlert.diagnostics && (en ? stop.trafficAlert.diagnostics.en : stop.trafficAlert.diagnostics.th)?.length > 0 && (
+                                <div className="flex flex-wrap gap-1 mt-0.5">
+                                  {(en ? stop.trafficAlert.diagnostics.en : stop.trafficAlert.diagnostics.th)?.map((diag, index) => (
+                                    <span key={index} className="text-[0.62rem] bg-paper/60 px-1.5 py-0.5 rounded-full border border-hairline text-ink-faint">
+                                      {diag}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          
+                          {stop.recommendationDetails && (
+                            <div className="mt-3 rounded-2xl border border-hairline bg-paper/40 p-3 text-xs flex flex-col gap-2">
+                              <div className="flex items-center justify-between">
+                                <span className="font-semibold text-ink-muted">
+                                  {stop.recommendationDetails.usedMlModel
+                                    ? (en ? "🧠 ML Recommendation" : "🧠 ระบบแนะนำด้วย ML")
+                                    : (en ? "⚖️ Hybrid Recommendation" : "⚖️ ระบบแนะนำด้วย Hybrid Scorer")}
+                                </span>
+                                <span className="font-display font-semibold text-rain bg-rain/10 px-2 py-0.5 rounded-full text-[10px]">
+                                  {en ? `Score: ${stop.recommendationDetails.totalScore}%` : `คะแนนแนะนำ: ${stop.recommendationDetails.totalScore}%`}
+                                </span>
+                              </div>
+
+                              <div className="space-y-1 my-1">
+                                <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-hairline">
+                                  <div className="bg-sun" style={{ width: `${stop.recommendationDetails.explanation.scorePercentInterest}%` }} title={`Interest: ${stop.recommendationDetails.explanation.scorePercentInterest}%`} />
+                                  <div className="bg-success" style={{ width: `${stop.recommendationDetails.explanation.scorePercentConvenience}%` }} title={`Convenience: ${stop.recommendationDetails.explanation.scorePercentConvenience}%`} />
+                                  <div className="bg-rain" style={{ width: `${stop.recommendationDetails.explanation.scorePercentWeather}%` }} title={`Weather: ${stop.recommendationDetails.explanation.scorePercentWeather}%`} />
+                                </div>
+                                <div className="flex justify-between text-[0.55rem] text-ink-faint">
+                                  <span>🎯 {stop.recommendationDetails.explanation.scorePercentInterest}%</span>
+                                  <span>🚗 {stop.recommendationDetails.explanation.scorePercentConvenience}%</span>
+                                  <span>☀️ {stop.recommendationDetails.explanation.scorePercentWeather}%</span>
+                                </div>
+                              </div>
+
                               <div className="flex flex-wrap gap-1 mt-0.5">
-                                {(en ? stop.trafficAlert.diagnostics.en : stop.trafficAlert.diagnostics.th)?.map((diag, index) => (
-                                  <span key={index} className="text-[0.62rem] bg-paper/60 px-1.5 py-0.5 rounded border border-hairline text-ink-faint">
-                                    {diag}
+                                {stop.recommendationDetails.explanation.matchesInterest && (
+                                  <span className="text-[0.62rem] font-thai bg-sun/10 text-ink-muted border border-sun/20 px-2 py-0.5 rounded-full">
+                                    🎯 {en ? "Matches Interest" : "แนะนำเพราะตรงกับความสนใจ"}
                                   </span>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        )}
-                        {stop.recommendationDetails && (
-                          <div className="mt-2.5 rounded-xl border border-hairline bg-paper/30 p-3 text-xs flex flex-col gap-2">
-                            <div className="flex items-center justify-between">
-                              <span className="font-semibold text-ink-muted">
-                                {stop.recommendationDetails.usedMlModel
-                                  ? (en ? "🧠 ML Recommendation" : "🧠 ระบบแนะนำด้วย ML")
-                                  : (en ? "⚖️ Hybrid Recommendation" : "⚖️ ระบบแนะนำด้วย Hybrid Scorer")}
-                              </span>
-                              <span className="font-display font-semibold text-rain bg-rain/10 px-2 py-0.5 rounded-full text-[10px]">
-                                {en ? `Score: ${stop.recommendationDetails.totalScore}%` : `คะแนนแนะนำ: ${stop.recommendationDetails.totalScore}%`}
-                              </span>
-                            </div>
-
-                            {/* Factor Weight Bars (XAI graph) */}
-                            <div className="space-y-1 my-1">
-                              <div className="flex h-1.5 w-full overflow-hidden rounded-full bg-hairline">
-                                <div className="bg-sun" style={{ width: `${stop.recommendationDetails.explanation.scorePercentInterest}%` }} title={`Interest: ${stop.recommendationDetails.explanation.scorePercentInterest}%`} />
-                                <div className="bg-success" style={{ width: `${stop.recommendationDetails.explanation.scorePercentConvenience}%` }} title={`Convenience: ${stop.recommendationDetails.explanation.scorePercentConvenience}%`} />
-                                <div className="bg-rain" style={{ width: `${stop.recommendationDetails.explanation.scorePercentWeather}%` }} title={`Weather: ${stop.recommendationDetails.explanation.scorePercentWeather}%`} />
-                              </div>
-                              <div className="flex justify-between text-[0.55rem] text-ink-faint">
-                                <span>🎯 {stop.recommendationDetails.explanation.scorePercentInterest}%</span>
-                                <span>🚗 {stop.recommendationDetails.explanation.scorePercentConvenience}%</span>
-                                <span>☀️ {stop.recommendationDetails.explanation.scorePercentWeather}%</span>
+                                )}
+                                {stop.recommendationDetails.explanation.convenientTravel && (
+                                  <span className="text-[0.62rem] font-thai bg-success/10 text-ink-muted border border-success/20 px-2 py-0.5 rounded-full">
+                                    🚗 {en ? "Convenient Travel" : "เดินทางสะดวก"}
+                                  </span>
+                                )}
+                                {stop.recommendationDetails.explanation.weatherSuitable && (
+                                  <span className="text-[0.62rem] font-thai bg-rain/10 text-ink-muted border border-rain/20 px-2 py-0.5 rounded-full">
+                                    ☀️ {en ? "Weather Suitable" : "เหมาะกับอากาศ"}
+                                  </span>
+                                )}
                               </div>
                             </div>
-
-                            {/* Dynamic Qualitative explanations in Thai and English */}
-                            <div className="flex flex-wrap gap-1 mt-0.5">
-                              {stop.recommendationDetails.explanation.matchesInterest && (
-                                <span className="text-[0.62rem] font-thai bg-sun/10 text-ink-muted border border-sun/20 px-2 py-0.5 rounded-full">
-                                  🎯 {en ? "Matches Interest" : "แนะนำเพราะตรงกับความสนใจ"}
-                                </span>
-                              )}
-                              {stop.recommendationDetails.explanation.convenientTravel && (
-                                <span className="text-[0.62rem] font-thai bg-success/10 text-ink-muted border border-success/20 px-2 py-0.5 rounded-full">
-                                  🚗 {en ? "Convenient Travel" : "เดินทางสะดวก"}
-                                </span>
-                              )}
-                              {stop.recommendationDetails.explanation.weatherSuitable && (
-                                <span className="text-[0.62rem] font-thai bg-rain/10 text-ink-muted border border-rain/20 px-2 py-0.5 rounded-full">
-                                  ☀️ {en ? "Weather Suitable" : "เหมาะกับอากาศ"}
-                                </span>
-                              )}
+                          )}
+                          
+                          <div className="mt-3 border-t border-hairline pt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+                            {stop.openStatus === "open" && <span className="text-success">{en ? "open now" : "เปิดอยู่"}</span>}
+                            {stop.openStatus === "closed" && <span className="text-indoor-warm">{en ? "closed now" : "ปิดตอนนี้"}</span>}
+                            {stop.openStatus === "unknown" && <span className="text-ink-faint">{en ? "hours unclear" : "เวลาเปิดไม่แน่ชัด"}</span>}
+                            {stop.poi.crowd && stop.poi.crowd.n >= 3 ? (
+                              <span className="inline-flex items-center gap-1 text-success" title={en ? "refined by real visitors" : "ปรับจากฟีดแบ็กจริงของคนที่ไปมา"}>
+                                <span aria-hidden>✦</span>{en ? `learned from ${stop.poi.crowd.n}` : `เรียนรู้จาก ${stop.poi.crowd.n} ครั้ง`}, {Math.round(stop.poi.crowd.okRate * 100)}% {en ? "ok" : "โอเค"}
+                              </span>
+                            ) : stop.poi.profile.confidence < 0.5 ? (
+                              <span className="text-ink-faint">{en ? "profile unsure" : "โปรไฟล์ยังไม่ชัด"}</span>
+                            ) : null}
+                            <div className="ml-auto flex items-center gap-3">
+                              <a href={mapsPoiUrl(stop.poi.lat, stop.poi.lng, stop.poi.name)} target="_blank" rel="noopener noreferrer" className="text-rain font-medium hover:underline">{en ? "navigate ↗" : "นำทาง ↗"}</a>
+                              {stop.poi.website && <a href={stop.poi.website} target="_blank" rel="noopener noreferrer" className="text-rain font-medium hover:underline">{en ? "website ↗" : "เว็บไซต์ ↗"}</a>}
                             </div>
                           </div>
-                        )}
-                        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
-                          {stop.openStatus === "open" && <span className="text-success">{en ? "open now" : "เปิดอยู่"}</span>}
-                          {stop.openStatus === "closed" && <span className="text-indoor-warm">{en ? "closed now" : "ปิดตอนนี้"}</span>}
-                          {stop.openStatus === "unknown" && <span className="text-ink-faint">{en ? "hours unclear" : "เวลาเปิดไม่แน่ชัด"}</span>}
-                          {stop.poi.crowd && stop.poi.crowd.n >= 3 ? (
-                            <span className="inline-flex items-center gap-1 text-success" title={en ? "refined by real visitors" : "ปรับจากฟีดแบ็กจริงของคนที่ไปมา"}>
-                              <span aria-hidden>✦</span>{en ? `learned from ${stop.poi.crowd.n}` : `เรียนรู้จาก ${stop.poi.crowd.n} ครั้ง`}, {Math.round(stop.poi.crowd.okRate * 100)}% {en ? "ok" : "โอเค"}
-                            </span>
-                          ) : stop.poi.profile.confidence < 0.5 ? (
-                            <span className="text-ink-faint">{en ? "profile unsure" : "โปรไฟล์ยังไม่ชัด"}</span>
-                          ) : null}
-                          <a href={mapsPoiUrl(stop.poi.lat, stop.poi.lng, stop.poi.name)} target="_blank" rel="noopener noreferrer" className="text-rain hover:underline">{en ? "navigate ↗" : "นำทาง ↗"}</a>
-                          {stop.poi.website && <a href={stop.poi.website} target="_blank" rel="noopener noreferrer" className="text-rain hover:underline">{en ? "website ↗" : "เว็บไซต์ ↗"}</a>}
+                          
+                          {CROWD_ENABLED && <div className="mt-3"><StopFeedback poiId={stop.poi.id} skyState={stop.skyState} rainProb={stop.rainProb} district={districtKey} en={en} /></div>}
                         </div>
-                        {CROWD_ENABLED && <StopFeedback poiId={stop.poi.id} skyState={stop.skyState} rainProb={stop.rainProb} district={districtKey} en={en} />}
-                      </div>
-                    </li>
-                    </Fragment>
-                  ); })}
-                </ol>
+                      </li>
+                      </Fragment>
+                    ); })}
+                  </ol>
+                </div>
 
                 {activePlan.stops.length === 0 && (
                   <p className="font-thai text-ink-faint py-8 text-center">{en ? "Nothing fits right now — try more time, another area, or a different vibe." : "ไม่มีที่แนะนำในเวลานี้ — ลองเพิ่มเวลา เปลี่ยนย่าน หรือเปลี่ยนแนวดู"}</p>
                 )}
 
                 {activePlan.stops.length > 0 && (
-                  <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2">
-                    <ShareButton url={shareUrl} />
-                    {user ? (
-                      <button type="button" onClick={doSave} disabled={saveState !== "idle"}
-                        className="font-thai inline-flex h-11 items-center gap-1.5 rounded-full bg-ink px-5 text-sm text-paper transition-colors hover:bg-ink-muted disabled:opacity-60">
-                        {saveState === "saved" ? (en ? "Saved ✓" : "บันทึกแล้ว ✓") : saveState === "saving" ? (en ? "Saving…" : "กำลังเซฟ…") : (en ? "Save trip" : "เซฟทริป")}
-                      </button>
-                    ) : (
-                      <Link href="/trips" className="font-thai inline-flex h-11 items-center rounded-full border border-hairline px-5 text-sm text-ink transition-colors hover:bg-surface">
-                        {en ? "Sign in to save" : "เข้าสู่ระบบเพื่อเซฟ"}
-                      </Link>
-                    )}
-                    <a href={mapsTripUrl(activePlan.stops.map((s) => ({ lat: s.poi.lat, lng: s.poi.lng })))} target="_blank" rel="noopener noreferrer"
-                      className="font-thai inline-flex h-11 items-center gap-1.5 rounded-full border border-hairline px-5 text-sm text-ink transition-colors hover:bg-surface">
-                      {en ? "Open in Google Maps ↗" : "เปิดใน Google Maps ↗"}
-                    </a>
+                  <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-surface p-4 rounded-3xl shadow-sm border border-hairline relative z-10 af-lift">
+                    <div className="flex-1">
+                      {user ? (
+                        <button type="button" onClick={doSave} disabled={saveState !== "idle"}
+                          className="font-thai flex w-full h-12 items-center justify-center gap-2 rounded-full bg-ink px-6 text-[0.95rem] font-medium text-paper transition-all hover:bg-ink-muted hover:shadow-md hover:-translate-y-0.5 disabled:opacity-60 disabled:hover:translate-y-0 disabled:hover:shadow-none">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <polyline points="17 21 17 13 7 13 7 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            <polyline points="7 3 7 8 15 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                          {saveState === "saved" ? (en ? "Saved ✓" : "บันทึกแล้ว ✓") : saveState === "saving" ? (en ? "Saving…" : "กำลังเซฟ…") : (en ? "Save this trip" : "บันทึกทริปนี้")}
+                        </button>
+                      ) : (
+                        <Link href="/trips" className="font-thai flex w-full h-12 items-center justify-center gap-2 rounded-full bg-ink px-6 text-[0.95rem] font-medium text-paper transition-all hover:bg-ink-muted hover:shadow-md hover:-translate-y-0.5">
+                          {en ? "Sign in to save" : "เข้าสู่ระบบเพื่อเซฟ"}
+                        </Link>
+                      )}
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="flex-1 sm:flex-none">
+                        <ShareButton url={shareUrl} />
+                      </div>
+                      <a href={mapsTripUrl(activePlan.stops.map((s) => ({ lat: s.poi.lat, lng: s.poi.lng })))} target="_blank" rel="noopener noreferrer"
+                        className="font-thai flex h-12 flex-1 sm:flex-none items-center justify-center gap-2 rounded-full border border-hairline bg-paper px-5 text-sm font-medium text-ink transition-all hover:bg-surface hover:shadow-sm"
+                        title={en ? "Open in Google Maps" : "เปิดใน Google Maps"}>
+                        <span className="hidden sm:inline">{en ? "Map" : "แผนที่"}</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <circle cx="12" cy="10" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
                 )}
-                <div className="mt-6 space-y-4">
+                
+                <div className="mt-8 space-y-4">
                   <TransitNearby lat={center.lat} lng={center.lng} />
                   <GoThere districtKey={districtKey} areaTh={districtTh} areaEn={districtEn} stayIn={outdoorPenalty > 0.25} />
                   {/* Rest stops are a road-trip thing → only for drive-to destinations, not walkable city areas */}
@@ -837,7 +872,7 @@ function PlanInner() {
                 </div>
               </div>
 
-              <div className="h-[500px] sm:h-[600px] lg:h-auto lg:min-h-[700px] lg:sticky lg:top-6">
+              <div className="h-[500px] sm:h-[600px] lg:h-auto lg:min-h-[700px] lg:sticky lg:top-6 lg:-mt-4">
                 <PlanMap stops={activePlan.stops} center={center} mlModes={mlModes} />
               </div>
             </div>

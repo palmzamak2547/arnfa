@@ -160,28 +160,44 @@ export default function WherePage() {
               <h2 className="font-thai-serif text-2xl font-light text-ink mb-5 text-balance">
                 {(top[0].verdict === "clearish" || top[0].verdict === "ok") ? (en ? "Clearest skies" : "ฟ้าโปร่งสุด") : (en ? "Best of the day" : "ฟ้าดีสุดเท่าที่มี")} — {dayLabel(day, en)}
               </h2>
-              <ol className="mb-14 border-y border-hairline divide-y divide-hairline">
-                {top.map((a, i) => (
-                  <li key={a.key}>
-                    <Link href={`/plan?y=${a.key}&d=${day}`} className="group flex items-center gap-4 py-4">
-                      <span className="w-8 shrink-0 font-display text-2xl font-light tabular-nums text-ink-faint">{i + 1}</span>
-                      <span className="min-w-0 flex-1">
-                        <span className="flex items-center gap-2">
-                          <span className="inline-block h-2 w-2 shrink-0 rounded-full" style={{ background: VDOT[a.verdict] }} aria-hidden />
-                          <span className="font-thai-serif text-xl font-light text-ink truncate transition-colors group-hover:text-ink-muted">{en ? a.en : a.th}</span>
+              {/* top picks — Horizontal Scroll Cards (Figma inspired) */}
+              <div className="-mx-[max(1.5rem,var(--safe-l))] mb-12">
+                <div className="arnfa-scroll-x gap-4 py-2">
+                  {top.map((a, i) => {
+                    // Use a thematic gradient instead of a real image since we don't have district photos
+                    const bgGradients = {
+                      clearish: "linear-gradient(135deg, #7BA68A 0%, #3D604A 100%)", // success
+                      ok: "linear-gradient(135deg, #F2A65A 0%, #D47B28 100%)", // sun
+                      closing: "linear-gradient(135deg, #5B7FB8 0%, #345281 100%)", // rain
+                      poor: "linear-gradient(135deg, #D9534A 0%, #9B2D25 100%)", // indoor-warm
+                    };
+                    const bg = bgGradients[a.verdict] || "var(--arnfa-surface)";
+                    
+                    return (
+                      <Link key={a.key} href={`/plan?y=${a.key}&d=${day}`} className="arnfa-image-card shrink-0 w-[220px] h-[300px] af-lift shadow-sm block">
+                        {/* Placeholder Background instead of image */}
+                        <div className="absolute inset-0 transition-transform var(--dur-slow) var(--ease-drift) group-hover:scale-105" style={{ background: bg }} />
+                        
+                        <div className="arnfa-image-card-content flex flex-col justify-end h-full">
                           {i === 0 && (
-                            <span className="shrink-0 rounded-full border border-sun px-2 py-0.5 font-display text-[0.58rem] uppercase tracking-[0.14em] text-sun">
+                            <span className="mb-2 self-start rounded-full bg-paper/20 backdrop-blur-md px-2.5 py-1 font-display text-[0.6rem] uppercase tracking-[0.14em] text-paper">
                               {(a.verdict === "clearish" || a.verdict === "ok") ? (en ? "clearest" : "ฟ้าโปร่งสุด") : (en ? "best today" : "ดีสุดวันนี้")}
                             </span>
                           )}
-                        </span>
-                        <span className="font-thai text-xs text-ink-faint">{zoneLabel(a.zone, en)} — {en ? SKY_VERDICT_EN[a.verdict] : SKY_VERDICT_TH[a.verdict]}</span>
-                      </span>
-                      <span className="shrink-0 font-thai text-sm text-ink-muted tabular-nums">{a.tempC}° {en ? "rain" : "ฝน"} {a.rainProb}%</span>
-                    </Link>
-                  </li>
-                ))}
-              </ol>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="font-thai-serif text-2xl font-light text-white truncate drop-shadow-md">{en ? a.en : a.th}</span>
+                          </div>
+                          <p className="font-thai text-sm text-white/90 drop-shadow-sm mb-1">{zoneLabel(a.zone, en)}</p>
+                          <div className="flex items-center gap-3 font-thai text-xs text-white/80 drop-shadow-sm tabular-nums">
+                            <span>{en ? "Temp" : "อุณหภูมิ"} {a.tempC}°</span>
+                            <span>{en ? "Rain" : "ฝน"} {a.rainProb}%</span>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
 
               {/* full ranked list, grouped by region */}
               <h2 className="font-thai-serif text-lg font-light text-ink mt-12 mb-4">{en ? "All areas, by region" : "ทั้งหมด รายภาค"}</h2>

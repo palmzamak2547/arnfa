@@ -34,9 +34,17 @@ export function ShareButton({
   const { en } = useLang();
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [shortUrl, setShortUrl] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   const full = url.startsWith("http") ? url : typeof window !== "undefined" ? window.location.origin + url : url;
+  const activeUrl = shortUrl || full;
+
+  // Reset short URL if the base URL changes
+  useEffect(() => {
+    setShortUrl(null);
+  }, [url]);
 
   useEffect(() => {
     if (!open) return;
@@ -46,32 +54,65 @@ export function ShareButton({
   }, [open]);
 
   async function onMain() {
+    if (loading) return;
+    let finalUrl = shortUrl;
+    
+    if (!finalUrl) {
+      setLoading(true);
+      finalUrl = full; // fallback
+      if (full.includes("/plan?")) {
+        try {
+          const qs = full.split("/plan?")[1];
+          const res = await fetch("/api/share", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ stateQs: qs }),
+          });
+          if (res.ok) {
+            const { id } = await res.json();
+            finalUrl = `${window.location.origin}/t/${id}`;
+            setShortUrl(finalUrl);
+          }
+        } catch { /* fallback */ }
+      }
+      setLoading(false);
+    }
+
     if (typeof navigator !== "undefined" && navigator.share) {
-      try { await navigator.share({ title, text, url: full }); return; } catch { /* cancelled → show menu */ }
+      try { await navigator.share({ title, text, url: finalUrl }); return; } catch { /* cancelled → show menu */ }
     }
     setOpen((o) => !o);
   }
 
   async function copy() {
-    try { await navigator.clipboard.writeText(full); setCopied(true); setTimeout(() => setCopied(false), 1800); } catch { /* blocked */ }
+    try { await navigator.clipboard.writeText(activeUrl); setCopied(true); setTimeout(() => setCopied(false), 1800); } catch { /* blocked */ }
     setOpen(false);
   }
 
   return (
     <div ref={ref} className="relative inline-block">
-      <button type="button" onClick={onMain}
-        className={clsx("font-thai inline-flex items-center gap-2 rounded-full border border-hairline px-5 text-sm font-medium text-ink transition-colors duration-[var(--dur-base)] hover:bg-surface min-h-[44px]", className)}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
-          <line x1="8.6" y1="13.5" x2="15.4" y2="17.5" /><line x1="15.4" y1="6.5" x2="8.6" y2="10.5" />
-        </svg>
-        {copied ? (en ? "Link copied" : "คัดลอกลิงก์แล้ว") : (en ? "Share this plan" : "แชร์แพลนนี้")}
+      <button type="button" onClick={onMain} disabled={loading}
+        className={clsx("font-thai inline-flex items-center gap-2 rounded-full border border-hairline px-5 text-sm font-medium text-ink transition-colors duration-[var(--dur-base)] min-h-[44px]", loading ? "opacity-70 cursor-not-allowed bg-surface" : "hover:bg-surface", className)}>
+        {loading ? (
+          <span className="flex items-center gap-2">
+            <span className="af-blink h-2 w-2 rounded-full bg-sun" />
+            {en ? "Generating..." : "กำลังสร้างลิงก์..."}
+          </span>
+        ) : (
+          <>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+              <line x1="8.6" y1="13.5" x2="15.4" y2="17.5" /><line x1="15.4" y1="6.5" x2="8.6" y2="10.5" />
+            </svg>
+            {copied ? (en ? "Link copied" : "คัดลอกลิงก์แล้ว") : (en ? "Share this plan" : "แชร์แพลนนี้")}
+          </>
+        )}
       </button>
 
       {open && (
         <div className="absolute left-0 z-20 mt-2 w-60 rounded-2xl border border-hairline bg-paper p-2 shadow-lg">
           {TARGETS.map((t) => (
-            <a key={t.brand} href={t.href(full, text)} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}
+            <a key={t.brand} href={t.href(activeUrl, text)} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}
               className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink transition-colors hover:bg-surface">
               <span style={{ color: BRANDS[t.brand].hex }} className="flex shrink-0"><BrandIcon brand={t.brand} size={18} /></span>
               <span className="font-thai">{en ? `Share to ${t.label}` : `แชร์ไป ${t.label}`}</span>
@@ -88,3 +129,4 @@ export function ShareButton({
     </div>
   );
 }
+
