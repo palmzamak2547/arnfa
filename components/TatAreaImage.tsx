@@ -24,16 +24,25 @@ export function TatAreaImage({ lat, lng, thName, fallbackBg }: { lat: number; ln
 
         // 2. Fallback to Wikipedia API if TAT has no image
         if (thName) {
-          const wikiName = thName.startsWith("จ.") || thName.startsWith("อ.") 
-            ? thName.replace("จ.", "จังหวัด").replace("อ.", "อำเภอ")
-            : `จังหวัด${thName}`;
+          const variants = [];
+          if (thName.startsWith("จ.") || thName.startsWith("อ.")) {
+            variants.push(thName.replace("จ.", "จังหวัด").replace("อ.", "อำเภอ"));
+          } else {
+            variants.push(thName);
+            variants.push(`เขต${thName}`);
+            variants.push(`จังหวัด${thName}`);
+            if (thName === "ทองหล่อ") variants.push("ซอยทองหล่อ");
+            if (thName === "เยาวราช" || thName === "สัมพันธวงศ์") variants.push("ถนนเยาวราช");
+          }
           
-          const wikiRes = await fetch(`https://th.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(wikiName)}`);
-          if (wikiRes.ok) {
-            const wikiData = await wikiRes.json();
-            if (wikiData?.thumbnail?.source) {
-              if (active) setImgUrl(wikiData.thumbnail.source);
-              return;
+          for (const wikiName of variants) {
+            const wikiRes = await fetch(`https://th.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(wikiName)}`);
+            if (wikiRes.ok) {
+              const wikiData = await wikiRes.json();
+              if (wikiData?.thumbnail?.source) {
+                if (active) setImgUrl(wikiData.thumbnail.source);
+                return;
+              }
             }
           }
         }

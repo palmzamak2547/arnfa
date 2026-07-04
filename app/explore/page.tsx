@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Masthead } from "@/components/Masthead";
 import { SiteFooter } from "@/components/SiteFooter";
 import { useLang } from "@/lib/i18n/useLang";
+import { TatAreaImage } from "@/components/TatAreaImage";
+import { districtMeta } from "@/lib/poi/districts";
 
 /**
  * /explore — "Bangkok, planned around the weather" — the TOURIST surface (business model v3:
@@ -94,7 +96,9 @@ export default function ExplorePage() {
         <div className="col-content">
           <h2 className="mb-5 border-t border-hairline pt-7 font-display text-sm uppercase tracking-[0.2em] text-ink">{tx("ย่านห้ามพลาด", "Must-see zones", "必去区域")}</h2>
           <div className="grid gap-x-6 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
-            {TOURIST_AREAS.map((a, i) => (
+            {TOURIST_AREAS.map((a, i) => {
+              const meta = districtMeta(a.key);
+              return (
               <Link key={a.key} href={`/plan?y=${a.key}`} className="group af-lift block">
                 <div className="relative aspect-[3/2] overflow-hidden rounded-2xl border border-hairline">
                   <div
@@ -102,7 +106,12 @@ export default function ExplorePage() {
                     className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
                     style={{ background: a.bg }}
                   />
-                  <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(26,31,43,0.62)]" />
+                  {meta && (
+                     <div className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] opacity-80 mix-blend-overlay mix-blend-luminosity">
+                        <TatAreaImage thName={meta.th} lat={meta.lat} lng={meta.lng} />
+                     </div>
+                  )}
+                  <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(26,31,43,0.85)]" />
                   <span aria-hidden className="absolute right-3 top-3 text-2xl opacity-80 drop-shadow-[0_1px_4px_rgba(26,31,43,0.5)]">{a.icon}</span>
                   {i === 0 && (
                     <span className="absolute left-3 top-3 rounded-full bg-paper px-2.5 py-1 font-display text-[0.55rem] uppercase tracking-wider text-success">
@@ -116,7 +125,7 @@ export default function ExplorePage() {
                 </div>
                 <p className="mt-2 px-0.5 font-thai text-xs text-rain opacity-0 transition-opacity duration-300 group-hover:opacity-100">{tx("วางแผนรอบฟ้า →", "Plan it around the sky →", "按天气规划 →")}</p>
               </Link>
-            ))}
+            )})}
           </div>
         </div>
       </section>
