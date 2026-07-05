@@ -26,7 +26,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       return NextResponse.redirect(new URL("/plan", req.url));
     }
 
-    return NextResponse.redirect(new URL(`/plan?${data.state_qs}`, req.url));
+    return NextResponse.redirect(new URL(`/plan?${data.state_qs}&sid=${id}`, req.url));
   } catch (err) {
     return NextResponse.redirect(new URL("/plan", req.url));
   }

@@ -65,6 +65,7 @@ import { DistrictPicker } from "@/components/DistrictPicker";
 import { MlRecommendations } from "@/components/MlRecommendations";
 import { FigmaAddPlaces } from "@/components/FigmaAddPlaces";
 import { WeatherGeoFence } from "@/components/WeatherGeoFence";
+import { BudgetTracker } from "@/components/BudgetTracker";
 
 const PlanMap = dynamic(() => import("@/components/PlanMap").then((m) => m.PlanMap), {
   ssr: false,
@@ -87,6 +88,7 @@ function PlanInner() {
   const [budgetMin, setBudgetMin] = useState(DEFAULT_PLAN_STATE.budgetMin);
   const [dayOffset, setDayOffset] = useState(DEFAULT_PLAN_STATE.day);
   const [urlApplied, setUrlApplied] = useState(false);
+  const [sharedLinkId, setSharedLinkId] = useState<string | null>(null);
 
   useEffect(() => {
     const q = window.location.search.slice(1);
@@ -95,6 +97,10 @@ function PlanInner() {
     setBudgetMin(s.budgetMin);
     setDayOffset(s.day);
     setUrlApplied(true);
+    
+    const p = new URLSearchParams(q);
+    const sid = p.get("sid");
+    if (sid) setSharedLinkId(sid);
   }, []);
   const [forecast, setForecast] = useState<HourlyForecast[] | null>(null);
   const [provider, setProvider] = useState("");
@@ -553,6 +559,12 @@ function PlanInner() {
                 </span>
               </button>
             </div>
+            
+            {sharedLinkId && (
+              <div className="w-full mt-4 border-t border-hairline pt-4">
+                <BudgetTracker sharedLinkId={sharedLinkId} en={en} />
+              </div>
+            )}
           </div>
 
           <div className="mt-5">
