@@ -20,7 +20,8 @@ export default function TripsPage() {
 
   useEffect(() => {
     if (!ready) return;
-    if (user) listTrips().then(setTrips).catch(() => setLoadError(true));
+    // null = unavailable (not "you have none") → show the honest error state, not an empty state
+    if (user) listTrips().then((r) => (r === null ? setLoadError(true) : setTrips(r))).catch(() => setLoadError(true));
     else setTrips([]);
   }, [user, ready]);
 

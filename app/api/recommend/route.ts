@@ -69,8 +69,14 @@ export async function GET(req: NextRequest) {
       console.error("NVIDIA Recommendation fallback to TF-IDF due to error:", e);
     }
 
+    // Which method ACTUALLY produced the ranking — reported to the client so the UI can label
+    // itself honestly. data/poi_embeddings.json is gitignored, so on Vercel the NVIDIA branch
+    // above never runs and this is always "tfidf"; the UI must not claim otherwise.
+    let method: "nvidia" | "tfidf" = scores.length > 0 ? "nvidia" : "tfidf";
+
     // 2) Fallback to TF-IDF Recommender if NVIDIA failed/missing
     if (scores.length === 0) {
+      method = "tfidf";
       const recommender = new TfIdfRecommender();
       for (const p of district.pois) {
         const text = `${p.name} ${p.category} ${p.nameTh || ""}`;
@@ -110,7 +116,11 @@ export async function GET(req: NextRequest) {
       })
       .filter(Boolean);
 
-    return NextResponse.json({ recommendations: recommendedPois });
+    // deterministic per (district, sky, vibes) → safe to edge-cache instead of recomputing per render
+    return NextResponse.json(
+      { recommendations: recommendedPois, method },
+      { headers: { "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=3600" } },
+    );
   } catch (err) {
     console.error("Failed to generate recommendations:", err);
     return NextResponse.json({ error: "Failed to generate recommendations" }, { status: 500 });

@@ -20,21 +20,28 @@ type MlRecommendationsProps = {
 
 export function MlRecommendations({ districtKey, sky, vibes, en }: MlRecommendationsProps) {
   const [recommendations, setRecommendations] = useState<RecommendedPoi[]>([]);
+  const [method, setMethod] = useState<"nvidia" | "tfidf" | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // `vibes` is a fresh array on every parent render, so depending on it re-fired this fetch on
+  // every render (a request storm, and a late response could overwrite a newer district's).
+  // Depend on the serialised value and drop stale responses instead.
+  const vibesParam = vibes.join(",");
   useEffect(() => {
     if (!districtKey) return;
+    let cancelled = false;
     setLoading(true);
-    
-    const vibesParam = vibes.join(",");
     fetch(`/api/recommend?district=${districtKey}&sky=${sky}&vibes=${vibesParam}`)
       .then(r => (r.ok ? r.json() : Promise.reject()))
-      .then((d: { recommendations: RecommendedPoi[] }) => {
+      .then((d: { recommendations: RecommendedPoi[]; method?: "nvidia" | "tfidf" }) => {
+        if (cancelled) return;
         setRecommendations(d.recommendations ?? []);
+        setMethod(d.method ?? null);
       })
       .catch(() => {})
-      .finally(() => setLoading(false));
-  }, [districtKey, sky, vibes]);
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, [districtKey, sky, vibesParam]);
 
   if (loading) {
     return (
@@ -61,8 +68,13 @@ export function MlRecommendations({ districtKey, sky, vibes, en }: MlRecommendat
           <h3 className="font-display text-[0.7rem] uppercase tracking-[0.2em] text-ink-faint">
             {en ? "Recommended for you (ML)" : "แนะนำเฉพาะคุณด้วย ML"}
           </h3>
+          {/* Name the ranking that ACTUALLY ran. The NVIDIA embedding file is gitignored, so in
+              production this is the TF-IDF path — claiming "NVIDIA embeddings" there would be a
+              false statement about how the result was produced. */}
           <span className="ml-auto font-thai text-[0.55rem] text-ink-faint">
-            {en ? "NVIDIA Embeddings + Cosine Similarity" : "โมเดลความคล้ายคลึงเวกเตอร์ NVIDIA"}
+            {method === "nvidia"
+              ? (en ? "NVIDIA embeddings, cosine similarity" : "เวกเตอร์ NVIDIA (cosine similarity)")
+              : (en ? "keyword similarity (TF-IDF)" : "จัดอันดับตามคำใกล้เคียง (TF-IDF)")}
           </span>
         </div>
         <div className="grid gap-4 sm:grid-cols-3">

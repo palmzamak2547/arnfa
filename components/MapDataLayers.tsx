@@ -144,15 +144,19 @@ export function MapDataLayers({ center, active, routePresent, en, underId, stops
       return;
     }
     let cancelled = false;
-    // Note: transit-graph returns the entire city network, so we don't need to pass lat/lng/n
-    fetch("/api/transit-graph")
+    // Ask for the corridor around this area, not the whole city: we only ever draw nodes within
+    // ~2.5 km of the plan (see filteredNodes below), and the full graph is 12.5 MB on the wire.
+    // Measured: km=4 → 554 KB (23x smaller) and still leaves margin over the 2.5 km client
+    // filter for stops spread across a district. (km=6 balloons back to 2.2 MB — area is
+    // quadratic and bus nodes are dense — so 4 is the sweet spot, not a guess.)
+    fetch(`/api/transit-graph?nearLat=${center.lat}&nearLng=${center.lng}&km=4`)
       .then((r) => (r.ok ? r.json() : Promise.reject()))
       .then((d) => {
         if (!cancelled && d.nodes && d.edges) setTransitData({ nodes: d.nodes, edges: d.edges });
       })
       .catch(() => { if (!cancelled) setTransitData(null); });
     return () => { cancelled = true; };
-  }, [showTransit]);
+  }, [showTransit, center.lat, center.lng]);
 
   // Filter nodes to only those within 2.5 km of ANY stop in the plan (or center if empty)
   const filteredNodes = useMemo(() => {

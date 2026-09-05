@@ -9,6 +9,7 @@ import { overlayCrowd } from "@/lib/poi/crowd";
 import { startIndexForDay } from "@/lib/plan/days";
 import { filterByGroups } from "@/lib/plan/categories";
 import { bkkNow } from "@/lib/bkkNow";
+import { walkMinutes } from "@/lib/transport/route";
 import { rateLimit, clientIp, tooMany } from "@/lib/ratelimit";
 import { fetchAirForecast, dayPeak, airPeakIsBad } from "@/lib/air/forecast";
 import { fetchFloodTrend } from "@/lib/flood/flood";
@@ -194,50 +195,32 @@ export async function POST(req: NextRequest) {
     stops = plan.stops.map((s, i) => {
       const isRaining = s.skyState === "rain" || s.skyState === "storm";
       
+      // Iron Rule 0: the hop between stops is a REAL distance-derived walking estimate
+      // (lib/transport/route.walkMinutes — the same helper /plan uses), never an invented one.
+      // This route has no live routing or fare data, so we do NOT name a train line, a fare or a
+      // taxi price: a plausible-looking number is worse than no number. A long hop just says so.
       let routeFromPrev = undefined;
       if (i > 0) {
-        // Mock Citymapper-style route
-        if (isRaining) {
-          routeFromPrev = {
-            summary: "แท็กซี่ / Grab",
-            summaryEn: "Taxi / Grab",
-            mode: "taxi",
-            durationMin: Math.floor(Math.random() * 15) + 10,
-            totalCost: Math.floor(Math.random() * 50) + 60,
-            weatherWarning: "ฝนกำลังตก แนะนำให้นั่งรถเพื่อความสะดวก",
-            weatherWarningEn: "It's raining. Taking a taxi is recommended.",
-            steps: [
-              { mode: "walk", instruction: "เดินไปจุดเรียกฝั่งตรงข้าม", instructionEn: "Walk to pickup point", timeMin: 1 },
-              { mode: "taxi", instruction: `นั่งรถไปยัง ${s.poi.name}`, instructionEn: `Ride to ${s.poi.name}`, timeMin: 12, price: 85, icon: "🚕" }
-            ]
-          };
-        } else {
-          const isFar = Math.random() > 0.5;
-          if (isFar) {
-            routeFromPrev = {
-              summary: "รถไฟฟ้า BTS",
-              summaryEn: "BTS Skytrain",
-              mode: "transit",
-              durationMin: Math.floor(Math.random() * 10) + 5,
-              totalCost: 35,
-              steps: [
-                { mode: "walk", instruction: "เดินไปสถานี", instructionEn: "Walk to station", timeMin: 3 },
-                { mode: "bts", instruction: "สายสีเขียว อ่อนนุช", instructionEn: "Green Line to On Nut", timeMin: 8, price: 35, lineColor: "#10B981" },
-                { mode: "walk", instruction: `เดินไป ${s.poi.name}`, instructionEn: `Walk to ${s.poi.name}`, timeMin: 2 }
-              ]
-            };
-          } else {
-            routeFromPrev = {
-              summary: "เดิน",
-              summaryEn: "Walk",
+        const prev = plan.stops[i - 1];
+        const mins = Math.max(1, Math.round(walkMinutes(prev.poi.lat, prev.poi.lng, s.poi.lat, s.poi.lng)));
+        const far = mins > 25;
+        routeFromPrev = {
+          summary: far ? "ระยะไกล แนะนำนั่งรถต่อ" : "เดินต่อ",
+          summaryEn: far ? "Far — consider a ride" : "Walk",
+          mode: "walk" as const,
+          durationMin: mins,
+          ...(isRaining
+            ? { weatherWarning: "ฝนกำลังตก เผื่อเวลาและหาที่หลบระหว่างทาง", weatherWarningEn: "It's raining — allow extra time and cover on the way" }
+            : {}),
+          steps: [
+            {
               mode: "walk",
-              durationMin: Math.floor(Math.random() * 10) + 3,
-              steps: [
-                { mode: "walk", instruction: `เดินลัดซอยไป ${s.poi.name}`, instructionEn: `Walk through alley to ${s.poi.name}`, timeMin: 5 }
-              ]
-            };
-          }
-        }
+              instruction: `ไป ${s.poi.name} (~${mins} นาทีเดิน)`,
+              instructionEn: `To ${s.poi.name} (~${mins} min walk)`,
+              timeMin: mins,
+            },
+          ],
+        };
       }
 
       return {

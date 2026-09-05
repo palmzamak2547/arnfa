@@ -20,6 +20,7 @@ export function StopFeedback({
   en: boolean;
 }) {
   const [voted, setVoted] = useState<null | "ok" | "bad">(null);
+  const [saved, setSaved] = useState<boolean | null>(null); // null = still in flight
   const sent = useRef(false); // guard a fast double-tap from firing the write twice
   const inRain = skyState === "rain" || skyState === "storm" || rainProb > 0.4;
 
@@ -27,16 +28,27 @@ export function StopFeedback({
     if (sent.current) return;
     sent.current = true;
     setVoted(kind === "weather_ok" ? "ok" : "bad");
-    void recordFeedback(poiId, kind, {
+    recordFeedback(poiId, kind, {
       inRain,
       context: { skyState, rainProb: Math.round(rainProb * 100), district },
-    });
+    }).then(setSaved);
   }
 
   if (voted) {
+    // Only claim Arnfah LEARNED once the write is confirmed. While in flight we just thank them,
+    // and if it never reached the server we say so — never a fabricated "got smarter".
+    if (saved === false) {
+      return (
+        <p className="font-thai mt-2 text-xs text-ink-faint">
+          {en ? "Thanks — couldn't reach the server, so this one wasn't recorded." : "ขอบคุณ — แต่ส่งเข้าระบบไม่ได้ ยังไม่ได้บันทึกไว้"}
+        </p>
+      );
+    }
     return (
       <p className="font-thai mt-2 text-xs text-success">
-        {en ? "Thanks — Arnfah just got a little sharper." : "ขอบคุณ — Arnfah ฉลาดขึ้นอีกนิดแล้ว"}
+        {saved
+          ? (en ? "Thanks — Arnfah just got a little sharper." : "ขอบคุณ — Arnfah ฉลาดขึ้นอีกนิดแล้ว")
+          : (en ? "Thanks — saving…" : "ขอบคุณ — กำลังบันทึก…")}
       </p>
     );
   }
