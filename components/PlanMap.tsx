@@ -342,7 +342,7 @@ export function PlanMap({
             onClick={(e) => { e.originalEvent.stopPropagation(); setSelected(stop); }}>
             <button type="button" className="flex cursor-pointer flex-col items-center" title={stop.poi.name} aria-label={stop.poi.name}
               style={reduced ? undefined : { animation: "arnfa-drop 0.5s cubic-bezier(0.22,1,0.36,1) both" }}>
-              <div className={clsx("flex items-center justify-center rounded-full font-semibold text-white ring-2 ring-white transition-all hover:scale-110",
+              <div className={clsx("flex items-center justify-center rounded-full font-semibold text-white ring-2 ring-white transition-transform hover:scale-110",
                   active ? "h-9 w-9 text-sm shadow-lg scale-110" : "h-7 w-7 text-xs shadow-md")}
                 style={{ background: SKY_COLOR[stop.skyState], boxShadow: active ? `0 0 0 3px ${SKY_COLOR[stop.skyState]}40, 0 6px 16px rgba(26,31,43,0.25)` : undefined }}>
                 {i + 1}

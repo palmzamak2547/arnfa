@@ -21,14 +21,33 @@ type TatEvent = {
 export function TatEventsStrip() {
   const { en, lang } = useLang();
   const [events, setEvents] = useState<TatEvent[]>([]);
+  const [down, setDown] = useState(false); // upstream unavailable ≠ "no events"
 
   useEffect(() => {
+    let cancelled = false;
     fetch("/api/tat?events=1&limit=8")
       .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d: { events: TatEvent[] }) => setEvents(d.events ?? []))
-      .catch(() => {});
+      .then((d: { events?: TatEvent[]; unavailable?: boolean }) => {
+        if (cancelled) return;
+        if (d.unavailable) { setDown(true); return; }
+        setEvents(d.events ?? []);
+      })
+      .catch(() => { if (!cancelled) setDown(true); });
+    return () => { cancelled = true; };
   }, []);
 
+  // Honest: say the source is unreachable rather than vanishing as if nothing is on.
+  if (down) {
+    return (
+      <section className="arnfa-grid section-minor">
+        <div className="col-content">
+          <p className="font-thai text-[0.7rem] text-ink-faint">
+            {en ? "TAT events are unavailable right now" : "ดึงงาน/เทศกาลจาก ททท. ไม่ได้ตอนนี้"}
+          </p>
+        </div>
+      </section>
+    );
+  }
   if (events.length === 0) return null;
 
   const fmt = (d: Date) =>

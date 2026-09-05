@@ -79,7 +79,7 @@ export function TasteQuiz({
                 type="button"
                 onClick={() => pick(side)}
                 className={clsx(
-                  "font-thai text-left rounded-2xl border border-hairline bg-paper/60 p-5 transition-all duration-[var(--dur-fast)]",
+                  "font-thai text-left rounded-2xl border border-hairline bg-paper/60 p-5 transition-colors duration-[var(--dur-fast)]",
                   "hover:border-ink/30 hover:bg-surface hover:-translate-y-0.5 min-h-[44px]",
                 )}
               >

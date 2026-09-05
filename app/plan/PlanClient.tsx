@@ -927,16 +927,34 @@ type TatPlaceBrief = { placeId: string; name: string; thumbnailUrl: string[]; lo
 
 function TatNearbyStrip({ lat, lng, en }: { lat: number; lng: number; en: boolean }) {
   const [places, setPlaces] = useState<TatPlaceBrief[]>([]);
+  const [down, setDown] = useState(false); // upstream unavailable ≠ "nothing nearby"
   useEffect(() => {
     if (!lat || !lng) return;
+    let cancelled = false;
+    setDown(false);
     fetch(`/api/tat?lat=${lat}&lng=${lng}&limit=8`)
       .then(r => r.ok ? r.json() : Promise.reject())
-      .then((d: { places: TatPlaceBrief[] }) => {
+      .then((d: { places?: TatPlaceBrief[]; unavailable?: boolean }) => {
+        if (cancelled) return;
+        if (d.unavailable) { setDown(true); setPlaces([]); return; }
         setPlaces((d.places ?? []).filter(p => p.thumbnailUrl?.length > 0));
       })
-      .catch(() => {});
+      .catch(() => { if (!cancelled) setDown(true); });
+    return () => { cancelled = true; };
   }, [lat, lng]);
 
+  // Honest: name the unreachable source instead of silently showing nothing.
+  if (down) {
+    return (
+      <section className="arnfa-grid mt-3 mb-1">
+        <div className="col-content">
+          <p className="font-thai text-[0.7rem] text-ink-faint">
+            {en ? "TAT attractions are unavailable right now" : "ดึงสถานที่จาก ททท. ไม่ได้ตอนนี้"}
+          </p>
+        </div>
+      </section>
+    );
+  }
   if (places.length === 0) return null;
 
   return (

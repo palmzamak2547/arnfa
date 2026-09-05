@@ -70,7 +70,7 @@ export function DistrictPicker({ value, onChange }: { value: string; onChange: (
             style={{ background: "rgba(255,255,255,0.72)" }}
           >
             <div className="border-b border-hairline p-3">
-              <div className="flex items-center gap-2 rounded-2xl bg-paper px-3">
+              <div className="flex items-center gap-2 rounded-2xl bg-paper px-3 transition-shadow focus-within:ring-2 focus-within:ring-rain/40">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="shrink-0 text-ink-faint" aria-hidden>
                   <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.8" />
                   <path d="m20 20-3.2-3.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />

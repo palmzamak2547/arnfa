@@ -92,7 +92,7 @@ export function FigmaAddPlaces({ pois, boostedPoiIds, onToggleBoost, en, sky, ce
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={en ? "Search places in this district..." : "ค้นหาสถานที่ในย่านนี้..."}
-            className="w-full font-thai text-sm px-5 py-3.5 pl-12 rounded-full border border-hairline bg-white/70 shadow-inner focus:outline-none focus:ring-2 focus:ring-sun/50 transition-all text-ink placeholder:text-ink-faint"
+            className="w-full font-thai text-sm px-5 py-3.5 pl-12 rounded-full border border-hairline bg-white/70 shadow-inner focus:outline-none focus:ring-2 focus:ring-sun/50 transition-colors text-ink placeholder:text-ink-faint"
           />
           <span className="absolute left-5 top-1/2 -translate-y-1/2 text-ink-faint text-lg" aria-hidden="true">🔍</span>
         </div>
@@ -106,10 +106,10 @@ export function FigmaAddPlaces({ pois, boostedPoiIds, onToggleBoost, en, sky, ce
                 key={cat.key}
                 type="button"
                 onClick={() => setActiveCategory(cat.key)}
-                className="flex flex-col items-center gap-1.5 shrink-0 select-none group focus:outline-none"
+                className="flex flex-col items-center gap-1.5 shrink-0 select-none group"
               >
                 <div
-                  className={`w-14 h-14 rounded-full flex items-center justify-center text-xl transition-all duration-300 shadow-sm ${
+                  className={`w-14 h-14 rounded-full flex items-center justify-center text-xl transition-[transform,background-color,color,box-shadow] duration-300 shadow-sm ${
                     isActive
                       ? "bg-ink text-paper scale-110 shadow-md ring-2 ring-sun/30"
                       : "bg-white/90 text-ink-muted border border-hairline hover:bg-white hover:scale-105"
@@ -161,7 +161,7 @@ export function FigmaAddPlaces({ pois, boostedPoiIds, onToggleBoost, en, sky, ce
                     <button
                       type="button"
                       onClick={() => onToggleBoost(poi.id)}
-                      className={`w-full font-thai text-xs font-semibold py-2.5 px-4 rounded-full transition-all duration-300 shadow-sm flex items-center justify-center gap-1.5 ${
+                      className={`w-full font-thai text-xs font-semibold py-2.5 px-4 rounded-full transition-colors duration-300 shadow-sm flex items-center justify-center gap-1.5 ${
                         isAdded
                           ? "bg-indoor-warm/15 text-indoor-warm border border-indoor-warm/40 hover:bg-indoor-warm/25"
                           : "bg-ink text-paper hover:bg-ink-muted"

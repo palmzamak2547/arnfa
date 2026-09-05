@@ -350,6 +350,18 @@ export function MapDataLayers({ center, active, routePresent, en, underId, stops
   // reset the AI read whenever the open camera changes
   useEffect(() => { setCamRead(null); setCamReadErr(false); setReading(false); }, [liveCam, selWaterCam]);
 
+  // Escape closes an open camera modal — without this a keyboard user is trapped (the
+  // backdrop click is mouse-only).
+  useEffect(() => {
+    if (!liveCam && !selWaterCam) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      if (liveCam) closeLive(); else closeWater();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [liveCam, selWaterCam]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // shared: POST a frame (client base64 OR server-fetched imageUrl) → VLM read → honest gated result.
   // pinId set → update the street-flood overlay; null (dam cams) → no flood pin (a reservoir isn't a flood).
   async function doCamRead(payload: Record<string, unknown>, pinId: string | null) {

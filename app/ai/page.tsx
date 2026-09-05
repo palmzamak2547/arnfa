@@ -138,10 +138,10 @@ export default function AiPage() {
               onKeyDown={(e) => { if (e.key === "Enter") ask(); }}
               aria-label={en ? "Ask Arnfah" : "ถามอ่านฟ้า"}
               placeholder={turns.length ? (en ? "Ask a follow-up…" : "ถามต่อยอดเพื่อปรับทริปได้เลย…") : (en ? "e.g. a chill café tomorrow, dodge the rain" : "เช่น อยากไปคาเฟ่ชิลๆ พรุ่งนี้บ่าย เลี่ยงฝน")}
-              className="font-thai h-12 flex-1 rounded-full border border-hairline bg-white/80 px-5 text-base text-ink outline-none shadow-sm transition-all focus:border-sun/80 focus:bg-white"
+              className="font-thai h-12 flex-1 rounded-full border border-hairline bg-white/80 px-5 text-base text-ink outline-none shadow-sm transition-colors focus:border-sun/80 focus:bg-white"
             />
             <button type="button" onClick={() => ask()} disabled={loading || !input.trim()}
-              className="font-thai inline-flex h-12 items-center justify-center rounded-full bg-ink px-8 text-base font-medium text-paper shadow transition-all hover:bg-ink-muted active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none">
+              className="font-thai inline-flex h-12 items-center justify-center rounded-full bg-ink px-8 text-base font-medium text-paper shadow transition-[background-color,transform] hover:bg-ink-muted active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none">
               {loading ? (en ? "Reading…" : "อ่านฟ้า…") : (en ? "Ask" : "ถาม")}
             </button>
           </div>
@@ -286,7 +286,7 @@ export default function AiPage() {
 
                     {/* Quick links & Data provenance metadata */}
                     <div className="mt-6 pt-5 border-t border-hairline/80 flex flex-wrap items-center gap-x-4 gap-y-3">
-                      <Link href={turn.resp.planUrl} className="font-thai inline-flex h-10 items-center justify-center rounded-full bg-ink px-6 text-sm font-medium text-paper transition-all hover:bg-ink-muted active:scale-[0.98] shadow-sm">
+                      <Link href={turn.resp.planUrl} className="font-thai inline-flex h-10 items-center justify-center rounded-full bg-ink px-6 text-sm font-medium text-paper transition-[background-color,transform] hover:bg-ink-muted active:scale-[0.98] shadow-sm">
                         {en ? `Open the full plan for ${turn.resp.plan.areaEn} →` : `เปิดแผนแบบแผนที่เต็มของ${turn.resp.plan.areaTh} →`}
                       </Link>
                       
@@ -314,7 +314,7 @@ export default function AiPage() {
                 <div className="flex flex-wrap items-center gap-2">
                   {followUps.map((f) => (
                     <button key={f} type="button" onClick={() => ask(f)}
-                      className="font-thai rounded-full border border-hairline bg-white/40 px-4 py-1.5 text-sm text-ink-muted transition-all hover:bg-white hover:text-ink min-h-[44px] shadow-sm">{f}</button>
+                      className="font-thai rounded-full border border-hairline bg-white/40 px-4 py-1.5 text-sm text-ink-muted transition-colors hover:bg-white hover:text-ink min-h-[44px] shadow-sm">{f}</button>
                   ))}
                   <button type="button" onClick={() => setTurns([])} className="font-thai text-sm font-semibold text-rain hover:underline ml-2 min-h-[44px] px-3">
                     {en ? "start over" : "เริ่มแผนใหม่"}
