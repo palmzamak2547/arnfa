@@ -1,4 +1,4 @@
-import { getClientSupabase } from "@/lib/supabase/client";
+import { getSupabase } from "@/lib/supabase/client";
 
 export type Expense = {
   id: string;
@@ -10,7 +10,7 @@ export type Expense = {
 };
 
 export async function fetchExpenses(sharedLinkId: string): Promise<Expense[]> {
-  const sb = getClientSupabase();
+  const sb = getSupabase();
   if (!sb) return [];
   
   const { data, error } = await sb
@@ -27,7 +27,7 @@ export async function fetchExpenses(sharedLinkId: string): Promise<Expense[]> {
 }
 
 export async function addExpense(sharedLinkId: string, title: string, amount: number, payer_name: string): Promise<Expense | null> {
-  const sb = getClientSupabase();
+  const sb = getSupabase();
   if (!sb) return null;
 
   const { data, error } = await sb
@@ -44,7 +44,7 @@ export async function addExpense(sharedLinkId: string, title: string, amount: nu
 }
 
 export async function deleteExpense(id: string): Promise<boolean> {
-  const sb = getClientSupabase();
+  const sb = getSupabase();
   if (!sb) return false;
 
   const { error } = await sb.from("expense").delete().eq("id", id);

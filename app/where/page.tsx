@@ -17,6 +17,9 @@ import { TatAreaImage } from "@/components/TatAreaImage";
 
 type Area = {
   key: string; th: string; en: string; zone: string; tier: string;
+  // /api/where really does send these (lib/where/today.ts) — the local type just omitted them,
+  // which broke the build where the card passes them to <TatAreaImage>.
+  lat: number; lng: number;
   tempC: number; rainProb: number; score: number; verdict: SkyVerdict;
 };
 

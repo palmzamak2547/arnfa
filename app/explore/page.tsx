@@ -108,7 +108,7 @@ export default function ExplorePage() {
                   />
                   {meta && (
                      <div className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] opacity-80 mix-blend-overlay mix-blend-luminosity">
-                        <TatAreaImage thName={meta.th} lat={meta.lat} lng={meta.lng} />
+                        <TatAreaImage thName={meta.th} lat={meta.lat} lng={meta.lng} fallbackBg={a.bg} />
                      </div>
                   )}
                   <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(26,31,43,0.85)]" />
